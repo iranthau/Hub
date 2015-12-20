@@ -71,7 +71,7 @@
         <!--TermsViewController-->
         <scene sceneID="r1i-az-IXQ">
             <objects>
-                <viewController title="TermsViewController" id="wb4-cP-xjR" sceneMemberID="viewController">
+                <viewController title="TermsViewController" id="wb4-cP-xjR" customClass="TermsConditionsViewController" customModule="Hub" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="odP-va-8hi"/>
                         <viewControllerLayoutGuide type="bottom" id="tzg-bp-SVI"/>
@@ -141,6 +141,9 @@
                         </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="CancelButton" destination="BkO-83-3eb" id="v5V-KC-MwG"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OfW-Jw-WJb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

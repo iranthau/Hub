@@ -35,6 +35,7 @@ class TermsConditionsViewController: UIViewController {
         //TODO: wire up to return to the home screen and add handlers
         close()
     }
+    @IBOutlet weak var CancelButton: UIButton!
     
     //Close the view controller - called in the cancelAndReturnHome() method
     func close() {
