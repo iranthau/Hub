@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -123,8 +123,8 @@
                             <constraint firstItem="3p1-2H-6WU" firstAttribute="centerY" secondItem="pbH-vz-4wQ" secondAttribute="centerY" id="9VN-Rh-yhf"/>
                             <constraint firstAttribute="trailingMargin" secondItem="3p1-2H-6WU" secondAttribute="trailing" constant="10" id="BfR-IX-jHT"/>
                             <constraint firstItem="cQX-5i-ZlG" firstAttribute="centerX" secondItem="pbH-vz-4wQ" secondAttribute="centerX" id="CzM-Lm-YeW"/>
-                            <constraint firstItem="cQX-5i-ZlG" firstAttribute="width" secondItem="D9p-G4-QWJ" secondAttribute="width" id="QOc-jH-oqk"/>
-                            <constraint firstItem="cQX-5i-ZlG" firstAttribute="centerY" secondItem="pbH-vz-4wQ" secondAttribute="centerY" id="aZ3-Pn-n6t"/>
+                            <constraint firstItem="cQX-5i-ZlG" firstAttribute="width" secondItem="D9p-G4-QWJ" secondAttribute="width" constant="1" id="QOc-jH-oqk"/>
+                            <constraint firstItem="cQX-5i-ZlG" firstAttribute="centerY" secondItem="pbH-vz-4wQ" secondAttribute="centerY" constant="317.5" id="aZ3-Pn-n6t"/>
                             <constraint firstItem="el0-sc-9sP" firstAttribute="centerY" secondItem="pbH-vz-4wQ" secondAttribute="centerY" id="clT-sC-Ahg"/>
                             <constraint firstItem="cQX-5i-ZlG" firstAttribute="centerX" secondItem="D9p-G4-QWJ" secondAttribute="centerX" id="dqv-P4-3sS"/>
                             <constraint firstAttribute="bottom" secondItem="cQX-5i-ZlG" secondAttribute="bottom" constant="20" symbolic="YES" id="ftH-ho-Lib"/>
@@ -134,6 +134,11 @@
                             <constraint firstItem="BkO-83-3eb" firstAttribute="leading" secondItem="D9p-G4-QWJ" secondAttribute="leadingMargin" constant="10" id="wa4-e6-sbi"/>
                             <constraint firstItem="BkO-83-3eb" firstAttribute="centerY" secondItem="pbH-vz-4wQ" secondAttribute="centerY" id="yQ0-fu-N4a"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="1jb-fB-xt2"/>
+                            </mask>
+                        </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>

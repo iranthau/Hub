@@ -26,13 +26,19 @@ class TermsConditionsViewController: UIViewController {
     //If user agreed to terms and conditions, handle any necessary actions here and
     //proceed to account creation
     @IBAction func agreedToTerms() {
-        
+        //TODO: wire up to follow to next screen and add handlers
     }
     
     //If user did not agree to t&c, handle necessary actions and appropriate prompts
     //here and return to the app home screen
-    @IBAction func cancelAndReturnHome() {
-        
+    @IBAction func cancelAndReturnHome(sender: UIButton) {
+        //TODO: wire up to return to the home screen and add handlers
+        close()
+    }
+    
+    //Close the view controller - called in the cancelAndReturnHome() method
+    func close() {
+        dismissViewControllerAnimated(true, completion: nil)
     }
     /*
     // MARK: - Navigation
