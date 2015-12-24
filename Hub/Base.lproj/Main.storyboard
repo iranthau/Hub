@@ -100,8 +100,16 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Terms and Conditions" id="nt1-O1-v04">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="GS6-1O-35E"/>
-                        <barButtonItem key="rightBarButtonItem" title="Agree" id="Z1A-VW-vQC"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="GS6-1O-35E">
+                            <connections>
+                                <action selector="cancelAndReturnHome" destination="wb4-cP-xjR" id="fTc-XB-PTZ"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Agree" style="done" id="Z1A-VW-vQC">
+                            <connections>
+                                <action selector="agreedToTerms" destination="wb4-cP-xjR" id="rJl-DL-S2K"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
