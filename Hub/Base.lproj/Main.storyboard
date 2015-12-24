@@ -68,28 +68,20 @@
             </objects>
             <point key="canvasLocation" x="379.5" y="295.5"/>
         </scene>
-        <!--About View Controller-->
-        <scene sceneID="vdc-tM-upz">
+        <!--About-->
+        <scene sceneID="u1A-Fp-mvM">
             <objects>
-                <viewController id="DnH-5w-Lte" customClass="AboutViewController" customModule="Hub" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="PGg-jz-kyf" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="SnR-QU-lrJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="9Ib-sP-BPu"/>
+                        <viewControllerLayoutGuide type="top" id="Ept-FG-RfX"/>
+                        <viewControllerLayoutGuide type="bottom" id="YTM-BI-zl9"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="zo4-dX-Zs0">
+                    <view key="view" contentMode="scaleToFill" id="741-Ph-6TH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="6lA-wJ-kQd">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="barTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <items>
-                                    <navigationItem title="About" id="GVf-xG-XOH"/>
-                                </items>
-                            </navigationBar>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6qw-1C-OSd">
-                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="z22-Wk-L8f">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -97,12 +89,38 @@
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="z22-Wk-L8f" firstAttribute="leading" secondItem="741-Ph-6TH" secondAttribute="leadingMargin" constant="10" id="U1p-AJ-iqM"/>
+                            <constraint firstItem="YTM-BI-zl9" firstAttribute="top" secondItem="z22-Wk-L8f" secondAttribute="bottom" constant="8" id="aid-wd-FIh"/>
+                            <constraint firstItem="z22-Wk-L8f" firstAttribute="top" secondItem="741-Ph-6TH" secondAttribute="topMargin" constant="5" id="faT-5j-NbM"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="z22-Wk-L8f" secondAttribute="trailing" constant="10" id="wMe-uT-tqP"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="About" id="s60-m0-XgR"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hRd-Ms-dJr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tUe-Fv-4b1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="379.5" y="1084.5"/>
+            <point key="canvasLocation" x="1191.5" y="1027.5"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="wos-Ks-NI0">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="XrK-iX-lNW" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="37e-kQ-QgP">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="PGg-jz-kyf" kind="relationship" relationship="rootViewController" id="0I4-Qo-9Eh"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="733-0a-7GB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="379" y="1027"/>
         </scene>
     </scenes>
     <resources>
