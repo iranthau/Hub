@@ -37,6 +37,7 @@ class TermsConditionsViewController: UIViewController, SetUserHasViewed {
     //If user did not agree to t&c, handle necessary actions and appropriate prompts
     //here and return to the app home screen
     @IBAction func cancelAndReturnHome() {
+        setUserViewedFlag(false)
         //TODO: wire up to return to the home screen and add handlers
         dismissViewControllerAnimated(true, completion: nil)
     }
