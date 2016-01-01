@@ -10,7 +10,7 @@
 
 import UIKit
 
-class TermsConditionsViewController: UIViewController {
+class TermsConditionsViewController: UIViewController, SetUserHasViewed {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +26,10 @@ class TermsConditionsViewController: UIViewController {
     //If user agreed to terms and conditions, handle any necessary actions here and
     //proceed to account creation
     @IBAction func agreedToTerms() {
+        //set a flag to indicate the user has read this screen and agreed to 
+        //terms and conditions - this means the screen won't show up by default next time
+        setUserViewedFlag(true)
+        
         //TODO: wire up to follow to next screen and add handlers
         dismissViewControllerAnimated(true, completion: nil)
     }
@@ -45,5 +49,13 @@ class TermsConditionsViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func setUserViewedFlag(flag: Bool) {
+        if flag == true {
+            //TODO: set value in the data model and re-use it on next startup
+        } else {
+            //TODO: set a false value so the T&C screen re-appears on next startup
+        }
+    }
 
 }
