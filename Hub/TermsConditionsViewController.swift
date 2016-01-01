@@ -12,10 +12,26 @@ import UIKit
 
 class TermsConditionsViewController: UIViewController, SetUserHasViewed {
 
+    @IBOutlet weak var agreeToTermsButton: UIBarButtonItem!
+    
+    //TODO: a toggle function that enables/disables this button based on whether
+    // a) userHasViewed flag is true, and b) user has navigated to this from launch
+    // or settings screen
+    var agreeIsEnabled:Bool = true
+
+    required init?(coder aDecoder: NSCoder) {
+        
+        super.init(coder: aDecoder)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        // TODO: Read the value of the userHasViewed flag. If true, disable the 'agree'
+        // button on startup by greying out or hiding:
+        agreeToTermsButton.enabled = agreeIsEnabled
     }
 
     override func didReceiveMemoryWarning() {
