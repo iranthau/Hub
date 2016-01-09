@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A4E59881C213FC70046C8E8 /* TermsConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4E59871C213FC70046C8E8 /* TermsConditionsViewController.swift */; };
+		9AA824E61C373BE000B71364 /* SetUserHasViewedFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA824E51C373BE000B71364 /* SetUserHasViewedFlags.swift */; };
 		BDAE7A121C101F6B0085264A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAE7A111C101F6B0085264A /* AppDelegate.swift */; };
 		BDAE7A141C101F6B0085264A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAE7A131C101F6B0085264A /* ViewController.swift */; };
 		BDAE7A171C101F6B0085264A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BDAE7A151C101F6B0085264A /* Main.storyboard */; };
@@ -34,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9A4E59871C213FC70046C8E8 /* TermsConditionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsConditionsViewController.swift; sourceTree = "<group>"; };
+		9AA824E51C373BE000B71364 /* SetUserHasViewedFlags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetUserHasViewedFlags.swift; sourceTree = "<group>"; };
 		BDAE7A0E1C101F6B0085264A /* Hub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDAE7A111C101F6B0085264A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BDAE7A131C101F6B0085264A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -88,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				BDAE7A131C101F6B0085264A /* ViewController.swift */,
+				9A4E59871C213FC70046C8E8 /* TermsConditionsViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -95,6 +100,7 @@
 		BD423AF41C132747001D25E7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				9AA824E51C373BE000B71364 /* SetUserHasViewedFlags.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -225,6 +231,7 @@
 				TargetAttributes = {
 					BDAE7A0D1C101F6B0085264A = {
 						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = 6WLMCC2XX4;
 					};
 					BDAE7A211C101F6B0085264A = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -290,6 +297,8 @@
 			files = (
 				BDAE7A141C101F6B0085264A /* ViewController.swift in Sources */,
 				BDAE7A121C101F6B0085264A /* AppDelegate.swift in Sources */,
+				9AA824E61C373BE000B71364 /* SetUserHasViewedFlags.swift in Sources */,
+				9A4E59881C213FC70046C8E8 /* TermsConditionsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,11 +438,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Hub/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.88Software.Hub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -441,11 +453,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Hub/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.88Software.Hub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
