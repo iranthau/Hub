@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A4E21761C267FE500688BA4 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4E21751C267FE500688BA4 /* AboutViewController.swift */; };
 		BDAE7A121C101F6B0085264A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAE7A111C101F6B0085264A /* AppDelegate.swift */; };
 		BDAE7A141C101F6B0085264A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAE7A131C101F6B0085264A /* ViewController.swift */; };
 		BDAE7A171C101F6B0085264A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BDAE7A151C101F6B0085264A /* Main.storyboard */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9A4E21751C267FE500688BA4 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		BDAE7A0E1C101F6B0085264A /* Hub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDAE7A111C101F6B0085264A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BDAE7A131C101F6B0085264A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -74,6 +76,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BD423AF21C1326F3001D25E7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BDAE7A151C101F6B0085264A /* Main.storyboard */,
+				BDAE7A181C101F6B0085264A /* Assets.xcassets */,
+				BDAE7A1A1C101F6B0085264A /* LaunchScreen.storyboard */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		BD423AF31C132728001D25E7 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				BDAE7A131C101F6B0085264A /* ViewController.swift */,
+				9A4E21751C267FE500688BA4 /* AboutViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		BD423AF41C132747001D25E7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		BD423AF51C13276A001D25E7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BDAE7A111C101F6B0085264A /* AppDelegate.swift */,
+				BDAE7A1D1C101F6B0085264A /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		BDAE7A051C101F6B0085264A = {
 			isa = PBXGroup;
 			children = (
@@ -97,12 +134,10 @@
 		BDAE7A101C101F6B0085264A /* Hub */ = {
 			isa = PBXGroup;
 			children = (
-				BDAE7A111C101F6B0085264A /* AppDelegate.swift */,
-				BDAE7A131C101F6B0085264A /* ViewController.swift */,
-				BDAE7A151C101F6B0085264A /* Main.storyboard */,
-				BDAE7A181C101F6B0085264A /* Assets.xcassets */,
-				BDAE7A1A1C101F6B0085264A /* LaunchScreen.storyboard */,
-				BDAE7A1D1C101F6B0085264A /* Info.plist */,
+				BD423AF21C1326F3001D25E7 /* View */,
+				BD423AF31C132728001D25E7 /* Controller */,
+				BD423AF41C132747001D25E7 /* Model */,
+				BD423AF51C13276A001D25E7 /* Supporting Files */,
 			);
 			path = Hub;
 			sourceTree = "<group>";
@@ -256,6 +291,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A4E21761C267FE500688BA4 /* AboutViewController.swift in Sources */,
 				BDAE7A141C101F6B0085264A /* ViewController.swift in Sources */,
 				BDAE7A121C101F6B0085264A /* AppDelegate.swift in Sources */,
 			);
@@ -484,6 +520,7 @@
 				BDAE7A381C101F6B0085264A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BDAE7A391C101F6B0085264A /* Build configuration list for PBXNativeTarget "HubTests" */ = {
 			isa = XCConfigurationList;
@@ -492,6 +529,7 @@
 				BDAE7A3B1C101F6B0085264A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BDAE7A3C1C101F6B0085264A /* Build configuration list for PBXNativeTarget "HubUITests" */ = {
 			isa = XCConfigurationList;
@@ -500,6 +538,7 @@
 				BDAE7A3E1C101F6B0085264A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
