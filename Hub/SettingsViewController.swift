@@ -40,6 +40,46 @@ class SettingsViewController: UITableViewController {
             }
     }
     
+    //table view delegate method:
+    override func tableView(tableView: UITableView, willSelectRowAtIndexPath
+        indexPath: NSIndexPath) -> NSIndexPath? {
+            
+            //return the index path row depends on what user taps, and perform
+            switch indexPath.row {
+            case 1:
+                return indexPath
+            case 2:
+                return indexPath
+            case 3:
+                return indexPath
+            case 4:
+                return indexPath
+            case 5:
+                return indexPath
+            case 6:
+                return indexPath
+            case 7:
+                return indexPath
+            case 8:
+                return indexPath
+            case 9:
+                return indexPath
+            default:
+                return nil
+            }
+    }
+    
+    //get the table view cell depending on which row the user tapped.
+    override func tableView(tableView: UITableView,
+        cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+            
+        return super.tableView(tableView, cellForRowAtIndexPath: indexPath)
+    }
+    
+    override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+        //if user tapped an accessory button, perform segue to the correct screen
+    }
+    
     //UI @IBAction methods live here:
     @IBAction func hideProfileToggle(switchControl: UISwitch) {
         
