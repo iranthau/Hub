@@ -10,7 +10,7 @@
 
 import UIKit
 
-class TermsConditionsViewController: UIViewController, SetUserHasViewed {
+class TermsConditionsViewController: UIViewController {//, SetUserHasViewed {
 
     @IBOutlet weak var agreeToTermsButton: UIBarButtonItem!
     
