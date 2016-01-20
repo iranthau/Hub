@@ -12,6 +12,7 @@
 		9AA824F91C43476800B71364 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA824F81C43476800B71364 /* SettingsViewController.swift */; };
 		9AA824FA1C43476800B71364 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA824F81C43476800B71364 /* SettingsViewController.swift */; };
 		9AA824FB1C43476800B71364 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA824F81C43476800B71364 /* SettingsViewController.swift */; };
+		BD376EB71C4FB90E0096CCA9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD376EB61C4FB90E0096CCA9 /* User.swift */; };
 		BD78B8D81C40D0210056AACE /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD78B8D71C40D0210056AACE /* AboutViewController.swift */; };
 		BDA966551C4E6D0900FDDD33 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966531C4E6D0900FDDD33 /* Bolts.framework */; };
 		BDA966561C4E6D0900FDDD33 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966541C4E6D0900FDDD33 /* Parse.framework */; };
@@ -55,6 +56,7 @@
 		9A4E59871C213FC70046C8E8 /* TermsConditionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsConditionsViewController.swift; sourceTree = "<group>"; };
 		9AA824E51C373BE000B71364 /* AppDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDataModel.swift; sourceTree = "<group>"; };
 		9AA824F81C43476800B71364 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		BD376EB61C4FB90E0096CCA9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BD78B8D71C40D0210056AACE /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutViewController.swift; path = Hub/Controller/AboutViewController.swift; sourceTree = SOURCE_ROOT; };
 		BDA966531C4E6D0900FDDD33 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		BDA966541C4E6D0900FDDD33 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				9AA824E51C373BE000B71364 /* AppDataModel.swift */,
+				BD376EB61C4FB90E0096CCA9 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -364,6 +367,7 @@
 				BD78B8D81C40D0210056AACE /* AboutViewController.swift in Sources */,
 				9A4E59881C213FC70046C8E8 /* TermsConditionsViewController.swift in Sources */,
 				9AA824F91C43476800B71364 /* SettingsViewController.swift in Sources */,
+				BD376EB71C4FB90E0096CCA9 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
