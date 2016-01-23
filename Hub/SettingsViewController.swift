@@ -26,7 +26,12 @@ class SettingsViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    
+    //get the table view cell depending on which row the user tapped.
+    override func tableView(tableView: UITableView,
+        cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+            
+            return super.tableView(tableView, cellForRowAtIndexPath: indexPath)
+    }
     //WARNING: check this during testing, as this method may require additional overriding
     // of the tableView() methods, as it's a prototype-intended method type. Static cells
     // are designed in the storyboard, so the size may need to be set there in some way!!! - A.G. 11/01/16
@@ -40,48 +45,39 @@ class SettingsViewController: UITableViewController {
             }
     }
     
-    //table view delegate method:
-    override func tableView(tableView: UITableView, willSelectRowAtIndexPath
-        indexPath: NSIndexPath) -> NSIndexPath? {
-            
-            //return the index path row depends on what user taps, and perform
-            switch indexPath.row {
-            case 1:
-                return indexPath
-            case 2:
-                return indexPath
-            case 3:
-                return indexPath
-            case 4:
-                return indexPath
-            case 5:
-                return indexPath
-            case 6:
-                return indexPath
-            case 7:
-                return indexPath
-            case 8:
-                return indexPath
-            case 9:
-                return indexPath
-            default:
-                return nil
-            }
+    // MARK: - decide what happens when a user taps a row in the Settings screen (whether
+    //  they will go to another screen, sign out, etc.)
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        // make sure the row does not remain selected after the user touched it
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        switch indexPath.row {
+        case 0:
+            performSegueWithIdentifier("TermsAndConditionsSegue", sender: nil)
+        case 1:
+            performSegueWithIdentifier("AboutSegue", sender: nil)
+        default:
+            return
+        }
     }
     
-    //get the table view cell depending on which row the user tapped.
-    override func tableView(tableView: UITableView,
-        cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-            
-        return super.tableView(tableView, cellForRowAtIndexPath: indexPath)
-    }
-    
-    override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
-        //if user tapped an accessory button, perform segue to the correct screen
+    //MARK: - prepare for navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "TermsAndConditionsSegue" {
+            let controller = segue.destinationViewController as! TermsConditionsViewController
+            //disable the 'agree' button if the user has navigated to T&C screen from another part
+            // of the app (rather than through first-time launch)
+            controller.agreeIsEnabled = false
+        }
     }
     
     //UI @IBAction methods live here:
     @IBAction func hideProfileToggle(switchControl: UISwitch) {
+        
+    }
+    
+    //If user taps the 'log out' row, log him out of the system and set a flag
+    func userDidLogOut() {
         
     }
 }
