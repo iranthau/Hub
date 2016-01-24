@@ -14,6 +14,9 @@
 		9AA824FB1C43476800B71364 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA824F81C43476800B71364 /* SettingsViewController.swift */; };
 		BD376EB71C4FB90E0096CCA9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD376EB61C4FB90E0096CCA9 /* User.swift */; };
 		BD78B8D81C40D0210056AACE /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD78B8D71C40D0210056AACE /* AboutViewController.swift */; };
+		BD9032C21C5474C300C323A9 /* HubModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9032C11C5474C300C323A9 /* HubModel.swift */; };
+		BD9032C41C54A5D600C323A9 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9032C31C54A5D600C323A9 /* SignUpViewController.swift */; };
+		BD9032C61C54E1BD00C323A9 /* FNameField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9032C51C54E1BD00C323A9 /* FNameField.swift */; };
 		BDA966551C4E6D0900FDDD33 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966531C4E6D0900FDDD33 /* Bolts.framework */; };
 		BDA966561C4E6D0900FDDD33 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966541C4E6D0900FDDD33 /* Parse.framework */; };
 		BDA966581C4E6D6900FDDD33 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966571C4E6D6900FDDD33 /* AudioToolbox.framework */; };
@@ -58,6 +61,9 @@
 		9AA824F81C43476800B71364 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		BD376EB61C4FB90E0096CCA9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BD78B8D71C40D0210056AACE /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutViewController.swift; path = Hub/Controller/AboutViewController.swift; sourceTree = SOURCE_ROOT; };
+		BD9032C11C5474C300C323A9 /* HubModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HubModel.swift; sourceTree = "<group>"; };
+		BD9032C31C54A5D600C323A9 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		BD9032C51C54E1BD00C323A9 /* FNameField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FNameField.swift; path = View/FNameField.swift; sourceTree = "<group>"; };
 		BDA966531C4E6D0900FDDD33 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		BDA966541C4E6D0900FDDD33 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		BDA966571C4E6D6900FDDD33 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -125,6 +131,7 @@
 		BD423AF21C1326F3001D25E7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				BD9032C71C54EDDD00C323A9 /* CustomTextFields */,
 				BDAE7A151C101F6B0085264A /* Main.storyboard */,
 				BDAE7A181C101F6B0085264A /* Assets.xcassets */,
 				BDAE7A1A1C101F6B0085264A /* LaunchScreen.storyboard */,
@@ -139,6 +146,7 @@
 				BDAE7A131C101F6B0085264A /* ViewController.swift */,
 				9A4E59871C213FC70046C8E8 /* TermsConditionsViewController.swift */,
 				9AA824F81C43476800B71364 /* SettingsViewController.swift */,
+				BD9032C31C54A5D600C323A9 /* SignUpViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -148,6 +156,7 @@
 			children = (
 				9AA824E51C373BE000B71364 /* AppDataModel.swift */,
 				BD376EB61C4FB90E0096CCA9 /* User.swift */,
+				BD9032C11C5474C300C323A9 /* HubModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -158,6 +167,15 @@
 				BDAE7A1D1C101F6B0085264A /* Info.plist */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BD9032C71C54EDDD00C323A9 /* CustomTextFields */ = {
+			isa = PBXGroup;
+			children = (
+				BD9032C51C54E1BD00C323A9 /* FNameField.swift */,
+			);
+			name = CustomTextFields;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		BDA9666B1C4E6E5C00FDDD33 /* Frameworks */ = {
@@ -362,10 +380,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDAE7A141C101F6B0085264A /* ViewController.swift in Sources */,
+				BD9032C21C5474C300C323A9 /* HubModel.swift in Sources */,
 				BDAE7A121C101F6B0085264A /* AppDelegate.swift in Sources */,
 				9AA824E61C373BE000B71364 /* AppDataModel.swift in Sources */,
+				BD9032C61C54E1BD00C323A9 /* FNameField.swift in Sources */,
 				BD78B8D81C40D0210056AACE /* AboutViewController.swift in Sources */,
 				9A4E59881C213FC70046C8E8 /* TermsConditionsViewController.swift in Sources */,
+				BD9032C41C54A5D600C323A9 /* SignUpViewController.swift in Sources */,
 				9AA824F91C43476800B71364 /* SettingsViewController.swift in Sources */,
 				BD376EB71C4FB90E0096CCA9 /* User.swift in Sources */,
 			);

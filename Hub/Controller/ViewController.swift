@@ -12,6 +12,8 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        var user = User(firstName: "Iran", lastName: "Rajakaruna", email: "iranthau@gmail.com", password: "12355")
+        user.signUp()
         // Do any additional setup after loading the view, typically from a nib.
     }
 
