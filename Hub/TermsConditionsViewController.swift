@@ -47,7 +47,8 @@ class TermsConditionsViewController: UIViewController {
         //userAcceptedTermsAndConditions(true)
         
         //TODO: wire up to follow to next screen and add handlers
-        performSegueWithIdentifier("TabBarTransitionSegue", sender: nil)
+        performSegueWithIdentifier("TestMyProfileSegue", sender: nil)
+//        performSegueWithIdentifier("TabBarTransitionSegue", sender: nil)
         
         //dismissViewControllerAnimated(true, completion: nil)
     }

@@ -12,6 +12,10 @@ class SettingsViewController: UITableViewController {
 
     //Variables (properties, outlets, etc) begin here:
     @IBOutlet weak var hideProfileSwitch: UISwitch!
+    @IBOutlet weak var hideProfileCell: UITableViewCell!
+    @IBOutlet weak var hideProfileImage: UIImage!
+    
+    var cell:UITableViewCell?
     
     //Methods begin here:
     override func viewDidLoad() {
@@ -32,6 +36,7 @@ class SettingsViewController: UITableViewController {
             
             return super.tableView(tableView, cellForRowAtIndexPath: indexPath)
     }
+    
     //WARNING: check this during testing, as this method may require additional overriding
     // of the tableView() methods, as it's a prototype-intended method type. Static cells
     // are designed in the storyboard, so the size may need to be set there in some way!!! - A.G. 11/01/16
@@ -56,6 +61,7 @@ class SettingsViewController: UITableViewController {
             performSegueWithIdentifier("TermsAndConditionsSegue", sender: nil)
         case 1:
             performSegueWithIdentifier("AboutSegue", sender: nil)
+            //TODO: - write cases for other rows that require action as functionality is implemented
         default:
             return
         }
@@ -64,7 +70,9 @@ class SettingsViewController: UITableViewController {
     //MARK: - prepare for navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "TermsAndConditionsSegue" {
-            let controller = segue.destinationViewController as! TermsConditionsViewController
+            let navigationController = segue.destinationViewController as! UINavigationController
+            
+            let controller = navigationController.topViewController as! TermsConditionsViewController
             //disable the 'agree' button if the user has navigated to T&C screen from another part
             // of the app (rather than through first-time launch)
             controller.agreeIsEnabled = false
@@ -73,11 +81,22 @@ class SettingsViewController: UITableViewController {
     
     //UI @IBAction methods live here:
     @IBAction func hideProfileToggle(switchControl: UISwitch) {
+        // 1. hide profile
         
+        // 2. display a quick status message
     }
     
-    //If user taps the 'log out' row, log him out of the system and set a flag
-    func userDidLogOut() {
+    //If user taps the 'log out' row, log him out of the system, set userIsLoggedIn to false and 
+    //  return them to home screen
+    func userDidTapSignoutRow() {
+        
+        // 0. prompt if user is sure they want to sign out (optional - discuss with Iran)
+        
+        // 1. save any data that needs to be saved prior to signing out
+        
+        // 2. set the logged in flag to false, set any other states that need to be set
+        
+        // 3. return user to log-in screen
         
     }
 }

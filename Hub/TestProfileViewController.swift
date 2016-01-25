@@ -9,6 +9,8 @@
 import UIKit
 
 class TestProfileViewController: UIViewController {
+    
+    @IBOutlet weak var settingsTestTabBarItem:UITabBarItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +24,10 @@ class TestProfileViewController: UIViewController {
     }
     
     @IBAction func buttonTapped() {
+        performSegueWithIdentifier("TabFromProfileSegue", sender: nil)
+    }
+    
+    @IBAction func settingsItemTapped() {
         performSegueWithIdentifier("TabFromProfileSegue", sender: nil)
     }
     /*
