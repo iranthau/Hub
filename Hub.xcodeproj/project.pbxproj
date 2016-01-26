@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A2B93771C53027500D7C6E0 /* TestProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2B93761C53027500D7C6E0 /* TestProfileViewController.swift */; };
 		9A4E59881C213FC70046C8E8 /* TermsConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4E59871C213FC70046C8E8 /* TermsConditionsViewController.swift */; };
 		9AA824E61C373BE000B71364 /* AppDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA824E51C373BE000B71364 /* AppDataModel.swift */; };
 		9AA824F91C43476800B71364 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA824F81C43476800B71364 /* SettingsViewController.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9A2B93761C53027500D7C6E0 /* TestProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestProfileViewController.swift; sourceTree = "<group>"; };
 		9A4E59871C213FC70046C8E8 /* TermsConditionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsConditionsViewController.swift; sourceTree = "<group>"; };
 		9AA824E51C373BE000B71364 /* AppDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDataModel.swift; sourceTree = "<group>"; };
 		9AA824F81C43476800B71364 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				BDAE7A131C101F6B0085264A /* ViewController.swift */,
 				9A4E59871C213FC70046C8E8 /* TermsConditionsViewController.swift */,
 				9AA824F81C43476800B71364 /* SettingsViewController.swift */,
+				9A2B93761C53027500D7C6E0 /* TestProfileViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 			files = (
 				BDAE7A141C101F6B0085264A /* ViewController.swift in Sources */,
 				BDAE7A121C101F6B0085264A /* AppDelegate.swift in Sources */,
+				9A2B93771C53027500D7C6E0 /* TestProfileViewController.swift in Sources */,
 				9AA824E61C373BE000B71364 /* AppDataModel.swift in Sources */,
 				BD78B8D81C40D0210056AACE /* AboutViewController.swift in Sources */,
 				9A4E59881C213FC70046C8E8 /* TermsConditionsViewController.swift in Sources */,

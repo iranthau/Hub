@@ -76,6 +76,15 @@ class AppDataModel {
         //complete the implementation: 
     }
     
+    //check the state of T&C and set key to 'true' if they've been accepted
+    func userAcceptedTermsAndConditions(flag: Bool) {
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        if flag {
+            userDefaults.setBool(true, forKey: "TermsConditionsAccepted")
+            userDefaults.synchronize()
+        }
+    }
+    
     //TODO: sort contacts by name function here:
     
     
@@ -91,6 +100,4 @@ class AppDataModel {
         return (getDocumentsDirectory()
             as NSString).stringByAppendingPathComponent("Hub.plist")
     }
-    
-
 }

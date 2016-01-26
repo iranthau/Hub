@@ -12,6 +12,10 @@ class SettingsViewController: UITableViewController {
 
     //Variables (properties, outlets, etc) begin here:
     @IBOutlet weak var hideProfileSwitch: UISwitch!
+    @IBOutlet weak var hideProfileCell: UITableViewCell!
+    @IBOutlet weak var hideProfileImage: UIImage!
+    
+    var cell:UITableViewCell?
     
     //Methods begin here:
     override func viewDidLoad() {
@@ -26,6 +30,12 @@ class SettingsViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    //get the table view cell depending on which row the user tapped.
+    override func tableView(tableView: UITableView,
+        cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+            
+            return super.tableView(tableView, cellForRowAtIndexPath: indexPath)
+    }
     
     //WARNING: check this during testing, as this method may require additional overriding
     // of the tableView() methods, as it's a prototype-intended method type. Static cells
@@ -40,48 +50,53 @@ class SettingsViewController: UITableViewController {
             }
     }
     
-    //table view delegate method:
-    override func tableView(tableView: UITableView, willSelectRowAtIndexPath
-        indexPath: NSIndexPath) -> NSIndexPath? {
-            
-            //return the index path row depends on what user taps, and perform
-            switch indexPath.row {
-            case 1:
-                return indexPath
-            case 2:
-                return indexPath
-            case 3:
-                return indexPath
-            case 4:
-                return indexPath
-            case 5:
-                return indexPath
-            case 6:
-                return indexPath
-            case 7:
-                return indexPath
-            case 8:
-                return indexPath
-            case 9:
-                return indexPath
-            default:
-                return nil
-            }
+    // MARK: - decide what happens when a user taps a row in the Settings screen (whether
+    //  they will go to another screen, sign out, etc.)
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        // make sure the row does not remain selected after the user touched it
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        switch indexPath.row {
+        case 0:
+            performSegueWithIdentifier("TermsAndConditionsSegue", sender: nil)
+        case 1:
+            performSegueWithIdentifier("AboutSegue", sender: nil)
+            //TODO: - write cases for other rows that require action as functionality is implemented
+        default:
+            return
+        }
     }
     
-    //get the table view cell depending on which row the user tapped.
-    override func tableView(tableView: UITableView,
-        cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    //MARK: - prepare for navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "TermsAndConditionsSegue" {
+            let navigationController = segue.destinationViewController as! UINavigationController
             
-        return super.tableView(tableView, cellForRowAtIndexPath: indexPath)
-    }
-    
-    override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
-        //if user tapped an accessory button, perform segue to the correct screen
+            let controller = navigationController.topViewController as! TermsConditionsViewController
+            //disable the 'agree' button if the user has navigated to T&C screen from another part
+            // of the app (rather than through first-time launch)
+            controller.agreeIsEnabled = false
+        }
     }
     
     //UI @IBAction methods live here:
     @IBAction func hideProfileToggle(switchControl: UISwitch) {
+        // 1. hide profile
+        
+        // 2. display a quick status message
+    }
+    
+    //If user taps the 'log out' row, log him out of the system, set userIsLoggedIn to false and 
+    //  return them to home screen
+    func userDidTapSignoutRow() {
+        
+        // 0. prompt if user is sure they want to sign out (optional - discuss with Iran)
+        
+        // 1. save any data that needs to be saved prior to signing out
+        
+        // 2. set the logged in flag to false, set any other states that need to be set
+        
+        // 3. return user to log-in screen
         
     }
 }
