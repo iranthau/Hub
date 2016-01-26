@@ -25,23 +25,13 @@ class User {
     }
     
     // Handles user signing up
-    func signUp() {
-        let pfUser = PFUser()
-        pfUser["firstName"] = firstName
-        pfUser["lastName"] = lastName
-        pfUser.username = email
-        pfUser.password = password
-        pfUser.email = email
-        
-        var response = false
-        var errorString: NSString?
-        
+    func signUp(pfUser: PFUser) {
         pfUser.signUpInBackgroundWithBlock {
             (success: Bool, error: NSError?) -> Void in
             if let error = error {
-                errorString = error.userInfo["error"] as? NSString
+                print(error.userInfo["error"] as? NSString)
             } else {
-                response = true
+                print("Success")
             }
         }
     }
