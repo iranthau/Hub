@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Parse
 
 class HubModel {
     
@@ -24,15 +23,5 @@ class HubModel {
             Static.instance = HubModel()
         }
         return Static.instance!
-    }
-    
-    func userSignUp(user: User) {
-        let pfUser = PFUser()
-        pfUser["firstName"] = user.firstName
-        pfUser["lastName"] = user.lastName
-        pfUser.username = user.email
-        pfUser.password = user.password
-        pfUser.email = user.email
-        user.signUp(pfUser)
     }
 }
