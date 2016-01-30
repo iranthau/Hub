@@ -1,15 +1,16 @@
 //
-//  AboutViewController.swift
+//  TestProfileViewController.swift
 //  Hub
 //
-//  Created by Alexei Gudimenko on 20/12/2015.
-//  Copyright © 2015 88Software. All rights reserved.
+//  Created by Alexei Gudimenko on 23/01/2016.
+//  Copyright © 2016 88Software. All rights reserved.
 //
-//  - handle any 'About' view functionality here
 
 import UIKit
 
-class AboutViewController: UIViewController {
+class TestProfileViewController: UIViewController {
+    
+    @IBOutlet weak var settingsTestTabBarItem:UITabBarItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,8 +23,12 @@ class AboutViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func dismissAboutViewController() {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func buttonTapped() {
+        performSegueWithIdentifier("TabFromProfileSegue", sender: nil)
+    }
+    
+    @IBAction func settingsItemTapped() {
+        performSegueWithIdentifier("TabFromProfileSegue", sender: nil)
     }
     /*
     // MARK: - Navigation

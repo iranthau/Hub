@@ -17,10 +17,10 @@ class TermsConditionsViewController: UIViewController {//, SetUserHasViewed {
     //TODO: a toggle function that enables/disables this button based on whether
     // a) userHasViewed flag is true, and b) user has navigated to this from launch
     // or settings screen
-    var agreeIsEnabled:Bool = true
+    var agreeIsEnabled:Bool?
 
     required init?(coder aDecoder: NSCoder) {
-        
+        agreeIsEnabled = true
         super.init(coder: aDecoder)
     }
     
@@ -31,7 +31,7 @@ class TermsConditionsViewController: UIViewController {//, SetUserHasViewed {
         
         // TODO: Read the value of the userHasViewed flag. If true, disable the 'agree'
         // button on startup by greying out or hiding:
-        agreeToTermsButton.enabled = agreeIsEnabled
+        agreeToTermsButton.enabled = agreeIsEnabled!
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,18 +42,21 @@ class TermsConditionsViewController: UIViewController {//, SetUserHasViewed {
     //If user agreed to terms and conditions, handle any necessary actions here and
     //proceed to account creation
     @IBAction func agreedToTerms() {
-        //set a flag to indicate the user has read this screen and agreed to 
-        //terms and conditions - this means the screen won't show up by default next time
-        setUserViewedFlag(true)
+        /*set a flag to indicate the user has read this screen and agreed to
+           terms and conditions - this means the screen won't show up by default next time */
+        //userAcceptedTermsAndConditions(true)
         
         //TODO: wire up to follow to next screen and add handlers
-        dismissViewControllerAnimated(true, completion: nil)
+        performSegueWithIdentifier("TestMyProfileSegue", sender: nil)
+//        performSegueWithIdentifier("TabBarTransitionSegue", sender: nil)
+        
+        //dismissViewControllerAnimated(true, completion: nil)
     }
     
     //If user did not agree to t&c, handle necessary actions and appropriate prompts
     //here and return to the app home screen
     @IBAction func cancelAndReturnHome() {
-        setUserViewedFlag(false)
+        //userAcceptedTermsAndConditions(false)
         //TODO: wire up to return to the home screen and add handlers
         dismissViewControllerAnimated(true, completion: nil)
     }
@@ -66,13 +69,5 @@ class TermsConditionsViewController: UIViewController {//, SetUserHasViewed {
         // Pass the selected object to the new view controller.
     }
     */
-    
-    func setUserViewedFlag(flag: Bool) {
-        if flag == true {
-            //TODO: set value in the data model and re-use it on next startup
-        } else {
-            //TODO: set a false value so the T&C screen re-appears on next startup
-        }
-    }
 
 }
