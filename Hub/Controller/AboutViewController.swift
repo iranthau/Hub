@@ -15,7 +15,6 @@ class AboutViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        navigationController?.navigationBar.barTintColor = UIColor.blueColor()
     }
 
     override func didReceiveMemoryWarning() {

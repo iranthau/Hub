@@ -60,7 +60,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
                     
                 } else {
                     self.activityIndicator.stopAnimating()
-                    self.performSegueWithIdentifier("signUp", sender: nil)
+                    self.performSegueWithIdentifier("signUpSegue", sender: nil)
                 }
             }
         } else {
