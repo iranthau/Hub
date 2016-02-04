@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import ParseFacebookUtilsV4
 
 class SignInViewController: UIViewController {
 
@@ -42,6 +43,24 @@ class SignInViewController: UIViewController {
             }
         }
         
+    }
+    
+    @IBAction func facebookSignIn(sender: AnyObject) {
+        PFFacebookUtils.logInInBackgroundWithReadPermissions(["public_profile", "email"],
+            block: { (user: PFUser?, error: NSError?) -> Void in
+            if let error = error {
+                let errorMessage = error.userInfo["error"] as? String
+                self.showAlert(errorMessage!)
+            } else if let user = user {
+                if user.isNew {
+                    print("User signed up and logged in through Facebook!")
+                } else {
+                    print("User logged in through Facebook!")
+                }
+            } else {
+                print("Uh oh. The user cancelled the Facebook login.")
+            }
+        })
     }
     
     func showAlert(message: String) {

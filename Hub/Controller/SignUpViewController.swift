@@ -57,7 +57,6 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
                     self.activityIndicator.stopAnimating()
                     let errorMessage = error.userInfo["error"] as? String
                     self.showAlert(errorMessage!)
-                    
                 } else {
                     self.activityIndicator.stopAnimating()
                     self.performSegueWithIdentifier("signUpSegue", sender: nil)
