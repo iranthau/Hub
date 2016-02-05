@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="FYO-gF-uhB">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -37,7 +37,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="0ca-aS-lqm" kind="show" id="ejX-hR-iQW"/>
+                                    <action selector="createAccount:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aNQ-gj-zo7"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="72Y-GV-ufc">
@@ -110,6 +110,7 @@
                         <outlet property="passwordInput" destination="2Mi-gH-WHv" id="y7H-qb-62H"/>
                         <outlet property="userNameInput" destination="rqD-cc-MpT" id="g31-EL-klJ"/>
                         <segue destination="zoJ-sz-7kp" kind="show" identifier="signInSegue" id="Vkv-W8-tWJ"/>
+                        <segue destination="0ca-aS-lqm" kind="show" identifier="createAccountSegue" id="2Pd-pM-jEq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -191,13 +192,14 @@
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="agreedToTerms" destination="wb4-cP-xjR" id="rJl-DL-S2K"/>
-                                <segue destination="CQm-qP-1GK" kind="show" id="YAA-ir-VD1"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="agreeToTermsButton" destination="Z1A-VW-vQC" id="ONX-fx-zK3"/>
+                        <segue destination="CQm-qP-1GK" kind="show" identifier="normalSignUpSegue" id="jnD-5L-Pdf"/>
+                        <segue destination="FYO-gF-uhB" kind="show" identifier="facebookSignUpSegue" id="IgN-O4-3Ep"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OfW-Jw-WJb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -619,7 +621,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uL0-8H-C15" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1611.5" y="-96.5"/>
+            <point key="canvasLocation" x="-1617.5" y="-96.5"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="q3f-2A-6IC">
@@ -658,4 +660,7 @@
         <image name="profile-pic" width="102" height="102"/>
         <image name="tick" width="24" height="18"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="WnZ-H8-8sI"/>
+    </inferredMetricsTieBreakers>
 </document>

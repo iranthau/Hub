@@ -53,14 +53,18 @@ class SignInViewController: UIViewController {
                 self.showAlert(errorMessage!)
             } else if let user = user {
                 if user.isNew {
-                    print("User signed up and logged in through Facebook!")
+                    self.performSegueWithIdentifier("createAccountSegue", sender: nil)
                 } else {
-                    print("User logged in through Facebook!")
+                    self.performSegueWithIdentifier("signInSegue", sender: nil)
                 }
             } else {
-                print("Uh oh. The user cancelled the Facebook login.")
+                self.showAlert("Sign up error.")
             }
         })
+    }
+    
+    @IBAction func createAccount(sender: AnyObject) {
+        self.performSegueWithIdentifier("createAccountSegue", sender: nil)
     }
     
     func showAlert(message: String) {
