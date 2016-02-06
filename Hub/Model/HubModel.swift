@@ -7,8 +7,12 @@
 //
 
 import Foundation
+import UIKit
+import Parse
 
 class HubModel {
+    
+    var user: User?
     
     private init() {
         
@@ -23,5 +27,18 @@ class HubModel {
             Static.instance = HubModel()
         }
         return Static.instance!
+    }
+    
+    func userSignUp(view: SignUpViewController) {
+        let pfUser = PFUser()
+        
+        pfUser["firstName"] = user!.firstName
+        pfUser["lastName"] = user!.lastName
+        pfUser.username = user!.email
+        pfUser.email = user!.email
+        pfUser.password = user!.password
+        pfUser["profileImage"] = user!.profileImage
+        
+        user!.signUp(view, pfUser: pfUser)
     }
 }

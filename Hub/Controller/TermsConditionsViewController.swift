@@ -14,7 +14,6 @@ import Parse
 class TermsConditionsViewController: UIViewController {//, SetUserHasViewed {
 
     @IBOutlet weak var agreeToTermsButton: UIBarButtonItem!
-    let currentUser = PFUser.currentUser()
     
     //TODO: a toggle function that enables/disables this button based on whether
     // a) userHasViewed flag is true, and b) user has navigated to this from launch
@@ -45,7 +44,8 @@ class TermsConditionsViewController: UIViewController {//, SetUserHasViewed {
         //set a flag to indicate the user has read this screen and agreed to 
         //terms and conditions - this means the screen won't show up by default next time
         setUserViewedFlag(true)
-        
+
+        let currentUser = PFUser.currentUser()
         if currentUser?.isNew == true {
             self.performSegueWithIdentifier("facebookSignUpSegue", sender: nil)
         } else {

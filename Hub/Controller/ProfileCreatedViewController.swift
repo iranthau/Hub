@@ -9,27 +9,35 @@
 import UIKit
 
 class ProfileCreatedViewController: UIViewController {
+    
+    @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var firstNameLabel: UILabel!
 
+    let hubModel = HubModel.sharedInstance
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBarHidden = true
+        let user = hubModel.user
+        
+        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        
+        profileImage.layer.cornerRadius = 0.5 * profileImage.bounds.size.width
+        profileImage.clipsToBounds = true
+        
+        dispatch_async(dispatch_get_global_queue(priority, 0)) {
+            let image = user!.getProfileImage()
 
-        // Do any additional setup after loading the view.
+            dispatch_async(dispatch_get_main_queue()) {
+                self.profileImage.image = image
+            }
+        }
+        
+        firstNameLabel.text = user!.firstName
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

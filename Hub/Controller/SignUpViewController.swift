@@ -20,6 +20,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var imagePicker = UIImagePickerController()
+    var hubModel = HubModel.sharedInstance
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,33 +36,29 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     @IBAction func signMeUp(sender: AnyObject) {
-        let user = PFUser()
-        
         let password    = passwordTextfield.text!
         let password_2  = cPasswordTextfield.text!
         
         if password == password_2 {
             activityIndicator.startAnimating()
-            user["firstName"] = fNameTextfield.text!
-            user["lastName"] = lNameTextfield.text!
-            user.username = emailTextfield.text!
-            user.email = emailTextfield.text!
-            user.password = password
-            let profileImageData = UIImagePNGRepresentation(profilePicture.imageForState(.Normal)!)
-            let parseProfileImageFile = PFFile(data: profileImageData!)
-            user["profileImage"] = parseProfileImageFile
+            let firstName = fNameTextfield.text!
+            let lastName = lNameTextfield.text!
+            let email = emailTextfield.text!
             
-            user.signUpInBackgroundWithBlock {
-                (success: Bool, error: NSError?) in
-                if let error = error {
-                    self.activityIndicator.stopAnimating()
-                    let errorMessage = error.userInfo["error"] as? String
-                    self.showAlert(errorMessage!)
-                } else {
-                    self.activityIndicator.stopAnimating()
-                    self.performSegueWithIdentifier("signUpSegue", sender: nil)
-                }
+            let user = User(fName: firstName, lName: lastName, email: email)
+            user.password = password
+            
+            let buttonBgImage = profilePicture.imageForState(.Normal)!
+            if !buttonBgImage.isEqual(UIImage(named: "profile-pic")) {
+                let profileImageData = UIImagePNGRepresentation(buttonBgImage)
+                let parseProfileImageFile = PFFile(data: profileImageData!)
+                user.profileImage = parseProfileImageFile!
             }
+            
+            hubModel.user = user
+            
+            hubModel.userSignUp(self)
+            
         } else {
             self.activityIndicator.stopAnimating()
             self.showAlert("Password doesn't match")

@@ -18,6 +18,7 @@
 		BD9032C21C5474C300C323A9 /* HubModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9032C11C5474C300C323A9 /* HubModel.swift */; };
 		BD9032C41C54A5D600C323A9 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9032C31C54A5D600C323A9 /* SignUpViewController.swift */; };
 		BD9032C61C54E1BD00C323A9 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9032C51C54E1BD00C323A9 /* CustomTextField.swift */; };
+		BDA812051C6613EC00219C4A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA812041C6613EC00219C4A /* User.swift */; };
 		BDA966551C4E6D0900FDDD33 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966531C4E6D0900FDDD33 /* Bolts.framework */; };
 		BDA966561C4E6D0900FDDD33 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966541C4E6D0900FDDD33 /* Parse.framework */; };
 		BDA966581C4E6D6900FDDD33 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966571C4E6D6900FDDD33 /* AudioToolbox.framework */; };
@@ -73,6 +74,7 @@
 		BD9032C11C5474C300C323A9 /* HubModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HubModel.swift; sourceTree = "<group>"; };
 		BD9032C31C54A5D600C323A9 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		BD9032C51C54E1BD00C323A9 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomTextField.swift; path = View/CustomTextField.swift; sourceTree = "<group>"; };
+		BDA812041C6613EC00219C4A /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BDA966531C4E6D0900FDDD33 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		BDA966541C4E6D0900FDDD33 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		BDA966571C4E6D6900FDDD33 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -181,6 +183,7 @@
 			children = (
 				9AA824E51C373BE000B71364 /* AppDataModel.swift */,
 				BD9032C11C5474C300C323A9 /* HubModel.swift */,
+				BDA812041C6613EC00219C4A /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -418,6 +421,7 @@
 				BD78B8D81C40D0210056AACE /* AboutViewController.swift in Sources */,
 				BD5B94DB1C64F43300812FFD /* ProfileCreatedViewController.swift in Sources */,
 				9A4E59881C213FC70046C8E8 /* TermsConditionsViewController.swift in Sources */,
+				BDA812051C6613EC00219C4A /* User.swift in Sources */,
 				BD9032C41C54A5D600C323A9 /* SignUpViewController.swift in Sources */,
 				BD644D2E1C60D2CB005657FD /* PassswordRecoveryViewController.swift in Sources */,
 				9AA824F91C43476800B71364 /* SettingsViewController.swift in Sources */,
