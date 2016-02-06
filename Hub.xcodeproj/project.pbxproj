@@ -146,7 +146,7 @@
 				BDAE7A131C101F6B0085264A /* ViewController.swift */,
 				9A4E59871C213FC70046C8E8 /* TermsConditionsViewController.swift */,
 				9AA824F81C43476800B71364 /* SettingsViewController.swift */,
-				9A2B93761C53027500D7C6E0 /* TestProfileViewController.swift */,
+				BD9032C31C54A5D600C323A9 /* SignUpViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
