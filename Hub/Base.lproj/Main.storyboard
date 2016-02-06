@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="0ca-aS-lqm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="1S0-Aw-HZs">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -109,7 +109,7 @@
                         <outlet property="fbSignInButton" destination="wXE-wV-CGv" id="Loa-qc-5PN"/>
                         <outlet property="passwordInput" destination="2Mi-gH-WHv" id="y7H-qb-62H"/>
                         <outlet property="userNameInput" destination="rqD-cc-MpT" id="g31-EL-klJ"/>
-                        <segue destination="zoJ-sz-7kp" kind="show" identifier="signInSegue" id="Vkv-W8-tWJ"/>
+                        <segue destination="1S0-Aw-HZs" kind="show" identifier="signInSegue" id="Vkv-W8-tWJ"/>
                         <segue destination="0ca-aS-lqm" kind="show" identifier="createAccountSegue" id="2Pd-pM-jEq"/>
                     </connections>
                 </viewController>
@@ -151,7 +151,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tUe-Fv-4b1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="115.5" y="876.5"/>
+            <point key="canvasLocation" x="2913.5" y="876.5"/>
         </scene>
         <!--TermsViewController-->
         <scene sceneID="r1i-az-IXQ">
@@ -590,7 +590,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ToI-XK-6ze" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-334.5" y="876.5"/>
+            <point key="canvasLocation" x="2463.5" y="876.5"/>
         </scene>
         <!--PasswordRecoveryViewController-->
         <scene sceneID="oYw-kJ-Xr9">
@@ -680,12 +680,12 @@
             </objects>
             <point key="canvasLocation" x="-1617.5" y="-96.5"/>
         </scene>
-        <!--Table View Controller-->
+        <!--My Contacts-->
         <scene sceneID="q3f-2A-6IC">
             <objects>
                 <tableViewController id="zoJ-sz-7kp" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Wj8-xe-EBT">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -693,7 +693,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SDd-pR-fIP" id="tPv-oo-RZ4">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -703,21 +703,89 @@
                             <outlet property="delegate" destination="zoJ-sz-7kp" id="hlm-2J-AMa"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="My Contacts" id="XFL-SS-UFM">
+                        <barButtonItem key="rightBarButtonItem" image="add-user" id="Sfz-mz-1g8">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f5u-Vs-Mk3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1022.5" y="798.5"/>
+        </scene>
+        <!--My Contacts-->
+        <scene sceneID="Hy7-BN-P33">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="y2f-Qa-Lrv" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="My Contacts" image="my-contacts" selectedImage="my-contacts-active" id="4o3-cp-bD5"/>
+                    <toolbarItems/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="DFg-eW-50x">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.2901960784" green="0.56470588239999997" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="textShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="zoJ-sz-7kp" kind="relationship" relationship="rootViewController" id="Gf2-gv-Ivj"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qMp-us-vvo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1617.5" y="798.5"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="ife-dD-jKA">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="1S0-Aw-HZs" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="mYa-Xv-eQC">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.2901960784" green="0.56470588239999997" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </tabBar>
+                    <connections>
+                        <segue destination="y2f-Qa-Lrv" kind="relationship" relationship="viewControllers" id="cz0-PO-hCk"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OOe-iC-VEU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tabBar contentMode="scaleToFill" translucent="NO" id="m4r-Yg-wpd">
+                    <autoresizingMask key="autoresizingMask"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <items/>
+                    <color key="barTintColor" red="0.2901960784" green="0.56470588239999997" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                            <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </tabBar>
             </objects>
             <point key="canvasLocation" x="-2205.5" y="798.5"/>
         </scene>
     </scenes>
     <resources>
+        <image name="add-user" width="36" height="35"/>
         <image name="bg-img" width="188" height="334"/>
         <image name="fb" width="30" height="30"/>
         <image name="logo" width="60" height="55"/>
+        <image name="my-contacts" width="32" height="30"/>
+        <image name="my-contacts-active" width="30" height="28"/>
         <image name="profile-pic" width="102" height="102"/>
         <image name="tick" width="24" height="18"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="WnZ-H8-8sI"/>
+        <segue reference="IgN-O4-3Ep"/>
     </inferredMetricsTieBreakers>
 </document>
