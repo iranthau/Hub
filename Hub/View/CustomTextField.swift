@@ -19,7 +19,7 @@ class CustomTextField: UITextField {
         
         let image = selectImage(self.placeholder!)
         imageView.image = image
-        imageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+        imageView.frame = CGRect(x: 5, y: 0, width: 20, height: 20)
         
         // Create a subview for adding the image so that padding around the image
         // can be set properly.
@@ -48,6 +48,8 @@ class CustomTextField: UITextField {
             image = UIImage(named: "user.png")
         case "Email":
             image = UIImage(named: "email.png")
+        case "Username":
+            image = UIImage(named: "user.png")
         case "Password":
             image = UIImage(named: "lock.png")
         case "Confirm password":

@@ -9,10 +9,12 @@
 //
 
 import UIKit
+import Parse
 
 class TermsConditionsViewController: UIViewController {//, SetUserHasViewed {
 
     @IBOutlet weak var agreeToTermsButton: UIBarButtonItem!
+    let currentUser = PFUser.currentUser()
     
     //TODO: a toggle function that enables/disables this button based on whether
     // a) userHasViewed flag is true, and b) user has navigated to this from launch
@@ -26,7 +28,6 @@ class TermsConditionsViewController: UIViewController {//, SetUserHasViewed {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
         
         // TODO: Read the value of the userHasViewed flag. If true, disable the 'agree'
