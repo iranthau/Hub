@@ -14,7 +14,6 @@ import Parse
 class TermsConditionsViewController: UIViewController {//, SetUserHasViewed {
 
     @IBOutlet weak var agreeToTermsButton: UIBarButtonItem!
-    let currentUser = PFUser.currentUser()
     
     //TODO: a toggle function that enables/disables this button based on whether
     // a) userHasViewed flag is true, and b) user has navigated to this from launch
