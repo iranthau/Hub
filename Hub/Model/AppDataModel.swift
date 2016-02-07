@@ -59,8 +59,8 @@ class AppDataModel {
     //TODO: save-data function here:
     func saveAppData() {
         //set up mechanism for data processing: a data object and the archiver that'll do the writing
-        let data = NSMutableData()
-        let archiver = NSKeyedArchiver(forWritingWithMutableData: data)
+//        let data = NSMutableData()
+//        let archiver = NSKeyedArchiver(forWritingWithMutableData: data)
         
         //encode data and give it a key, this will be the filename and key used on loading the data
         //archiver.encodeObject(    , forKey: "Hub")

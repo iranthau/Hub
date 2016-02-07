@@ -22,6 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Initialise parse
         Parse.setApplicationId("inQev5jlG1BWu0LdsRHBK5XbyQrADMJ6BwGXweEF", clientKey: "p2C6htbwjtzV0syI7zXsjiWxbQajREwoJdreYDL0")
+        
+        // Set colors and appearance of UI elements:
+        customizeAppearance()
         return true
     }
 
@@ -47,6 +50,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    // customize tab bar controller appearance and any other app elements that require programmatic view 
+    //  change
+    func customizeAppearance() {
+        UINavigationBar.appearance().barTintColor = UIColor(red: 23/255.0, green: 129/255.0,
+            blue: 204/255.0, alpha: 1.0)
+        UINavigationBar.appearance().titleTextAttributes =
+            [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        UITabBar.appearance().barTintColor = UIColor(red: 23/255.0, green: 129/255.0,
+            blue: 204/255.0, alpha: 1.0)
+        let tintColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0,
+            alpha: 1.0)
+        UITabBar.appearance().tintColor = tintColor
+    }
 
 }
 
