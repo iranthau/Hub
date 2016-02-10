@@ -22,40 +22,32 @@ class MyProfileViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
 
     
-    //view set-up variables: use test values, replace with values from data model
-    //let thisUser: User?
+    // #warning: this object is simply a test object to enable functionality 
+    //  testing. Replace this with correct content from the model when the 
+    //  relevant bits of functionality are merged. (Subject to pull request) - A. G.
+    let testData = MyProfileTestData()
     
-    var phoneNumberTestData = [
-        "0421433433",
-        "0431623946"
-    ]
-    
-    var emailTestData = [
-        "whispering.gloom@live.com.au",
-        "alexei.gudimenko@gmail.com",
-        "spear.of.longinus@gmx.com"
-    ]
-    
-    var addressTestData = [
-        "92, Wilson St, Cheltenham",
-        "2, Alvina Crt, Frankston",
-        "811, Princes Hwy, Springvale",
-        "1, Flinders St, Melbourne"
-    ]
-    
-    var activeDataSource = [String]()
+    var activeDataSource:[String] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        tableView.separatorColor = UIColor(red: 255/255.0, green: 255/255.0,
+            blue: 255/255.0, alpha: 0.0)
         // Do any additional setup after loading the view.
         // TODO: replace test values with content from model
-        title = "John Smith"
+        title = testData.userFirstName + " " + testData.userLastName
         
         // Make image view circular and set it to image from model:
-        profileImageView.image = UIImage(named: "mona_cthulu")
+        profileImageView.image = UIImage(named: testData.userImageName)
         profileImageView.layer.cornerRadius = profileImageView.bounds.size.width / 2
         profileImageView.clipsToBounds = true
+        
+        nicknameLabel.text = "☞ " + testData.userNickname
+        cityLocationLabel.text = "📍 " + testData.userCity
+        
+        // Display phone numbers by default:
+        activeDataSource = testData.phoneNumberTestData
     }
 
     override func didReceiveMemoryWarning() {
@@ -64,32 +56,42 @@ class MyProfileViewController: UIViewController {
     }
     
     @IBAction func phoneButtonPressed() {
-        activeDataSource = phoneNumberTestData
+        activeDataSource = testData.phoneNumberTestData
         print("***Phone button pressed; count of items in array: \(activeDataSource.count)")
         tableView.reloadData()
     }
     @IBAction func emailButtonPressed() {
-        activeDataSource = emailTestData
+        activeDataSource = testData.emailTestData
         print("***Email button pressed; count of items in array: \(activeDataSource.count)")
         tableView.reloadData()
     }
     @IBAction func addressButtonPressed() {
-        activeDataSource = addressTestData
+        activeDataSource = testData.addressTestData
         print("***Address button pressed; count of items in array: \(activeDataSource.count)")
         tableView.reloadData()
     }
     @IBAction func socialButtonPressed() {
-        
+        activeDataSource = testData.socialTestData
+        print("***Social button pressed; count of items in array: \(activeDataSource.count)")
+        tableView.reloadData()
     }
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "EditProfile" {
+            let navigationController = segue.destinationViewController as! UINavigationController
+            let controller = navigationController.topViewController as! EditMyProfileViewController
+            
+            controller.doneIsEnabled = false
+            // #warning: replace with model data!
+            controller.testDataToEdit = testData
+        }
     }
-    */
+    
 
 }
 
