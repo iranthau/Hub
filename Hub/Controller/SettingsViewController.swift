@@ -21,6 +21,9 @@ class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //hide the separator line between cells
+        self.tableView.separatorColor = UIColor(red: 255/255.0, green: 255/255.0,
+            blue: 255/255.0, alpha: 0.0)
         /*check the state of hideProfileSwitch here:*/
         //hideProfileSwitch.on =
     }
@@ -50,6 +53,14 @@ class SettingsViewController: UITableViewController {
             }
     }
     
+    // customize the settings view cell appearance:
+    override func tableView(tableView: UITableView,
+        willDisplayCell cell: UITableViewCell,
+        forRowAtIndexPath indexPath: NSIndexPath) {
+            
+//            cell.separatorInset = UIEdgeInsets(top: 0, left: 600, bottom: 0, right: 0)
+    }
+    
     // MARK: - decide what happens when a user taps a row in the Settings screen (whether
     //  they will go to another screen, sign out, etc.)
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -71,7 +82,6 @@ class SettingsViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "TermsAndConditionsSegue" {
             let navigationController = segue.destinationViewController as! UINavigationController
-            
             let controller = navigationController.topViewController as! TermsConditionsViewController
             //disable the 'agree' button if the user has navigated to T&C screen from another part
             // of the app (rather than through first-time launch)
