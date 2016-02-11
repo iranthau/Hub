@@ -15,6 +15,8 @@ class User {
     var email: String
     var profileImage: PFFile
     var password: String?
+    var nickName: String?
+    var cityName: String?
     
     init(fName: String, lName: String, email: String) {
         firstName = fName
