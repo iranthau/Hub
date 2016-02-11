@@ -16,6 +16,7 @@ class EditContactItemCell: UITableViewCell, UITextFieldDelegate {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        initialiseTextField()
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -34,5 +35,13 @@ class EditContactItemCell: UITableViewCell, UITextFieldDelegate {
         }
     }
 
+    func initialiseTextField() {
+        contactInputTextField.delegate = self
+    }
     
+    //If the user presses the 'return' key, hide keyboard
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }
