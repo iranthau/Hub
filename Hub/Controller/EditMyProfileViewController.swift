@@ -29,29 +29,47 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var addressButton: UIButton!
     @IBOutlet weak var socialButton: UIButton!
     
+    
     //color reference: UIColor(red: 23/255.0, green: 129/255.0,
     // blue: 204/255.0, alpha: 1.0)
     
     // this variable simulates the user data, in this case to give EditMyProfileView
     //  something to work with for functionality testing.
     //  #warning: replace with correct content from the model!!!! - A. G.
-    var testDataToEdit: MyProfileTestData?
-    var doneIsEnabled = true
+    var userData: MyProfileTestData?
+    var activeDataSource = [String]()
+    var doneIsEnabled = false
+    
+    var contactFieldCell: EditContactItemCell?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         //hide the separator lines in the table view
         contactFieldTableView.separatorColor = UIColor(red: 255/255.0, green: 255/255.0,
             blue: 255/255.0, alpha: 0.0)
         profileImageView.layer.cornerRadius = profileImageView.bounds.size.width / 2
         profileImageView.clipsToBounds = true
         
-        if let user = testDataToEdit {
+        if let user = userData {
             title = "Edit " + user.userFirstName + "'s Profile"
             // perform any other additional setup of the view
-            doneNavBarButton.enabled = doneIsEnabled
+            doneNavBarButton.enabled = true
+            firstNameTextField.text = user.userFirstName
+            lastNameTextField.text = user.userLastName
+            nicknameTextField.text = user.userNickname
+            profileImageView.image = UIImage(named: user.userImageName)
         }
+    }
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        self.navigationController?.navigationBar.translucent = false
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        self.navigationController?.navigationBar.translucent = false
     }
     
     //cancel editing: dismiss view controller
@@ -65,24 +83,35 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func phoneButtonPressed() {
-        
+        //TODO: set active data source, set keyboard type, reload tableView data
+        if let user = userData {
+            activeDataSource = user.phoneNumberTestData
+        }
     }
     @IBAction func emailButtonPressed() {
-        
+        //TODO: set active data source, set keyboard type, reload tableView data
+        if let user = userData {
+            activeDataSource = user.emailTestData
+        }
     }
     @IBAction func addressButtonPressed() {
-        
+        //TODO: set active data source, set keyboard type, reload tableView data
+        if let user = userData {
+            activeDataSource = user.addressTestData
+        }
     }
     @IBAction func socialButtonPressed() {
-        
+        //TODO: set active data source, set keyboard type, reload tableView data
+        if let user = userData {
+            activeDataSource = user.socialTestData
+        }
     }
 }
 
 extension EditMyProfileViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //TODO: implement correct number of rows to display
-        return 0
+        return activeDataSource.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -93,4 +122,10 @@ extension EditMyProfileViewController: UITableViewDataSource {
 
 extension EditMyProfileViewController: UITableViewDelegate {
     //enable row deletion etc
+}
+
+extension EditMyProfileViewController: UINavigationBarDelegate {
+    func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
+        return .TopAttached
+    }
 }

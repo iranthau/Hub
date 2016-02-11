@@ -69,6 +69,9 @@
 		9AF6A0541C6B6D0100B4647C /* MyProfileTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF6A0531C6B6D0100B4647C /* MyProfileTestData.swift */; };
 		9AF6A0551C6B6D0100B4647C /* MyProfileTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF6A0531C6B6D0100B4647C /* MyProfileTestData.swift */; };
 		9AF6A0561C6B6D0100B4647C /* MyProfileTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF6A0531C6B6D0100B4647C /* MyProfileTestData.swift */; };
+		9AF6A0581C6C0AB300B4647C /* EditContactItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF6A0571C6C0AB300B4647C /* EditContactItemCell.swift */; };
+		9AF6A0591C6C0AB300B4647C /* EditContactItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF6A0571C6C0AB300B4647C /* EditContactItemCell.swift */; };
+		9AF6A05A1C6C0AB300B4647C /* EditContactItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF6A0571C6C0AB300B4647C /* EditContactItemCell.swift */; };
 		BD376EB71C4FB90E0096CCA9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD376EB61C4FB90E0096CCA9 /* User.swift */; };
 		BD78B8D81C40D0210056AACE /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD78B8D71C40D0210056AACE /* AboutViewController.swift */; };
 		BDA966551C4E6D0900FDDD33 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966531C4E6D0900FDDD33 /* Bolts.framework */; };
@@ -160,6 +163,7 @@
 		9AAFE1E21C69852F0079C6EB /* ContactType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactType.swift; sourceTree = "<group>"; };
 		9AF6A04F1C6B6C7F00B4647C /* EditMyProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditMyProfileViewController.swift; sourceTree = "<group>"; };
 		9AF6A0531C6B6D0100B4647C /* MyProfileTestData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyProfileTestData.swift; sourceTree = "<group>"; };
+		9AF6A0571C6C0AB300B4647C /* EditContactItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditContactItemCell.swift; sourceTree = "<group>"; };
 		BD376EB61C4FB90E0096CCA9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BD78B8D71C40D0210056AACE /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutViewController.swift; path = Hub/Controller/AboutViewController.swift; sourceTree = SOURCE_ROOT; };
 		BDA966531C4E6D0900FDDD33 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
@@ -303,6 +307,7 @@
 				9A241D071C66E569006C9EDF /* ContactItemCell.swift */,
 				9A241D0B1C66EAA5006C9EDF /* CustomNavigationController.swift */,
 				9AF6A04F1C6B6C7F00B4647C /* EditMyProfileViewController.swift */,
+				9AF6A0571C6C0AB300B4647C /* EditContactItemCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -580,6 +585,7 @@
 				9AF6A0541C6B6D0100B4647C /* MyProfileTestData.swift in Sources */,
 				9AA824F91C43476800B71364 /* SettingsViewController.swift in Sources */,
 				9A241D041C66D4AC006C9EDF /* MyProfileViewController.swift in Sources */,
+				9AF6A0581C6C0AB300B4647C /* EditContactItemCell.swift in Sources */,
 				BD376EB71C4FB90E0096CCA9 /* User.swift in Sources */,
 				9AF6A0501C6B6C7F00B4647C /* EditMyProfileViewController.swift in Sources */,
 			);
@@ -594,6 +600,7 @@
 				9A241D051C66D4AC006C9EDF /* MyProfileViewController.swift in Sources */,
 				9A241D0D1C66EAA5006C9EDF /* CustomNavigationController.swift in Sources */,
 				BDAE7A271C101F6B0085264A /* HubTests.swift in Sources */,
+				9AF6A0591C6C0AB300B4647C /* EditContactItemCell.swift in Sources */,
 				9AA824FA1C43476800B71364 /* SettingsViewController.swift in Sources */,
 				9A241D091C66E569006C9EDF /* ContactItemCell.swift in Sources */,
 			);
@@ -608,6 +615,7 @@
 				9A241D061C66D4AC006C9EDF /* MyProfileViewController.swift in Sources */,
 				9A241D0E1C66EAA5006C9EDF /* CustomNavigationController.swift in Sources */,
 				BDAE7A321C101F6B0085264A /* HubUITests.swift in Sources */,
+				9AF6A05A1C6C0AB300B4647C /* EditContactItemCell.swift in Sources */,
 				9AA824FB1C43476800B71364 /* SettingsViewController.swift in Sources */,
 				9A241D0A1C66E569006C9EDF /* ContactItemCell.swift in Sources */,
 			);

@@ -88,7 +88,7 @@ class MyProfileViewController: UIViewController {
             
             controller.doneIsEnabled = false
             // #warning: replace with model data!
-            controller.testDataToEdit = testData
+            controller.userData = testData
         }
     }
     
