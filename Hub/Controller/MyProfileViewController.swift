@@ -14,7 +14,7 @@ class MyProfileViewController: UIViewController {
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nicknameLabel: UILabel!
     @IBOutlet weak var cityLocationLabel: UILabel!
-    @IBOutlet weak var contactHoursDetail: UILabel!
+    @IBOutlet weak var contactHoursDetail: UITextView!
     @IBOutlet weak var phoneContactButton: UIButton!
     @IBOutlet weak var emailContactButton: UIButton!
     @IBOutlet weak var addressContactButton: UIButton!

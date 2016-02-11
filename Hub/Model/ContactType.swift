@@ -71,7 +71,6 @@ enum ContactType: Int {
         case .Snapchat: return "snapchat"
         case .Steam: return "steam"
         case .VK: return "vk"
-        case .School: return "school"
         case .Skype: return "skype"
         case .Line: return "line"
         case .DefaultPhone: return "phone"
