@@ -95,13 +95,20 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
         lastNameTextField.delegate = self
         lastNameTextField.keyboardType = .Default
         nicknameTextField.delegate = self
-        lastNameTextField.keyboardType = .Default
+        nicknameTextField.keyboardType = .Default
     }
     
     //If the user presses the 'return' key, hide keyboard
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    @IBAction func userTappedBackground(sender: AnyObject) {
+        availabilityTextField.resignFirstResponder()
+        firstNameTextField.resignFirstResponder()
+        lastNameTextField.resignFirstResponder()
+        nicknameTextField.resignFirstResponder()
     }
     
     //cancel editing: dismiss view controller
