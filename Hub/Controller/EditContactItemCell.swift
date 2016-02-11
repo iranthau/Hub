@@ -23,5 +23,16 @@ class EditContactItemCell: UITableViewCell, UITextFieldDelegate {
 
         // Configure the view for the selected state
     }
+    
+    func configureKeyboardForContactType(contactType: Int) {
+        switch contactType {
+        case 1: contactInputTextField.keyboardType = .PhonePad
+        case 2: contactInputTextField.keyboardType = .EmailAddress
+        case 3: contactInputTextField.keyboardType = .Default
+        case 4: contactInputTextField.keyboardType = .Twitter
+        default: contactInputTextField.keyboardType = .Default
+        }
+    }
 
+    
 }

@@ -10,7 +10,7 @@ import UIKit
 
 protocol EditMyProfileViewControllerDelegate: class {
     func editMyProfileViewControllerDidCancel(controller: EditMyProfileViewController)
-    func editMyProfileViewControllerDidFinishEditingProfile(controller: EditMyProfileViewController,
+    func editMyProfileViewController(controller: EditMyProfileViewController,
         didFinishEditingProfile userProfile: MyProfileTestData) //#warning: replace with model obj
 }
 
@@ -29,7 +29,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var addressButton: UIButton!
     @IBOutlet weak var socialButton: UIButton!
     
-    
+    weak var delegate: EditMyProfileViewControllerDelegate?
     //color reference: UIColor(red: 23/255.0, green: 129/255.0,
     // blue: 204/255.0, alpha: 1.0)
     
@@ -38,6 +38,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
     //  #warning: replace with correct content from the model!!!! - A. G.
     var userData: MyProfileTestData?
     var activeDataSource = [String]()
+    var keyboardForContactType: Int = 0
     var doneIsEnabled = false
     
     var contactFieldCell: EditContactItemCell?
@@ -58,7 +59,19 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
             lastNameTextField.text = user.userLastName
             nicknameTextField.text = user.userNickname
             profileImageView.image = UIImage(named: user.userImageName)
+            activeDataSource = user.phoneNumberTestData
+            keyboardForContactType = 1
         }
+        
+        initialiseTextFields()
+        
+        //dismiss the keyboard triggered by text fields in table view cells by tapping anywhere on
+        // the screen:
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("hideKeyboard:"))
+        gestureRecognizer.cancelsTouchesInView = false
+        contactFieldTableView.addGestureRecognizer(gestureRecognizer)
+        
+        
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -72,6 +85,25 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
         self.navigationController?.navigationBar.translucent = false
     }
     
+    //Assign a delegate to the main text fields so that they can respond to events in the
+    // UI, such as user tapping a return button
+    func initialiseTextFields() {
+        availabilityTextField.delegate = self
+        availabilityTextField.keyboardType = .Default
+        firstNameTextField.delegate = self
+        firstNameTextField.keyboardType = .Default
+        lastNameTextField.delegate = self
+        lastNameTextField.keyboardType = .Default
+        nicknameTextField.delegate = self
+        lastNameTextField.keyboardType = .Default
+    }
+    
+    //If the user presses the 'return' key, hide keyboard
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     //cancel editing: dismiss view controller
     @IBAction func cancel() {
         dismissViewControllerAnimated(true, completion: nil)
@@ -79,6 +111,14 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
     
     //done editing: set new values, dismiss view controller
     @IBAction func done() {
+        
+        if let userData = userData {
+            userData.userFirstName = firstNameTextField.text!
+            userData.userLastName = lastNameTextField.text!
+            userData.userNickname = nicknameTextField.text!
+            delegate?.editMyProfileViewController(self, didFinishEditingProfile: userData)
+        }
+        
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -86,25 +126,68 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
         //TODO: set active data source, set keyboard type, reload tableView data
         if let user = userData {
             activeDataSource = user.phoneNumberTestData
+            keyboardForContactType = 1
         }
+        
+        contactFieldTableView.reloadData()
     }
     @IBAction func emailButtonPressed() {
         //TODO: set active data source, set keyboard type, reload tableView data
         if let user = userData {
             activeDataSource = user.emailTestData
+            keyboardForContactType = 2
         }
+        
+        contactFieldTableView.reloadData()
     }
     @IBAction func addressButtonPressed() {
         //TODO: set active data source, set keyboard type, reload tableView data
         if let user = userData {
             activeDataSource = user.addressTestData
+            keyboardForContactType = 3
         }
+        
+        contactFieldTableView.reloadData()
     }
     @IBAction func socialButtonPressed() {
         //TODO: set active data source, set keyboard type, reload tableView data
         if let user = userData {
             activeDataSource = user.socialTestData
+            keyboardForContactType = 4
         }
+        
+        contactFieldTableView.reloadData()
+    }
+
+    
+    //function to dismiss keyboard (@see Selector() in viewDidLoad()
+    func hideKeyboard(gestureRecogniser: UIGestureRecognizer) {
+        let point = gestureRecogniser.locationInView(contactFieldTableView)
+        let indexPath = contactFieldTableView.indexPathForRowAtPoint(point)
+        
+        //if user taps description field, ignore the 'hide keyboard' message
+        //otherwise, hide keyboard if user taps somewhere on screen
+        
+        if let indexPath = indexPath where indexPath.section == 0 && indexPath.row != 0 {
+            if let cell = contactFieldCell {
+                cell.contactInputTextField.resignFirstResponder()
+            }
+        }
+        
+    }
+    
+    //enable editing of text fields; enable nav bar Done button when there's some text typed
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange,
+        replacementString string:String) -> Bool {
+            
+            //read in the value of the original text of the checklist item:
+            let oldText:NSString = textField.text!
+            //replace its value with value of replacementString
+            let newText:NSString = oldText.stringByReplacingCharactersInRange(range, withString: string)
+            
+            doneNavBarButton.enabled = (newText.length > 0)
+
+            return true
     }
 }
 
@@ -116,7 +199,14 @@ extension EditMyProfileViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         //TODO: implement the cell configuration and allow user to edit content in cells
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCellWithIdentifier("EditContactCell") as! EditContactItemCell
+        
+        let textField = cell.contactInputTextField
+        textField.text = activeDataSource[indexPath.row]
+        
+        cell.configureKeyboardForContactType(keyboardForContactType)
+        
+        return cell
     }
 }
 
@@ -129,3 +219,4 @@ extension EditMyProfileViewController: UINavigationBarDelegate {
         return .TopAttached
     }
 }
+

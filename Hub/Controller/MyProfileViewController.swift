@@ -25,7 +25,7 @@ class MyProfileViewController: UIViewController {
     // #warning: this object is simply a test object to enable functionality 
     //  testing. Replace this with correct content from the model when the 
     //  relevant bits of functionality are merged. (Subject to pull request) - A. G.
-    let testData = MyProfileTestData()
+    let userData = MyProfileTestData()
     
     var activeDataSource:[String] = []
 
@@ -36,18 +36,18 @@ class MyProfileViewController: UIViewController {
             blue: 255/255.0, alpha: 0.0)
         // Do any additional setup after loading the view.
         // TODO: replace test values with content from model
-        title = testData.userFirstName + " " + testData.userLastName
+        title = userData.userFirstName + " " + userData.userLastName
         
         // Make image view circular and set it to image from model:
-        profileImageView.image = UIImage(named: testData.userImageName)
+        profileImageView.image = UIImage(named: userData.userImageName)
         profileImageView.layer.cornerRadius = profileImageView.bounds.size.width / 2
         profileImageView.clipsToBounds = true
         
-        nicknameLabel.text = "☞ " + testData.userNickname
-        cityLocationLabel.text = "📍 " + testData.userCity
+        nicknameLabel.text = "☞ " + userData.userNickname
+        cityLocationLabel.text = "📍 " + userData.userCity
         
         // Display phone numbers by default:
-        activeDataSource = testData.phoneNumberTestData
+        activeDataSource = userData.phoneNumberTestData
     }
 
     override func didReceiveMemoryWarning() {
@@ -56,22 +56,22 @@ class MyProfileViewController: UIViewController {
     }
     
     @IBAction func phoneButtonPressed() {
-        activeDataSource = testData.phoneNumberTestData
+        activeDataSource = userData.phoneNumberTestData
         print("***Phone button pressed; count of items in array: \(activeDataSource.count)")
         tableView.reloadData()
     }
     @IBAction func emailButtonPressed() {
-        activeDataSource = testData.emailTestData
+        activeDataSource = userData.emailTestData
         print("***Email button pressed; count of items in array: \(activeDataSource.count)")
         tableView.reloadData()
     }
     @IBAction func addressButtonPressed() {
-        activeDataSource = testData.addressTestData
+        activeDataSource = userData.addressTestData
         print("***Address button pressed; count of items in array: \(activeDataSource.count)")
         tableView.reloadData()
     }
     @IBAction func socialButtonPressed() {
-        activeDataSource = testData.socialTestData
+        activeDataSource = userData.socialTestData
         print("***Social button pressed; count of items in array: \(activeDataSource.count)")
         tableView.reloadData()
     }
@@ -88,7 +88,7 @@ class MyProfileViewController: UIViewController {
             
             controller.doneIsEnabled = false
             // #warning: replace with model data!
-            controller.userData = testData
+            controller.userData = userData
         }
     }
     
@@ -125,4 +125,16 @@ extension MyProfileViewController: UITableViewDataSource {
 
 extension MyProfileViewController: UITableViewDelegate {
     
+}
+
+extension MyProfileViewController: EditMyProfileViewControllerDelegate {
+    
+    func editMyProfileViewControllerDidCancel(controller: EditMyProfileViewController) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func editMyProfileViewController(controller: EditMyProfileViewController,
+        didFinishEditingProfile userProfile: MyProfileTestData) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
 }
