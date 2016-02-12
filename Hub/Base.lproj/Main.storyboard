@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="1S0-Aw-HZs">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -117,10 +117,10 @@
             </objects>
             <point key="canvasLocation" x="-2205.5" y="-96.5"/>
         </scene>
-        <!--About-->
+        <!--AboutViewController-->
         <scene sceneID="u1A-Fp-mvM">
             <objects>
-                <viewController id="PGg-jz-kyf" sceneMemberID="viewController">
+                <viewController title="AboutViewController" id="PGg-jz-kyf" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ept-FG-RfX"/>
                         <viewControllerLayoutGuide type="bottom" id="YTM-BI-zl9"/>
@@ -162,10 +162,10 @@
                         <viewControllerLayoutGuide type="bottom" id="tzg-bp-SVI"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="D9p-G4-QWJ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Zf9-jv-uEM">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Zf9-jv-uEM">
                                 <rect key="frame" x="26" y="5" width="323" height="593"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
@@ -215,7 +215,7 @@
                         <viewControllerLayoutGuide type="bottom" id="hIb-p4-j0a"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="SL7-d7-9In">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pw2-2p-Fsg">
@@ -300,10 +300,10 @@
             </objects>
             <point key="canvasLocation" x="-347.5" y="-96.5"/>
         </scene>
-        <!--Profile Created View Controller-->
+        <!--ProfileCreatedViewController-->
         <scene sceneID="Kmg-cz-sfS">
             <objects>
-                <viewController id="FYO-gF-uhB" customClass="ProfileCreatedViewController" customModule="Hub" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="ProfileCreatedViewController" id="FYO-gF-uhB" customClass="ProfileCreatedViewController" customModule="Hub" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8EV-0R-xeY"/>
                         <viewControllerLayoutGuide type="bottom" id="Lhd-Li-KMI"/>
@@ -376,10 +376,10 @@
             </objects>
             <point key="canvasLocation" x="272.5" y="-96.5"/>
         </scene>
-        <!--Settings-->
+        <!--SettingsViewController-->
         <scene sceneID="9q0-cR-gb4">
             <objects>
-                <tableViewController clearsSelectionOnViewWillAppear="NO" id="o6j-Kn-g4y" customClass="SettingsViewController" customModule="Hub" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="SettingsViewController" clearsSelectionOnViewWillAppear="NO" id="o6j-Kn-g4y" customClass="SettingsViewController" customModule="Hub" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="UXT-sq-GmU">
                         <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -493,7 +493,7 @@
                                         <rect key="frame" x="0.0" y="264" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BER-gJ-gSQ" id="XRj-Re-dLk">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oq3-NQ-cpU">
@@ -546,7 +546,7 @@
                                         <rect key="frame" x="0.0" y="352" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jWK-ox-Y2G" id="qha-dg-QyR">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Made with ❤️" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sdk-bn-3fz">
@@ -562,7 +562,7 @@
                                         <rect key="frame" x="0.0" y="396" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" tableViewCell="ALa-04-tcK" id="D6l-hE-hc2">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="[88 Software]" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bnk-zv-iQm">
@@ -655,10 +655,10 @@
             </objects>
             <point key="canvasLocation" x="-1611.5" y="-936.5"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--SignUpNavigationController-->
         <scene sceneID="Lna-eT-o6N">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0ca-aS-lqm" sceneMemberID="viewController">
+                <navigationController title="SignUpNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="0ca-aS-lqm" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="ato-Hf-1qT">
@@ -680,10 +680,10 @@
             </objects>
             <point key="canvasLocation" x="-1617.5" y="-96.5"/>
         </scene>
-        <!--My Contacts-->
+        <!--MyContactsViewController-->
         <scene sceneID="q3f-2A-6IC">
             <objects>
-                <tableViewController id="zoJ-sz-7kp" customClass="MyContactsTableViewController" customModule="Hub" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="MyContactsViewController" id="zoJ-sz-7kp" customClass="MyContactsTableViewController" customModule="Hub" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="120" sectionHeaderHeight="28" sectionFooterHeight="28" id="Wj8-xe-EBT">
                         <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -693,7 +693,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="120"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SDd-pR-fIP" id="tPv-oo-RZ4">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="119.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Yk-Et-CS8">
@@ -737,10 +737,10 @@
             </objects>
             <point key="canvasLocation" x="-1022.5" y="798.5"/>
         </scene>
-        <!--My Contacts-->
+        <!--MyContactsNavigationController-->
         <scene sceneID="Hy7-BN-P33">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="y2f-Qa-Lrv" sceneMemberID="viewController">
+                <navigationController title="MyContactsNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="y2f-Qa-Lrv" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="My Contacts" image="my-contacts" selectedImage="my-contacts-active" id="4o3-cp-bD5"/>
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -762,10 +762,10 @@
             </objects>
             <point key="canvasLocation" x="-1617.5" y="798.5"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--HeyyaTabBarController-->
         <scene sceneID="ife-dD-jKA">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="1S0-Aw-HZs" sceneMemberID="viewController">
+                <tabBarController title="HeyyaTabBarController" automaticallyAdjustsScrollViewInsets="NO" id="1S0-Aw-HZs" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="KYn-CG-fvf"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -800,10 +800,10 @@
             </objects>
             <point key="canvasLocation" x="-2205.5" y="798.5"/>
         </scene>
-        <!--Settings-->
+        <!--SettingsNavigationController-->
         <scene sceneID="Tra-dh-eV3">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kZB-PQ-r3Q" sceneMemberID="viewController">
+                <navigationController title="SettingsNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="kZB-PQ-r3Q" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Settings" image="settings" selectedImage="settings-active" id="uw7-Yu-g50"/>
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -835,6 +835,6 @@
         <image name="tick" width="24" height="18"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="IgN-O4-3Ep"/>
+        <segue reference="WnZ-H8-8sI"/>
     </inferredMetricsTieBreakers>
 </document>
