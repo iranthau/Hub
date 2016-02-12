@@ -765,7 +765,7 @@
         <!--HeyyaTabBarController-->
         <scene sceneID="ife-dD-jKA">
             <objects>
-                <tabBarController title="HeyyaTabBarController" automaticallyAdjustsScrollViewInsets="NO" id="1S0-Aw-HZs" sceneMemberID="viewController">
+                <tabBarController title="HeyyaTabBarController" automaticallyAdjustsScrollViewInsets="NO" id="1S0-Aw-HZs" customClass="HeyyaTabBarController" customModule="Hub" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="KYn-CG-fvf"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
