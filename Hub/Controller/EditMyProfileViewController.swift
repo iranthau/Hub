@@ -30,6 +30,8 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var socialButton: UIButton!
     @IBOutlet weak var containerView: UIView!
     
+    var frameView: UIView!
+    
     weak var delegate: EditMyProfileViewControllerDelegate?
     //color reference: UIColor(red: 23/255.0, green: 129/255.0,
     // blue: 204/255.0, alpha: 1.0)
@@ -49,9 +51,12 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
         //hide the separator lines in the table view
         contactFieldTableView.separatorColor = UIColor(red: 255/255.0, green: 255/255.0,
             blue: 255/255.0, alpha: 0.0)
+        
+        //set user's profile image to round display instead of square
         profileImageView.layer.cornerRadius = profileImageView.bounds.size.width / 2
         profileImageView.clipsToBounds = true
         
+        //get the user data from the segue
         if let user = userData {
             title = "Edit " + user.userFirstName + "'s Profile"
             // perform any other additional setup of the view
@@ -60,8 +65,6 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
             lastNameTextField.text = user.userLastName
             nicknameTextField.text = user.userNickname
             profileImageView.image = UIImage(named: user.userImageName)
-            activeDataSource = user.phoneNumberTestData
-            keyboardForContactType = 1
         }
         
         initialiseTextFields()
@@ -72,7 +75,11 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
         gestureRecognizer.cancelsTouchesInView = false
         contactFieldTableView.addGestureRecognizer(gestureRecognizer)
         
-        
+        //move content higher when a text field is selected:
+        self.frameView = UIView(frame: CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height))
+        let center: NSNotificationCenter = NSNotificationCenter.defaultCenter()
+        center.addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        center.addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -84,6 +91,11 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLayoutSubviews()
         
         self.navigationController?.navigationBar.translucent = false
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
     
     //Assign a delegate to the main text fields so that they can respond to events in the
@@ -225,6 +237,36 @@ extension EditMyProfileViewController: UITableViewDelegate {
 extension EditMyProfileViewController: UINavigationBarDelegate {
     func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
         return .TopAttached
+    }
+}
+
+//keyboard show/hide handling
+extension EditMyProfileViewController {
+    func keyboardWillShow(notification: NSNotification) {
+        let info: NSDictionary = notification.userInfo!
+        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
+        let keyboardHeight: CGFloat = keyboardSize.height
+        
+        let _:CGFloat = info[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber as CGFloat
+        
+        UIView.animateWithDuration(0.25, delay: 0.25, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            self.frameView.frame = CGRectMake(0, (self.frameView.frame.origin.y - keyboardHeight),
+                self.view.bounds.width, self.view.bounds.height)
+            }, completion: nil)
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        let info: NSDictionary = notification.userInfo!
+        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
+        let keyboardHeight: CGFloat = keyboardSize.height
+        
+        let _:CGFloat = info[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber as CGFloat
+        
+        UIView.animateWithDuration(0.25, delay: 0.25, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            self.frameView.frame = CGRectMake(0, (self.frameView.frame.origin.y + keyboardHeight),
+                self.view.bounds.width, self.view.bounds.height)
+            }, completion: nil)
+
     }
 }
 

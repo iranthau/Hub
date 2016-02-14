@@ -31,6 +31,7 @@ class MyProfileViewController: UIViewController {
     
     var activeDataSource:[String] = []
     var activeContactImage:UIImage = UIImage()
+    var keyboardState = 0
     
     let defaultPhoneImage = UIImage(named: "phone")
     let defaultEmailImage = UIImage(named: "email-other")
@@ -61,6 +62,7 @@ class MyProfileViewController: UIViewController {
         // Display phone numbers by default:
         activeDataSource = userData.phoneNumberTestData
         activeContactImage = defaultPhoneImage!
+        keyboardState = 1
     }
 
     override func didReceiveMemoryWarning() {
@@ -73,6 +75,7 @@ class MyProfileViewController: UIViewController {
         selectedContactLabel.backgroundColor = UIColor(red: 240/255.0, green: 148/255.0,
             blue: 27/255.0, alpha: 0.4)
         activeContactImage = defaultPhoneImage!
+        keyboardState = 1
         print("***Phone button pressed; count of items in array: \(activeDataSource.count)")
         tableView.reloadData()
     }
@@ -81,6 +84,7 @@ class MyProfileViewController: UIViewController {
         selectedContactLabel.backgroundColor = UIColor(red: 234/255.0, green: 176/255.0,
             blue: 51/255.0, alpha: 0.4)
         activeContactImage = defaultEmailImage!
+        keyboardState = 2
         print("***Email button pressed; count of items in array: \(activeDataSource.count)")
         tableView.reloadData()
     }
@@ -89,6 +93,7 @@ class MyProfileViewController: UIViewController {
         selectedContactLabel.backgroundColor = UIColor(red: 212/255.0, green: 149/255.0,
             blue: 225/255.0, alpha: 0.4)
         activeContactImage = defaultAddressImage!
+        keyboardState = 3
         print("***Address button pressed; count of items in array: \(activeDataSource.count)")
         tableView.reloadData()
     }
@@ -97,6 +102,7 @@ class MyProfileViewController: UIViewController {
         selectedContactLabel.backgroundColor = UIColor(red: 138/255.0, green: 194/255.0,
             blue: 81/255.0, alpha: 0.4)
         activeContactImage = defaultSocialImage!
+        keyboardState = 4
         print("***Social button pressed; count of items in array: \(activeDataSource.count)")
         tableView.reloadData()
     }
@@ -114,6 +120,8 @@ class MyProfileViewController: UIViewController {
             controller.doneIsEnabled = false
             // #warning: replace with model data!
             controller.userData = userData
+            controller.activeDataSource = activeDataSource
+            controller.keyboardForContactType = keyboardState
         }
     }
     
