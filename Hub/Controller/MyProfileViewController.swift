@@ -20,6 +20,8 @@ class MyProfileViewController: UIViewController {
     @IBOutlet weak var addressContactButton: UIButton!
     @IBOutlet weak var socialContactButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var selectedContactView: UIView!
+    @IBOutlet weak var selectedContactLabel: UILabel!
 
     
     // #warning: this object is simply a test object to enable functionality 
@@ -28,6 +30,12 @@ class MyProfileViewController: UIViewController {
     let userData = MyProfileTestData()
     
     var activeDataSource:[String] = []
+    var activeContactImage:UIImage = UIImage()
+    
+    let defaultPhoneImage = UIImage(named: "phone")
+    let defaultEmailImage = UIImage(named: "email-other")
+    let defaultAddressImage = UIImage(named: "address-other")
+    let defaultSocialImage = UIImage(named: "social-other")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,12 +50,17 @@ class MyProfileViewController: UIViewController {
         profileImageView.image = UIImage(named: userData.userImageName)
         profileImageView.layer.cornerRadius = profileImageView.bounds.size.width / 2
         profileImageView.clipsToBounds = true
+        selectedContactLabel.backgroundColor = UIColor(red: 240/255.0, green: 148/255.0,
+            blue: 27/255.0, alpha: 0.4)
         
+        // Set user info to display on loading:
         nicknameLabel.text = "☞ " + userData.userNickname
         cityLocationLabel.text = "📍 " + userData.userCity
+        contactHoursDetail.text = userData.userAvailability
         
         // Display phone numbers by default:
         activeDataSource = userData.phoneNumberTestData
+        activeContactImage = defaultPhoneImage!
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,21 +70,33 @@ class MyProfileViewController: UIViewController {
     
     @IBAction func phoneButtonPressed() {
         activeDataSource = userData.phoneNumberTestData
+        selectedContactLabel.backgroundColor = UIColor(red: 240/255.0, green: 148/255.0,
+            blue: 27/255.0, alpha: 0.4)
+        activeContactImage = defaultPhoneImage!
         print("***Phone button pressed; count of items in array: \(activeDataSource.count)")
         tableView.reloadData()
     }
     @IBAction func emailButtonPressed() {
         activeDataSource = userData.emailTestData
+        selectedContactLabel.backgroundColor = UIColor(red: 234/255.0, green: 176/255.0,
+            blue: 51/255.0, alpha: 0.4)
+        activeContactImage = defaultEmailImage!
         print("***Email button pressed; count of items in array: \(activeDataSource.count)")
         tableView.reloadData()
     }
     @IBAction func addressButtonPressed() {
         activeDataSource = userData.addressTestData
+        selectedContactLabel.backgroundColor = UIColor(red: 212/255.0, green: 149/255.0,
+            blue: 225/255.0, alpha: 0.4)
+        activeContactImage = defaultAddressImage!
         print("***Address button pressed; count of items in array: \(activeDataSource.count)")
         tableView.reloadData()
     }
     @IBAction func socialButtonPressed() {
         activeDataSource = userData.socialTestData
+        selectedContactLabel.backgroundColor = UIColor(red: 138/255.0, green: 194/255.0,
+            blue: 81/255.0, alpha: 0.4)
+        activeContactImage = defaultSocialImage!
         print("***Social button pressed; count of items in array: \(activeDataSource.count)")
         tableView.reloadData()
     }
@@ -82,7 +107,7 @@ class MyProfileViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if segue.identifier == "EditProfile" {
+        if segue.identifier == "EditProfileSegue" {
             let navigationController = segue.destinationViewController as! UINavigationController
             let controller = navigationController.topViewController as! EditMyProfileViewController
             
@@ -118,6 +143,10 @@ extension MyProfileViewController: UITableViewDataSource {
             let label = cell.viewWithTag(88) as! UILabel
             label.text = activeDataSource[indexPath.row]
             print("***Text in label:" + label.text!)
+            
+            let imageView = cell.viewWithTag(87) as! UIImageView
+            imageView.image = activeContactImage
+            
             
         return cell
     }

@@ -10,6 +10,7 @@
 import UIKit
 
 class AboutViewController: UIViewController {
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +24,9 @@ class AboutViewController: UIViewController {
     }
     
 
+    @IBAction func userDidCancel() {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
     /*
     // MARK: - Navigation
 

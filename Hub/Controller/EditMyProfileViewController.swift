@@ -28,6 +28,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var emailButton: UIButton!
     @IBOutlet weak var addressButton: UIButton!
     @IBOutlet weak var socialButton: UIButton!
+    @IBOutlet weak var containerView: UIView!
     
     weak var delegate: EditMyProfileViewControllerDelegate?
     //color reference: UIColor(red: 23/255.0, green: 129/255.0,

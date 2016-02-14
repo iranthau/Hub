@@ -17,9 +17,10 @@ class MyProfileTestData {
     
     var userFirstName = "John"
     var userLastName = "Smith"
-    var userImageName = "mona_cthulu"
+    var userImageName = "placeholder-image"
     var userNickname = "Johnny"
     var userCity = "Melbourne"
+    var userAvailability = ""
     var contactType:ContactType = ContactType()
     
     var phoneNumberTestData = [
