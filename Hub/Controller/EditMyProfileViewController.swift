@@ -29,8 +29,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var addressButton: UIButton!
     @IBOutlet weak var socialButton: UIButton!
     @IBOutlet weak var containerView: UIView!
-    
-    var frameView: UIView!
+    @IBOutlet weak var profileImageChangeButton: UIButton!
     
     weak var delegate: EditMyProfileViewControllerDelegate?
     //color reference: UIColor(red: 23/255.0, green: 129/255.0,
@@ -149,6 +148,10 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
         contactFieldTableView.reloadData()
     }
 
+    //handle profile image change:
+    @IBAction func changeProfileImage() {
+        pickPhoto()
+    }
     
     //enable editing of text fields; enable nav bar Done button when there's some text typed
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange,
@@ -251,21 +254,6 @@ extension EditMyProfileViewController {
                 self.view.frame.origin.y += keyboardSize.height - offset.height
             })
         }
-        
-        
-//        if keyboardSize.height == offset.height {
-//            if self.view.frame.origin.y == 0 {
-//                UIView.animateWithDuration(0.1, animations: {
-//                    () -> Void in
-//                    self.view.frame.origin.y -= keyboardSize.height
-//                })
-//            }
-//        } else {
-//            UIView.animateWithDuration(0.1, animations: {
-//                () -> Void in
-//                self.view.frame.origin.y += keyboardSize.height - offset.height
-//            })
-//        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -285,6 +273,68 @@ extension EditMyProfileViewController {
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+}
+
+//MARK: - photo picker extension
+extension EditMyProfileViewController:
+    UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func takePhotoWithCamera() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .Camera
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        presentViewController(imagePicker, animated: true, completion: nil)
+    }
+    
+    func choosePhotoFromLibrary() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .PhotoLibrary
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        presentViewController(imagePicker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        profileImageView.image = info[UIImagePickerControllerEditedImage] as? UIImage
+                dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func pickPhoto() {
+        if UIImagePickerController.isSourceTypeAvailable(.Camera) {
+            showPhotoMenu()
+        } else {
+            choosePhotoFromLibrary()
+        }
+    }
+    
+    func showPhotoMenu() {
+        let alertController = UIAlertController(title: nil, message: nil,
+            preferredStyle: .ActionSheet)
+        //ActionSheet is similar to normal AlertController, except it slides up
+        // from the bottom of the screen.
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel,
+            handler: nil)
+        
+        alertController.addAction(cancelAction)
+        
+        let takePhotoAction = UIAlertAction(title: "Take Photo",
+            style: .Default, handler: { _ in self.takePhotoWithCamera()})
+        
+        alertController.addAction(takePhotoAction)
+        
+        let chooseFromLibraryAction = UIAlertAction(title: "Choose From Library",
+            style: .Default, handler: { _ in self.choosePhotoFromLibrary()})
+        
+        alertController.addAction(chooseFromLibraryAction)
+        
+        presentViewController(alertController, animated: true, completion: nil)
     }
 }
 
