@@ -122,6 +122,7 @@ class MyProfileViewController: UIViewController {
             controller.userData = userData
             controller.activeDataSource = activeDataSource
             controller.keyboardForContactType = keyboardState
+            controller.activeContactImage = activeContactImage
         }
     }
     

@@ -42,6 +42,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
     var userData: MyProfileTestData?
     var activeDataSource = [String]()
     var keyboardForContactType: Int = 0
+    var activeContactImage = UIImage()
     var doneIsEnabled = false
     
     var contactFieldCell: EditContactItemCell?
@@ -147,6 +148,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
         if let user = userData {
             activeDataSource = user.phoneNumberTestData
             keyboardForContactType = 1
+            activeContactImage = UIImage(named: "phone")!
         }
         
         contactFieldTableView.reloadData()
@@ -156,6 +158,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
         if let user = userData {
             activeDataSource = user.emailTestData
             keyboardForContactType = 2
+            activeContactImage = UIImage(named: "email-other")!
         }
         
         contactFieldTableView.reloadData()
@@ -165,6 +168,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
         if let user = userData {
             activeDataSource = user.addressTestData
             keyboardForContactType = 3
+            activeContactImage = UIImage(named: "address-other")!
         }
         
         contactFieldTableView.reloadData()
@@ -223,6 +227,8 @@ extension EditMyProfileViewController: UITableViewDataSource {
         
         let textField = cell.contactInputTextField
         textField.text = activeDataSource[indexPath.row]
+        let imageView = cell.contactTypeImageView
+        imageView.image = activeContactImage
         
         cell.configureKeyboardForContactType(keyboardForContactType)
         
@@ -267,6 +273,11 @@ extension EditMyProfileViewController {
                 self.view.bounds.width, self.view.bounds.height)
             }, completion: nil)
 
+    }
+    
+    //hide keyboard
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.view.endEditing(true)
     }
 }
 
