@@ -163,6 +163,9 @@ extension MyProfileViewController: UITableViewDataSource {
 
 extension MyProfileViewController: UITableViewDelegate {
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
 }
 
 extension MyProfileViewController: EditMyProfileViewControllerDelegate {
@@ -173,6 +176,9 @@ extension MyProfileViewController: EditMyProfileViewControllerDelegate {
     
     func editMyProfileViewController(controller: EditMyProfileViewController,
         didFinishEditingProfile userProfile: MyProfileTestData) {
+            
+            tableView.reloadData()
+            
         dismissViewControllerAnimated(true, completion: nil)
     }
 }

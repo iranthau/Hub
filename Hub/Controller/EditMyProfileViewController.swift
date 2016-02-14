@@ -68,35 +68,14 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
             profileImageView.image = UIImage(named: user.userImageName)
         }
         
+        // assign delegates and keyboard types to regular text fields
         initialiseTextFields()
         
-        //dismiss the keyboard triggered by text fields in table view cells by tapping anywhere on
-        // the screen:
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("hideKeyboard:"))
-        gestureRecognizer.cancelsTouchesInView = false
-        contactFieldTableView.addGestureRecognizer(gestureRecognizer)
-        
         //move content higher when a text field is selected:
-        self.frameView = UIView(frame: CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height))
-        let center: NSNotificationCenter = NSNotificationCenter.defaultCenter()
-        center.addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        center.addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
-    }
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
-        self.navigationController?.navigationBar.translucent = false
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        self.navigationController?.navigationBar.translucent = false
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"),
+            name: UIKeyboardWillShowNotification, object: self.view.window)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"),
+            name: UIKeyboardWillHideNotification, object: self.view.window)
     }
     
     //Assign a delegate to the main text fields so that they can respond to events in the
@@ -111,20 +90,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
         nicknameTextField.delegate = self
         nicknameTextField.keyboardType = .Default
     }
-    
-    //If the user presses the 'return' key, hide keyboard
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
-    @IBAction func userTappedBackground(sender: AnyObject) {
-        availabilityTextField.resignFirstResponder()
-        firstNameTextField.resignFirstResponder()
-        lastNameTextField.resignFirstResponder()
-        nicknameTextField.resignFirstResponder()
-    }
-    
+
     //cancel editing: dismiss view controller
     @IBAction func cancel() {
         dismissViewControllerAnimated(true, completion: nil)
@@ -184,22 +150,6 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
     }
 
     
-    //function to dismiss keyboard (@see Selector() in viewDidLoad()
-    func hideKeyboard(gestureRecogniser: UIGestureRecognizer) {
-        let point = gestureRecogniser.locationInView(contactFieldTableView)
-        let indexPath = contactFieldTableView.indexPathForRowAtPoint(point)
-        
-        //if user taps description field, ignore the 'hide keyboard' message
-        //otherwise, hide keyboard if user taps somewhere on screen
-        
-        if let indexPath = indexPath where indexPath.section == 0 && indexPath.row != 0 {
-            if let cell = contactFieldCell {
-                cell.contactInputTextField.resignFirstResponder()
-            }
-        }
-        
-    }
-    
     //enable editing of text fields; enable nav bar Done button when there's some text typed
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange,
         replacementString string:String) -> Bool {
@@ -238,6 +188,32 @@ extension EditMyProfileViewController: UITableViewDataSource {
 
 extension EditMyProfileViewController: UITableViewDelegate {
     //enable row deletion etc
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if let cell = tableView.cellForRowAtIndexPath(indexPath) {
+            // perform any data assignments etc
+        }
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    //enable data deletion from contact fields
+    func tableView(tableView: UITableView,
+        commitEditingStyle editingStyle: UITableViewCellEditingStyle,
+        forRowAtIndexPath indexPath: NSIndexPath) {
+            
+            activeDataSource.removeAtIndex(indexPath.row)
+            
+            let indexPaths = [indexPath]
+            tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+    }
+    
+    //handle tap on the accessory button
+    func tableView(tableView: UITableView,
+        accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+            
+    }
 }
 
 extension EditMyProfileViewController: UINavigationBarDelegate {
@@ -248,36 +224,67 @@ extension EditMyProfileViewController: UINavigationBarDelegate {
 
 //keyboard show/hide handling
 extension EditMyProfileViewController {
-    func keyboardWillShow(notification: NSNotification) {
-        let info: NSDictionary = notification.userInfo!
-        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
-        let keyboardHeight: CGFloat = keyboardSize.height
-        
-        let _:CGFloat = info[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber as CGFloat
-        
-        UIView.animateWithDuration(0.25, delay: 0.25, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
-            self.frameView.frame = CGRectMake(0, (self.frameView.frame.origin.y - keyboardHeight),
-                self.view.bounds.width, self.view.bounds.height)
-            }, completion: nil)
+    func keyboardWillHide(sender: NSNotification) {
+        let userInfo: [NSObject : AnyObject] = sender.userInfo!
+        let keyboardSize: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
+        self.view.frame.origin.y += keyboardSize.height
     }
     
-    func keyboardWillHide(notification: NSNotification) {
-        let info: NSDictionary = notification.userInfo!
-        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
-        let keyboardHeight: CGFloat = keyboardSize.height
+    func keyboardWillShow(sender: NSNotification) {
+        let userInfo: [NSObject : AnyObject] = sender.userInfo!
+        let keyboardSize: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
+        let offset: CGSize = userInfo[UIKeyboardFrameEndUserInfoKey]!.CGRectValue.size
+        print("***\(self.view.frame.origin.y)")
+//        self.view.frame.origin.y = 0.0
+        //print("***offset: \(offset)")
+        //print("***key size: \(keyboardSize)")
+        if keyboardSize == offset {
+            if self.view.frame.origin.y == 64.0 {
+                UIView.animateWithDuration(0.1, animations: {
+                    () -> Void in
+                    self.view.frame.origin.y -= keyboardSize.height
+                })
+            }
+        } else {
+            UIView.animateWithDuration(0.1, animations: {
+                () -> Void in
+                self.view.frame.origin.y += keyboardSize.height - offset.height
+            })
+        }
         
-        let _:CGFloat = info[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber as CGFloat
         
-        UIView.animateWithDuration(0.25, delay: 0.25, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
-            self.frameView.frame = CGRectMake(0, (self.frameView.frame.origin.y + keyboardHeight),
-                self.view.bounds.width, self.view.bounds.height)
-            }, completion: nil)
-
+//        if keyboardSize.height == offset.height {
+//            if self.view.frame.origin.y == 0 {
+//                UIView.animateWithDuration(0.1, animations: {
+//                    () -> Void in
+//                    self.view.frame.origin.y -= keyboardSize.height
+//                })
+//            }
+//        } else {
+//            UIView.animateWithDuration(0.1, animations: {
+//                () -> Void in
+//                self.view.frame.origin.y += keyboardSize.height - offset.height
+//            })
+//        }
     }
     
-    //hide keyboard
+    override func viewWillDisappear(animated: Bool) {
+        NSNotificationCenter.defaultCenter().removeObserver(self,
+            name: UIKeyboardWillShowNotification, object: self.view.window)
+        NSNotificationCenter.defaultCenter().removeObserver(self,
+            name: UIKeyboardWillHideNotification, object: self.view.window)
+    }
+    
+    //hide keyboard on background tap
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        super.touchesBegan(touches, withEvent: event)
         self.view.endEditing(true)
+    }
+    
+    //hide keyboard on pressing return key
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
 
