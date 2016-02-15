@@ -32,17 +32,16 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var profileImageChangeButton: UIButton!
     
     weak var delegate: EditMyProfileViewControllerDelegate?
-    //color reference: UIColor(red: 23/255.0, green: 129/255.0,
-    // blue: 204/255.0, alpha: 1.0)
     
     // this variable simulates the user data, in this case to give EditMyProfileView
     //  something to work with for functionality testing.
     //  #warning: replace with correct content from the model!!!! - A. G.
     var userData: MyProfileTestData?
+    var profileImage: UIImage?
     var activeDataSource = [String]()
     var keyboardForContactType: Int = 0
-    var activeContactImage = UIImage()
     var doneIsEnabled = false
+    var activeContactImage:UIImage = UIImage()
     
     //keep track of which text field is active. If it's one of the upper fields, 
     // keep the overall view where it is. Otherwise, move it up.
@@ -70,7 +69,9 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
             lastNameTextField.text = user.userLastName
             nicknameTextField.text = user.userNickname
             availabilityTextField.text = user.userAvailability
-            profileImageView.image = UIImage(named: user.userImageName)
+//            profileImageView.image = UIImage(named: user.userImageName)
+            profileImage = user.userImage
+            profileImageView.image = profileImage
         }
         
         // assign delegates and keyboard types to regular text fields
@@ -98,7 +99,6 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
 
     //cancel editing: dismiss view controller
     @IBAction func cancel() {
-//        dismissViewControllerAnimated(true, completion: nil)
         delegate?.editMyProfileViewControllerDidCancel(self)
     }
     
@@ -110,10 +110,9 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
             userData.userLastName = lastNameTextField.text!
             userData.userNickname = nicknameTextField.text!
             userData.userAvailability = availabilityTextField.text!
+            userData.userImage = profileImage
             delegate?.editMyProfileViewController(self, didFinishEditingProfile: userData)
         }
-        
-//        dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func phoneButtonPressed() {
@@ -324,7 +323,8 @@ extension EditMyProfileViewController:
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        profileImageView.image = info[UIImagePickerControllerEditedImage] as? UIImage
+        profileImage = info[UIImagePickerControllerEditedImage] as? UIImage
+        profileImageView.image = profileImage 
 //        if let user = userData{
 //           user.userImageName = (info[UIImagePickerControllerEditedImage]?.key)!
 //        }
