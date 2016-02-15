@@ -69,6 +69,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
             firstNameTextField.text = user.userFirstName
             lastNameTextField.text = user.userLastName
             nicknameTextField.text = user.userNickname
+            availabilityTextField.text = user.userAvailability
             profileImageView.image = UIImage(named: user.userImageName)
         }
         
@@ -97,7 +98,8 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
 
     //cancel editing: dismiss view controller
     @IBAction func cancel() {
-        dismissViewControllerAnimated(true, completion: nil)
+//        dismissViewControllerAnimated(true, completion: nil)
+        delegate?.editMyProfileViewControllerDidCancel(self)
     }
     
     //done editing: set new values, dismiss view controller
@@ -107,10 +109,11 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
             userData.userFirstName = firstNameTextField.text!
             userData.userLastName = lastNameTextField.text!
             userData.userNickname = nicknameTextField.text!
+            userData.userAvailability = availabilityTextField.text!
             delegate?.editMyProfileViewController(self, didFinishEditingProfile: userData)
         }
         
-        dismissViewControllerAnimated(true, completion: nil)
+//        dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func phoneButtonPressed() {
@@ -322,7 +325,10 @@ extension EditMyProfileViewController:
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         profileImageView.image = info[UIImagePickerControllerEditedImage] as? UIImage
-                dismissViewControllerAnimated(true, completion: nil)
+//        if let user = userData{
+//           user.userImageName = (info[UIImagePickerControllerEditedImage]?.key)!
+//        }
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {

@@ -123,6 +123,8 @@ class MyProfileViewController: UIViewController {
             controller.activeDataSource = activeDataSource
             controller.keyboardForContactType = keyboardState
             controller.activeContactImage = activeContactImage
+            
+            controller.delegate = self
         }
     }
     
@@ -166,19 +168,35 @@ extension MyProfileViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
+    
+    func tableView(tableView: UITableView,
+        willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        return nil
+    }
 }
 
 extension MyProfileViewController: EditMyProfileViewControllerDelegate {
     
     func editMyProfileViewControllerDidCancel(controller: EditMyProfileViewController) {
+        print("***delegate: editMyProfileViewControllerDidCancel")
         dismissViewControllerAnimated(true, completion: nil)
     }
     
     func editMyProfileViewController(controller: EditMyProfileViewController,
         didFinishEditingProfile userProfile: MyProfileTestData) {
+            print("***delegate: didFinishEditingProfile")
+            
+            userData.userFirstName = userProfile.userFirstName
+            userData.userLastName = userProfile.userLastName
+            userData.userNickname = userProfile.userNickname
+            userData.userAvailability = userProfile.userAvailability
+            
+            title = userData.userFirstName + " " + userData.userLastName
             
             tableView.reloadData()
             
+            
+            print("***first name after delegate: \(userData.userFirstName)")
         dismissViewControllerAnimated(true, completion: nil)
     }
 }
