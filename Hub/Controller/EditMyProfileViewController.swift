@@ -228,16 +228,18 @@ extension EditMyProfileViewController: UINavigationBarDelegate {
 //keyboard show/hide handling
 extension EditMyProfileViewController {
     func keyboardWillHide(sender: NSNotification) {
+        print("***KeyboardWillHide")
         let userInfo: [NSObject : AnyObject] = sender.userInfo!
         let keyboardSize: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
         self.view.frame.origin.y += keyboardSize.height
     }
     
     func keyboardWillShow(sender: NSNotification) {
+        print("***KeyboardWillShow")
         let userInfo: [NSObject : AnyObject] = sender.userInfo!
         let keyboardSize: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
         let offset: CGSize = userInfo[UIKeyboardFrameEndUserInfoKey]!.CGRectValue.size
-        print("***\(self.view.frame.origin.y)")
+//        print("***\(self.view.frame.origin.y)")
 //        self.view.frame.origin.y = 0.0
         //print("***offset: \(offset)")
         //print("***key size: \(keyboardSize)")
