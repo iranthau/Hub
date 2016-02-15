@@ -17,6 +17,7 @@ class User {
     var password: String?
     var nickName: String?
     var cityName: String?
+//    var section: Int?
     
     init(fName: String, lName: String, email: String) {
         firstName = fName
@@ -49,6 +50,25 @@ class User {
             } else {
                 view.activityIndicator.stopAnimating()
                 view.performSegueWithIdentifier("signUpSegue", sender: nil)
+            }
+        }
+    }
+    
+    func getAllMyContacts(tableViewController: MyContactsTableViewController, model: HubModel) {
+        let query = PFUser.query()
+        
+        query!.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            
+            if let error = error {
+                print(error)
+            } else {
+                var myContacts = [User]()
+                for userObject in objects as! [PFUser] {
+                    myContacts.append(model.pfUserToUser(userObject))
+                }
+                tableViewController.myContacts = myContacts.sort { $0.firstName < $1.firstName }
+                tableViewController.refreshTableViewInBackground()
             }
         }
     }
