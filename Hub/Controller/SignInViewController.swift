@@ -15,6 +15,7 @@ class SignInViewController: UIViewController {
     @IBOutlet weak var fbSignInButton: UIButton!
     @IBOutlet weak var userNameInput: UITextField!
     @IBOutlet weak var passwordInput: UITextField!
+    let hubModel = HubModel.sharedInstance
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,13 +37,14 @@ class SignInViewController: UIViewController {
         PFUser.logInWithUsernameInBackground(username, password: password) {
             (user: PFUser?, error: NSError?) -> Void in
             if user != nil {
+                let currentUser = PFUser.currentUser()
+                self.hubModel.user = self.hubModel.pfUserToUser(currentUser!)
                 self.performSegueWithIdentifier("signInSegue", sender: nil)
             } else {
                 let errorMessage = error!.userInfo["error"] as? String
                 self.showAlert(errorMessage!)
             }
         }
-        
     }
     
     @IBAction func facebookSignIn(sender: AnyObject) {
