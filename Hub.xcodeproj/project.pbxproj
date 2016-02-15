@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A0CBDBD1C71902C002BD9D0 /* CustomImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0CBDBC1C71902C002BD9D0 /* CustomImagePickerController.swift */; };
 		9A241D051C66D4AC006C9EDF /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A241D031C66D4AC006C9EDF /* MyProfileViewController.swift */; };
 		9A241D061C66D4AC006C9EDF /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A241D031C66D4AC006C9EDF /* MyProfileViewController.swift */; };
 		9A241D091C66E569006C9EDF /* ContactItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A241D071C66E569006C9EDF /* ContactItemCell.swift */; };
@@ -86,6 +87,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9A0CBDBC1C71902C002BD9D0 /* CustomImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomImagePickerController.swift; sourceTree = "<group>"; };
 		9A241D031C66D4AC006C9EDF /* MyProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
 		9A241D071C66E569006C9EDF /* ContactItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactItemCell.swift; sourceTree = "<group>"; };
 		9A241D0B1C66EAA5006C9EDF /* CustomNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
@@ -476,6 +478,7 @@
 				BD78B8D81C40D0210056AACE /* AboutViewController.swift in Sources */,
 				BD910CEE1C6C7FF4003B099C /* MyProfileViewController.swift in Sources */,
 				BD5B94DB1C64F43300812FFD /* ProfileCreatedViewController.swift in Sources */,
+				9A0CBDBD1C71902C002BD9D0 /* CustomImagePickerController.swift in Sources */,
 				9A4E59881C213FC70046C8E8 /* TermsConditionsViewController.swift in Sources */,
 				BDA812051C6613EC00219C4A /* User.swift in Sources */,
 				BD9032C41C54A5D600C323A9 /* SignUpViewController.swift in Sources */,

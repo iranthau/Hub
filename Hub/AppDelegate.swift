@@ -66,12 +66,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // customize tab bar controller appearance and any other app elements that require programmatic view
     //  change
     func customizeAppearance() {
-        UINavigationBar.appearance().barTintColor = UIColor(red: 23/255.0, green: 129/255.0,
-            blue: 204/255.0, alpha: 1.0)
+        UINavigationBar.appearance().barTintColor = UIColor(red: 74/255.0, green: 144/255.0,
+            blue: 226/255.0, alpha: 1.0)
         UINavigationBar.appearance().titleTextAttributes =
             [NSForegroundColorAttributeName: UIColor.whiteColor()]
-        UITabBar.appearance().barTintColor = UIColor(red: 23/255.0, green: 129/255.0,
-            blue: 204/255.0, alpha: 1.0)
+        UITabBar.appearance().barTintColor = UIColor(red: 74/255.0, green: 144/255.0,
+            blue: 226/255.0, alpha: 1.0)
         let tintColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0,
             alpha: 1.0)
         UITabBar.appearance().tintColor = tintColor

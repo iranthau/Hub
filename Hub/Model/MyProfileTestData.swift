@@ -11,15 +11,17 @@
 //  environment. It models information of a single user (in this case: owner of
 //  the app, who is assumed to be already logged into the app).
 
-import Foundation
+import UIKit
 
 class MyProfileTestData {
     
     var userFirstName = "John"
     var userLastName = "Smith"
-    var userImageName = "mona_cthulu"
+    var userImageName = "placeholder-image"
+    var userImage = UIImage(named: "placeholder-image")
     var userNickname = "Johnny"
     var userCity = "Melbourne"
+    var userAvailability = ""
     var contactType:ContactType = ContactType()
     
     var phoneNumberTestData = [

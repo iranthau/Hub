@@ -17,6 +17,7 @@ class EditContactItemCell: UITableViewCell, UITextFieldDelegate {
         super.awakeFromNib()
         // Initialization code
         initialiseTextField()
+//        self.accessoryType = .DetailButton
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -27,7 +28,8 @@ class EditContactItemCell: UITableViewCell, UITextFieldDelegate {
     
     func configureKeyboardForContactType(contactType: Int) {
         switch contactType {
-        case 1: contactInputTextField.keyboardType = .PhonePad
+        case 1: contactInputTextField.keyboardType = .NumberPad
+        //case 1: contactInputTextField.keyboardType = .NumbersAndPunctuation
         case 2: contactInputTextField.keyboardType = .EmailAddress
         case 3: contactInputTextField.keyboardType = .Default
         case 4: contactInputTextField.keyboardType = .Twitter
