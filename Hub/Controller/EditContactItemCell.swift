@@ -17,7 +17,7 @@ class EditContactItemCell: UITableViewCell, UITextFieldDelegate {
         super.awakeFromNib()
         // Initialization code
         initialiseTextField()
-        self.accessoryType = .DetailButton
+//        self.accessoryType = .DetailButton
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

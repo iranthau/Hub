@@ -44,6 +44,11 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
     var activeContactImage = UIImage()
     var doneIsEnabled = false
     
+    //keep track of which text field is active. If it's one of the upper fields, 
+    // keep the overall view where it is. Otherwise, move it up.
+    var activeTextField: UITextField?
+    let defaultViewFrameOriginY: CGFloat = 64.0 //point at the bottom of the nav bar
+    
     var contactFieldCell: EditContactItemCell?
     
     override func viewDidLoad() {
@@ -58,7 +63,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
         
         //get the user data from the segue
         if let user = userData {
-            title = "Edit " + user.userFirstName + "'s Profile"
+            title = "Edit Profile"
             // perform any other additional setup of the view
             doneNavBarButton.enabled = true
             firstNameTextField.text = user.userFirstName
@@ -227,11 +232,24 @@ extension EditMyProfileViewController: UINavigationBarDelegate {
 
 //keyboard show/hide handling
 extension EditMyProfileViewController {
+    //track the active text field
+    func textFieldDidBeginEditing(textField: UITextField) {
+        activeTextField = textField
+    }
+    func textFieldDidEndEditing(textField: UITextField) {
+        activeTextField = nil
+    }
+    
     func keyboardWillHide(sender: NSNotification) {
         print("***KeyboardWillHide")
         let userInfo: [NSObject : AnyObject] = sender.userInfo!
-        let keyboardSize: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
-        self.view.frame.origin.y += keyboardSize.height
+        let _: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
+        self.view.frame.origin.y = defaultViewFrameOriginY
+//        if self.view.frame.origin.y != defaultViewFrameOriginY {
+//            self.view.frame.origin.y += keyboardSize.height
+//        } else {
+//            self.view.frame.origin.y = defaultViewFrameOriginY
+//        }
     }
     
     func keyboardWillShow(sender: NSNotification) {
@@ -239,12 +257,15 @@ extension EditMyProfileViewController {
         let userInfo: [NSObject : AnyObject] = sender.userInfo!
         let keyboardSize: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
         let offset: CGSize = userInfo[UIKeyboardFrameEndUserInfoKey]!.CGRectValue.size
-//        print("***\(self.view.frame.origin.y)")
-//        self.view.frame.origin.y = 0.0
+        //print("***\(self.view.frame.origin.y)")
+        //self.view.frame.origin.y = 0.0
         //print("***offset: \(offset)")
         //print("***key size: \(keyboardSize)")
+        //print("***Active text field: \(activeTextField)")
+        if activeTextField != availabilityTextField && activeTextField != firstNameTextField &&
+            activeTextField != lastNameTextField {
         if keyboardSize == offset {
-            if self.view.frame.origin.y == 64.0 {
+            if self.view.frame.origin.y == defaultViewFrameOriginY {
                 UIView.animateWithDuration(0.1, animations: {
                     () -> Void in
                     self.view.frame.origin.y -= keyboardSize.height
@@ -255,6 +276,7 @@ extension EditMyProfileViewController {
                 () -> Void in
                 self.view.frame.origin.y += keyboardSize.height - offset.height
             })
+        }
         }
     }
     
@@ -283,7 +305,7 @@ extension EditMyProfileViewController:
     UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func takePhotoWithCamera() {
-        let imagePicker = UIImagePickerController()
+        let imagePicker = CustomImagePickerController()
         imagePicker.sourceType = .Camera
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
