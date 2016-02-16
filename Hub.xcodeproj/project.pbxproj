@@ -28,7 +28,6 @@
 		9AF6A0561C6B6D0100B4647C /* MyProfileTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF6A0531C6B6D0100B4647C /* MyProfileTestData.swift */; };
 		9AF6A0591C6C0AB300B4647C /* EditContactItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF6A0571C6C0AB300B4647C /* EditContactItemCell.swift */; };
 		9AF6A05A1C6C0AB300B4647C /* EditContactItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF6A0571C6C0AB300B4647C /* EditContactItemCell.swift */; };
-		BD3E67B31C7060120055E5CD /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3E67B21C7060120055E5CD /* Section.swift */; };
 		BD45F1B71C66FF4E00DBE5DB /* MyContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45F1B61C66FF4E00DBE5DB /* MyContactsTableViewController.swift */; };
 		BD5869811C6E5179009408EA /* HeyyaTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5869801C6E5179009408EA /* HeyyaTabBarController.swift */; };
 		BD5B94DB1C64F43300812FFD /* ProfileCreatedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5B94DA1C64F43300812FFD /* ProfileCreatedViewController.swift */; };
@@ -238,7 +237,6 @@
 			children = (
 				BD910CEF1C6C8102003B099C /* ContactType.swift */,
 				BD910CF01C6C8102003B099C /* MyProfileTestData.swift */,
-				9AA824E51C373BE000B71364 /* AppDataModel.swift */,
 				BD9032C11C5474C300C323A9 /* HubModel.swift */,
 				BDA812041C6613EC00219C4A /* User.swift */,
 				BD3E67B21C7060120055E5CD /* Section.swift */,
@@ -481,11 +479,9 @@
 				BD9032C21C5474C300C323A9 /* HubModel.swift in Sources */,
 				BD910CF21C6C8102003B099C /* MyProfileTestData.swift in Sources */,
 				BD910CEA1C6C7FF4003B099C /* ContactItemCell.swift in Sources */,
-				BD3E67B31C7060120055E5CD /* Section.swift in Sources */,
 				BD45F1B71C66FF4E00DBE5DB /* MyContactsTableViewController.swift in Sources */,
 				BDAE7A121C101F6B0085264A /* AppDelegate.swift in Sources */,
 				BD910CED1C6C7FF4003B099C /* EditMyProfileViewController.swift in Sources */,
-				9AA824E61C373BE000B71364 /* AppDataModel.swift in Sources */,
 				BD910CEC1C6C7FF4003B099C /* EditContactItemCell.swift in Sources */,
 				BD9032C61C54E1BD00C323A9 /* CustomTextField.swift in Sources */,
 				9A0CBDC11C71EDC6002BD9D0 /* EmailContact.swift in Sources */,
@@ -663,7 +659,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Hub/Info.plist;
@@ -686,7 +681,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Hub/Info.plist;
