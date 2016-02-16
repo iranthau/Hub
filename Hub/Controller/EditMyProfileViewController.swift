@@ -201,8 +201,11 @@ extension EditMyProfileViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        //get the cell
         if let cell = tableView.cellForRowAtIndexPath(indexPath) {
             // perform any data assignments etc
+            let textField = cell.viewWithTag(80) as! UITextField
+            activeDataSource[indexPath.row] = textField.text!
         }
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
