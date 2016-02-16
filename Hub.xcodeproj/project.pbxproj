@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		9A0CBDBD1C71902C002BD9D0 /* CustomImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0CBDBC1C71902C002BD9D0 /* CustomImagePickerController.swift */; };
+		9A0CBDBF1C71ECD0002BD9D0 /* PhoneContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0CBDBE1C71ECD0002BD9D0 /* PhoneContact.swift */; };
+		9A0CBDC11C71EDC6002BD9D0 /* EmailContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0CBDC01C71EDC6002BD9D0 /* EmailContact.swift */; };
+		9A0CBDC31C71EE0D002BD9D0 /* AddressContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0CBDC21C71EE0D002BD9D0 /* AddressContact.swift */; };
+		9A0CBDC51C71EF1B002BD9D0 /* SocialContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0CBDC41C71EF1B002BD9D0 /* SocialContact.swift */; };
 		9A241D051C66D4AC006C9EDF /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A241D031C66D4AC006C9EDF /* MyProfileViewController.swift */; };
 		9A241D061C66D4AC006C9EDF /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A241D031C66D4AC006C9EDF /* MyProfileViewController.swift */; };
 		9A241D091C66E569006C9EDF /* ContactItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A241D071C66E569006C9EDF /* ContactItemCell.swift */; };
@@ -86,6 +90,10 @@
 
 /* Begin PBXFileReference section */
 		9A0CBDBC1C71902C002BD9D0 /* CustomImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomImagePickerController.swift; sourceTree = "<group>"; };
+		9A0CBDBE1C71ECD0002BD9D0 /* PhoneContact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneContact.swift; sourceTree = "<group>"; };
+		9A0CBDC01C71EDC6002BD9D0 /* EmailContact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailContact.swift; sourceTree = "<group>"; };
+		9A0CBDC21C71EE0D002BD9D0 /* AddressContact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressContact.swift; sourceTree = "<group>"; };
+		9A0CBDC41C71EF1B002BD9D0 /* SocialContact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialContact.swift; sourceTree = "<group>"; };
 		9A241D031C66D4AC006C9EDF /* MyProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
 		9A241D071C66E569006C9EDF /* ContactItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactItemCell.swift; sourceTree = "<group>"; };
 		9A241D0B1C66EAA5006C9EDF /* CustomNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
@@ -226,6 +234,10 @@
 				9AA824E51C373BE000B71364 /* AppDataModel.swift */,
 				BD9032C11C5474C300C323A9 /* HubModel.swift */,
 				BDA812041C6613EC00219C4A /* User.swift */,
+				9A0CBDBE1C71ECD0002BD9D0 /* PhoneContact.swift */,
+				9A0CBDC01C71EDC6002BD9D0 /* EmailContact.swift */,
+				9A0CBDC21C71EE0D002BD9D0 /* AddressContact.swift */,
+				9A0CBDC41C71EF1B002BD9D0 /* SocialContact.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -464,17 +476,21 @@
 				9AA824E61C373BE000B71364 /* AppDataModel.swift in Sources */,
 				BD910CEC1C6C7FF4003B099C /* EditContactItemCell.swift in Sources */,
 				BD9032C61C54E1BD00C323A9 /* CustomTextField.swift in Sources */,
+				9A0CBDC11C71EDC6002BD9D0 /* EmailContact.swift in Sources */,
 				BD78B8D81C40D0210056AACE /* AboutViewController.swift in Sources */,
 				BD910CEE1C6C7FF4003B099C /* MyProfileViewController.swift in Sources */,
 				BD5B94DB1C64F43300812FFD /* ProfileCreatedViewController.swift in Sources */,
 				9A0CBDBD1C71902C002BD9D0 /* CustomImagePickerController.swift in Sources */,
 				9A4E59881C213FC70046C8E8 /* TermsConditionsViewController.swift in Sources */,
+				9A0CBDC31C71EE0D002BD9D0 /* AddressContact.swift in Sources */,
 				BDA812051C6613EC00219C4A /* User.swift in Sources */,
 				BD9032C41C54A5D600C323A9 /* SignUpViewController.swift in Sources */,
 				BD910CF11C6C8102003B099C /* ContactType.swift in Sources */,
 				BD644D2E1C60D2CB005657FD /* PassswordRecoveryViewController.swift in Sources */,
 				BD910CEB1C6C7FF4003B099C /* CustomNavigationController.swift in Sources */,
+				9A0CBDC51C71EF1B002BD9D0 /* SocialContact.swift in Sources */,
 				9AA824F91C43476800B71364 /* SettingsViewController.swift in Sources */,
+				9A0CBDBF1C71ECD0002BD9D0 /* PhoneContact.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
