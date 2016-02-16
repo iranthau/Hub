@@ -220,6 +220,7 @@
 				BD9032C31C54A5D600C323A9 /* SignUpViewController.swift */,
 				BD644D2D1C60D2CB005657FD /* PassswordRecoveryViewController.swift */,
 				BD5869801C6E5179009408EA /* HeyyaTabBarController.swift */,
+				9A0CBDBC1C71902C002BD9D0 /* CustomImagePickerController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
