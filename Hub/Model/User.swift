@@ -17,7 +17,6 @@ class User {
     var password: String?
     var nickName: String?
     var cityName: String?
-//    var section: Int?
     
     init(fName: String, lName: String, email: String) {
         firstName = fName
