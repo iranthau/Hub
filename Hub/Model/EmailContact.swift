@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct EmailContact {
+class EmailContact {
     
     var type:ContactType = .DefaultEmail
     var value:String = ""

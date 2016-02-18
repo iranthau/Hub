@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct SocialContact {
+class SocialContact {
     
     var type:ContactType = .DefaultSocial
     var value:String = ""

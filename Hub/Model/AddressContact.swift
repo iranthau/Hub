@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct AddressContact {
+class AddressContact {
     
     var type: ContactType = .DefaultAddress
     var value: String = ""

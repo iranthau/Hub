@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct PhoneContact {
+class PhoneContact {
     
     var type:ContactType = .DefaultPhone
     var value:String = ""
