@@ -87,8 +87,41 @@ class RequestsTableViewController: UITableViewController {
         })
     }
     
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        // Get the new view controller using segue.destinationViewController.
-//        // Pass the selected object to the new view controller.
-//    }
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+    }
+    
+    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let acceptAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Accept" , handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
+            self.acceptRequest(tableView, indexPath: indexPath)
+        })
+        
+        acceptAction.backgroundColor = UIColor(hue: 0.3, saturation: 1, brightness: 0.67, alpha: 1.0)
+
+        let declineAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Decline" , handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
+            self.declineRequest(tableView, indexPath: indexPath)
+        })
+        
+        return [declineAction, acceptAction]
+    }
+    
+    func acceptRequest(tableView: UITableView, indexPath: NSIndexPath) {
+        let requestContact = requests[indexPath.row]
+        self.performSegueWithIdentifier("acceptRequestSegue", sender: requestContact)
+    }
+    
+    func declineRequest(tableView: UITableView, indexPath: NSIndexPath) {
+        requests.removeAtIndex(indexPath.row)
+        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let requestContact = sender as! User
+        
+        if segue.identifier == "acceptRequestSegue" {
+            if let destinationVC = segue.destinationViewController as? ContactRequestTableViewController {
+                destinationVC.requestContact = requestContact
+            }
+        }
+    }
 }

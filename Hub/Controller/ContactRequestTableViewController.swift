@@ -9,9 +9,13 @@
 import UIKit
 
 class ContactRequestTableViewController: UITableViewController {
+    
+    var requestContact: User?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.title = requestContact!.firstName
         
         self.tableView.separatorColor = UIColor(red: 255/255.0, green: 255/255.0,
             blue: 255/255.0, alpha: 0.0)
@@ -47,6 +51,11 @@ class ContactRequestTableViewController: UITableViewController {
     override func tableView(tableView: UITableView,
         titleForHeaderInSection section: Int)
         -> String {
-            return "something"
+            return "Select what \(requestContact!.firstName) can see"
     }
+    
+    @IBAction func back(sender: UIBarButtonItem) {
+        self.navigationController?.popToRootViewControllerAnimated(true)
+    }
+    
 }

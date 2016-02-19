@@ -1278,9 +1278,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="jdO-bZ-kG5" kind="show" id="sXQ-XH-Bku"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -1290,6 +1287,9 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Requests" id="QNI-Z1-dh4"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <segue destination="jdO-bZ-kG5" kind="show" identifier="acceptRequestSegue" id="fw5-Wl-lpU"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cud-Ua-BIE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1348,6 +1348,17 @@
                             <outlet property="delegate" destination="jdO-bZ-kG5" id="Vze-Vm-QPm"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Title" id="WaY-rI-qKQ">
+                        <barButtonItem key="leftBarButtonItem" image="back-arrow" id="5AE-pB-MOc">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="back:" destination="jdO-bZ-kG5" id="puj-c9-rk1"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="tick" id="HKs-N7-4qi">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uk3-lo-K5x" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1407,8 +1418,8 @@
         <image name="user" width="21" height="19"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="aD6-kq-Qqs"/>
         <segue reference="uaK-In-Vgu"/>
         <segue reference="WnZ-H8-8sI"/>
+        <segue reference="aD6-kq-Qqs"/>
     </inferredMetricsTieBreakers>
 </document>
