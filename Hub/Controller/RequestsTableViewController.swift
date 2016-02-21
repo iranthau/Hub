@@ -15,18 +15,18 @@ class RequestsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let user_1 = User(fName: "Samual", lName: "Jackson", email: "")
+        let user_1 = User(fName: "Samual", lName: "Jackson", email: "iaea@gmail.com")
         user_1.nickName = "Sam"
         user_1.cityName = "Melbourne"
         
-        let user_2 = User(fName: "Marlon", lName: "Rodrigo", email: "")
+        let user_2 = User(fName: "Marlon", lName: "Rodrigo", email: "asdasd@asd.com")
         user_2.nickName = "Mal"
         user_2.cityName = "Sydney"
-
-        let user_3 = User(fName: "Iain", lName: "Murray", email: "")
+        
+        let user_3 = User(fName: "Iain", lName: "Murray", email: "ramai@f.com")
         user_3.nickName = "Iain"
         user_3.cityName = "Perth"
-
+        
         requests.append(user_1)
         requests.append(user_2)
         requests.append(user_3)
@@ -48,7 +48,6 @@ class RequestsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("requestCell", forIndexPath: indexPath)
 
         let request: User
-        
 
         request = requests[indexPath.row]
         
@@ -107,7 +106,8 @@ class RequestsTableViewController: UITableViewController {
     
     func acceptRequest(tableView: UITableView, indexPath: NSIndexPath) {
         let requestContact = requests[indexPath.row]
-        self.performSegueWithIdentifier("acceptRequestSegue", sender: requestContact)
+        let dataToSend = ["user": requestContact, "vc": self]
+        self.performSegueWithIdentifier("acceptRequestSegue", sender: dataToSend)
     }
     
     func declineRequest(tableView: UITableView, indexPath: NSIndexPath) {
@@ -116,11 +116,12 @@ class RequestsTableViewController: UITableViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let requestContact = sender as! User
+        let dataToSend = sender as! [String: AnyObject]
         
         if segue.identifier == "acceptRequestSegue" {
             if let destinationVC = segue.destinationViewController as? ContactRequestTableViewController {
-                destinationVC.requestContact = requestContact
+                destinationVC.requestContact = dataToSend["user"] as? User
+                destinationVC.viewController = dataToSend["vc"] as? RequestsTableViewController
             }
         }
     }

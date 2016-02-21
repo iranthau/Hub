@@ -12,7 +12,6 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
     var myContacts = [User]()
     var filteredContacts = [User]()
     let searchController = UISearchController(searchResultsController: nil)
-    let collation = UILocalizedIndexedCollation.currentCollation()
     var sections : [(index: Int, length :Int, title: String)] = Array()
     
     override func viewDidLoad() {
@@ -30,7 +29,7 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if searchController.active {
             return 1
