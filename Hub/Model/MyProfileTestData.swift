@@ -22,7 +22,8 @@ class MyProfileTestData {
     var userNickname = "Johnny"
     var userCity = "Melbourne"
     var userAvailability = ""
-    var contactType:ContactType = ContactType()
+
+    
     
     var phoneNumberTestData = [
         "0421433433",

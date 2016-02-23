@@ -8,9 +8,11 @@
 
 import UIKit
 
-class SocialContact {
+class SocialContact: Contact {
     
-    var type:ContactType = .DefaultSocial
-    var value:String = ""
-    var image:UIImage = UIImage(named: "social-other")!
+    override init() {
+        super.init()
+        type = .DefaultSocial
+        image = UIImage(named: "social-other")!
+    }
 }

@@ -8,9 +8,11 @@
 
 import UIKit
 
-class AddressContact {
+class AddressContact: Contact {
     
-    var type: ContactType = .DefaultAddress
-    var value: String = ""
-    var image: UIImage = UIImage(named: "address-other")!
+    override init() {
+        super.init()
+        type = .DefaultAddress
+        image = UIImage(named: "address-other")!
+    }
 }

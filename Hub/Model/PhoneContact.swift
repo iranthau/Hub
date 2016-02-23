@@ -8,9 +8,11 @@
 
 import UIKit
 
-class PhoneContact {
+class PhoneContact: Contact {
     
-    var type:ContactType = .DefaultPhone
-    var value:String = ""
-    var image:UIImage = UIImage(named: "phone")!
+    override init() {
+        super.init()
+        type = .DefaultPhone
+        image = UIImage(named: "phone-other")!
+    }
 }

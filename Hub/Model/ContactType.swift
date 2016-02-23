@@ -80,9 +80,15 @@ enum ContactType: Int {
         }
     }
     
-    var imageForContactType:String {
+    var contactImage:String {
         get {
-           return self.name
+            switch self{
+            case .DefaultPhone: return "phone-other"
+            case .DefaultEmail: return "email-other"
+            case .DefaultAddress: return "address-other"
+            case .DefaultSocial: return "social-other"
+            default: return "phone-other"
+            }
         }
     }
 }

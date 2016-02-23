@@ -8,9 +8,11 @@
 
 import UIKit
 
-class EmailContact {
-    
-    var type:ContactType = .DefaultEmail
-    var value:String = ""
-    var image:UIImage = UIImage(named: "email-other")!
+class EmailContact: Contact {
+
+    override init() {
+        super.init()
+        type = .DefaultEmail
+        image = UIImage(named: "email-other")!
+    }
 }

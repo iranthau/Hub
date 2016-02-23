@@ -19,16 +19,22 @@
 		9A241D0D1C66EAA5006C9EDF /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A241D0B1C66EAA5006C9EDF /* CustomNavigationController.swift */; };
 		9A241D0E1C66EAA5006C9EDF /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A241D0B1C66EAA5006C9EDF /* CustomNavigationController.swift */; };
 		9A4E59881C213FC70046C8E8 /* TermsConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4E59871C213FC70046C8E8 /* TermsConditionsViewController.swift */; };
+		9AA47EAD1C7576310034FBE8 /* AddContactController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA47EAC1C7576310034FBE8 /* AddContactController.swift */; };
+		9AA47EAE1C7576310034FBE8 /* AddContactController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA47EAC1C7576310034FBE8 /* AddContactController.swift */; };
+		9AA47EAF1C7576310034FBE8 /* AddContactController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA47EAC1C7576310034FBE8 /* AddContactController.swift */; };
+		9AA47EB11C7AD5110034FBE8 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA47EB01C7AD5110034FBE8 /* Contact.swift */; };
+		9AA47EB21C7AD5110034FBE8 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA47EB01C7AD5110034FBE8 /* Contact.swift */; };
+		9AA47EB31C7AD5110034FBE8 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA47EB01C7AD5110034FBE8 /* Contact.swift */; };
 		9AA824F91C43476800B71364 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA824F81C43476800B71364 /* SettingsViewController.swift */; };
 		9AA824FA1C43476800B71364 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA824F81C43476800B71364 /* SettingsViewController.swift */; };
 		9AA824FB1C43476800B71364 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA824F81C43476800B71364 /* SettingsViewController.swift */; };
+		9AD9296D1C7C958000B764B7 /* AddContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD9296C1C7C958000B764B7 /* AddContactTableViewCell.swift */; };
 		9AF6A0511C6B6C7F00B4647C /* EditMyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF6A04F1C6B6C7F00B4647C /* EditMyProfileViewController.swift */; };
 		9AF6A0521C6B6C7F00B4647C /* EditMyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF6A04F1C6B6C7F00B4647C /* EditMyProfileViewController.swift */; };
 		9AF6A0551C6B6D0100B4647C /* MyProfileTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF6A0531C6B6D0100B4647C /* MyProfileTestData.swift */; };
 		9AF6A0561C6B6D0100B4647C /* MyProfileTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF6A0531C6B6D0100B4647C /* MyProfileTestData.swift */; };
 		9AF6A0591C6C0AB300B4647C /* EditContactItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF6A0571C6C0AB300B4647C /* EditContactItemCell.swift */; };
 		9AF6A05A1C6C0AB300B4647C /* EditContactItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF6A0571C6C0AB300B4647C /* EditContactItemCell.swift */; };
-		BD3E67B31C7060120055E5CD /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3E67B21C7060120055E5CD /* Section.swift */; };
 		BD45F1B71C66FF4E00DBE5DB /* MyContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45F1B61C66FF4E00DBE5DB /* MyContactsTableViewController.swift */; };
 		BD5869811C6E5179009408EA /* HeyyaTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5869801C6E5179009408EA /* HeyyaTabBarController.swift */; };
 		BD5B94DB1C64F43300812FFD /* ProfileCreatedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5B94DA1C64F43300812FFD /* ProfileCreatedViewController.swift */; };
@@ -100,11 +106,14 @@
 		9A241D071C66E569006C9EDF /* ContactItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactItemCell.swift; sourceTree = "<group>"; };
 		9A241D0B1C66EAA5006C9EDF /* CustomNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		9A4E59871C213FC70046C8E8 /* TermsConditionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsConditionsViewController.swift; sourceTree = "<group>"; };
+		9AA47EAC1C7576310034FBE8 /* AddContactController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactController.swift; sourceTree = "<group>"; };
+		9AA47EB01C7AD5110034FBE8 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		9AA824F81C43476800B71364 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		9AD929691C7C4C7100B764B7 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
+		9AD9296C1C7C958000B764B7 /* AddContactTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactTableViewCell.swift; sourceTree = "<group>"; };
 		9AF6A04F1C6B6C7F00B4647C /* EditMyProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditMyProfileViewController.swift; sourceTree = "<group>"; };
 		9AF6A0531C6B6D0100B4647C /* MyProfileTestData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyProfileTestData.swift; sourceTree = "<group>"; };
 		9AF6A0571C6C0AB300B4647C /* EditContactItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditContactItemCell.swift; sourceTree = "<group>"; };
-		BD3E67B21C7060120055E5CD /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		BD45F1B61C66FF4E00DBE5DB /* MyContactsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyContactsTableViewController.swift; sourceTree = "<group>"; };
 		BD4CD9E61C676D3E00FE450F /* Hub.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Hub.playground; sourceTree = "<group>"; };
 		BD5869801C6E5179009408EA /* HeyyaTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeyyaTabBarController.swift; sourceTree = "<group>"; };
@@ -229,6 +238,8 @@
 				BD644D2D1C60D2CB005657FD /* PassswordRecoveryViewController.swift */,
 				BD5869801C6E5179009408EA /* HeyyaTabBarController.swift */,
 				9A0CBDBC1C71902C002BD9D0 /* CustomImagePickerController.swift */,
+				9AA47EAC1C7576310034FBE8 /* AddContactController.swift */,
+				9AD9296C1C7C958000B764B7 /* AddContactTableViewCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -238,14 +249,14 @@
 			children = (
 				BD910CEF1C6C8102003B099C /* ContactType.swift */,
 				BD910CF01C6C8102003B099C /* MyProfileTestData.swift */,
-				9AA824E51C373BE000B71364 /* AppDataModel.swift */,
 				BD9032C11C5474C300C323A9 /* HubModel.swift */,
 				BDA812041C6613EC00219C4A /* User.swift */,
-				BD3E67B21C7060120055E5CD /* Section.swift */,
 				9A0CBDBE1C71ECD0002BD9D0 /* PhoneContact.swift */,
 				9A0CBDC01C71EDC6002BD9D0 /* EmailContact.swift */,
 				9A0CBDC21C71EE0D002BD9D0 /* AddressContact.swift */,
 				9A0CBDC41C71EF1B002BD9D0 /* SocialContact.swift */,
+				9AA47EB01C7AD5110034FBE8 /* Contact.swift */,
+				9AD929691C7C4C7100B764B7 /* MyPlayground.playground */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -481,11 +492,10 @@
 				BD9032C21C5474C300C323A9 /* HubModel.swift in Sources */,
 				BD910CF21C6C8102003B099C /* MyProfileTestData.swift in Sources */,
 				BD910CEA1C6C7FF4003B099C /* ContactItemCell.swift in Sources */,
-				BD3E67B31C7060120055E5CD /* Section.swift in Sources */,
 				BD45F1B71C66FF4E00DBE5DB /* MyContactsTableViewController.swift in Sources */,
 				BDAE7A121C101F6B0085264A /* AppDelegate.swift in Sources */,
 				BD910CED1C6C7FF4003B099C /* EditMyProfileViewController.swift in Sources */,
-				9AA824E61C373BE000B71364 /* AppDataModel.swift in Sources */,
+				9AD9296D1C7C958000B764B7 /* AddContactTableViewCell.swift in Sources */,
 				BD910CEC1C6C7FF4003B099C /* EditContactItemCell.swift in Sources */,
 				BD9032C61C54E1BD00C323A9 /* CustomTextField.swift in Sources */,
 				9A0CBDC11C71EDC6002BD9D0 /* EmailContact.swift in Sources */,
@@ -497,7 +507,9 @@
 				9A0CBDC31C71EE0D002BD9D0 /* AddressContact.swift in Sources */,
 				BDA812051C6613EC00219C4A /* User.swift in Sources */,
 				BD9032C41C54A5D600C323A9 /* SignUpViewController.swift in Sources */,
+				9AA47EB11C7AD5110034FBE8 /* Contact.swift in Sources */,
 				BD910CF11C6C8102003B099C /* ContactType.swift in Sources */,
+				9AA47EAD1C7576310034FBE8 /* AddContactController.swift in Sources */,
 				BD644D2E1C60D2CB005657FD /* PassswordRecoveryViewController.swift in Sources */,
 				BD910CEB1C6C7FF4003B099C /* CustomNavigationController.swift in Sources */,
 				9A0CBDC51C71EF1B002BD9D0 /* SocialContact.swift in Sources */,
@@ -512,7 +524,9 @@
 			files = (
 				9AF6A0511C6B6C7F00B4647C /* EditMyProfileViewController.swift in Sources */,
 				9AF6A0551C6B6D0100B4647C /* MyProfileTestData.swift in Sources */,
+				9AA47EB21C7AD5110034FBE8 /* Contact.swift in Sources */,
 				9A241D051C66D4AC006C9EDF /* MyProfileViewController.swift in Sources */,
+				9AA47EAE1C7576310034FBE8 /* AddContactController.swift in Sources */,
 				9A241D0D1C66EAA5006C9EDF /* CustomNavigationController.swift in Sources */,
 				BDAE7A271C101F6B0085264A /* HubTests.swift in Sources */,
 				9AF6A0591C6C0AB300B4647C /* EditContactItemCell.swift in Sources */,
@@ -527,7 +541,9 @@
 			files = (
 				9AF6A0521C6B6C7F00B4647C /* EditMyProfileViewController.swift in Sources */,
 				9AF6A0561C6B6D0100B4647C /* MyProfileTestData.swift in Sources */,
+				9AA47EB31C7AD5110034FBE8 /* Contact.swift in Sources */,
 				9A241D061C66D4AC006C9EDF /* MyProfileViewController.swift in Sources */,
+				9AA47EAF1C7576310034FBE8 /* AddContactController.swift in Sources */,
 				9A241D0E1C66EAA5006C9EDF /* CustomNavigationController.swift in Sources */,
 				BDAE7A321C101F6B0085264A /* HubUITests.swift in Sources */,
 				9AF6A05A1C6C0AB300B4647C /* EditContactItemCell.swift in Sources */,
