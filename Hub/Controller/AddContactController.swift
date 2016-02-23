@@ -18,15 +18,29 @@ class AddContactController: UIViewController {
     @IBOutlet weak var howToContactLabel: UILabel!
     
    
-    //var userData: MyProfileTestData?
-    var userData:MyProfileTestData? = MyProfileTestData()
-    var sharedContacts:[Contact]
+    var userData: MyProfileTestData?
+    var contacts:[String] = Array()
+    
+//    var sharedContacts:[Contact]
     
     override func viewDidLoad() {
         
         if let user = userData {
             //set screen title
             title = "\(user.userFirstName)" + " " + "\(user.userLastName)"
+            
+            //temporary code to populate the Contacts array, rework to use a Contact class
+            for item in user.phoneNumberTestData {
+                contacts.append(item)
+            }
+            
+            for item in user.emailTestData {
+                contacts.append(item)
+            }
+            
+            for item in user.addressTestData {
+                contacts.append(item)
+            }
             
             //hide table view separator
             contactSelectionTableView.separatorColor = UIColor(red: 255/255.0,
@@ -51,13 +65,26 @@ class AddContactController: UIViewController {
 extension AddContactController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return contacts.count
     }
     
     func tableView(tableView: UITableView,
         cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-            return UITableViewCell()
+            let cellIdentifier = "AddProfileContactListCell"
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier,
+                forIndexPath: indexPath) as! AddContactTableViewCell
+            
+//            let label = cell.viewWithTag(88) as! UILabel
+//            label.text = activeDataSource[indexPath.row]
+//            print("***Text in label:" + label.text!)
+//            
+//            let imageView = cell.viewWithTag(87) as! UIImageView
+//            imageView.image = activeContactImage
+            
+            
+            return cell
+
     }
 }
 
