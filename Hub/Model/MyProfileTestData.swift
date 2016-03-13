@@ -21,7 +21,7 @@ class MyProfileTestData {
     var userImage = UIImage(named: "placeholder-image")
     var userNickname = "Johnny"
     var userCity = "Melbourne"
-    var userAvailability = ""
+    var userAvailability = "Please contact me during working hours on friday"
     var contactType:ContactType = ContactType()
     
     var phoneNumberTestData = [
@@ -39,7 +39,8 @@ class MyProfileTestData {
         "92, Wilson St, Cheltenham",
         "2, Alvina Crt, Frankston",
         "811, Princes Hwy, Springvale",
-        "1, Flinders St, Melbourne"
+        "1, Flinders St, Melbourne",
+        "2, Samn St, Geelng"
     ]
     
     var socialTestData = [
