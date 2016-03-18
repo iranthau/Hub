@@ -35,11 +35,16 @@
 		9AF6A0561C6B6D0100B4647C /* MyProfileTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF6A0531C6B6D0100B4647C /* MyProfileTestData.swift */; };
 		9AF6A0591C6C0AB300B4647C /* EditContactItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF6A0571C6C0AB300B4647C /* EditContactItemCell.swift */; };
 		9AF6A05A1C6C0AB300B4647C /* EditContactItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF6A0571C6C0AB300B4647C /* EditContactItemCell.swift */; };
+		BD19009D1C7341F600D82DA6 /* ContactRequestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD19009C1C7341F600D82DA6 /* ContactRequestTableViewController.swift */; };
 		BD45F1B71C66FF4E00DBE5DB /* MyContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45F1B61C66FF4E00DBE5DB /* MyContactsTableViewController.swift */; };
 		BD5869811C6E5179009408EA /* HeyyaTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5869801C6E5179009408EA /* HeyyaTabBarController.swift */; };
 		BD5B94DB1C64F43300812FFD /* ProfileCreatedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5B94DA1C64F43300812FFD /* ProfileCreatedViewController.swift */; };
 		BD644D2E1C60D2CB005657FD /* PassswordRecoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD644D2D1C60D2CB005657FD /* PassswordRecoveryViewController.swift */; };
+		BD6FF1CE1C93E8560069D7D9 /* ProfileContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6FF1CD1C93E8560069D7D9 /* ProfileContactViewController.swift */; };
 		BD78B8D81C40D0210056AACE /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD78B8D71C40D0210056AACE /* AboutViewController.swift */; };
+		BD7A5E3D1C74909C0019D5F1 /* RequestsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7A5E3C1C74909C0019D5F1 /* RequestsTableViewController.swift */; };
+		BD8513331C784043002470A2 /* ContactShareCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8513321C784043002470A2 /* ContactShareCell.swift */; };
+		BD8513361C789994002470A2 /* ContactShareCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8513351C789994002470A2 /* ContactShareCellDelegate.swift */; };
 		BD9032C21C5474C300C323A9 /* HubModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9032C11C5474C300C323A9 /* HubModel.swift */; };
 		BD9032C41C54A5D600C323A9 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9032C31C54A5D600C323A9 /* SignUpViewController.swift */; };
 		BD9032C61C54E1BD00C323A9 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9032C51C54E1BD00C323A9 /* CustomTextField.swift */; };
@@ -77,6 +82,7 @@
 		BDBB6A7C1C62225900143087 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDBB6A7A1C62225900143087 /* ParseFacebookUtilsV4.framework */; };
 		BDBB6A7E1C6224A600143087 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDBB6A7D1C6224A600143087 /* Accounts.framework */; };
 		BDBB6A801C6224D800143087 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDBB6A7F1C6224D800143087 /* Social.framework */; };
+		BDC7AB5E1C798CE40093D5F4 /* AddContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC7AB5D1C798CE40093D5F4 /* AddContactTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,18 +120,23 @@
 		9AF6A04F1C6B6C7F00B4647C /* EditMyProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditMyProfileViewController.swift; sourceTree = "<group>"; };
 		9AF6A0531C6B6D0100B4647C /* MyProfileTestData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyProfileTestData.swift; sourceTree = "<group>"; };
 		9AF6A0571C6C0AB300B4647C /* EditContactItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditContactItemCell.swift; sourceTree = "<group>"; };
+		BD19009C1C7341F600D82DA6 /* ContactRequestTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactRequestTableViewController.swift; sourceTree = "<group>"; };
 		BD45F1B61C66FF4E00DBE5DB /* MyContactsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyContactsTableViewController.swift; sourceTree = "<group>"; };
 		BD4CD9E61C676D3E00FE450F /* Hub.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Hub.playground; sourceTree = "<group>"; };
 		BD5869801C6E5179009408EA /* HeyyaTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeyyaTabBarController.swift; sourceTree = "<group>"; };
 		BD5B94DA1C64F43300812FFD /* ProfileCreatedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCreatedViewController.swift; sourceTree = "<group>"; };
 		BD644D2D1C60D2CB005657FD /* PassswordRecoveryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassswordRecoveryViewController.swift; sourceTree = "<group>"; };
+		BD6FF1CD1C93E8560069D7D9 /* ProfileContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileContactViewController.swift; sourceTree = "<group>"; };
 		BD78B8D71C40D0210056AACE /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutViewController.swift; path = Hub/Controller/AboutViewController.swift; sourceTree = SOURCE_ROOT; };
+		BD7A5E3C1C74909C0019D5F1 /* RequestsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestsTableViewController.swift; sourceTree = "<group>"; };
+		BD8513321C784043002470A2 /* ContactShareCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactShareCell.swift; sourceTree = "<group>"; };
+		BD8513351C789994002470A2 /* ContactShareCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactShareCellDelegate.swift; path = Hub/View/ContactShareCellDelegate.swift; sourceTree = SOURCE_ROOT; };
 		BD9032C11C5474C300C323A9 /* HubModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HubModel.swift; sourceTree = "<group>"; };
 		BD9032C31C54A5D600C323A9 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		BD9032C51C54E1BD00C323A9 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomTextField.swift; path = View/CustomTextField.swift; sourceTree = "<group>"; };
-		BD910CE51C6C7FF4003B099C /* ContactItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactItemCell.swift; sourceTree = "<group>"; };
+		BD910CE51C6C7FF4003B099C /* ContactItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactItemCell.swift; path = ../Controller/ContactItemCell.swift; sourceTree = "<group>"; };
 		BD910CE61C6C7FF4003B099C /* CustomNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
-		BD910CE71C6C7FF4003B099C /* EditContactItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditContactItemCell.swift; sourceTree = "<group>"; };
+		BD910CE71C6C7FF4003B099C /* EditContactItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditContactItemCell.swift; path = ../Controller/EditContactItemCell.swift; sourceTree = "<group>"; };
 		BD910CE81C6C7FF4003B099C /* EditMyProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditMyProfileViewController.swift; sourceTree = "<group>"; };
 		BD910CE91C6C7FF4003B099C /* MyProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
 		BD910CEF1C6C8102003B099C /* ContactType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactType.swift; sourceTree = "<group>"; };
@@ -163,6 +174,7 @@
 		BDBB6A7A1C62225900143087 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
 		BDBB6A7D1C6224A600143087 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		BDBB6A7F1C6224D800143087 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		BDC7AB5D1C798CE40093D5F4 /* AddContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +224,7 @@
 		BD423AF21C1326F3001D25E7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				BD8513341C784057002470A2 /* customCells */,
 				BD9032C71C54EDDD00C323A9 /* CustomTextFields */,
 				BDAE7A151C101F6B0085264A /* Main.storyboard */,
 				BDAE7A181C101F6B0085264A /* Assets.xcassets */,
@@ -223,9 +236,10 @@
 		BD423AF31C132728001D25E7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				BD910CE51C6C7FF4003B099C /* ContactItemCell.swift */,
+				BD6FF1CD1C93E8560069D7D9 /* ProfileContactViewController.swift */,
+				BD7A5E3C1C74909C0019D5F1 /* RequestsTableViewController.swift */,
+				BD19009C1C7341F600D82DA6 /* ContactRequestTableViewController.swift */,
 				BD910CE61C6C7FF4003B099C /* CustomNavigationController.swift */,
-				BD910CE71C6C7FF4003B099C /* EditContactItemCell.swift */,
 				BD910CE81C6C7FF4003B099C /* EditMyProfileViewController.swift */,
 				BD910CE91C6C7FF4003B099C /* MyProfileViewController.swift */,
 				BD45F1B61C66FF4E00DBE5DB /* MyContactsTableViewController.swift */,
@@ -240,6 +254,7 @@
 				9A0CBDBC1C71902C002BD9D0 /* CustomImagePickerController.swift */,
 				9AA47EAC1C7576310034FBE8 /* AddContactController.swift */,
 				9AD9296C1C7C958000B764B7 /* AddContactTableViewCell.swift */,
+				BDC7AB5D1C798CE40093D5F4 /* AddContactTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -265,8 +280,19 @@
 			isa = PBXGroup;
 			children = (
 				BDAE7A1D1C101F6B0085264A /* Info.plist */,
+				BD8513351C789994002470A2 /* ContactShareCellDelegate.swift */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BD8513341C784057002470A2 /* customCells */ = {
+			isa = PBXGroup;
+			children = (
+				BD8513321C784043002470A2 /* ContactShareCell.swift */,
+				BD910CE51C6C7FF4003B099C /* ContactItemCell.swift */,
+				BD910CE71C6C7FF4003B099C /* EditContactItemCell.swift */,
+			);
+			name = customCells;
 			sourceTree = "<group>";
 		};
 		BD9032C71C54EDDD00C323A9 /* CustomTextFields */ = {
@@ -489,23 +515,29 @@
 			files = (
 				BDAE7A141C101F6B0085264A /* SignInViewController.swift in Sources */,
 				BD5869811C6E5179009408EA /* HeyyaTabBarController.swift in Sources */,
+				BD19009D1C7341F600D82DA6 /* ContactRequestTableViewController.swift in Sources */,
 				BD9032C21C5474C300C323A9 /* HubModel.swift in Sources */,
 				BD910CF21C6C8102003B099C /* MyProfileTestData.swift in Sources */,
 				BD910CEA1C6C7FF4003B099C /* ContactItemCell.swift in Sources */,
+				9AD9296D1C7C958000B764B7 /* AddContactTableViewCell.swift in Sources */,
+				BDC7AB5E1C798CE40093D5F4 /* AddContactTableViewController.swift in Sources */,
 				BD45F1B71C66FF4E00DBE5DB /* MyContactsTableViewController.swift in Sources */,
 				BDAE7A121C101F6B0085264A /* AppDelegate.swift in Sources */,
 				BD910CED1C6C7FF4003B099C /* EditMyProfileViewController.swift in Sources */,
-				9AD9296D1C7C958000B764B7 /* AddContactTableViewCell.swift in Sources */,
 				BD910CEC1C6C7FF4003B099C /* EditContactItemCell.swift in Sources */,
 				BD9032C61C54E1BD00C323A9 /* CustomTextField.swift in Sources */,
+				BD8513361C789994002470A2 /* ContactShareCellDelegate.swift in Sources */,
 				9A0CBDC11C71EDC6002BD9D0 /* EmailContact.swift in Sources */,
 				BD78B8D81C40D0210056AACE /* AboutViewController.swift in Sources */,
+				BD6FF1CE1C93E8560069D7D9 /* ProfileContactViewController.swift in Sources */,
 				BD910CEE1C6C7FF4003B099C /* MyProfileViewController.swift in Sources */,
 				BD5B94DB1C64F43300812FFD /* ProfileCreatedViewController.swift in Sources */,
+				BD7A5E3D1C74909C0019D5F1 /* RequestsTableViewController.swift in Sources */,
 				9A0CBDBD1C71902C002BD9D0 /* CustomImagePickerController.swift in Sources */,
 				9A4E59881C213FC70046C8E8 /* TermsConditionsViewController.swift in Sources */,
 				9A0CBDC31C71EE0D002BD9D0 /* AddressContact.swift in Sources */,
 				BDA812051C6613EC00219C4A /* User.swift in Sources */,
+				BD8513331C784043002470A2 /* ContactShareCell.swift in Sources */,
 				BD9032C41C54A5D600C323A9 /* SignUpViewController.swift in Sources */,
 				9AA47EB11C7AD5110034FBE8 /* Contact.swift in Sources */,
 				BD910CF11C6C8102003B099C /* ContactType.swift in Sources */,
@@ -679,7 +711,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Hub/Info.plist;
@@ -702,7 +733,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Hub/Info.plist;

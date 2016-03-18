@@ -12,7 +12,6 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
     var myContacts = [User]()
     var filteredContacts = [User]()
     let searchController = UISearchController(searchResultsController: nil)
-    let collation = UILocalizedIndexedCollation.currentCollation()
     var sections : [(index: Int, length :Int, title: String)] = Array()
     
     override func viewDidLoad() {
@@ -30,7 +29,7 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if searchController.active {
             return 1
@@ -166,4 +165,14 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
         -> Int {
             return index
     }
+    
+    /*
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    // Get the new view controller using segue.destinationViewController.
+    // Pass the selected object to the new view controller.
+    }
+    */
 }

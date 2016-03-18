@@ -9,7 +9,7 @@
 import Foundation
 import Parse
 
-class User {
+class User: Hashable {
     var firstName: String
     var lastName: String
     var email: String
@@ -17,6 +17,9 @@ class User {
     var password: String?
     var nickName: String?
     var cityName: String?
+    var hashValue: Int {
+        return email.hashValue
+    }
     
     init(fName: String, lName: String, email: String) {
         firstName = fName
@@ -71,4 +74,8 @@ class User {
             }
         }
     }
+}
+
+func == (lhs: User, rhs: User) -> Bool {
+    return lhs.hashValue == rhs.hashValue
 }

@@ -13,9 +13,16 @@ import Parse
 class HubModel {
     
     var user: User?
+    var contactRequests: [(imageName: String, contact: String, shared: Bool)] = []
     
     private init() {
+        let request1 = ("phone", "0433353343", true)
+        let request2 = ("email-home", "iranta@gmaas.com", false)
+        let request3 = ("phone-home", "234523423", true)
         
+        contactRequests.append(request1)
+        contactRequests.append(request2)
+        contactRequests.append(request3)
     }
     
     private struct Static {
