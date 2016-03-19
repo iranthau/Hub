@@ -53,13 +53,13 @@
                                 <rect key="frame" x="27" y="309" width="320" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
                             <textField clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Mi-gH-WHv" customClass="CustomTextField" customModule="Hub" customModuleProvider="target">
                                 <rect key="frame" x="27" y="359" width="320" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="go" secureTextEntry="YES"/>
                             </textField>
                             <button contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1VO-UK-J51">
                                 <rect key="frame" x="27" y="409" width="320" height="50"/>
@@ -169,7 +169,7 @@
                         <viewControllerLayoutGuide type="bottom" id="tzg-bp-SVI"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="D9p-G4-QWJ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zf9-jv-uEM">
@@ -222,7 +222,7 @@
                         <viewControllerLayoutGuide type="bottom" id="hIb-p4-j0a"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="SL7-d7-9In">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pw2-2p-Fsg">
@@ -1980,7 +1980,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="2Pd-pM-jEq"/>
-        <segue reference="WnZ-H8-8sI"/>
+        <segue reference="IgN-O4-3Ep"/>
         <segue reference="Khi-MG-uFE"/>
         <segue reference="fw5-Wl-lpU"/>
     </inferredMetricsTieBreakers>
