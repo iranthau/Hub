@@ -18,6 +18,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var cPasswordTextfield: UITextField!
     @IBOutlet weak var profilePicture: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
     var imagePicker = UIImagePickerController()
     var hubModel = HubModel.sharedInstance
@@ -28,6 +29,9 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         // Disable back button
         self.navigationItem.hidesBackButton = true
         activityIndicator.hidesWhenStopped = true
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -128,5 +132,33 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         alertError.addAction(defaultAction)
         
         self.presentViewController(alertError, animated: true, completion: nil)
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func keyboardWillShow(notification:NSNotification) {
+        profilePicture.hidden = true
+        adjustingHeight(true, notification: notification)
+    }
+    
+    func keyboardWillHide(notification:NSNotification) {
+        profilePicture.hidden = false
+        adjustingHeight(false, notification: notification)
+    }
+    
+    func adjustingHeight(show:Bool, notification:NSNotification) {
+        var userInfo = notification.userInfo!
+        let keyboardFrame:CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
+        let animationDurarion = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSTimeInterval
+        let changeInHeight = CGRectGetHeight(keyboardFrame)
+        UIView.animateWithDuration(animationDurarion, animations: { () -> Void in
+            if show {
+                self.bottomConstraint.constant = changeInHeight
+            } else {
+                self.bottomConstraint.constant = 0
+            }
+        })
     }
 }
