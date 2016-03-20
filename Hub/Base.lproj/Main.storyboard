@@ -118,10 +118,10 @@
             </objects>
             <point key="canvasLocation" x="-2205.5" y="-96.5"/>
         </scene>
-        <!--About-->
+        <!--AboutViewController-->
         <scene sceneID="u1A-Fp-mvM">
             <objects>
-                <viewController id="PGg-jz-kyf" customClass="AboutViewController" customModule="Hub" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="AboutViewController" id="PGg-jz-kyf" customClass="AboutViewController" customModule="Hub" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ept-FG-RfX"/>
                         <viewControllerLayoutGuide type="bottom" id="YTM-BI-zl9"/>
@@ -732,10 +732,10 @@
             </objects>
             <point key="canvasLocation" x="-1646.5" y="-96.5"/>
         </scene>
-        <!--My Profile-->
+        <!--MyProfileViewController-->
         <scene sceneID="RvT-EP-Nom">
             <objects>
-                <viewController id="L1H-FX-Jjc" customClass="MyProfileViewController" customModule="Hub" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="MyProfileViewController" id="L1H-FX-Jjc" customClass="MyProfileViewController" customModule="Hub" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="zg9-3T-vGI"/>
                         <viewControllerLayoutGuide type="bottom" id="3fL-VV-RBL"/>
@@ -876,10 +876,10 @@
             </objects>
             <point key="canvasLocation" x="-1646.5" y="1657.5"/>
         </scene>
-        <!--Edit Profile-->
+        <!--EditProfileViewController-->
         <scene sceneID="j1P-j2-SOF">
             <objects>
-                <viewController id="gxG-wg-d2f" customClass="EditMyProfileViewController" customModule="Hub" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="EditProfileViewController" id="gxG-wg-d2f" customClass="EditMyProfileViewController" customModule="Hub" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="KCj-Mg-cyS"/>
                         <viewControllerLayoutGuide type="bottom" id="fRE-Ic-oTY"/>
@@ -1118,10 +1118,10 @@
             </objects>
             <point key="canvasLocation" x="-1104.5" y="804.5"/>
         </scene>
-        <!--Add Profile-->
+        <!--AddProfileViewController-->
         <scene sceneID="6vP-ME-lPZ">
             <objects>
-                <viewController id="1u3-W9-zS7" customClass="AddContactController" customModule="Hub" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="AddProfileViewController" id="1u3-W9-zS7" customClass="AddContactController" customModule="Hub" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="EcH-Sz-RtJ"/>
                         <viewControllerLayoutGuide type="bottom" id="L3h-DJ-Nu8"/>
@@ -1222,12 +1222,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4ee-q9-wXd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="56.5" y="804.5"/>
+            <point key="canvasLocation" x="6.5" y="804.5"/>
         </scene>
-        <!--Add contacts-->
+        <!--AddContactsViewController-->
         <scene sceneID="dUU-O7-LOS">
             <objects>
-                <tableViewController id="6x5-SV-Chh" customClass="AddContactTableViewController" customModule="Hub" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="AddContactsViewController" id="6x5-SV-Chh" customClass="AddContactTableViewController" customModule="Hub" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="120" sectionHeaderHeight="28" sectionFooterHeight="28" id="YEH-vC-k1W">
                         <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1290,10 +1290,10 @@
             </objects>
             <point key="canvasLocation" x="-535.5" y="804.5"/>
         </scene>
-        <!--Profile Contact View Controller-->
+        <!--ProfileContactViewController-->
         <scene sceneID="0J7-nj-l0N">
             <objects>
-                <viewController id="z9L-CM-VEC" customClass="ProfileContactViewController" customModule="Hub" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="ProfileContactViewController" id="z9L-CM-VEC" customClass="ProfileContactViewController" customModule="Hub" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="h61-Sv-6Dd"/>
                         <viewControllerLayoutGuide type="bottom" id="3Hh-Af-GsC"/>
@@ -1616,7 +1616,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fNA-Af-pwK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="619.5" y="797"/>
+            <point key="canvasLocation" x="1101.5" y="910"/>
         </scene>
         <!--MyContactsNavigationController-->
         <scene sceneID="Hy7-BN-P33">
@@ -1643,10 +1643,10 @@
             </objects>
             <point key="canvasLocation" x="-1644.5" y="798.5"/>
         </scene>
-        <!--My Profile-->
+        <!--MyProfileViewController-->
         <scene sceneID="8OJ-h4-v9E">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="adC-Jh-dL7" sceneMemberID="viewController">
+                <navigationController title="MyProfileViewController" automaticallyAdjustsScrollViewInsets="NO" id="adC-Jh-dL7" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="My Profile" image="my-profile" selectedImage="my-profile-active" id="Anr-7y-c80"/>
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -1664,10 +1664,10 @@
             </objects>
             <point key="canvasLocation" x="-2205.5" y="1657.5"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--EditProfileNavigationController-->
         <scene sceneID="Yth-Io-Qvm">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sHb-d9-BGa" sceneMemberID="viewController">
+                <navigationController title="EditProfileNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="sHb-d9-BGa" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="75T-mS-cZG">
@@ -1684,10 +1684,10 @@
             </objects>
             <point key="canvasLocation" x="-1099.5" y="1657.5"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--AboutNavigationController-->
         <scene sceneID="Fii-1w-jmO">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="yV2-Fi-yWi" sceneMemberID="viewController">
+                <navigationController title="AboutNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="yV2-Fi-yWi" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9Iv-12-J1X">
@@ -1764,10 +1764,10 @@
             </objects>
             <point key="canvasLocation" x="-2205.5" y="2533.5"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--AddProfileNavigationController-->
         <scene sceneID="CL8-Ac-uGH">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bd9-gV-Wl5" sceneMemberID="viewController">
+                <navigationController title="AddProfileNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="bd9-gV-Wl5" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="h4a-98-n3h">
@@ -1936,10 +1936,10 @@
             </objects>
             <point key="canvasLocation" x="-2205.5" y="3424.5"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--ProfileContactNavigationController-->
         <scene sceneID="uvf-RL-B9x">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qcT-Yf-E5M" sceneMemberID="viewController">
+                <navigationController title="ProfileContactNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="qcT-Yf-E5M" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="qNY-k5-q33">
@@ -1954,7 +1954,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="suf-Z9-njw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="56" y="798"/>
+            <point key="canvasLocation" x="529.5" y="804.5"/>
         </scene>
     </scenes>
     <resources>
