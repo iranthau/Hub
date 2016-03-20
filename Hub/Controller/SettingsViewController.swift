@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class SettingsViewController: UITableViewController {
 
@@ -72,6 +73,8 @@ class SettingsViewController: UITableViewController {
             performSegueWithIdentifier("TermsAndConditionsSegue", sender: nil)
         case 1:
             performSegueWithIdentifier("AboutSegue", sender: nil)
+        case 7:
+            userDidTapSignoutRow()
             //TODO: - write cases for other rows that require action as functionality is implemented
         default:
             return
@@ -96,17 +99,24 @@ class SettingsViewController: UITableViewController {
         // 2. display a quick status message
     }
     
-    //If user taps the 'log out' row, log him out of the system, set userIsLoggedIn to false and 
-    //  return them to home screen
     func userDidTapSignoutRow() {
+        let message = "Sign out?"
         
-        // 0. prompt if user is sure they want to sign out (optional - discuss with Iran)
+        let alertError = UIAlertController(title: "Alert", message: message, preferredStyle: .Alert)
         
-        // 1. save any data that needs to be saved prior to signing out
+        let okAction = UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+            PFUser.logOutInBackgroundWithBlock({ (error: NSError?) -> Void in
+                if(error == nil) {
+                    self.performSegueWithIdentifier("signOutSegue", sender: nil)
+                }
+            })
+        })
         
-        // 2. set the logged in flag to false, set any other states that need to be set
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
         
-        // 3. return user to log-in screen
+        alertError.addAction(okAction)
+        alertError.addAction(cancelAction)
         
+        self.presentViewController(alertError, animated: true, completion: nil)
     }
 }
