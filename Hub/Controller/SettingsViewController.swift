@@ -22,6 +22,7 @@ class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.tabBarController?.tabBar.hidden = false
         //hide the separator line between cells
         self.tableView.separatorColor = UIColor(red: 255/255.0, green: 255/255.0,
             blue: 255/255.0, alpha: 0.0)
