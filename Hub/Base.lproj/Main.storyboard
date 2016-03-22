@@ -396,7 +396,7 @@
         <!--SettingsViewController-->
         <scene sceneID="9q0-cR-gb4">
             <objects>
-                <tableViewController title="SettingsViewController" hidesBottomBarWhenPushed="YES" clearsSelectionOnViewWillAppear="NO" id="o6j-Kn-g4y" customClass="SettingsViewController" customModule="Hub" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="SettingsViewController" clearsSelectionOnViewWillAppear="NO" id="o6j-Kn-g4y" customClass="SettingsViewController" customModule="Hub" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="UXT-sq-GmU">
                         <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -637,7 +637,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="hideProfileSwitch" destination="PNd-Vr-rV3" id="WXl-Eq-4ya"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="signOutSegue" id="tvg-cP-sKa"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="signOutSegue" id="Vdt-ou-q38"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ToI-XK-6ze" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1991,10 +1991,10 @@
         <image name="user" width="21" height="19"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Khi-MG-uFE"/>
-        <segue reference="tvg-cP-sKa"/>
+        <segue reference="aD6-kq-Qqs"/>
+        <segue reference="Vdt-ou-q38"/>
         <segue reference="fw5-Wl-lpU"/>
-        <segue reference="2Pd-pM-jEq"/>
+        <segue reference="uaK-In-Vgu"/>
         <segue reference="WnZ-H8-8sI"/>
     </inferredMetricsTieBreakers>
 </document>
