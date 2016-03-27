@@ -22,17 +22,30 @@ class ProfileContactViewController: UIViewController {
     let userData = MyProfileTestData()
     var activeDataSource:[String] = []
     var mySharedContacts:[String] = []
+    var contactProfile: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "\(userData.userFirstName) \(userData.userLastName)"
-        profileImageView.image = userData.userImage
+        title = "\(contactProfile!.firstName) \(contactProfile!.lastName)"
+        
+        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        
+        dispatch_async(dispatch_get_global_queue(priority, 0)) {
+            self.profileImageView.image = self.contactProfile!.getProfileImage()
+        }
+        
+        sharedContactsTableView.separatorColor = UIColor(red: 255/255.0,
+                                                           green: 255/255.0, blue: 255/255.0, alpha: 0.0)
+        
+        mySharedContactsTableView.separatorColor = UIColor(red: 255/255.0,
+                                                         green: 255/255.0, blue: 255/255.0, alpha: 0.0)
+        
         profileImageView.layer.cornerRadius = profileImageView.bounds.size.width / 2
         profileImageView.clipsToBounds = true
         
-        nickNameLabel.text = userData.userNickname
-        cityLabel.text = userData.userCity
+        nickNameLabel.text = contactProfile!.nickName
+        cityLabel.text = contactProfile!.cityName
         contactHoursTextView.text = userData.userAvailability
         
         activeDataSource = userData.phoneNumberTestData
@@ -81,6 +94,10 @@ class ProfileContactViewController: UIViewController {
     
     @IBAction func configureSharedContacts(sender: UIBarButtonItem) {
         self.performSegueWithIdentifier("configureSharedContactsSegue", sender: nil)
+    }
+    
+    @IBAction func back(sender: AnyObject) {
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

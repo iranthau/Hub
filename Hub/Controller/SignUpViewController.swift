@@ -30,8 +30,8 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         self.navigationItem.hidesBackButton = true
         activityIndicator.hidesWhenStopped = true
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SignUpViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SignUpViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -45,8 +45,8 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         if password == password_2 {
             activityIndicator.startAnimating()
-            let firstName = fNameTextfield.text!
-            let lastName = lNameTextfield.text!
+            let firstName = fNameTextfield.text!.capitalizedString
+            let lastName = lNameTextfield.text!.capitalizedString
             let email = emailTextfield.text!
             
             let user = User(fName: firstName, lName: lastName, email: email)

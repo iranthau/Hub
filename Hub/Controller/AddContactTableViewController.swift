@@ -16,25 +16,10 @@ class AddContactTableViewController: UITableViewController, UISearchResultsUpdat
     var myContacts = [User]()
     var filteredContacts = [User]()
     let searchController = UISearchController(searchResultsController: nil)
+    let hubModel = HubModel.sharedInstance
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let user_1 = User(fName: "Samual", lName: "Jackson", email: "iaea@gmail.com")
-        user_1.nickName = "Sam"
-        user_1.cityName = "Melbourne"
-        
-        let user_2 = User(fName: "Marlon", lName: "Rodrigo", email: "asdasd@asd.com")
-        user_2.nickName = "Mal"
-        user_2.cityName = "Sydney"
-        
-        let user_3 = User(fName: "Iain", lName: "Murray", email: "ramai@f.com")
-        user_3.nickName = "Iain"
-        user_3.cityName = "Perth"
-        
-        myContacts.append(user_1)
-        myContacts.append(user_2)
-        myContacts.append(user_3)
         
         searchController.searchResultsUpdater = self
         searchController.searchBar.placeholder = "Search contacts by their name"
@@ -66,14 +51,7 @@ class AddContactTableViewController: UITableViewController, UISearchResultsUpdat
         let cell = tableView.dequeueReusableCellWithIdentifier("addContactCell",
             forIndexPath: indexPath)
         
-        let contact: User
-        
-        if searchController.active && searchController.searchBar.text != "" {
-            contact = filteredContacts[indexPath.row]
-        } else {
-            print(indexPath.row)
-            contact = myContacts[indexPath.row]
-        }
+        let contact = filteredContacts[indexPath.row]
         
         if let profileImage = cell.viewWithTag(1) as? UIImageView {
             let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
@@ -105,15 +83,33 @@ class AddContactTableViewController: UITableViewController, UISearchResultsUpdat
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        filterContentForSearchText(searchController.searchBar.text!)
+        let textToSearch = searchController.searchBar.text!
+        
+        if !textToSearch.isEmpty {
+            filterContentForSearchText(textToSearch)
+        }
     }
     
-    func filterContentForSearchText(searchText: String, scope: String = "All") {
-        filteredContacts = myContacts.filter { contact in
-            let stringGetSearched = contact.firstName + " " + contact.lastName
-            return stringGetSearched.lowercaseString.containsString(searchText.lowercaseString)
+    func filterContentForSearchText(searchText: String) {
+        let query = PFUser.query()
+        
+        query!.whereKey("firstName", hasPrefix: searchText)
+        query!.whereKey("profileIsVisible", equalTo: true)
+        
+        query!.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            
+            if error == nil {
+                var profiles = [User]()
+                if let objects = objects {
+                    for userObject in objects as! [PFUser] {
+                        profiles.append(self.hubModel.pfUserToUser(userObject))
+                    }
+                    self.filteredContacts = profiles
+                    self.tableView.reloadData()
+                }
+            }
         }
-        self.tableView.reloadData()
     }
     
     @IBAction func back(sender: UIBarButtonItem) {
@@ -154,14 +150,20 @@ class AddContactTableViewController: UITableViewController, UISearchResultsUpdat
         controller.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    /*
-    // MARK: - Navigation
-
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        // make sure the row does not remain selected after the user touched it
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        let contact = filteredContacts[indexPath.row]
+        self.performSegueWithIdentifier("addContactSegue", sender: contact)
+    }
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "addContactSegue" {
+            let profileToAdd = sender as! User
+            if let destinationVC = segue.destinationViewController as? AddContactController {
+                destinationVC.contactProfile = profileToAdd
+            }
+        }
     }
-    */
-
 }

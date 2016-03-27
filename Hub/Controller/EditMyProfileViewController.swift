@@ -78,9 +78,9 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
         initialiseTextFields()
         
         //move content higher when a text field is selected:
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"),
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditMyProfileViewController.keyboardWillShow(_:)),
             name: UIKeyboardWillShowNotification, object: self.view.window)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"),
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditMyProfileViewController.keyboardWillHide(_:)),
             name: UIKeyboardWillHideNotification, object: self.view.window)
     }
     

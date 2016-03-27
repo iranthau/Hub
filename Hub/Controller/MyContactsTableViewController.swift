@@ -100,13 +100,22 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
             
             let commonPrefix = myContacts[i].firstName.commonPrefixWithString(myContacts[index].firstName, options: .CaseInsensitiveSearch)
             
-            if (commonPrefix.characters.count == 0 || i == myContacts.count - 1) {
+            if(commonPrefix.characters.count == 0) {
                 let string = myContacts[index].firstName.uppercaseString;
                 let firstCharacter = string[string.startIndex]
                 let title = "\(firstCharacter)"
                 let newSection = (index: index, length: i - index, title: title)
                 sections.append(newSection)
                 index = i;
+            }
+            
+            if(i == myContacts.count - 1) {
+                let length = i - index + 1
+                let string = myContacts[index].firstName.uppercaseString;
+                let firstCharacter = string[string.startIndex]
+                let title = "\(firstCharacter)"
+                let newSection = (index: index, length: length, title: title)
+                sections.append(newSection)
             }
             
             i = i + 1
@@ -125,22 +134,23 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
         tableView.reloadData()
     }
     
+    
     // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        if searchController.active {
-            return false
-        }
-        return true
-    }
+//    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+//        // Return false if you do not want the specified item to be editable.
+//        if searchController.active {
+//            return false
+//        }
+//        return true
+//    }
 
     // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            myContacts.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        }
-    }
+//    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+//        if editingStyle == .Delete {
+//            myContacts.removeAtIndex(indexPath.row)
+//            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+//        }
+//    }
     
     override func tableView(tableView: UITableView,
         titleForHeaderInSection section: Int)
@@ -166,13 +176,20 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
             return index
     }
     
-    /*
-    // MARK: - Navigation
-    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        // make sure the row does not remain selected after the user touched it
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        let contact = myContacts[sections[indexPath.section].index + indexPath.row]
+        self.performSegueWithIdentifier("contactProfileSegue", sender: contact)
+    }
+
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
+        if segue.identifier == "contactProfileSegue" {
+            let friendProfile = sender as! User
+            if let destinationVC = segue.destinationViewController as? ProfileContactViewController {
+                destinationVC.contactProfile = friendProfile
+            }
+        }
     }
-    */
 }

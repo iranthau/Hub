@@ -22,7 +22,7 @@ class SignInViewController: UIViewController {
         self.navigationController?.navigationBarHidden = true
         fbSignInButton.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 10.0, bottom: 0.0, right: 0.0)
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SignInViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
     }
 
@@ -95,15 +95,15 @@ class SignInViewController: UIViewController {
                 let errorMessage = error.localizedDescription
                 self.showAlert(errorMessage)
             } else if(result != nil) {
-                let fName = result["first_name"] as! String
-                let lName = result["last_name"] as! String
-                let email = result["email"] as! String
+                let fName = result["first_name"]! as! String
+                let lName = result["last_name"]! as! String
+                let email = result["email"]! as! String
                 
                 let user = User(fName: fName, lName: lName, email: email)
                 self.hubModel.user = user
                 
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-                    user.profileImage = self.readProfileImageFromFacebook(result["id"] as! String)
+                    user.profileImage = self.readProfileImageFromFacebook(result["id"]! as! String)
                     
                     self.uploadUserDetailsToParse(user)
                 }

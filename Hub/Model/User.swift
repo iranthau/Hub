@@ -10,18 +10,21 @@ import Foundation
 import Parse
 
 class User: Hashable {
-    var firstName: String
-    var lastName: String
-    var email: String
-    var profileImage: PFFile
-    var password: String?
-    var nickName: String?
-    var cityName: String?
+    var userID:         String
+    var firstName:      String
+    var lastName:       String
+    var email:          String
+    var profileImage:   PFFile
+    var password:       String?
+    var nickName:       String?
+    var cityName:       String?
+    
     var hashValue: Int {
         return email.hashValue
     }
     
     init(fName: String, lName: String, email: String) {
+        userID = "fO0139zWuu"
         firstName = fName
         lastName = lName
         self.email = email
@@ -57,20 +60,36 @@ class User: Hashable {
     }
     
     func getAllMyContacts(tableViewController: MyContactsTableViewController, model: HubModel) {
-        let query = PFUser.query()
         
-        query!.findObjectsInBackgroundWithBlock {
-            (objects: [PFObject]?, error: NSError?) -> Void in
+        let query = PFQuery(className: "UserFriends")
+        
+        query.whereKey("userId", equalTo: self.userID)
+        query.whereKey("status", equalTo: true)
+        
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]? , error: NSError?) -> Void in
             
-            if let error = error {
-                print(error)
-            } else {
-                var myContacts = [User]()
-                for userObject in objects as! [PFUser] {
-                    myContacts.append(model.pfUserToUser(userObject))
+            if error == nil {
+                let innerQuery = PFUser.query()
+                var friendIds = [String]()
+                
+                if let objects = objects {
+                    for object in objects {
+                        friendIds.append(object["friendId"] as! String)
+                    }
+                    innerQuery!.whereKey("objectId", containedIn: friendIds)
+                    
+                    innerQuery!.findObjectsInBackgroundWithBlock {
+                        (objects: [PFObject]?, error: NSError?) -> Void in
+                        var myContacts = [User]()
+                        for userObject in objects as! [PFUser] {
+                            myContacts.append(model.pfUserToUser(userObject))
+                        }
+                        tableViewController.myContacts = myContacts.sort { $0.firstName < $1.firstName }
+                        tableViewController.refreshTableViewInBackground()
+
+                    }
                 }
-                tableViewController.myContacts = myContacts.sort { $0.firstName < $1.firstName }
-                tableViewController.refreshTableViewInBackground()
             }
         }
     }

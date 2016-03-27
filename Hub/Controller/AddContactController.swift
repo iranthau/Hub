@@ -17,17 +17,36 @@ class AddContactController: UIViewController {
     @IBOutlet weak var contactSelectionTableView: UITableView!
     @IBOutlet weak var howToContactLabel: UILabel!
     
-   
+    var contactProfile: User?
     var userData: MyProfileTestData?
     var contacts:[String] = Array()
     
 //    var sharedContacts:[Contact]
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        title = "\(contactProfile!.firstName)" + " " + "\(contactProfile!.lastName)"
+        
+        //hide table view separator
+        contactSelectionTableView.separatorColor = UIColor(red: 255/255.0,
+                                                           green: 255/255.0, blue: 255/255.0, alpha: 0.0)
+        
+        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        
+        dispatch_async(dispatch_get_global_queue(priority, 0)) {
+            self.profileImageView.image = self.contactProfile!.getProfileImage()
+        }
+        
+        //set profile image to circular shape
+        profileImageView.layer.cornerRadius = profileImageView.bounds.size.width / 2
+        profileImageView.clipsToBounds = true
+        
+        //set "how to connect" label:
+        howToContactLabel.text = "How would you like to connect with \(contactProfile!.firstName)?"
         
         if let user = userData {
             //set screen title
-            title = "\(user.userFirstName)" + " " + "\(user.userLastName)"
             
             //temporary code to populate the Contacts array, rework to use a Contact class
             for item in user.phoneNumberTestData {
@@ -41,24 +60,11 @@ class AddContactController: UIViewController {
             for item in user.addressTestData {
                 contacts.append(item)
             }
-            
-            //hide table view separator
-            contactSelectionTableView.separatorColor = UIColor(red: 255/255.0,
-                green: 255/255.0, blue: 255/255.0, alpha: 0.0)
-            
-            //set profile image to circular shape
-            profileImageView.layer.cornerRadius = profileImageView.bounds.size.width / 2
-            profileImageView.clipsToBounds = true
-            
-            //set "how to connect" label:
-            howToContactLabel.text = "How would you like to connect with \(user.userFirstName)?"
-            
-            //set profile information:
-            
-            
         }
-        
-        super.viewDidLoad()
+    }
+    
+    @IBAction func back(sender: AnyObject) {
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
 }
 

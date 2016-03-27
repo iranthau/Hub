@@ -83,6 +83,7 @@
 		BDBB6A7E1C6224A600143087 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDBB6A7D1C6224A600143087 /* Accounts.framework */; };
 		BDBB6A801C6224D800143087 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDBB6A7F1C6224D800143087 /* Social.framework */; };
 		BDC7AB5E1C798CE40093D5F4 /* AddContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC7AB5D1C798CE40093D5F4 /* AddContactTableViewController.swift */; };
+		BDFD87DD1CA7A1E000DF44EB /* UserFriends.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFD87DC1CA7A1E000DF44EB /* UserFriends.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -173,6 +174,7 @@
 		BDBB6A7D1C6224A600143087 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		BDBB6A7F1C6224D800143087 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		BDC7AB5D1C798CE40093D5F4 /* AddContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactTableViewController.swift; sourceTree = "<group>"; };
+		BDFD87DC1CA7A1E000DF44EB /* UserFriends.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFriends.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -269,6 +271,7 @@
 				9A0CBDC21C71EE0D002BD9D0 /* AddressContact.swift */,
 				9A0CBDC41C71EF1B002BD9D0 /* SocialContact.swift */,
 				9AA47EB01C7AD5110034FBE8 /* Contact.swift */,
+				BDFD87DC1CA7A1E000DF44EB /* UserFriends.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -538,6 +541,7 @@
 				9AA47EB11C7AD5110034FBE8 /* Contact.swift in Sources */,
 				BD910CF11C6C8102003B099C /* ContactType.swift in Sources */,
 				9AA47EAD1C7576310034FBE8 /* AddContactController.swift in Sources */,
+				BDFD87DD1CA7A1E000DF44EB /* UserFriends.swift in Sources */,
 				BD644D2E1C60D2CB005657FD /* PassswordRecoveryViewController.swift in Sources */,
 				BD910CEB1C6C7FF4003B099C /* CustomNavigationController.swift in Sources */,
 				9A0CBDC51C71EF1B002BD9D0 /* SocialContact.swift in Sources */,
