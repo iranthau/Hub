@@ -207,7 +207,7 @@
                     <connections>
                         <outlet property="agreeToTermsButton" destination="Z1A-VW-vQC" id="ONX-fx-zK3"/>
                         <segue destination="CQm-qP-1GK" kind="show" identifier="normalSignUpSegue" id="jnD-5L-Pdf"/>
-                        <segue destination="FYO-gF-uhB" kind="show" identifier="facebookSignUpSegue" id="IgN-O4-3Ep"/>
+                        <segue destination="FYO-gF-uhB" kind="presentation" identifier="facebookSignUpSegue" id="IgN-O4-3Ep"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OfW-Jw-WJb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -310,7 +310,7 @@
                         <outlet property="lNameTextfield" destination="ded-Lm-bfH" id="z5v-Cv-3pq"/>
                         <outlet property="passwordTextfield" destination="qvW-Rp-ToH" id="f39-gZ-yCI"/>
                         <outlet property="profilePicture" destination="Rou-Vy-FMn" id="OXG-1L-cmO"/>
-                        <segue destination="FYO-gF-uhB" kind="show" identifier="signUpSegue" id="WnZ-H8-8sI"/>
+                        <segue destination="FYO-gF-uhB" kind="presentation" identifier="signUpSegue" id="WnZ-H8-8sI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ruc-m3-LDv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -374,6 +374,9 @@
                                             <state key="normal" title="Complete My Profile">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <connections>
+                                                <segue destination="gxG-wg-d2f" kind="show" id="fH8-pM-Bni"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                 </view>
@@ -886,7 +889,7 @@
                         <viewControllerLayoutGuide type="bottom" id="fRE-Ic-oTY"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="gg9-hs-CAN">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dfm-sM-8Ij">
@@ -1451,7 +1454,7 @@
                                                         <rect key="frame" x="8" y="37" width="359" height="50"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                     </textView>
                                                 </subviews>
@@ -1669,6 +1672,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.29019607843137252" green="0.56470588235294117" blue="0.88627450980392153" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="textShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1689,6 +1696,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.2901960784" green="0.56470588239999997" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="textShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1966,10 +1977,11 @@
         <image name="user" width="21" height="19"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="2Pd-pM-jEq"/>
         <segue reference="Vdt-ou-q38"/>
-        <segue reference="9Ig-ZG-LB3"/>
+        <segue reference="2Pd-pM-jEq"/>
         <segue reference="Khi-MG-uFE"/>
         <segue reference="WnZ-H8-8sI"/>
+        <segue reference="fH8-pM-Bni"/>
+        <segue reference="9Ig-ZG-LB3"/>
     </inferredMetricsTieBreakers>
 </document>

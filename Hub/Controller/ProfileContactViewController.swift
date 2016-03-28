@@ -44,9 +44,26 @@ class ProfileContactViewController: UIViewController {
         profileImageView.layer.cornerRadius = profileImageView.bounds.size.width / 2
         profileImageView.clipsToBounds = true
         
-        nickNameLabel.text = contactProfile!.nickName
-        cityLabel.text = contactProfile!.cityName
-        contactHoursTextView.text = userData.userAvailability
+        if contactProfile!.nickName == nil {
+            nickNameLabel.text = "nickname"
+            nickNameLabel.textColor = UIColor.lightGrayColor()
+        } else {
+            nickNameLabel.text = contactProfile!.nickName
+        }
+        
+        if contactProfile!.cityName == nil {
+            cityLabel.text = "city"
+            cityLabel.textColor = UIColor.lightGrayColor()
+        } else {
+            cityLabel.text = contactProfile!.cityName
+        }
+        
+        if contactProfile!.availableTime == nil {
+            contactHoursTextView.text = "No prefered time provided"
+            contactHoursTextView.textColor = UIColor.lightGrayColor()
+        } else {
+            contactHoursTextView.text = contactProfile!.availableTime
+        }
         
         activeDataSource = userData.phoneNumberTestData
         

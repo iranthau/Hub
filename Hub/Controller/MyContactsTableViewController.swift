@@ -16,7 +16,7 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         hubModel.getAllContacts(self)
         
         searchController.searchResultsUpdater = self

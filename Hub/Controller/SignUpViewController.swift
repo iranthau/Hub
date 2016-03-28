@@ -54,8 +54,8 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
             
             let buttonBgImage = profilePicture.imageForState(.Normal)!
             if !buttonBgImage.isEqual(UIImage(named: "profile-pic")) {
-                let profileImageData = UIImagePNGRepresentation(buttonBgImage)
-                let parseProfileImageFile = PFFile(data: profileImageData!)
+                let profileImageData = buttonBgImage.lowestQualityJPEGNSData
+                let parseProfileImageFile = PFFile(data: profileImageData)
                 user.profileImage = parseProfileImageFile!
             }
             
@@ -160,5 +160,31 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
                 self.bottomConstraint.constant = 0
             }
         })
+    }
+}
+
+extension UIImage {
+    var uncompressedPNGData: NSData {
+        return UIImagePNGRepresentation(self)!
+    }
+    
+    var highestQualityJPEGNSData: NSData {
+        return UIImageJPEGRepresentation(self, 1.0)!
+    }
+    
+    var highQualityJPEGNSData: NSData {
+        return UIImageJPEGRepresentation(self, 0.75)!
+    }
+    
+    var mediumQualityJPEGNSData: NSData {
+        return UIImageJPEGRepresentation(self, 0.5)!
+    }
+    
+    var lowQualityJPEGNSData: NSData {
+        return UIImageJPEGRepresentation(self, 0.25)!
+    }
+    
+    var lowestQualityJPEGNSData:NSData {
+        return UIImageJPEGRepresentation(self, 0.0)!
     }
 }

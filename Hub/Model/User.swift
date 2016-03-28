@@ -10,7 +10,7 @@ import Foundation
 import Parse
 
 class User: Hashable {
-    var userID:         String
+    var userID:         String?
     var firstName:      String
     var lastName:       String
     var email:          String
@@ -18,19 +18,19 @@ class User: Hashable {
     var password:       String?
     var nickName:       String?
     var cityName:       String?
+    var availableTime:  String?
     
     var hashValue: Int {
         return email.hashValue
     }
     
     init(fName: String, lName: String, email: String) {
-        userID = "fO0139zWuu"
         firstName = fName
         lastName = lName
         self.email = email
         let defaultImage = UIImage(named: "placeholder-image")
-        let profileImageData = UIImagePNGRepresentation(defaultImage!)
-        profileImage = PFFile(data: profileImageData!)!
+        let profileImageData = defaultImage!.uncompressedPNGData
+        profileImage = PFFile(data: profileImageData)!
     }
     
     func getProfileImage() -> UIImage? {
@@ -54,6 +54,8 @@ class User: Hashable {
                 view.showAlert(errorMessage!)
             } else {
                 view.activityIndicator.stopAnimating()
+                let currentUser = PFUser.currentUser()
+                view.hubModel.user!.userID = currentUser!.objectId
                 view.performSegueWithIdentifier("signUpSegue", sender: nil)
             }
         }
@@ -63,7 +65,7 @@ class User: Hashable {
         
         let query = PFQuery(className: "UserFriends")
         
-        query.whereKey("userId", equalTo: self.userID)
+        query.whereKey("userId", equalTo: self.userID!)
         query.whereKey("status", equalTo: true)
         
         query.findObjectsInBackgroundWithBlock {

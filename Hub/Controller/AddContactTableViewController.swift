@@ -92,9 +92,12 @@ class AddContactTableViewController: UITableViewController, UISearchResultsUpdat
     
     func filterContentForSearchText(searchText: String) {
         let query = PFUser.query()
+        let currentUser = hubModel.user
         
         query!.whereKey("firstName", hasPrefix: searchText)
         query!.whereKey("profileIsVisible", equalTo: true)
+        query!.whereKey("objectId", notEqualTo: currentUser!.userID!)
+        
         
         query!.findObjectsInBackgroundWithBlock {
             (objects: [PFObject]?, error: NSError?) -> Void in

@@ -17,7 +17,7 @@ class ProfileCreatedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBarHidden = true
+//        self.navigationController?.navigationBarHidden = true
         let user = hubModel.user
         
         let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT

@@ -56,6 +56,8 @@ class SignInViewController: UIViewController {
                 let errorMessage = error.userInfo["error"] as? String
                 self.showAlert(errorMessage!)
             } else if let user = user {
+                let currentUser = PFUser.currentUser()
+                self.hubModel.user = self.hubModel.pfUserToUser(currentUser!)
                 if user.isNew {
                     self.readProfileDataFromFacebook()
                     self.performSegueWithIdentifier("createAccountSegue", sender: nil)

@@ -50,9 +50,6 @@ class HubModel {
     }
     
     func getAllContacts(tableViewController: MyContactsTableViewController) {
-        // Temporary code
-        let currentUser = PFUser.currentUser()
-        self.user = self.pfUserToUser(currentUser!)
         user!.getAllMyContacts(tableViewController, model: self)
     }
     
@@ -60,10 +57,9 @@ class HubModel {
         let contact = User(fName: pfContact["firstName"] as! String, lName: pfContact["lastName"] as! String, email: pfContact.username!)
         contact.nickName = pfContact["nickName"] as? String
         contact.cityName = pfContact["city"] as? String
-        
-        if pfContact["profileImage"] != nil {
-            contact.profileImage = pfContact["profileImage"] as! PFFile
-        }
+        contact.userID = pfContact.objectId
+        contact.profileImage = pfContact["profileImage"] as! PFFile
+        contact.availableTime = pfContact["availableTime"] as? String
         
         return contact
     }

@@ -12,12 +12,6 @@
 		9A0CBDC11C71EDC6002BD9D0 /* EmailContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0CBDC01C71EDC6002BD9D0 /* EmailContact.swift */; };
 		9A0CBDC31C71EE0D002BD9D0 /* AddressContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0CBDC21C71EE0D002BD9D0 /* AddressContact.swift */; };
 		9A0CBDC51C71EF1B002BD9D0 /* SocialContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0CBDC41C71EF1B002BD9D0 /* SocialContact.swift */; };
-		9A241D051C66D4AC006C9EDF /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A241D031C66D4AC006C9EDF /* MyProfileViewController.swift */; };
-		9A241D061C66D4AC006C9EDF /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A241D031C66D4AC006C9EDF /* MyProfileViewController.swift */; };
-		9A241D091C66E569006C9EDF /* ContactItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A241D071C66E569006C9EDF /* ContactItemCell.swift */; };
-		9A241D0A1C66E569006C9EDF /* ContactItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A241D071C66E569006C9EDF /* ContactItemCell.swift */; };
-		9A241D0D1C66EAA5006C9EDF /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A241D0B1C66EAA5006C9EDF /* CustomNavigationController.swift */; };
-		9A241D0E1C66EAA5006C9EDF /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A241D0B1C66EAA5006C9EDF /* CustomNavigationController.swift */; };
 		9A4E59881C213FC70046C8E8 /* TermsConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4E59871C213FC70046C8E8 /* TermsConditionsViewController.swift */; };
 		9AA47EAD1C7576310034FBE8 /* AddContactController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA47EAC1C7576310034FBE8 /* AddContactController.swift */; };
 		9AA47EAE1C7576310034FBE8 /* AddContactController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA47EAC1C7576310034FBE8 /* AddContactController.swift */; };
@@ -29,12 +23,6 @@
 		9AA824FA1C43476800B71364 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA824F81C43476800B71364 /* SettingsViewController.swift */; };
 		9AA824FB1C43476800B71364 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA824F81C43476800B71364 /* SettingsViewController.swift */; };
 		9AD9296D1C7C958000B764B7 /* AddContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD9296C1C7C958000B764B7 /* AddContactTableViewCell.swift */; };
-		9AF6A0511C6B6C7F00B4647C /* EditMyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF6A04F1C6B6C7F00B4647C /* EditMyProfileViewController.swift */; };
-		9AF6A0521C6B6C7F00B4647C /* EditMyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF6A04F1C6B6C7F00B4647C /* EditMyProfileViewController.swift */; };
-		9AF6A0551C6B6D0100B4647C /* MyProfileTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF6A0531C6B6D0100B4647C /* MyProfileTestData.swift */; };
-		9AF6A0561C6B6D0100B4647C /* MyProfileTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF6A0531C6B6D0100B4647C /* MyProfileTestData.swift */; };
-		9AF6A0591C6C0AB300B4647C /* EditContactItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF6A0571C6C0AB300B4647C /* EditContactItemCell.swift */; };
-		9AF6A05A1C6C0AB300B4647C /* EditContactItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF6A0571C6C0AB300B4647C /* EditContactItemCell.swift */; };
 		BD19009D1C7341F600D82DA6 /* ContactRequestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD19009C1C7341F600D82DA6 /* ContactRequestTableViewController.swift */; };
 		BD45F1B71C66FF4E00DBE5DB /* MyContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45F1B61C66FF4E00DBE5DB /* MyContactsTableViewController.swift */; };
 		BD5869811C6E5179009408EA /* HeyyaTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5869801C6E5179009408EA /* HeyyaTabBarController.swift */; };
@@ -83,6 +71,42 @@
 		BDBB6A7E1C6224A600143087 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDBB6A7D1C6224A600143087 /* Accounts.framework */; };
 		BDBB6A801C6224D800143087 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDBB6A7F1C6224D800143087 /* Social.framework */; };
 		BDC7AB5E1C798CE40093D5F4 /* AddContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC7AB5D1C798CE40093D5F4 /* AddContactTableViewController.swift */; };
+		BDEBFDA71CA9687C002E48CE /* ContactType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD910CEF1C6C8102003B099C /* ContactType.swift */; };
+		BDEBFDA81CA9688B002E48CE /* TermsConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4E59871C213FC70046C8E8 /* TermsConditionsViewController.swift */; };
+		BDEBFDA91CA96893002E48CE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA812041C6613EC00219C4A /* User.swift */; };
+		BDEBFDAA1CA9689E002E48CE /* MyProfileTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD910CF01C6C8102003B099C /* MyProfileTestData.swift */; };
+		BDEBFDAB1CA968A9002E48CE /* AddContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD9296C1C7C958000B764B7 /* AddContactTableViewCell.swift */; };
+		BDEBFDAC1CA968E2002E48CE /* ContactType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD910CEF1C6C8102003B099C /* ContactType.swift */; };
+		BDEBFDAD1CA968F8002E48CE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA812041C6613EC00219C4A /* User.swift */; };
+		BDEBFDAE1CA96900002E48CE /* MyProfileTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD910CF01C6C8102003B099C /* MyProfileTestData.swift */; };
+		BDEBFDAF1CA9690A002E48CE /* AddContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD9296C1C7C958000B764B7 /* AddContactTableViewCell.swift */; };
+		BDEBFDB01CA96911002E48CE /* TermsConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4E59871C213FC70046C8E8 /* TermsConditionsViewController.swift */; };
+		BDEBFDB11CA96C34002E48CE /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966541C4E6D0900FDDD33 /* Parse.framework */; };
+		BDEBFDB21CA96C3C002E48CE /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966541C4E6D0900FDDD33 /* Parse.framework */; };
+		BDEBFDB31CA96C78002E48CE /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9032C31C54A5D600C323A9 /* SignUpViewController.swift */; };
+		BDEBFDB41CA96C81002E48CE /* MyContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45F1B61C66FF4E00DBE5DB /* MyContactsTableViewController.swift */; };
+		BDEBFDB51CA96C88002E48CE /* HubModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9032C11C5474C300C323A9 /* HubModel.swift */; };
+		BDEBFDB61CA96CCA002E48CE /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9032C31C54A5D600C323A9 /* SignUpViewController.swift */; };
+		BDEBFDB71CA96CD1002E48CE /* MyContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45F1B61C66FF4E00DBE5DB /* MyContactsTableViewController.swift */; };
+		BDEBFDB81CA96CD7002E48CE /* HubModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9032C11C5474C300C323A9 /* HubModel.swift */; };
+		BDEBFDB91CA96D00002E48CE /* ProfileContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6FF1CD1C93E8560069D7D9 /* ProfileContactViewController.swift */; };
+		BDEBFDBA1CA96D08002E48CE /* ProfileContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6FF1CD1C93E8560069D7D9 /* ProfileContactViewController.swift */; };
+		BDEBFDBB1CA96D38002E48CE /* ContactRequestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD19009C1C7341F600D82DA6 /* ContactRequestTableViewController.swift */; };
+		BDEBFDBC1CA96D3F002E48CE /* ContactRequestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD19009C1C7341F600D82DA6 /* ContactRequestTableViewController.swift */; };
+		BDEBFDBD1CA96D69002E48CE /* ContactShareCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8513351C789994002470A2 /* ContactShareCellDelegate.swift */; };
+		BDEBFDBE1CA96D70002E48CE /* RequestsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7A5E3C1C74909C0019D5F1 /* RequestsTableViewController.swift */; };
+		BDEBFDBF1CA96D78002E48CE /* ContactShareCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8513321C784043002470A2 /* ContactShareCell.swift */; };
+		BDEBFDC01CA96D87002E48CE /* ContactShareCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8513351C789994002470A2 /* ContactShareCellDelegate.swift */; };
+		BDEBFDC11CA96D90002E48CE /* RequestsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7A5E3C1C74909C0019D5F1 /* RequestsTableViewController.swift */; };
+		BDEBFDC21CA96D97002E48CE /* ContactShareCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8513321C784043002470A2 /* ContactShareCell.swift */; };
+		BDEBFDC31CA96E31002E48CE /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966531C4E6D0900FDDD33 /* Bolts.framework */; };
+		BDEBFDC41CA96E39002E48CE /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966531C4E6D0900FDDD33 /* Bolts.framework */; };
+		BDEBFDC51CA96E86002E48CE /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966691C4E6DBB00FDDD33 /* libsqlite3.tbd */; };
+		BDEBFDC61CA96E92002E48CE /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966691C4E6DBB00FDDD33 /* libsqlite3.tbd */; };
+		BDEBFDC71CA96EFC002E48CE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966651C4E6DA500FDDD33 /* SystemConfiguration.framework */; };
+		BDEBFDC81CA96F03002E48CE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966651C4E6DA500FDDD33 /* SystemConfiguration.framework */; };
+		BDEBFDC91CA96F33002E48CE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966571C4E6D6900FDDD33 /* AudioToolbox.framework */; };
+		BDEBFDCA1CA96F3B002E48CE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966571C4E6D6900FDDD33 /* AudioToolbox.framework */; };
 		BDFD87DD1CA7A1E000DF44EB /* UserFriends.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFD87DC1CA7A1E000DF44EB /* UserFriends.swift */; };
 /* End PBXBuildFile section */
 
@@ -109,17 +133,11 @@
 		9A0CBDC01C71EDC6002BD9D0 /* EmailContact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailContact.swift; sourceTree = "<group>"; };
 		9A0CBDC21C71EE0D002BD9D0 /* AddressContact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressContact.swift; sourceTree = "<group>"; };
 		9A0CBDC41C71EF1B002BD9D0 /* SocialContact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialContact.swift; sourceTree = "<group>"; };
-		9A241D031C66D4AC006C9EDF /* MyProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
-		9A241D071C66E569006C9EDF /* ContactItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactItemCell.swift; sourceTree = "<group>"; };
-		9A241D0B1C66EAA5006C9EDF /* CustomNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		9A4E59871C213FC70046C8E8 /* TermsConditionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsConditionsViewController.swift; sourceTree = "<group>"; };
 		9AA47EAC1C7576310034FBE8 /* AddContactController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactController.swift; sourceTree = "<group>"; };
 		9AA47EB01C7AD5110034FBE8 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		9AA824F81C43476800B71364 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		9AD9296C1C7C958000B764B7 /* AddContactTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactTableViewCell.swift; sourceTree = "<group>"; };
-		9AF6A04F1C6B6C7F00B4647C /* EditMyProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditMyProfileViewController.swift; sourceTree = "<group>"; };
-		9AF6A0531C6B6D0100B4647C /* MyProfileTestData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyProfileTestData.swift; sourceTree = "<group>"; };
-		9AF6A0571C6C0AB300B4647C /* EditContactItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditContactItemCell.swift; sourceTree = "<group>"; };
 		BD19009C1C7341F600D82DA6 /* ContactRequestTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactRequestTableViewController.swift; sourceTree = "<group>"; };
 		BD45F1B61C66FF4E00DBE5DB /* MyContactsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyContactsTableViewController.swift; sourceTree = "<group>"; };
 		BD5869801C6E5179009408EA /* HeyyaTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeyyaTabBarController.swift; sourceTree = "<group>"; };
@@ -208,6 +226,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDEBFDC91CA96F33002E48CE /* AudioToolbox.framework in Frameworks */,
+				BDEBFDC71CA96EFC002E48CE /* SystemConfiguration.framework in Frameworks */,
+				BDEBFDC51CA96E86002E48CE /* libsqlite3.tbd in Frameworks */,
+				BDEBFDB11CA96C34002E48CE /* Parse.framework in Frameworks */,
+				BDEBFDC31CA96E31002E48CE /* Bolts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,6 +238,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDEBFDCA1CA96F3B002E48CE /* AudioToolbox.framework in Frameworks */,
+				BDEBFDC81CA96F03002E48CE /* SystemConfiguration.framework in Frameworks */,
+				BDEBFDC61CA96E92002E48CE /* libsqlite3.tbd in Frameworks */,
+				BDEBFDB21CA96C3C002E48CE /* Parse.framework in Frameworks */,
+				BDEBFDC41CA96E39002E48CE /* Bolts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -554,16 +582,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9AF6A0511C6B6C7F00B4647C /* EditMyProfileViewController.swift in Sources */,
-				9AF6A0551C6B6D0100B4647C /* MyProfileTestData.swift in Sources */,
+				BDEBFDBF1CA96D78002E48CE /* ContactShareCell.swift in Sources */,
+				BDEBFDBE1CA96D70002E48CE /* RequestsTableViewController.swift in Sources */,
+				BDEBFDBD1CA96D69002E48CE /* ContactShareCellDelegate.swift in Sources */,
+				BDEBFDBC1CA96D3F002E48CE /* ContactRequestTableViewController.swift in Sources */,
+				BDEBFDB91CA96D00002E48CE /* ProfileContactViewController.swift in Sources */,
+				BDEBFDB51CA96C88002E48CE /* HubModel.swift in Sources */,
+				BDEBFDB41CA96C81002E48CE /* MyContactsTableViewController.swift in Sources */,
+				BDEBFDB31CA96C78002E48CE /* SignUpViewController.swift in Sources */,
+				BDEBFDB01CA96911002E48CE /* TermsConditionsViewController.swift in Sources */,
+				BDEBFDAF1CA9690A002E48CE /* AddContactTableViewCell.swift in Sources */,
+				BDEBFDAE1CA96900002E48CE /* MyProfileTestData.swift in Sources */,
+				BDEBFDAD1CA968F8002E48CE /* User.swift in Sources */,
+				BDEBFDAC1CA968E2002E48CE /* ContactType.swift in Sources */,
 				9AA47EB21C7AD5110034FBE8 /* Contact.swift in Sources */,
-				9A241D051C66D4AC006C9EDF /* MyProfileViewController.swift in Sources */,
 				9AA47EAE1C7576310034FBE8 /* AddContactController.swift in Sources */,
-				9A241D0D1C66EAA5006C9EDF /* CustomNavigationController.swift in Sources */,
 				BDAE7A271C101F6B0085264A /* HubTests.swift in Sources */,
-				9AF6A0591C6C0AB300B4647C /* EditContactItemCell.swift in Sources */,
 				9AA824FA1C43476800B71364 /* SettingsViewController.swift in Sources */,
-				9A241D091C66E569006C9EDF /* ContactItemCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -571,16 +606,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9AF6A0521C6B6C7F00B4647C /* EditMyProfileViewController.swift in Sources */,
-				9AF6A0561C6B6D0100B4647C /* MyProfileTestData.swift in Sources */,
+				BDEBFDC21CA96D97002E48CE /* ContactShareCell.swift in Sources */,
+				BDEBFDC11CA96D90002E48CE /* RequestsTableViewController.swift in Sources */,
+				BDEBFDC01CA96D87002E48CE /* ContactShareCellDelegate.swift in Sources */,
+				BDEBFDBB1CA96D38002E48CE /* ContactRequestTableViewController.swift in Sources */,
+				BDEBFDBA1CA96D08002E48CE /* ProfileContactViewController.swift in Sources */,
+				BDEBFDB81CA96CD7002E48CE /* HubModel.swift in Sources */,
+				BDEBFDB71CA96CD1002E48CE /* MyContactsTableViewController.swift in Sources */,
+				BDEBFDB61CA96CCA002E48CE /* SignUpViewController.swift in Sources */,
+				BDEBFDAB1CA968A9002E48CE /* AddContactTableViewCell.swift in Sources */,
+				BDEBFDAA1CA9689E002E48CE /* MyProfileTestData.swift in Sources */,
+				BDEBFDA91CA96893002E48CE /* User.swift in Sources */,
+				BDEBFDA81CA9688B002E48CE /* TermsConditionsViewController.swift in Sources */,
+				BDEBFDA71CA9687C002E48CE /* ContactType.swift in Sources */,
 				9AA47EB31C7AD5110034FBE8 /* Contact.swift in Sources */,
-				9A241D061C66D4AC006C9EDF /* MyProfileViewController.swift in Sources */,
 				9AA47EAF1C7576310034FBE8 /* AddContactController.swift in Sources */,
-				9A241D0E1C66EAA5006C9EDF /* CustomNavigationController.swift in Sources */,
 				BDAE7A321C101F6B0085264A /* HubUITests.swift in Sources */,
-				9AF6A05A1C6C0AB300B4647C /* EditContactItemCell.swift in Sources */,
 				9AA824FB1C43476800B71364 /* SettingsViewController.swift in Sources */,
-				9A241D0A1C66E569006C9EDF /* ContactItemCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -749,6 +791,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = HubTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.88Software.HubTests;
@@ -761,6 +807,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = HubTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.88Software.HubTests;
@@ -772,6 +822,10 @@
 		BDAE7A3D1C101F6B0085264A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = HubUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.88Software.HubUITests;
@@ -784,6 +838,10 @@
 		BDAE7A3E1C101F6B0085264A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = HubUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.88Software.HubUITests;
