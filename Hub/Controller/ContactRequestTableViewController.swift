@@ -22,7 +22,7 @@ class ContactRequestTableViewController: UITableViewController, ContactShareCell
         self.tableView.separatorColor = UIColor(red: 255/255.0, green: 255/255.0,
             blue: 255/255.0, alpha: 0.0)
         
-        contacts = hubModel.contactRequests
+//        contacts = hubModel.contactRequests
     }
 
     override func didReceiveMemoryWarning() {

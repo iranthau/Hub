@@ -31,11 +31,14 @@ class AddContactController: UIViewController {
         //hide table view separator
         contactSelectionTableView.separatorColor = UIColor(red: 255/255.0,
                                                            green: 255/255.0, blue: 255/255.0, alpha: 0.0)
-        
-        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-        
-        dispatch_async(dispatch_get_global_queue(priority, 0)) {
-            self.profileImageView.image = self.contactProfile!.getProfileImage()
+        let imageFile = contactProfile!.profileImage
+        imageFile.getDataInBackgroundWithBlock {
+            (imageData: NSData?, error: NSError?) -> Void in
+            if error == nil {
+                if let imageData = imageData {
+                    self.profileImageView.image = UIImage(data:imageData)
+                }
+            }
         }
         
         //set profile image to circular shape

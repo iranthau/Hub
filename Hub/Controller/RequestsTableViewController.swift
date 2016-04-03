@@ -14,22 +14,6 @@ class RequestsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let user_1 = User(fName: "Samual", lName: "Jackson", email: "iaea@gmail.com")
-        user_1.nickName = "Sam"
-        user_1.cityName = "Melbourne"
-        
-        let user_2 = User(fName: "Marlon", lName: "Rodrigo", email: "asdasd@asd.com")
-        user_2.nickName = "Mal"
-        user_2.cityName = "Sydney"
-        
-        let user_3 = User(fName: "Iain", lName: "Murray", email: "ramai@f.com")
-        user_3.nickName = "Iain"
-        user_3.cityName = "Perth"
-        
-        requests.append(user_1)
-        requests.append(user_2)
-        requests.append(user_3)
     }
 
     override func didReceiveMemoryWarning() {
@@ -70,11 +54,11 @@ class RequestsTableViewController: UITableViewController {
         }
         
         if let nickNameLabel = cell.viewWithTag(3) as? UILabel {
-            nickNameLabel.text = request.nickName
+            nickNameLabel.text = request.nickname
         }
         
         if let cityLabel = cell.viewWithTag(4) as? UILabel {
-            cityLabel.text = request.cityName
+            cityLabel.text = request.city
         }
         
         return cell

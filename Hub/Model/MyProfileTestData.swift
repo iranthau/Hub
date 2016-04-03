@@ -2,6 +2,16 @@
 //  MyProfileTestData.swift
 //  Hub
 //
+//  Created by Irantha Rajakaruna on 3/04/2016.
+//  Copyright © 2016 88Software. All rights reserved.
+//
+
+import Foundation
+
+//
+//  MyProfileTestData.swift
+//  Hub
+//
 //  Created by Alexei Gudimenko on 9/02/2016.
 //  Copyright © 2016 88Software. All rights reserved.
 //
@@ -11,30 +21,30 @@
 //  environment. It models information of a single user (in this case: owner of
 //  the app, who is assumed to be already logged into the app).
 
-import UIKit
+import Foundation
 
 class MyProfileTestData {
-
+    
     var userFirstName = "John"
     var userLastName = "Smith"
     var userImageName = "placeholder-image"
-    var userImage = UIImage(named: "placeholder-image")
+//    var userImage = UIImage(named: "placeholder-image")
     var userNickname = "Johnny"
     var userCity = "Melbourne"
     var userAvailability = "Please contact me during working hours on friday"
-    var contactType:ContactType = ContactType()
-
+//    var contactType:ContactType = ContactType()
+    
     var phoneNumberTestData = [
         "0421433433",
         "0431623946"
     ]
-
+    
     var emailTestData = [
         "whispering.gloom@live.com.au",
         "alexei.gudimenko@gmail.com",
         "spear.of.longinus@gmx.com"
     ]
-
+    
     var addressTestData = [
         "92, Wilson St, Cheltenham",
         "2, Alvina Crt, Frankston",
@@ -42,7 +52,7 @@ class MyProfileTestData {
         "1, Flinders St, Melbourne",
         "2, Samn St, Geelng"
     ]
-
+    
     var socialTestData = [
         "www.facebook.com/j_smith",
         "www.linkedin.com/j_smith"

@@ -18,18 +18,18 @@ class ProfileCreatedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 //        self.navigationController?.navigationBarHidden = true
-        let user = hubModel.user
-        
-        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-        
+        let user = hubModel.currentUser
+                
         profileImage.layer.cornerRadius = 0.5 * profileImage.bounds.size.width
         profileImage.clipsToBounds = true
         
-        dispatch_async(dispatch_get_global_queue(priority, 0)) {
-            let image = user!.getProfileImage()
-
-            dispatch_async(dispatch_get_main_queue()) {
-                self.profileImage.image = image
+        let imageFile = user!.profileImage
+        imageFile.getDataInBackgroundWithBlock {
+            (imageData: NSData?, error: NSError?) -> Void in
+            if error == nil {
+                if let imageData = imageData {
+                    self.profileImage.image = UIImage(data:imageData)
+                }
             }
         }
         

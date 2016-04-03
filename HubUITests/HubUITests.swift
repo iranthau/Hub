@@ -28,7 +28,7 @@ class HubUITests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
+    func testCreateAccount() {
         let app = XCUIApplication()
         app.images["bg-img"].tap()
         app.buttons["Create Account"].tap()
@@ -52,7 +52,5 @@ class HubUITests: XCTestCase {
         app.secureTextFields["Confirm password"].typeText("pip")
         app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.tap()
         app.navigationBars["Create Account"].buttons["tick"].tap()
-//        waitForExpectationsWithTimeout(5, handler: nil)
-//        app.buttons["Complete My Profile"].tap()
     }
 }

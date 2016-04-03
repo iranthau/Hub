@@ -21,14 +21,12 @@ class SignInViewController: UIViewController {
         super.viewDidLoad()
         self.navigationController?.navigationBarHidden = true
         fbSignInButton.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 10.0, bottom: 0.0, right: 0.0)
-        
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SignInViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     
@@ -39,8 +37,8 @@ class SignInViewController: UIViewController {
         PFUser.logInWithUsernameInBackground(username, password: password) {
             (user: PFUser?, error: NSError?) -> Void in
             if user != nil {
-                let currentUser = PFUser.currentUser()
-                self.hubModel.user = self.hubModel.pfUserToUser(currentUser!)
+                let currentUser = PFUser.currentUser()!
+                self.hubModel.currentUser = User(parseUser: currentUser)
                 self.performSegueWithIdentifier("signInSegue", sender: nil)
             } else {
                 let errorMessage = error!.userInfo["error"] as? String
@@ -56,12 +54,12 @@ class SignInViewController: UIViewController {
                 let errorMessage = error.userInfo["error"] as? String
                 self.showAlert(errorMessage!)
             } else if let user = user {
-                let currentUser = PFUser.currentUser()
-                self.hubModel.user = self.hubModel.pfUserToUser(currentUser!)
                 if user.isNew {
                     self.readProfileDataFromFacebook()
                     self.performSegueWithIdentifier("createAccountSegue", sender: nil)
                 } else {
+                    let currentUser = PFUser.currentUser()
+                    self.hubModel.currentUser = User(parseUser: currentUser!)
                     self.performSegueWithIdentifier("signInSegue", sender: nil)
                 }
             } else {
@@ -76,10 +74,8 @@ class SignInViewController: UIViewController {
     
     func showAlert(message: String) {
         let alertError = UIAlertController(title: "Sign In", message: message, preferredStyle: .Alert)
-        
         let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
         alertError.addAction(defaultAction)
-        
         self.presentViewController(alertError, animated: true, completion: nil)
     }
     
@@ -89,9 +85,8 @@ class SignInViewController: UIViewController {
     
     func readProfileDataFromFacebook() {
         let requestParameters = ["fields": "id, email, first_name, last_name"]
-        
         let userDetails = FBSDKGraphRequest(graphPath: "me", parameters: requestParameters)
-        
+    
         userDetails.startWithCompletionHandler {(connection, result, error: NSError!) -> Void in
             if(error != nil) {
                 let errorMessage = error.localizedDescription
@@ -101,12 +96,13 @@ class SignInViewController: UIViewController {
                 let lName = result["last_name"]! as! String
                 let email = result["email"]! as! String
                 
-                let user = User(fName: fName, lName: lName, email: email)
-                self.hubModel.user = user
+                let parseUser = PFUser()
+                let user = User(parseUser: parseUser)
+                user.setUpParseUser(email, fName: fName, lName: lName)
+                self.hubModel.currentUser = user
                 
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-                    user.profileImage = self.readProfileImageFromFacebook(result["id"]! as! String)
-                    
+                    user.setProfileImage(self.readProfileImageFromFacebook(result["id"]! as! String))
                     self.uploadUserDetailsToParse(user)
                 }
             }
@@ -114,13 +110,7 @@ class SignInViewController: UIViewController {
     }
     
     func uploadUserDetailsToParse(user: User) {
-        let pfUser = PFUser.currentUser()!
-        
-        pfUser.setObject(user.firstName, forKey: "firstName")
-        pfUser.setObject(user.lastName, forKey: "lastName")
-        pfUser.setObject(user.email, forKey: "email")
-        pfUser.setObject(user.profileImage, forKey: "profileImage")
-        
+        let pfUser = user.matchingParseObject
         pfUser.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
             if(success) {
                 print("User details uploaded")
@@ -128,14 +118,11 @@ class SignInViewController: UIViewController {
         })
     }
     
-    func readProfileImageFromFacebook(userID: String) -> PFFile {
+    func readProfileImageFromFacebook(userID: String) -> UIImage {
         let userProfileUrl = "https://graph.facebook.com/\(userID)/picture?type=large"
-        
-        let profilePictureUrl = NSURL(string: userProfileUrl)
-        
-        let profilePicturedata = NSData(contentsOfURL: profilePictureUrl!)
-        
-        return PFFile(data: profilePicturedata!)!
+        let profilePictureUrl = NSURL(string: userProfileUrl)!
+        let profilePicturedata = NSData(contentsOfURL: profilePictureUrl)!
+        return UIImage(data: profilePicturedata)!
     }
 }
 

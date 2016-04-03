@@ -48,7 +48,7 @@ class MyProfileViewController: UIViewController {
         title = userData.userFirstName + " " + userData.userLastName
         
         // Make image view circular and set it to image from model:
-        profileImageView.image = userData.userImage
+//        profileImageView.image = userData.userImage
 //        profileImageView.image = UIImage(named: userData.userImageName)
         profileImageView.layer.cornerRadius = profileImageView.bounds.size.width / 2
         profileImageView.clipsToBounds = true
@@ -191,9 +191,9 @@ extension MyProfileViewController: EditMyProfileViewControllerDelegate {
             userData.userLastName = userProfile.userLastName
             userData.userNickname = userProfile.userNickname
             userData.userAvailability = userProfile.userAvailability
-            userData.userImage = userProfile.userImage
-            profileImageView.image = userData.userImage
-            
+//            userData.userImage = userProfile.userImage
+//            profileImageView.image = userData.userImage
+        
             title = userData.userFirstName + " " + userData.userLastName
             
             tableView.reloadData()

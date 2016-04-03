@@ -6,34 +6,34 @@
 //  Copyright © 2016 88Software. All rights reserved.
 //
 
-import UIKit
+import Foundation
+import Parse
 
 class Contact {
     
-    var name: String
+    let parseClassName = "Contact"
+    var matchingParseObject: PFObject
+    var objectId: String
     var value: String
-    var type: ContactType
-    var image: UIImage = UIImage()
-    var shared: Bool
+    var type: String
+    var subType: String
     
-    init() {
-        name = ""
-        value = ""
-        type = .Home
-        image = UIImage()
-        shared = false
+    init(parseObject: PFObject) {
+        matchingParseObject = parseObject
+        objectId = parseObject.objectId!
+        value = parseObject["value"] as! String
+        type = parseObject["type"] as! String
+        subType = parseObject["subType"] as! String
     }
     
-    init(name: String, value: String, type: ContactType, imageName: String = "", shared: Bool) {
-        let imageNameString = imageName
-        
-        self.name = name
-        self.value = value
-        self.type = type
-        self.shared = shared
-        guard imageNameString == "" else {
-            self.image = UIImage(named: imageNameString)!
-            return
-        }
+//    init(value: String, type: String, subType: String) {
+//        matchingParseObject = PFObject(className: parseClassName)
+//        matchingParseObject["value"] = value
+//        matchingParseObject["type"] = type
+//        matchingParseObject["subType"] = subType
+//    }
+    
+    func save() {
+        matchingParseObject.saveInBackground()
     }
 }

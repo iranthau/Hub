@@ -16,9 +16,7 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
-        hubModel.getAllContacts(self)
-        
+        hubModel.currentUser!.getFriends(self)
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         definesPresentationContext = true
@@ -57,15 +55,15 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
         }
         
         if let profileImage = cell.viewWithTag(1) as? UIImageView {
-            let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-            
-            dispatch_async(dispatch_get_global_queue(priority, 0)) {
-                let image = contact.getProfileImage()
-                profileImage.layer.cornerRadius = 0.5 * profileImage.bounds.size.width
-                profileImage.clipsToBounds = true
-
-                dispatch_async(dispatch_get_main_queue()) {
-                    profileImage.image = image
+            let imageFile = contact.profileImage
+            profileImage.layer.cornerRadius = 0.5 * profileImage.bounds.size.width
+            profileImage.clipsToBounds = true
+            imageFile.getDataInBackgroundWithBlock {
+                (imageData: NSData?, error: NSError?) -> Void in
+                if error == nil {
+                    if let imageData = imageData {
+                        profileImage.image = UIImage(data:imageData)
+                    }
                 }
             }
         }
@@ -75,11 +73,21 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
         }
         
         if let nickNameLabel = cell.viewWithTag(3) as? UILabel {
-            nickNameLabel.text = contact.nickName
+            if contact.nickname == nil {
+                nickNameLabel.text = "nickname"
+                nickNameLabel.textColor = UIColor.lightGrayColor()
+            } else {
+                nickNameLabel.text = contact.nickname
+            }
         }
         
         if let cityLabel = cell.viewWithTag(4) as? UILabel {
-            cityLabel.text = contact.cityName
+            if contact.nickname == nil {
+                cityLabel.text = "city"
+                cityLabel.textColor = UIColor.lightGrayColor()
+            } else {
+                cityLabel.text = contact.city
+            }
         }
         
         return cell
@@ -93,6 +101,7 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
     }
     
     func addSectionToTableViewController() {
+        sections = [(index: Int, length :Int, title: String)]()
         var index = 0
         var i = 0
         
@@ -134,23 +143,20 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
         tableView.reloadData()
     }
     
-    
-    // Override to support conditional editing of the table view.
-//    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-//        // Return false if you do not want the specified item to be editable.
-//        if searchController.active {
-//            return false
-//        }
-//        return true
-//    }
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        if searchController.active {
+            return false
+        }
+        return true
+    }
 
-    // Override to support editing the table view.
-//    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-//        if editingStyle == .Delete {
-//            myContacts.removeAtIndex(indexPath.row)
-//            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-//        }
-//    }
+    // Need to handle removing a friend from parse as well.
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            myContacts.removeAtIndex(sections[indexPath.section].index + indexPath.row)
+            self.refreshTableViewInBackground()
+        }
+    }
     
     override func tableView(tableView: UITableView,
         titleForHeaderInSection section: Int)

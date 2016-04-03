@@ -54,15 +54,16 @@ class AddContactTableViewController: UITableViewController, UISearchResultsUpdat
         let contact = filteredContacts[indexPath.row]
         
         if let profileImage = cell.viewWithTag(1) as? UIImageView {
-            let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
             
-            dispatch_async(dispatch_get_global_queue(priority, 0)) {
-                let image = contact.getProfileImage()
-                profileImage.layer.cornerRadius = 0.5 * profileImage.bounds.size.width
-                profileImage.clipsToBounds = true
-                
-                dispatch_async(dispatch_get_main_queue()) {
-                    profileImage.image = image
+            let imageFile = contact.profileImage
+            profileImage.layer.cornerRadius = 0.5 * profileImage.bounds.size.width
+            profileImage.clipsToBounds = true
+            imageFile.getDataInBackgroundWithBlock {
+                (imageData: NSData?, error: NSError?) -> Void in
+                if error == nil {
+                    if let imageData = imageData {
+                        profileImage.image = UIImage(data:imageData)
+                    }
                 }
             }
         }
@@ -72,11 +73,11 @@ class AddContactTableViewController: UITableViewController, UISearchResultsUpdat
         }
         
         if let nickNameLabel = cell.viewWithTag(3) as? UILabel {
-            nickNameLabel.text = contact.nickName
+            nickNameLabel.text = contact.nickname
         }
         
         if let cityLabel = cell.viewWithTag(4) as? UILabel {
-            cityLabel.text = contact.cityName
+            cityLabel.text = contact.city
         }
 
         return cell
@@ -92,11 +93,11 @@ class AddContactTableViewController: UITableViewController, UISearchResultsUpdat
     
     func filterContentForSearchText(searchText: String) {
         let query = PFUser.query()
-        let currentUser = hubModel.user
+        let currentUser = hubModel.currentUser
         
         query!.whereKey("firstName", hasPrefix: searchText)
         query!.whereKey("profileIsVisible", equalTo: true)
-        query!.whereKey("objectId", notEqualTo: currentUser!.userID!)
+        query!.whereKey("objectId", notEqualTo: currentUser!.objectId)
         
         
         query!.findObjectsInBackgroundWithBlock {
@@ -106,7 +107,7 @@ class AddContactTableViewController: UITableViewController, UISearchResultsUpdat
                 var profiles = [User]()
                 if let objects = objects {
                     for userObject in objects as! [PFUser] {
-                        profiles.append(self.hubModel.pfUserToUser(userObject))
+                        profiles.append(User(parseUser: userObject))
                     }
                     self.filteredContacts = profiles
                     self.tableView.reloadData()

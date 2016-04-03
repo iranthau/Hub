@@ -12,17 +12,10 @@ import Parse
 
 class HubModel {
     
-    var user: User?
-    var contactRequests: [(imageName: String, contact: String, shared: Bool)] = []
+    var currentUser: User?
     
     private init() {
-        let request1 = ("phone", "0433353343", true)
-        let request2 = ("email-home", "iranta@gmaas.com", false)
-        let request3 = ("phone-home", "234523423", true)
         
-        contactRequests.append(request1)
-        contactRequests.append(request2)
-        contactRequests.append(request3)
     }
     
     private struct Static {
@@ -36,31 +29,5 @@ class HubModel {
         return Static.instance!
     }
     
-    func userSignUp(view: SignUpViewController) {
-        let pfUser = PFUser()
-        
-        pfUser["firstName"] = user!.firstName
-        pfUser["lastName"] = user!.lastName
-        pfUser.username = user!.email
-        pfUser.email = user!.email
-        pfUser.password = user!.password
-        pfUser["profileImage"] = user!.profileImage
-        
-        user!.signUp(view, pfUser: pfUser)
-    }
     
-    func getAllContacts(tableViewController: MyContactsTableViewController) {
-        user!.getAllMyContacts(tableViewController, model: self)
-    }
-    
-    func pfUserToUser(pfContact: PFUser) -> User {
-        let contact = User(fName: pfContact["firstName"] as! String, lName: pfContact["lastName"] as! String, email: pfContact.username!)
-        contact.nickName = pfContact["nickName"] as? String
-        contact.cityName = pfContact["city"] as? String
-        contact.userID = pfContact.objectId
-        contact.profileImage = pfContact["profileImage"] as! PFFile
-        contact.availableTime = pfContact["availableTime"] as? String
-        
-        return contact
-    }
 }

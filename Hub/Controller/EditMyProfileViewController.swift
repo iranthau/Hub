@@ -70,7 +70,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
             nicknameTextField.text = user.userNickname
             availabilityTextField.text = user.userAvailability
 //            profileImageView.image = UIImage(named: user.userImageName)
-            profileImage = user.userImage
+//            profileImage = user.userImage
             profileImageView.image = profileImage
         }
         
@@ -110,7 +110,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
             userData.userLastName = lastNameTextField.text!
             userData.userNickname = nicknameTextField.text!
             userData.userAvailability = availabilityTextField.text!
-            userData.userImage = profileImage
+//            userData.userImage = profileImage
             delegate?.editMyProfileViewController(self, didFinishEditingProfile: userData)
         }
     }

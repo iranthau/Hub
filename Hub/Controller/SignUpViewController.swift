@@ -36,7 +36,6 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @IBAction func signMeUp(sender: AnyObject) {
@@ -49,20 +48,18 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
             let lastName = lNameTextfield.text!.capitalizedString
             let email = emailTextfield.text!
             
-            let user = User(fName: firstName, lName: lastName, email: email)
+            let parseUser = PFUser()
+            let user = User(parseUser: parseUser)
+            user.setUpParseUser(email, fName: firstName, lName: lastName)
+            user.username = email
             user.password = password
             
             let buttonBgImage = profilePicture.imageForState(.Normal)!
             if !buttonBgImage.isEqual(UIImage(named: "profile-pic")) {
-                let profileImageData = buttonBgImage.lowestQualityJPEGNSData
-                let parseProfileImageFile = PFFile(data: profileImageData)
-                user.profileImage = parseProfileImageFile!
+                user.setProfileImage(buttonBgImage)
             }
             
-            hubModel.user = user
-            
-            hubModel.userSignUp(self)
-            
+            user.signUp(self)
         } else {
             self.activityIndicator.stopAnimating()
             self.showAlert("Password doesn't match")
@@ -127,10 +124,8 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     func showAlert(message: String) {
         let alertError = UIAlertController(title: "Sign Up", message: message, preferredStyle: .Alert)
-        
         let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
         alertError.addAction(defaultAction)
-        
         self.presentViewController(alertError, animated: true, completion: nil)
     }
     
