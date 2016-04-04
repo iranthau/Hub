@@ -163,19 +163,22 @@ extension ProfileContactViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView,
-        cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-            let cellIdentifier = "ContactItemCell"
-            let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier,
-                forIndexPath: indexPath)
-            let label = cell.viewWithTag(1) as! UILabel
-            
-            if tableView == self.mySharedContactsTableView {
-                label.text = mySharedContacts[indexPath.row].value
-            } else {
-                label.text = activeDataSource[indexPath.row].value
-            }
-            
-            return cell
+                   cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cellIdentifier = "ContactItemCell"
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier,
+                                                               forIndexPath: indexPath)
+        let icon = cell.viewWithTag(2) as! UIImageView
+        let label = cell.viewWithTag(1) as! UILabel
+        
+        if tableView == self.mySharedContactsTableView {
+            label.text = mySharedContacts[indexPath.row].value
+            icon.image = UIImage(named: mySharedContacts[indexPath.row].getImageName())
+        } else {
+            label.text = activeDataSource[indexPath.row].value
+            icon.image = UIImage(named: activeDataSource[indexPath.row].getImageName())
+        }
+        
+        return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

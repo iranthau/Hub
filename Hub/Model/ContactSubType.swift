@@ -82,7 +82,7 @@ enum ContactSubType: Int {
                 case .PhoneHome: return "phone-home"
                 case .PhoneWork: return "phone-work"
                 case .PhoneOther: return "phone-other"
-                case .PhonePersonal: return "mobile"
+                case .PhonePersonal: return "phone-personal"
                 case .EmailHome: return "email-home"
                 case .EmailWork: return "email-work"
                 case .EmailOther: return "email-other"
