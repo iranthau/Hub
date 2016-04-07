@@ -38,11 +38,11 @@ class MyProfileViewController: UIViewController {
         tableView.separatorColor = UIColor(red: 255/255.0, green: 255/255.0,
             blue: 255/255.0, alpha: 0.0)
         user = hubModel.currentUser
-        title = "\(user!.firstName) \(user!.firstName)"
+        title = "\(user!.firstName!) \(user!.firstName!)"
         
         let imageFile = user!.profileImage
         
-        imageFile.getDataInBackgroundWithBlock {
+        imageFile!.getDataInBackgroundWithBlock {
             (imageData: NSData?, error: NSError?) -> Void in
             if error == nil {
                 if let imageData = imageData {
@@ -61,21 +61,21 @@ class MyProfileViewController: UIViewController {
             nicknameLabel.text = "nickname"
             nicknameLabel.textColor = UIColor.lightGrayColor()
         } else {
-            nicknameLabel.text = user!.nickname
+            nicknameLabel.text = user!.nickname!
         }
         
         if user!.city == nil {
             cityLocationLabel.text = "city"
             cityLocationLabel.textColor = UIColor.lightGrayColor()
         } else {
-            cityLocationLabel.text = user!.city
+            cityLocationLabel.text = user!.city!
         }
         
         if user!.availableTime == nil {
             contactHoursDetail.text = "No prefered time provided"
             contactHoursDetail.textColor = UIColor.lightGrayColor()
         } else {
-            contactHoursDetail.text = user!.availableTime
+            contactHoursDetail.text = user!.availableTime!
         }
         
         user!.getContacts(self)

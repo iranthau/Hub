@@ -13,14 +13,15 @@ import MessageUI
 
 class AddContactTableViewController: UITableViewController, UISearchResultsUpdating, MFMailComposeViewControllerDelegate {
     
-    var myContacts = [User]()
     var filteredContacts = [User]()
     let searchController = UISearchController(searchResultsController: nil)
     let hubModel = HubModel.sharedInstance
+    var currentUser: User?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        currentUser = hubModel.currentUser
         searchController.searchResultsUpdater = self
         searchController.searchBar.placeholder = "Search contacts by their name"
         searchController.dimsBackgroundDuringPresentation = false
@@ -58,7 +59,7 @@ class AddContactTableViewController: UITableViewController, UISearchResultsUpdat
             let imageFile = contact.profileImage
             profileImage.layer.cornerRadius = 0.5 * profileImage.bounds.size.width
             profileImage.clipsToBounds = true
-            imageFile.getDataInBackgroundWithBlock {
+            imageFile!.getDataInBackgroundWithBlock {
                 (imageData: NSData?, error: NSError?) -> Void in
                 if error == nil {
                     if let imageData = imageData {
@@ -69,15 +70,25 @@ class AddContactTableViewController: UITableViewController, UISearchResultsUpdat
         }
         
         if let nameLabel = cell.viewWithTag(2) as? UILabel {
-            nameLabel.text = "\(contact.firstName) \(contact.lastName)"
+            nameLabel.text = "\(contact.firstName!) \(contact.lastName!)"
         }
         
         if let nickNameLabel = cell.viewWithTag(3) as? UILabel {
-            nickNameLabel.text = contact.nickname
+            if contact.nickname == nil {
+                nickNameLabel.text = "nickname"
+                nickNameLabel.textColor = UIColor.lightGrayColor()
+            } else {
+                nickNameLabel.text = contact.nickname!
+            }
         }
         
         if let cityLabel = cell.viewWithTag(4) as? UILabel {
-            cityLabel.text = contact.city
+            if contact.city == nil {
+                cityLabel.text = "city"
+                cityLabel.textColor = UIColor.lightGrayColor()
+            } else {
+                cityLabel.text = contact.city!
+            }
         }
 
         return cell
@@ -93,12 +104,10 @@ class AddContactTableViewController: UITableViewController, UISearchResultsUpdat
     
     func filterContentForSearchText(searchText: String) {
         let query = PFUser.query()
-        let currentUser = hubModel.currentUser
         
         query!.whereKey("firstName", hasPrefix: searchText)
         query!.whereKey("profileIsVisible", equalTo: true)
-        query!.whereKey("objectId", notEqualTo: currentUser!.objectId)
-        
+        query!.whereKey("objectId", notEqualTo: currentUser!.objectId!)
         
         query!.findObjectsInBackgroundWithBlock {
             (objects: [PFObject]?, error: NSError?) -> Void in
@@ -107,7 +116,9 @@ class AddContactTableViewController: UITableViewController, UISearchResultsUpdat
                 var profiles = [User]()
                 if let objects = objects {
                     for userObject in objects as! [PFUser] {
-                        profiles.append(User(parseUser: userObject))
+                        let user = User(parseUser: userObject)
+                        user.buildUser()
+                        profiles.append(user)
                     }
                     self.filteredContacts = profiles
                     self.tableView.reloadData()
@@ -165,7 +176,7 @@ class AddContactTableViewController: UITableViewController, UISearchResultsUpdat
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "addContactSegue" {
             let profileToAdd = sender as! User
-            if let destinationVC = segue.destinationViewController as? AddContactController {
+            if let destinationVC = segue.destinationViewController as? AddContactViewController {
                 destinationVC.contactProfile = profileToAdd
             }
         }

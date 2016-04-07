@@ -12,42 +12,44 @@ import Parse
 class User: Hashable {
     let parseClassName = "User"
     var matchingParseObject: PFUser
-    var objectId: String
-    var username: String
+    var objectId: String?
+    var username: String?
     var password: String?
-    var email: String
-    var firstName: String
-    var lastName: String
+    var email: String?
+    var firstName: String?
+    var lastName: String?
     var nickname: String?
-    var profileIsVisible: Bool
+    var profileIsVisible: Bool?
     var availableTime: String?
     var city: String?
     var contacts: [Contact]?
-    var profileImage: PFFile
+    var profileImage: PFFile?
     var friends: [User]?
     var requests: [User]?
     let hubModel = HubModel.sharedInstance
     
     var hashValue: Int {
-        return email.hashValue
+        return email!.hashValue
     }
     
     init(parseUser: PFUser) {
         matchingParseObject = parseUser
-        objectId = parseUser.objectId!
-        username = parseUser.username!
-        email = parseUser.email!
-        firstName = parseUser["firstName"] as! String
-        lastName = parseUser["lastName"] as! String
-        nickname = parseUser["nickName"] as? String
-        profileIsVisible = parseUser["profileIsVisible"] as! Bool
-        availableTime = parseUser["availableTime"] as? String
-        city = parseUser["city"] as? String
-        profileImage = parseUser["profileImage"] as! PFFile
     }
     
-    func setUpParseUser(email: String, fName: String, lName: String) {
-        matchingParseObject = PFUser()
+    func buildUser() {
+        objectId = matchingParseObject.objectId!
+        username = matchingParseObject.username!
+        email = matchingParseObject.email!
+        firstName = matchingParseObject["firstName"] as? String
+        lastName = matchingParseObject["lastName"] as? String
+        nickname = matchingParseObject["nickName"] as? String
+        profileIsVisible = matchingParseObject["profileIsVisible"] as? Bool
+        availableTime = matchingParseObject["availableTime"] as? String
+        city = matchingParseObject["city"] as? String
+        profileImage = matchingParseObject["profileImage"] as? PFFile
+    }
+    
+    func buildParseUser(email: String, fName: String, lName: String) {
         matchingParseObject["firstName"] = fName
         matchingParseObject["lastName"] = lName
         matchingParseObject.email = email
@@ -74,6 +76,7 @@ class User: Hashable {
     }
     
     func signUp(signUpVC: SignUpViewController) {
+        
         matchingParseObject.signUpInBackgroundWithBlock {
             (success: Bool, error: NSError?) in
             if let error = error {
@@ -82,8 +85,10 @@ class User: Hashable {
                 signUpVC.showAlert(errorMessage!)
             } else {
                 signUpVC.activityIndicator.stopAnimating()
-                let user = PFUser.currentUser()!
-                self.hubModel.currentUser = User(parseUser: user)
+                let parseUser = PFUser.currentUser()!
+                let user = User(parseUser: parseUser)
+                user.buildUser()
+                self.hubModel.currentUser = user
                 signUpVC.performSegueWithIdentifier("signUpSegue", sender: nil)
             }
         }
@@ -100,7 +105,9 @@ class User: Hashable {
                 if let friends = friends {
                     var myFriends = [User]()
                     for friend in friends as! [PFUser] {
-                        myFriends.append(User(parseUser: friend))
+                        let user = User(parseUser: friend)
+                        user.buildUser()
+                        myFriends.append(user)
                     }
                     myContactTVC.myContacts = myFriends.sort { $0.firstName < $1.firstName }
                     myContactTVC.refreshTableViewInBackground()
@@ -191,6 +198,23 @@ class User: Hashable {
                 }
                 myProfileVC.tableView.reloadData()
             }
+        }
+    }
+    
+    func getRequests(requestsTVC: RequestsTableViewController) {
+        let relation = matchingParseObject.relationForKey("requests")
+        let query = relation.query()
+        
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            if let objects = objects {
+                for object in objects as! [PFUser] {
+                    let request = User(parseUser: object)
+                    request.buildUser()
+                    requestsTVC.requests.append(request)
+                }
+            }
+            requestsTVC.tableView.reloadData()
         }
     }
 }

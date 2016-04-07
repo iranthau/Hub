@@ -17,7 +17,7 @@ class ContactRequestTableViewController: UITableViewController, ContactShareCell
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = requestContact!.firstName
+        self.title = requestContact!.firstName!
         
         self.tableView.separatorColor = UIColor(red: 255/255.0, green: 255/255.0,
             blue: 255/255.0, alpha: 0.0)
@@ -75,8 +75,8 @@ class ContactRequestTableViewController: UITableViewController, ContactShareCell
         self.back(sender)
     }
     
-    func switchStateChanged(sender: ContactShareCell, isOn: Bool) {
-        let indexPath = self.tableView.indexPathForCell(sender)
+    func switchStateChanged(sender: AnyObject, isOn: Bool) {
+        let indexPath = self.tableView.indexPathForCell(sender as! UITableViewCell)
         contacts[indexPath!.row].shared = isOn
     }
 }

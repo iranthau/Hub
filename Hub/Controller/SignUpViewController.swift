@@ -50,9 +50,9 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
             
             let parseUser = PFUser()
             let user = User(parseUser: parseUser)
-            user.setUpParseUser(email, fName: firstName, lName: lastName)
-            user.username = email
-            user.password = password
+            user.buildParseUser(email, fName: firstName, lName: lastName)
+            user.setUsername(email)
+            user.setPassword(password)
             
             let buttonBgImage = profilePicture.imageForState(.Normal)!
             if !buttonBgImage.isEqual(UIImage(named: "profile-pic")) {

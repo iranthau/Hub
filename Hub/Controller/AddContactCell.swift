@@ -8,22 +8,19 @@
 
 import UIKit
 
-class AddContactTableViewCell: UITableViewCell {
-
-    @IBOutlet weak var contactImage: UIImageView!
-    @IBOutlet weak var contactName: UILabel!
-    @IBOutlet weak var setConnectOptionSwitch: UISwitch!
+class AddContactCell: UITableViewCell {
     
+    weak var cellDelegate: ContactShareCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
-
+    
+    @IBAction func statusChanged(sender: UISwitch) {
+        self.cellDelegate!.switchStateChanged(self, isOn: sender.on)
+    }
 }

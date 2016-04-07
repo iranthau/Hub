@@ -39,6 +39,7 @@ class SignInViewController: UIViewController {
             if user != nil {
                 let currentUser = PFUser.currentUser()!
                 self.hubModel.currentUser = User(parseUser: currentUser)
+                self.hubModel.currentUser!.buildUser()
                 self.performSegueWithIdentifier("signInSegue", sender: nil)
             } else {
                 let errorMessage = error!.userInfo["error"] as? String
@@ -60,6 +61,7 @@ class SignInViewController: UIViewController {
                 } else {
                     let currentUser = PFUser.currentUser()
                     self.hubModel.currentUser = User(parseUser: currentUser!)
+                    self.hubModel.currentUser!.buildUser()
                     self.performSegueWithIdentifier("signInSegue", sender: nil)
                 }
             } else {
@@ -98,7 +100,7 @@ class SignInViewController: UIViewController {
                 
                 let parseUser = PFUser()
                 let user = User(parseUser: parseUser)
-                user.setUpParseUser(email, fName: fName, lName: lName)
+                user.buildParseUser(email, fName: fName, lName: lName)
                 self.hubModel.currentUser = user
                 
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {

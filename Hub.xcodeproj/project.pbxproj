@@ -9,16 +9,16 @@
 /* Begin PBXBuildFile section */
 		9A0CBDBD1C71902C002BD9D0 /* CustomImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0CBDBC1C71902C002BD9D0 /* CustomImagePickerController.swift */; };
 		9A4E59881C213FC70046C8E8 /* TermsConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4E59871C213FC70046C8E8 /* TermsConditionsViewController.swift */; };
-		9AA47EAD1C7576310034FBE8 /* AddContactController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA47EAC1C7576310034FBE8 /* AddContactController.swift */; };
-		9AA47EAE1C7576310034FBE8 /* AddContactController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA47EAC1C7576310034FBE8 /* AddContactController.swift */; };
-		9AA47EAF1C7576310034FBE8 /* AddContactController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA47EAC1C7576310034FBE8 /* AddContactController.swift */; };
+		9AA47EAD1C7576310034FBE8 /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA47EAC1C7576310034FBE8 /* AddContactViewController.swift */; };
+		9AA47EAE1C7576310034FBE8 /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA47EAC1C7576310034FBE8 /* AddContactViewController.swift */; };
+		9AA47EAF1C7576310034FBE8 /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA47EAC1C7576310034FBE8 /* AddContactViewController.swift */; };
 		9AA47EB11C7AD5110034FBE8 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA47EB01C7AD5110034FBE8 /* Contact.swift */; };
 		9AA47EB21C7AD5110034FBE8 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA47EB01C7AD5110034FBE8 /* Contact.swift */; };
 		9AA47EB31C7AD5110034FBE8 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA47EB01C7AD5110034FBE8 /* Contact.swift */; };
 		9AA824F91C43476800B71364 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA824F81C43476800B71364 /* SettingsViewController.swift */; };
 		9AA824FA1C43476800B71364 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA824F81C43476800B71364 /* SettingsViewController.swift */; };
 		9AA824FB1C43476800B71364 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA824F81C43476800B71364 /* SettingsViewController.swift */; };
-		9AD9296D1C7C958000B764B7 /* AddContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD9296C1C7C958000B764B7 /* AddContactTableViewCell.swift */; };
+		9AD9296D1C7C958000B764B7 /* AddContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD9296C1C7C958000B764B7 /* AddContactCell.swift */; };
 		BD19009D1C7341F600D82DA6 /* ContactRequestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD19009C1C7341F600D82DA6 /* ContactRequestTableViewController.swift */; };
 		BD45F1B71C66FF4E00DBE5DB /* MyContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45F1B61C66FF4E00DBE5DB /* MyContactsTableViewController.swift */; };
 		BD5869811C6E5179009408EA /* HeyyaTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5869801C6E5179009408EA /* HeyyaTabBarController.swift */; };
@@ -70,10 +70,10 @@
 		BDEBFDA71CA9687C002E48CE /* ContactSubType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD910CEF1C6C8102003B099C /* ContactSubType.swift */; };
 		BDEBFDA81CA9688B002E48CE /* TermsConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4E59871C213FC70046C8E8 /* TermsConditionsViewController.swift */; };
 		BDEBFDA91CA96893002E48CE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA812041C6613EC00219C4A /* User.swift */; };
-		BDEBFDAB1CA968A9002E48CE /* AddContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD9296C1C7C958000B764B7 /* AddContactTableViewCell.swift */; };
+		BDEBFDAB1CA968A9002E48CE /* AddContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD9296C1C7C958000B764B7 /* AddContactCell.swift */; };
 		BDEBFDAC1CA968E2002E48CE /* ContactSubType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD910CEF1C6C8102003B099C /* ContactSubType.swift */; };
 		BDEBFDAD1CA968F8002E48CE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA812041C6613EC00219C4A /* User.swift */; };
-		BDEBFDAF1CA9690A002E48CE /* AddContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD9296C1C7C958000B764B7 /* AddContactTableViewCell.swift */; };
+		BDEBFDAF1CA9690A002E48CE /* AddContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD9296C1C7C958000B764B7 /* AddContactCell.swift */; };
 		BDEBFDB01CA96911002E48CE /* TermsConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4E59871C213FC70046C8E8 /* TermsConditionsViewController.swift */; };
 		BDEBFDB11CA96C34002E48CE /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966541C4E6D0900FDDD33 /* Parse.framework */; };
 		BDEBFDB21CA96C3C002E48CE /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966541C4E6D0900FDDD33 /* Parse.framework */; };
@@ -125,10 +125,10 @@
 /* Begin PBXFileReference section */
 		9A0CBDBC1C71902C002BD9D0 /* CustomImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomImagePickerController.swift; sourceTree = "<group>"; };
 		9A4E59871C213FC70046C8E8 /* TermsConditionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsConditionsViewController.swift; sourceTree = "<group>"; };
-		9AA47EAC1C7576310034FBE8 /* AddContactController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactController.swift; sourceTree = "<group>"; };
+		9AA47EAC1C7576310034FBE8 /* AddContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
 		9AA47EB01C7AD5110034FBE8 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		9AA824F81C43476800B71364 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		9AD9296C1C7C958000B764B7 /* AddContactTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddContactTableViewCell.swift; path = ../Controller/AddContactTableViewCell.swift; sourceTree = "<group>"; };
+		9AD9296C1C7C958000B764B7 /* AddContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddContactCell.swift; path = ../Controller/AddContactCell.swift; sourceTree = "<group>"; };
 		BD19009C1C7341F600D82DA6 /* ContactRequestTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactRequestTableViewController.swift; sourceTree = "<group>"; };
 		BD45F1B61C66FF4E00DBE5DB /* MyContactsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyContactsTableViewController.swift; sourceTree = "<group>"; };
 		BD5869801C6E5179009408EA /* HeyyaTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeyyaTabBarController.swift; sourceTree = "<group>"; };
@@ -272,7 +272,7 @@
 				BD644D2D1C60D2CB005657FD /* PassswordRecoveryViewController.swift */,
 				BD5869801C6E5179009408EA /* HeyyaTabBarController.swift */,
 				9A0CBDBC1C71902C002BD9D0 /* CustomImagePickerController.swift */,
-				9AA47EAC1C7576310034FBE8 /* AddContactController.swift */,
+				9AA47EAC1C7576310034FBE8 /* AddContactViewController.swift */,
 				BDC7AB5D1C798CE40093D5F4 /* AddContactTableViewController.swift */,
 			);
 			path = Controller;
@@ -304,7 +304,7 @@
 		BD8513341C784057002470A2 /* customCells */ = {
 			isa = PBXGroup;
 			children = (
-				9AD9296C1C7C958000B764B7 /* AddContactTableViewCell.swift */,
+				9AD9296C1C7C958000B764B7 /* AddContactCell.swift */,
 				BD8513321C784043002470A2 /* ContactShareCell.swift */,
 				BD910CE51C6C7FF4003B099C /* ContactItemCell.swift */,
 				BD910CE71C6C7FF4003B099C /* EditContactItemCell.swift */,
@@ -535,7 +535,7 @@
 				BDD912961CB0FBB400533279 /* MyProfileTestData.swift in Sources */,
 				BD9032C21C5474C300C323A9 /* HubModel.swift in Sources */,
 				BD910CEA1C6C7FF4003B099C /* ContactItemCell.swift in Sources */,
-				9AD9296D1C7C958000B764B7 /* AddContactTableViewCell.swift in Sources */,
+				9AD9296D1C7C958000B764B7 /* AddContactCell.swift in Sources */,
 				BDC7AB5E1C798CE40093D5F4 /* AddContactTableViewController.swift in Sources */,
 				BD45F1B71C66FF4E00DBE5DB /* MyContactsTableViewController.swift in Sources */,
 				BDAE7A121C101F6B0085264A /* AppDelegate.swift in Sources */,
@@ -557,7 +557,7 @@
 				BD9032C41C54A5D600C323A9 /* SignUpViewController.swift in Sources */,
 				9AA47EB11C7AD5110034FBE8 /* Contact.swift in Sources */,
 				BD910CF11C6C8102003B099C /* ContactSubType.swift in Sources */,
-				9AA47EAD1C7576310034FBE8 /* AddContactController.swift in Sources */,
+				9AA47EAD1C7576310034FBE8 /* AddContactViewController.swift in Sources */,
 				BD644D2E1C60D2CB005657FD /* PassswordRecoveryViewController.swift in Sources */,
 				BD910CEB1C6C7FF4003B099C /* CustomNavigationController.swift in Sources */,
 				9AA824F91C43476800B71364 /* SettingsViewController.swift in Sources */,
@@ -577,11 +577,11 @@
 				BDEBFDB41CA96C81002E48CE /* MyContactsTableViewController.swift in Sources */,
 				BDEBFDB31CA96C78002E48CE /* SignUpViewController.swift in Sources */,
 				BDEBFDB01CA96911002E48CE /* TermsConditionsViewController.swift in Sources */,
-				BDEBFDAF1CA9690A002E48CE /* AddContactTableViewCell.swift in Sources */,
+				BDEBFDAF1CA9690A002E48CE /* AddContactCell.swift in Sources */,
 				BDEBFDAD1CA968F8002E48CE /* User.swift in Sources */,
 				BDEBFDAC1CA968E2002E48CE /* ContactSubType.swift in Sources */,
 				9AA47EB21C7AD5110034FBE8 /* Contact.swift in Sources */,
-				9AA47EAE1C7576310034FBE8 /* AddContactController.swift in Sources */,
+				9AA47EAE1C7576310034FBE8 /* AddContactViewController.swift in Sources */,
 				BDAE7A271C101F6B0085264A /* HubTests.swift in Sources */,
 				9AA824FA1C43476800B71364 /* SettingsViewController.swift in Sources */,
 			);
@@ -599,12 +599,12 @@
 				BDEBFDB81CA96CD7002E48CE /* HubModel.swift in Sources */,
 				BDEBFDB71CA96CD1002E48CE /* MyContactsTableViewController.swift in Sources */,
 				BDEBFDB61CA96CCA002E48CE /* SignUpViewController.swift in Sources */,
-				BDEBFDAB1CA968A9002E48CE /* AddContactTableViewCell.swift in Sources */,
+				BDEBFDAB1CA968A9002E48CE /* AddContactCell.swift in Sources */,
 				BDEBFDA91CA96893002E48CE /* User.swift in Sources */,
 				BDEBFDA81CA9688B002E48CE /* TermsConditionsViewController.swift in Sources */,
 				BDEBFDA71CA9687C002E48CE /* ContactSubType.swift in Sources */,
 				9AA47EB31C7AD5110034FBE8 /* Contact.swift in Sources */,
-				9AA47EAF1C7576310034FBE8 /* AddContactController.swift in Sources */,
+				9AA47EAF1C7576310034FBE8 /* AddContactViewController.swift in Sources */,
 				BDAE7A321C101F6B0085264A /* HubUITests.swift in Sources */,
 				9AA824FB1C43476800B71364 /* SettingsViewController.swift in Sources */,
 			);

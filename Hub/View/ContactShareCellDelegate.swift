@@ -9,5 +9,5 @@
 import Foundation
 
 protocol ContactShareCellDelegate: class {
-    func switchStateChanged(sender: ContactShareCell, isOn: Bool)
+    func switchStateChanged(sender: AnyObject, isOn: Bool)
 }

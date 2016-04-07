@@ -58,7 +58,7 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
             let imageFile = contact.profileImage
             profileImage.layer.cornerRadius = 0.5 * profileImage.bounds.size.width
             profileImage.clipsToBounds = true
-            imageFile.getDataInBackgroundWithBlock {
+            imageFile!.getDataInBackgroundWithBlock {
                 (imageData: NSData?, error: NSError?) -> Void in
                 if error == nil {
                     if let imageData = imageData {
@@ -69,7 +69,7 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
         }
         
         if let nameLabel = cell.viewWithTag(2) as? UILabel {
-            nameLabel.text = "\(contact.firstName) \(contact.lastName)"
+            nameLabel.text = "\(contact.firstName!) \(contact.lastName!)"
         }
         
         if let nickNameLabel = cell.viewWithTag(3) as? UILabel {
@@ -77,16 +77,16 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
                 nickNameLabel.text = "nickname"
                 nickNameLabel.textColor = UIColor.lightGrayColor()
             } else {
-                nickNameLabel.text = contact.nickname
+                nickNameLabel.text = contact.nickname!
             }
         }
         
         if let cityLabel = cell.viewWithTag(4) as? UILabel {
-            if contact.nickname == nil {
+            if contact.city == nil {
                 cityLabel.text = "city"
                 cityLabel.textColor = UIColor.lightGrayColor()
             } else {
-                cityLabel.text = contact.city
+                cityLabel.text = contact.city!
             }
         }
         
@@ -107,10 +107,10 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
         
         for _ in myContacts {
             
-            let commonPrefix = myContacts[i].firstName.commonPrefixWithString(myContacts[index].firstName, options: .CaseInsensitiveSearch)
+            let commonPrefix = myContacts[i].firstName!.commonPrefixWithString(myContacts[index].firstName!, options: .CaseInsensitiveSearch)
             
             if(commonPrefix.characters.count == 0) {
-                let string = myContacts[index].firstName.uppercaseString;
+                let string = myContacts[index].firstName!.uppercaseString;
                 let firstCharacter = string[string.startIndex]
                 let title = "\(firstCharacter)"
                 let newSection = (index: index, length: i - index, title: title)
@@ -120,7 +120,7 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
             
             if(i == myContacts.count - 1) {
                 let length = i - index + 1
-                let string = myContacts[index].firstName.uppercaseString;
+                let string = myContacts[index].firstName!.uppercaseString;
                 let firstCharacter = string[string.startIndex]
                 let title = "\(firstCharacter)"
                 let newSection = (index: index, length: length, title: title)
@@ -137,7 +137,7 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
     
     func filterContentForSearchText(searchText: String, scope: String = "All") {
         filteredContacts = myContacts.filter { contact in
-            let stringGetSearched = contact.firstName + " " + contact.lastName
+            let stringGetSearched = contact.firstName! + " " + contact.lastName!
             return stringGetSearched.lowercaseString.containsString(searchText.lowercaseString)
         }
         tableView.reloadData()

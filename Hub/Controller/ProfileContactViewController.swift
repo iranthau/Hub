@@ -33,10 +33,10 @@ class ProfileContactViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "\(contactProfile!.firstName) \(contactProfile!.lastName)"
+        title = "\(contactProfile!.firstName!) \(contactProfile!.lastName!)"
         
         let imageFile = contactProfile!.profileImage
-        imageFile.getDataInBackgroundWithBlock {
+        imageFile!.getDataInBackgroundWithBlock {
             (imageData: NSData?, error: NSError?) -> Void in
             if error == nil {
                 if let imageData = imageData {
@@ -57,21 +57,21 @@ class ProfileContactViewController: UIViewController {
             nickNameLabel.text = "nickname"
             nickNameLabel.textColor = UIColor.lightGrayColor()
         } else {
-            nickNameLabel.text = contactProfile!.nickname
+            nickNameLabel.text = contactProfile!.nickname!
         }
         
         if contactProfile!.city == nil {
             cityLabel.text = "city"
             cityLabel.textColor = UIColor.lightGrayColor()
         } else {
-            cityLabel.text = contactProfile!.city
+            cityLabel.text = contactProfile!.city!
         }
         
         if contactProfile!.availableTime == nil {
             contactHoursTextView.text = "No prefered time provided"
             contactHoursTextView.textColor = UIColor.lightGrayColor()
         } else {
-            contactHoursTextView.text = contactProfile!.availableTime
+            contactHoursTextView.text = contactProfile!.availableTime!
         }
         
         hubModel.currentUser!.getAllSharedContacts(contactProfile!, profileContactVC: self)
@@ -156,7 +156,7 @@ extension ProfileContactViewController: UITableViewDataSource {
         titleForHeaderInSection section: Int)
         -> String? {
             if tableView == self.mySharedContactsTableView {
-                return "\(contactProfile!.firstName) can see"
+                return "\(contactProfile!.firstName!) can see"
             }
             
             return ""

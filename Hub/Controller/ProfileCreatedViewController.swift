@@ -24,7 +24,7 @@ class ProfileCreatedViewController: UIViewController {
         profileImage.clipsToBounds = true
         
         let imageFile = user!.profileImage
-        imageFile.getDataInBackgroundWithBlock {
+        imageFile!.getDataInBackgroundWithBlock {
             (imageData: NSData?, error: NSError?) -> Void in
             if error == nil {
                 if let imageData = imageData {
@@ -33,7 +33,7 @@ class ProfileCreatedViewController: UIViewController {
             }
         }
         
-        firstNameLabel.text = user!.firstName
+        firstNameLabel.text = user!.firstName!
     }
 
     override func didReceiveMemoryWarning() {
