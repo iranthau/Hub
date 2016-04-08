@@ -38,7 +38,7 @@ class MyProfileViewController: UIViewController {
         tableView.separatorColor = UIColor(red: 255/255.0, green: 255/255.0,
             blue: 255/255.0, alpha: 0.0)
         user = hubModel.currentUser
-        title = "\(user!.firstName!) \(user!.firstName!)"
+        self.navigationItem.title = "\(user!.firstName!) \(user!.lastName!)"
         
         let imageFile = user!.profileImage
         

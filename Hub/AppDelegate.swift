@@ -25,6 +25,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.setApplicationId("inQev5jlG1BWu0LdsRHBK5XbyQrADMJ6BwGXweEF", clientKey: "p2C6htbwjtzV0syI7zXsjiWxbQajREwoJdreYDL0")
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
         
+        let userNotificationTypes: UIUserNotificationType = [.Alert, .Badge, .Sound]
+        let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
+        
+        application.registerUserNotificationSettings(settings)
+        application.registerForRemoteNotifications()
+        
         // Set colors and appearance of UI elements:
         customizeAppearance()
         return true
@@ -61,6 +67,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 openURL: url,
                 sourceApplication: sourceApplication,
                 annotation: annotation)
+    }
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        // Store the deviceToken in the current Installation and save it to Parse
+        let installation = PFInstallation.currentInstallation()
+        installation.setDeviceTokenFromData(deviceToken)
+        installation.saveInBackground()
+    }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        PFPush.handlePush(userInfo)
     }
 
     // customize tab bar controller appearance and any other app elements that require programmatic view

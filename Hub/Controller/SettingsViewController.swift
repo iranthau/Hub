@@ -8,15 +8,14 @@
 
 import UIKit
 import Parse
+import MessageUI
 
 class SettingsViewController: UITableViewController {
 
-    //Variables (properties, outlets, etc) begin here:
     @IBOutlet weak var hideProfileSwitch: UISwitch!
-    @IBOutlet weak var hideProfileCell: UITableViewCell!
-    @IBOutlet weak var hideProfileImage: UIImage!
-    
-    var cell:UITableViewCell?
+    var mailComposer: MFMailComposer?
+    var currentUser: User?
+    let hubModel = HubModel.sharedInstance
     
     //Methods begin here:
     override func viewDidLoad() {
@@ -26,8 +25,11 @@ class SettingsViewController: UITableViewController {
         //hide the separator line between cells
         self.tableView.separatorColor = UIColor(red: 255/255.0, green: 255/255.0,
             blue: 255/255.0, alpha: 0.0)
-        /*check the state of hideProfileSwitch here:*/
-        //hideProfileSwitch.on =
+        
+        currentUser = hubModel.currentUser
+        
+        mailComposer = MFMailComposer(tableVC: self)
+        hideProfileSwitch.on = currentUser!.profileIsVisible!
     }
 
     override func didReceiveMemoryWarning() {
@@ -71,12 +73,17 @@ class SettingsViewController: UITableViewController {
         
         switch indexPath.row {
         case 0:
-            performSegueWithIdentifier("TermsAndConditionsSegue", sender: nil)
+            performTermsSegue()
         case 1:
-            performSegueWithIdentifier("AboutSegue", sender: nil)
+            performAboutSegue()
+        case 2:
+            help()
+        case 3:
+            tellAFriend()
+        case 4:
+            deleteAccount()
         case 7:
-            userDidTapSignoutRow()
-            //TODO: - write cases for other rows that require action as functionality is implemented
+            signOut()
         default:
             return
         }
@@ -93,14 +100,23 @@ class SettingsViewController: UITableViewController {
         }
     }
     
-    //UI @IBAction methods live here:
     @IBAction func hideProfileToggle(switchControl: UISwitch) {
-        // 1. hide profile
-        
-        // 2. display a quick status message
+        currentUser!.hideProfile(switchControl.on)
     }
     
-    func userDidTapSignoutRow() {
+    func performTermsSegue() {
+        performSegueWithIdentifier("TermsAndConditionsSegue", sender: nil)
+    }
+    
+    func performAboutSegue() {
+        performSegueWithIdentifier("AboutSegue", sender: nil)
+    }
+    
+    func deleteAccount() {
+        
+    }
+    
+    func signOut() {
         let message = "Sign out?"
         
         let alertError = UIAlertController(title: "Alert", message: message, preferredStyle: .Alert)
@@ -119,5 +135,21 @@ class SettingsViewController: UITableViewController {
         alertError.addAction(cancelAction)
         
         self.presentViewController(alertError, animated: true, completion: nil)
+    }
+    
+    func help() {
+        let alertError = UIAlertController(title: "Help", message: "Coming soon...", preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertError.addAction(defaultAction)
+        self.presentViewController(alertError, animated: true, completion: nil)
+    }
+    
+    func tellAFriend() {
+        let mailComposeViewController = mailComposer!.configuredMailComposeViewController()
+        if MFMailComposeViewController.canSendMail() {
+            self.presentViewController(mailComposeViewController, animated: true, completion: nil)
+        } else {
+            mailComposer!.showSendMailErrorAlert()
+        }
     }
 }

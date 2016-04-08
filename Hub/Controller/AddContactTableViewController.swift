@@ -11,12 +11,13 @@ import Parse
 import Foundation
 import MessageUI
 
-class AddContactTableViewController: UITableViewController, UISearchResultsUpdating, MFMailComposeViewControllerDelegate {
+class AddContactTableViewController: UITableViewController, UISearchResultsUpdating {
     
     var filteredContacts = [User]()
     let searchController = UISearchController(searchResultsController: nil)
     let hubModel = HubModel.sharedInstance
     var currentUser: User?
+    var mailComposer: MFMailComposer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +29,7 @@ class AddContactTableViewController: UITableViewController, UISearchResultsUpdat
         definesPresentationContext = true
         searchController.hidesNavigationBarDuringPresentation = false
         self.tableView.tableHeaderView = searchController.searchBar
+        mailComposer = MFMailComposer(tableVC: self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -132,37 +134,12 @@ class AddContactTableViewController: UITableViewController, UISearchResultsUpdat
     }
     
     @IBAction func inviteFriend(sender: UIBarButtonItem) {
-        let mailComposeViewController = configuredMailComposeViewController()
+        let mailComposeViewController = mailComposer!.configuredMailComposeViewController()
         if MFMailComposeViewController.canSendMail() {
             self.presentViewController(mailComposeViewController, animated: true, completion: nil)
         } else {
-            self.showSendMailErrorAlert()
+            mailComposer!.showSendMailErrorAlert()
         }
-    }
-    
-    func configuredMailComposeViewController() -> MFMailComposeViewController {
-        let mailComposerVC = MFMailComposeViewController()
-        mailComposerVC.mailComposeDelegate = self
-        
-        let mailBody = "Try out new Heyya. It's awesome! Download it here http://www.ioscreator.com/"
-        
-        mailComposerVC.setSubject("Join Heyya")
-        mailComposerVC.setMessageBody(mailBody, isHTML: false)
-        
-        return mailComposerVC
-    }
-    
-    func showSendMailErrorAlert() {
-        let alertError = UIAlertController(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", preferredStyle: .Alert)
-        
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-        alertError.addAction(defaultAction)
-        
-        self.presentViewController(alertError, animated: true, completion: nil)
-    }
-    
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        controller.dismissViewControllerAnimated(true, completion: nil)
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

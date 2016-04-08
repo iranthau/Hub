@@ -15,12 +15,14 @@ class SignInViewController: UIViewController {
     @IBOutlet weak var fbSignInButton: UIButton!
     @IBOutlet weak var userNameInput: UITextField!
     @IBOutlet weak var passwordInput: UITextField!
+    @IBOutlet weak var backgroundLayer: UIView!
     let hubModel = HubModel.sharedInstance
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBarHidden = true
         fbSignInButton.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 10.0, bottom: 0.0, right: 0.0)
+        backgroundLayer.backgroundColor = UIColor(white: 0, alpha: 0.5)
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SignInViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
     }

@@ -150,7 +150,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         let changeInHeight = CGRectGetHeight(keyboardFrame)
         UIView.animateWithDuration(animationDurarion, animations: { () -> Void in
             if show {
-                self.bottomConstraint.constant = changeInHeight
+                self.bottomConstraint.constant = changeInHeight * 0.8
             } else {
                 self.bottomConstraint.constant = 0
             }

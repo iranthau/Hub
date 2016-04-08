@@ -217,6 +217,11 @@ class User: Hashable {
             requestsTVC.tableView.reloadData()
         }
     }
+    
+    func hideProfile(isHidden: Bool) {
+        matchingParseObject["profileIsVisible"] = isHidden
+        matchingParseObject.saveInBackground()
+    }
 }
 
 func == (lhs: User, rhs: User) -> Bool {
