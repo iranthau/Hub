@@ -19,7 +19,9 @@ class AddContactViewController: UIViewController, ContactShareCellDelegate {
     
     var contactProfile: User?
     var contacts = [Contact]()
+    var requestedContacts = [PFObject]()
     var parseObjects: AnyObject?
+    let hubModel = HubModel.sharedInstance
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,6 +81,7 @@ class AddContactViewController: UIViewController, ContactShareCellDelegate {
                 (fetchedContact: PFObject?, error: NSError?) -> Void in
                 
                 let contact = Contact(parseObject: fetchedContact!)
+                contact.buildContact()
                 self.contacts.append(contact)
                 self.contactSelectionTableView.reloadData()
             }
@@ -87,7 +90,37 @@ class AddContactViewController: UIViewController, ContactShareCellDelegate {
     
     func switchStateChanged(sender: AnyObject, isOn: Bool) {
         let indexPath = contactSelectionTableView.indexPathForCell(sender as! UITableViewCell)
-        print(contacts[indexPath!.row].value)
+        let contact = contacts[indexPath!.row]
+        contact.selected = isOn
+        requestedContacts.append(contact.matchingParseObject)
+    }
+    
+    @IBAction func sendRequest(sender: UIBarButtonItem) {
+        let pushQuery = PFInstallation.query()!
+        let friend = contactProfile!.matchingParseObject
+        pushQuery.whereKey("user", equalTo: friend)
+        
+        // Send the push notification created above
+        let push = PFPush()
+        push.setQuery(pushQuery)
+        let message = "You have a request from \(contactProfile!.firstName!) \(contactProfile!.lastName!)"
+        let data = [
+            "alert": message,
+            "badge": "Increment",
+            "sound": "Ambient Hit.mp3"
+        ]
+        push.setData(data)
+        
+        let parseObject = PFObject(className: "SharedPermission")
+        let sharedPermission = SharedPermission(parseObject: parseObject)
+        let currentUser = hubModel.currentUser?.matchingParseObject
+        sharedPermission.buildParseObject(friend, toUser: currentUser!, contacts: requestedContacts, status: "pending")
+        sharedPermission.matchingParseObject.saveInBackgroundWithBlock {
+            (success, error) -> Void in
+            if success {
+                push.sendPushInBackground()
+            }
+        }
     }
 }
 
@@ -106,14 +139,14 @@ extension AddContactViewController: UITableViewDataSource {
         imageView.image = UIImage(named: contact.getImageName())
         
         let label = cell.viewWithTag(2) as! UILabel
-        if contact.type == ContactType.Social.label {
-            label.text = "\(contact.subType)"
+        if contact.type! == ContactType.Social.label {
+            label.text = "\(contact.subType!)"
         } else {
-            label.text = "\(contact.subType) \(contact.type)"
+            label.text = "\(contact.subType!) \(contact.type!)"
         }
         
         if let sharedSwitch = cell.viewWithTag(3) as? UISwitch {
-            sharedSwitch.setOn(false, animated: true)
+            sharedSwitch.setOn(contact.selected!, animated: true)
         }
         
         cell.cellDelegate = self

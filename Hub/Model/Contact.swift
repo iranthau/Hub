@@ -13,30 +13,35 @@ class Contact {
     
     let parseClassName = "Contact"
     var matchingParseObject: PFObject
-    var objectId: String
-    var value: String
-    var type: String
-    var subType: String
+    var objectId: String?
+    var value: String?
+    var type: String?
+    var subType: String?
+    var selected: Bool?
     
     init(parseObject: PFObject) {
         matchingParseObject = parseObject
-        objectId = parseObject.objectId!
-        value = parseObject["value"] as! String
-        type = parseObject["type"] as! String
-        subType = parseObject["subType"] as! String
     }
     
-//    init(value: String, type: String, subType: String) {
-//        matchingParseObject = PFObject(className: parseClassName)
-//        matchingParseObject["value"] = value
-//        matchingParseObject["type"] = type
-//        matchingParseObject["subType"] = subType
-//    }
+    func buildContact() {
+        objectId = matchingParseObject.objectId!
+        value = matchingParseObject["value"] as? String
+        type = matchingParseObject["type"] as? String
+        subType = matchingParseObject["subType"] as? String
+        selected = false
+    }
+    
+    func buildParseObject(value: String, type: String, subType: String) {
+        matchingParseObject = PFObject(className: parseClassName)
+        matchingParseObject["value"] = value
+        matchingParseObject["type"] = type
+        matchingParseObject["subType"] = subType
+    }
     
     func getImageName() -> String {
-        let contactType = (type, subType)
+        let contactType = (type!, subType!)
         switch contactType {
-            case (ContactType.Phone.label , ContactSubType.PhoneHome.label):
+            case (ContactType.Phone.label, ContactSubType.PhoneHome.label):
                 return ContactSubType.PhoneHome.image
             case (ContactType.Phone.label, ContactSubType.PhoneWork.label):
                 return ContactSubType.PhoneWork.image

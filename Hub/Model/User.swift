@@ -121,19 +121,19 @@ class User: Hashable {
         query.whereKey("user", equalTo: friend.matchingParseObject)
         query.whereKey("userFriend", equalTo: matchingParseObject)
         
-        query.findObjectsInBackgroundWithBlock {
-            (sharedPermissions: [PFObject]?, error: NSError?) -> Void in
-            
-            if let sharedPermissions = sharedPermissions {
-                for sharedPermission in sharedPermissions {
-                    let contact = sharedPermission.objectForKey("contact") as! PFObject
-                    
+        query.getFirstObjectInBackgroundWithBlock {
+            (sharedPermission: PFObject?, error: NSError?) -> Void in
+            if let sharedPermission = sharedPermission {
+                let contacts = sharedPermission.objectForKey("contacts")
+                
+                for contact in contacts as! [PFObject] {
                     contact.fetchInBackgroundWithBlock {
                         (fetchedContact: PFObject?, error: NSError?) -> Void in
                         
                         let sharedContact = Contact(parseObject: fetchedContact!)
+                        sharedContact.buildContact()
                         
-                        switch sharedContact.type {
+                        switch sharedContact.type! {
                         case ContactType.Phone.label:
                             profileContactVC.sharedPhoneContacts.append(sharedContact)
                         case ContactType.Email.label:
@@ -156,17 +156,19 @@ class User: Hashable {
         let query = PFQuery(className: "SharedPermission")
         query.whereKey("userFriend", equalTo: friend.matchingParseObject)
         query.whereKey("user", equalTo: matchingParseObject)
+        query.whereKey("status", equalTo: "accepted")
         
-        query.findObjectsInBackgroundWithBlock {
-            (sharedPermissions: [PFObject]?, error: NSError?) -> Void in
+        query.getFirstObjectInBackgroundWithBlock {
+            (sharedPermission: PFObject?, error: NSError?) -> Void in
             
-            if let sharedPermissions = sharedPermissions {
-                for sharedPermission in sharedPermissions {
-                    let contact = sharedPermission.objectForKey("contact") as! PFObject
-                    
+            if let sharedPermission = sharedPermission {
+                let contacts = sharedPermission.objectForKey("contacts") as! [PFObject]
+                
+                for contact in contacts {
                     contact.fetchInBackgroundWithBlock {
                         (fetchedContact: PFObject?, error: NSError?) -> Void in
                         let sharedContact = Contact(parseObject: fetchedContact!)
+                        sharedContact.buildContact()
                         profileContactVC.mySharedContacts.append(sharedContact)
                         profileContactVC.mySharedContactsTableView.reloadData()
                     }
@@ -183,8 +185,8 @@ class User: Hashable {
                 (fetchedContact: PFObject?, error: NSError?) -> Void in
                 
                 let contact = Contact(parseObject: fetchedContact!)
-                
-                switch contact.type {
+                contact.buildContact()
+                switch contact.type! {
                 case ContactType.Phone.label:
                     myProfileVC.sharedPhoneContacts.append(contact)
                 case ContactType.Email.label:
@@ -202,20 +204,32 @@ class User: Hashable {
     }
     
     func getRequests(requestsTVC: RequestsTableViewController) {
-        let relation = matchingParseObject.relationForKey("requests")
-        let query = relation.query()
+        let query = PFQuery(className: "SharedPermission")
+        query.whereKey("user", equalTo: matchingParseObject)
+        query.whereKey("status", equalTo: "pending")
         
         query.findObjectsInBackgroundWithBlock {
             (objects: [PFObject]?, error: NSError?) -> Void in
             if let objects = objects {
-                for object in objects as! [PFUser] {
-                    let request = User(parseUser: object)
-                    request.buildUser()
-                    requestsTVC.requests.append(request)
+                for object in objects {
+                    let fromUser = object["userFriend"] as! PFUser
+                    fromUser.fetchInBackgroundWithBlock {
+                        (fetchedUser: PFObject?, error: NSError?) -> Void in
+                        let fetchedFromUser = fetchedUser as! PFUser
+                        let request = User(parseUser: fetchedFromUser)
+                        request.buildUser()
+                        requestsTVC.requests.append(request)
+                        requestsTVC.tableView.reloadData()
+                    }
                 }
             }
-            requestsTVC.tableView.reloadData()
         }
+    }
+    
+    func getRequestedContacts(friend: User, contactRequestTVC: ContactRequestTableViewController) {
+        let parseSPObject = PFObject(className: "SharedPermission")
+        let sharedPermisson = SharedPermission(parseObject: parseSPObject)
+        sharedPermisson.getContacts(self, friend: friend, contactRequestTVC: contactRequestTVC)
     }
     
     func hideProfile(isHidden: Bool) {

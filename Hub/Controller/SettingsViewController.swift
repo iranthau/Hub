@@ -113,6 +113,22 @@ class SettingsViewController: UITableViewController {
     }
     
     func deleteAccount() {
+        let query = PFQuery(className: "SharedPermission")
+        query.whereKey("user", equalTo: currentUser!.matchingParseObject)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]?, error: NSError?) in
+            for object in objects! {
+                object.deleteInBackground()
+            }
+        }
+        
+        query.whereKey("userFriend", equalTo: currentUser!.matchingParseObject)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]?, error: NSError?) in
+            for object in objects! {
+                object.deleteInBackground()
+            }
+        }
         
     }
     

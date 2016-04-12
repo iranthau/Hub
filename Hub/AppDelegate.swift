@@ -53,6 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         FBSDKAppEvents.activateApp()
+        clearBadges()
     }
 
     func applicationWillTerminate(application: UIApplication) {
@@ -72,12 +73,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         // Store the deviceToken in the current Installation and save it to Parse
         let installation = PFInstallation.currentInstallation()
+        installation["user"] = PFUser.currentUser()
         installation.setDeviceTokenFromData(deviceToken)
         installation.saveInBackground()
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        PFPush.handlePush(userInfo)
+        if application.applicationState == UIApplicationState.Active {
+            PFPush.handlePush(userInfo)
+        } else {
+            let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+            let tabBarController = storyBoard.instantiateViewControllerWithIdentifier("HeyyaTabBarController") as! UITabBarController
+            if PFUser.currentUser() != nil {
+                tabBarController.selectedIndex = 2
+                self.window!.rootViewController = tabBarController
+            }
+        }
+    }
+    
+    func clearBadges() {
+        let installation = PFInstallation.currentInstallation()
+        installation.badge = 0
+        installation.saveInBackgroundWithBlock {
+            (success, error) -> Void in
+            if success {
+                UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+            }
+        }
     }
 
     // customize tab bar controller appearance and any other app elements that require programmatic view

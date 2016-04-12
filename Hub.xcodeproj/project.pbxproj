@@ -20,6 +20,7 @@
 		9AA824FB1C43476800B71364 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA824F81C43476800B71364 /* SettingsViewController.swift */; };
 		9AD9296D1C7C958000B764B7 /* AddContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD9296C1C7C958000B764B7 /* AddContactCell.swift */; };
 		BD19009D1C7341F600D82DA6 /* ContactRequestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD19009C1C7341F600D82DA6 /* ContactRequestTableViewController.swift */; };
+		BD2B11B11CBA18C300A68A5D /* Ambient Hit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BD2B11B01CBA18C300A68A5D /* Ambient Hit.mp3 */; };
 		BD45F1B71C66FF4E00DBE5DB /* MyContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45F1B61C66FF4E00DBE5DB /* MyContactsTableViewController.swift */; };
 		BD5869811C6E5179009408EA /* HeyyaTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5869801C6E5179009408EA /* HeyyaTabBarController.swift */; };
 		BD5B94DB1C64F43300812FFD /* ProfileCreatedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5B94DA1C64F43300812FFD /* ProfileCreatedViewController.swift */; };
@@ -131,6 +132,7 @@
 		9AA824F81C43476800B71364 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		9AD9296C1C7C958000B764B7 /* AddContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddContactCell.swift; path = ../Controller/AddContactCell.swift; sourceTree = "<group>"; };
 		BD19009C1C7341F600D82DA6 /* ContactRequestTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactRequestTableViewController.swift; sourceTree = "<group>"; };
+		BD2B11B01CBA18C300A68A5D /* Ambient Hit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Ambient Hit.mp3"; path = "Sound/Ambient Hit.mp3"; sourceTree = "<group>"; };
 		BD45F1B61C66FF4E00DBE5DB /* MyContactsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyContactsTableViewController.swift; sourceTree = "<group>"; };
 		BD5869801C6E5179009408EA /* HeyyaTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeyyaTabBarController.swift; sourceTree = "<group>"; };
 		BD5B94DA1C64F43300812FFD /* ProfileCreatedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCreatedViewController.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 		BDAE7A2D1C101F6B0085264A /* HubUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HubUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDAE7A311C101F6B0085264A /* HubUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubUITests.swift; sourceTree = "<group>"; };
 		BDAE7A331C101F6B0085264A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BDB921771CBD276400EDA96C /* HubPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = HubPlayground.playground; sourceTree = "<group>"; };
 		BDBB6A731C62117200143087 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		BDBB6A741C62117200143087 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		BDBB6A751C62117200143087 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
@@ -243,6 +246,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BD2B11AD1CB9CA6000A68A5D /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+				BD2B11B01CBA18C300A68A5D /* Ambient Hit.mp3 */,
+			);
+			name = Sound;
+			sourceTree = "<group>";
+		};
 		BD423AF21C1326F3001D25E7 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -374,10 +385,12 @@
 		BDAE7A101C101F6B0085264A /* Hub */ = {
 			isa = PBXGroup;
 			children = (
+				BDB921771CBD276400EDA96C /* HubPlayground.playground */,
 				BDAE7A111C101F6B0085264A /* AppDelegate.swift */,
 				BD423AF21C1326F3001D25E7 /* View */,
 				BD423AF31C132728001D25E7 /* Controller */,
 				BD423AF41C132747001D25E7 /* Model */,
+				BD2B11AD1CB9CA6000A68A5D /* Sound */,
 				BD423AF51C13276A001D25E7 /* Supporting Files */,
 			);
 			path = Hub;
@@ -513,6 +526,7 @@
 			files = (
 				BDAE7A1C1C101F6B0085264A /* LaunchScreen.storyboard in Resources */,
 				BDAE7A191C101F6B0085264A /* Assets.xcassets in Resources */,
+				BD2B11B11CBA18C300A68A5D /* Ambient Hit.mp3 in Resources */,
 				BDAE7A171C101F6B0085264A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
