@@ -179,26 +179,27 @@ class User: Hashable {
     
     func getContacts(myProfileVC: MyProfileViewController) {
         let myContacts = matchingParseObject.objectForKey("contacts")
-        for parseObject in myContacts as! [PFObject] {
-            
-            parseObject.fetchInBackgroundWithBlock {
-                (fetchedContact: PFObject?, error: NSError?) -> Void in
-                
-                let contact = Contact(parseObject: fetchedContact!)
-                contact.buildContact()
-                switch contact.type! {
-                case ContactType.Phone.label:
-                    myProfileVC.sharedPhoneContacts.append(contact)
-                case ContactType.Email.label:
-                    myProfileVC.sharedEmailContacts.append(contact)
-                case ContactType.Address.label:
-                    myProfileVC.sharedAddressContacts.append(contact)
-                case ContactType.Social.label:
-                    myProfileVC.sharedSocialContacts.append(contact)
-                default:
-                    return
+        if let myContacts = myContacts {
+            for parseObject in myContacts as! [PFObject] {
+                parseObject.fetchInBackgroundWithBlock {
+                    (fetchedContact: PFObject?, error: NSError?) -> Void in
+                    
+                    let contact = Contact(parseObject: fetchedContact!)
+                    contact.buildContact()
+                    switch contact.type! {
+                    case ContactType.Phone.label:
+                        myProfileVC.sharedPhoneContacts.append(contact)
+                    case ContactType.Email.label:
+                        myProfileVC.sharedEmailContacts.append(contact)
+                    case ContactType.Address.label:
+                        myProfileVC.sharedAddressContacts.append(contact)
+                    case ContactType.Social.label:
+                        myProfileVC.sharedSocialContacts.append(contact)
+                    default:
+                        return
+                    }
+                    myProfileVC.tableView.reloadData()
                 }
-                myProfileVC.tableView.reloadData()
             }
         }
     }

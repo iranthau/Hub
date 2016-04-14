@@ -73,7 +73,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         // Store the deviceToken in the current Installation and save it to Parse
         let installation = PFInstallation.currentInstallation()
-        installation["user"] = PFUser.currentUser()
+        if PFUser.currentUser() != nil {
+            installation["user"] = PFUser.currentUser()
+        }
         installation.setDeviceTokenFromData(deviceToken)
         installation.saveInBackground()
     }
