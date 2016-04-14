@@ -40,4 +40,11 @@ class ProfileCreatedViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    @IBAction func createProfile() {
+        let heyyaTabBarController: UITabBarController =
+            self.storyboard?.instantiateViewControllerWithIdentifier("HeyyaTabBarController") as! UITabBarController
+        heyyaTabBarController.selectedIndex = 1
+        self.presentViewController(heyyaTabBarController, animated: true, completion: nil)
+    }
 }
