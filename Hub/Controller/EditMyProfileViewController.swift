@@ -7,17 +7,17 @@
 //
 
 import UIKit
+import Parse
 
 protocol EditMyProfileViewControllerDelegate: class {
     func editMyProfileViewControllerDidCancel(controller: EditMyProfileViewController)
-    func editMyProfileViewController(controller: EditMyProfileViewController,
-        didFinishEditingProfile userProfile: MyProfileTestData) //#warning: replace with model obj
+    func editMyProfileViewController(controller: EditMyProfileViewController, didFinishEditingProfile userProfile: User)
 }
 
-class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
+class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var profileImageView: UIImageView!
-    @IBOutlet weak var availabilityTextField: UITextField!
+    @IBOutlet weak var availabilityTextField: UITextView!
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var nicknameTextField: UITextField!
@@ -30,52 +30,72 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var socialButton: UIButton!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var profileImageChangeButton: UIButton!
+    @IBOutlet weak var selectedContactColor: UIView!
     
     weak var delegate: EditMyProfileViewControllerDelegate?
-    
-    // this variable simulates the user data, in this case to give EditMyProfileView
-    //  something to work with for functionality testing.
-    //  #warning: replace with correct content from the model!!!! - A. G.
-    var userData: MyProfileTestData?
-    var profileImage: UIImage?
-    var activeDataSource = [String]()
-    var keyboardForContactType: Int = 0
-    var doneIsEnabled = false
-    var activeContactImage:UIImage = UIImage()
-    
-    //keep track of which text field is active. If it's one of the upper fields, 
-    // keep the overall view where it is. Otherwise, move it up.
+    var contactFieldCell: EditContactItemCell?
     var activeTextField: UITextField?
     let defaultViewFrameOriginY: CGFloat = 64.0 //point at the bottom of the nav bar
     
-    var contactFieldCell: EditContactItemCell?
+    var currentUser: User?
+    let hubModel = HubModel.sharedInstance
+    var profileImage: UIImage?
+    var activeDataSource = [Contact]()
+    var keyboardForContactType = 0
+    var doneIsEnabled = false
+    
+    var allContacts = [Contact]()
+    var phoneContacts = [Contact]()
+    var emailContacts = [Contact]()
+    var addressContacts = [Contact]()
+    var socialContacts = [Contact]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //hide the separator lines in the table view
-        contactFieldTableView.separatorColor = UIColor(red: 255/255.0, green: 255/255.0,
-            blue: 255/255.0, alpha: 0.0)
+        title = "Edit Profile"
+        currentUser = hubModel.currentUser
         
-        //set user's profile image to round display instead of square
         profileImageView.layer.cornerRadius = profileImageView.bounds.size.width / 2
         profileImageView.clipsToBounds = true
         
-        //get the user data from the segue
-        if let user = userData {
-            title = "Edit Profile"
-            // perform any other additional setup of the view
+        let pObject = PFObject(className: "Contact")
+        phoneContacts = hubModel.initialisePhoneContacts(pObject)
+        emailContacts = hubModel.initialiseEmailContacts(pObject)
+        addressContacts = hubModel.initialiseAddressContacts(pObject)
+        socialContacts = hubModel.initialiseSocialContacts(pObject)
+        
+        activeDataSource = phoneContacts
+
+        if let currentUser = currentUser {
             doneNavBarButton.enabled = true
-            firstNameTextField.text = user.userFirstName
-            lastNameTextField.text = user.userLastName
-            nicknameTextField.text = user.userNickname
-            availabilityTextField.text = user.userAvailability
-//            profileImageView.image = UIImage(named: user.userImageName)
-//            profileImage = user.userImage
-            profileImageView.image = profileImage
+            firstNameTextField.text = currentUser.firstName
+            lastNameTextField.text = currentUser.lastName
+            nicknameTextField.text = currentUser.nickname
+            if currentUser.availableTime == nil {
+                availabilityTextField.text = "When can others contact you"
+            } else {
+                availabilityTextField.text = currentUser.availableTime
+            }
+            
+            let imageFile = currentUser.profileImage
+            imageFile!.getDataInBackgroundWithBlock {
+                (imageData: NSData?, error: NSError?) -> Void in
+                if error == nil {
+                    if let imageData = imageData {
+                        self.profileImageView.image = UIImage(data:imageData)
+                    }
+                }
+            }
+            allContacts = currentUser.contacts
         }
+        
+        matchInitialContactsValues()
         
         // assign delegates and keyboard types to regular text fields
         initialiseTextFields()
+        
+        selectedContactColor.backgroundColor = UIColor(red: 240/255.0, green: 148/255.0,
+                                                      blue: 27/255.0, alpha: 1)
         
         //move content higher when a text field is selected:
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditMyProfileViewController.keyboardWillShow(_:)),
@@ -84,16 +104,45 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
             name: UIKeyboardWillHideNotification, object: self.view.window)
     }
     
+    func matchInitialContactsValues() {
+        for contact in allContacts {
+            switch contact.type! {
+            case ContactType.Phone.label:
+                for c in phoneContacts {
+                    if c.subType == contact.subType {
+                        c.value = contact.value
+                    }
+                }
+            case ContactType.Email.label:
+                for c in emailContacts {
+                    if c.subType == contact.subType {
+                        c.value = contact.value
+                    }
+                }
+            case ContactType.Address.label:
+                for c in addressContacts {
+                    if c.subType == contact.subType {
+                        c.value = contact.value
+                    }
+                }
+            case ContactType.Social.label:
+                for c in socialContacts {
+                    if c.subType == contact.subType {
+                        c.value = contact.value
+                    }
+                }
+            default:
+                break
+            }
+        }
+    }
+    
     //Assign a delegate to the main text fields so that they can respond to events in the
     // UI, such as user tapping a return button
     func initialiseTextFields() {
-        availabilityTextField.delegate = self
         availabilityTextField.keyboardType = .Default
-        firstNameTextField.delegate = self
         firstNameTextField.keyboardType = .Default
-        lastNameTextField.delegate = self
         lastNameTextField.keyboardType = .Default
-        nicknameTextField.delegate = self
         nicknameTextField.keyboardType = .Default
     }
 
@@ -163,19 +212,13 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate {
     //enable editing of text fields; enable nav bar Done button when there's some text typed
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange,
         replacementString string:String) -> Bool {
-            
             //read in the value of the original text of the checklist item:
             let oldText:NSString = textField.text!
             //replace its value with value of replacementString
             let newText:NSString = oldText.stringByReplacingCharactersInRange(range, withString: string)
-            
             doneNavBarButton.enabled = (newText.length > 0)
-
             return true
     }
-}
-
-extension EditMyProfileViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return activeDataSource.count
@@ -186,47 +229,23 @@ extension EditMyProfileViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCellWithIdentifier("EditContactCell") as! EditContactItemCell
         
         let textField = cell.contactInputTextField
-        textField.text = activeDataSource[indexPath.row]
-        let imageView = cell.contactTypeImageView
-        imageView.image = activeContactImage
-        
+        textField.delegate = self
+        textField.text = activeDataSource[indexPath.row].value
+        textField.placeholder = activeDataSource[indexPath.row].subType
+        let imageName = activeDataSource[indexPath.row].getImageName()
+        cell.contactImage.image = UIImage(named: imageName)
         cell.configureKeyboardForContactType(keyboardForContactType)
-        
+        cell.contact = activeDataSource[indexPath.row]
         return cell
     }
-}
-
-extension EditMyProfileViewController: UITableViewDelegate {
-    //enable row deletion etc
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        //get the cell
-        if let cell = tableView.cellForRowAtIndexPath(indexPath) {
-            // perform any data assignments etc
-            let textField = cell.viewWithTag(80) as! UITextField
-            activeDataSource[indexPath.row] = textField.text!
-        }
-        
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! EditContactItemCell
+        let textField = cell.contactInputTextField
+        activeDataSource[indexPath.row].value = textField.text!
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
-    
-    //enable data deletion from contact fields
-    func tableView(tableView: UITableView,
-        commitEditingStyle editingStyle: UITableViewCellEditingStyle,
-        forRowAtIndexPath indexPath: NSIndexPath) {
-            
-            activeDataSource.removeAtIndex(indexPath.row)
-            
-            let indexPaths = [indexPath]
-            tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
-    }
-    
-    //handle tap on the accessory button
-    func tableView(tableView: UITableView,
-        accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
-            
-    }
+
 }
 
 extension EditMyProfileViewController: UINavigationBarDelegate {
@@ -241,32 +260,23 @@ extension EditMyProfileViewController {
     func textFieldDidBeginEditing(textField: UITextField) {
         activeTextField = textField
     }
+    
     func textFieldDidEndEditing(textField: UITextField) {
+        let cell = textField.superview!.superview as! EditContactItemCell
+        cell.contact!.value = textField.text!
         activeTextField = nil
     }
     
     func keyboardWillHide(sender: NSNotification) {
-        print("***KeyboardWillHide")
         let userInfo: [NSObject : AnyObject] = sender.userInfo!
         let _: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
         self.view.frame.origin.y = defaultViewFrameOriginY
-//        if self.view.frame.origin.y != defaultViewFrameOriginY {
-//            self.view.frame.origin.y += keyboardSize.height
-//        } else {
-//            self.view.frame.origin.y = defaultViewFrameOriginY
-//        }
     }
     
     func keyboardWillShow(sender: NSNotification) {
-        print("***KeyboardWillShow")
         let userInfo: [NSObject : AnyObject] = sender.userInfo!
         let keyboardSize: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
         let offset: CGSize = userInfo[UIKeyboardFrameEndUserInfoKey]!.CGRectValue.size
-        //print("***\(self.view.frame.origin.y)")
-        //self.view.frame.origin.y = 0.0
-        //print("***offset: \(offset)")
-        //print("***key size: \(keyboardSize)")
-        //print("***Active text field: \(activeTextField)")
         if activeTextField != availabilityTextField && activeTextField != firstNameTextField &&
             activeTextField != lastNameTextField {
         if keyboardSize == offset {
