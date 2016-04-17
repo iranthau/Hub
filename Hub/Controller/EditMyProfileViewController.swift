@@ -153,54 +153,53 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
     
     //done editing: set new values, dismiss view controller
     @IBAction func done() {
+        let editedContacts = phoneContacts + emailContacts + addressContacts + socialContacts
+        var contactsToSave = [PFObject]()
         
-        if let userData = userData {
-            userData.userFirstName = firstNameTextField.text!
-            userData.userLastName = lastNameTextField.text!
-            userData.userNickname = nicknameTextField.text!
-            userData.userAvailability = availabilityTextField.text!
+        for a in editedContacts {
+            if a.value != nil {
+                a.buildParseObject(a.value!, type: a.type!, subType: a.subType!)
+                contactsToSave.append(a.matchingParseObject)
+            }
+        }
+
+        if let currentUser = currentUser {
+            currentUser.firstName = firstNameTextField.text!
+            currentUser.lastName = lastNameTextField.text!
+            currentUser.nickname = nicknameTextField.text!
+            currentUser.availableTime = availabilityTextField.text!
 //            userData.userImage = profileImage
-            delegate?.editMyProfileViewController(self, didFinishEditingProfile: userData)
+            currentUser.saveContacts(contactsToSave)
+            delegate?.editMyProfileViewController(self, didFinishEditingProfile: currentUser)
         }
     }
     
     @IBAction func phoneButtonPressed() {
-        //TODO: set active data source, set keyboard type, reload tableView data
-        if let user = userData {
-            activeDataSource = user.phoneNumberTestData
-            keyboardForContactType = 1
-            activeContactImage = UIImage(named: "phone")!
-        }
-        
+        selectedContactColor.backgroundColor = UIColor(red: 240/255.0, green: 148/255.0,
+                                                      blue: 27/255.0, alpha: 1)
+        activeDataSource = phoneContacts
+        keyboardForContactType = 1
         contactFieldTableView.reloadData()
     }
     @IBAction func emailButtonPressed() {
-        //TODO: set active data source, set keyboard type, reload tableView data
-        if let user = userData {
-            activeDataSource = user.emailTestData
-            keyboardForContactType = 2
-            activeContactImage = UIImage(named: "email-other")!
-        }
-        
+        selectedContactColor.backgroundColor = UIColor(red: 234/255.0, green: 176/255.0,
+                                                      blue: 51/255.0, alpha: 1)
+        activeDataSource = emailContacts
+        keyboardForContactType = 2
         contactFieldTableView.reloadData()
     }
     @IBAction func addressButtonPressed() {
-        //TODO: set active data source, set keyboard type, reload tableView data
-        if let user = userData {
-            activeDataSource = user.addressTestData
-            keyboardForContactType = 3
-            activeContactImage = UIImage(named: "address-other")!
-        }
-        
+        selectedContactColor.backgroundColor = UIColor(red: 212/255.0, green: 149/255.0,
+                                                      blue: 225/255.0, alpha: 1)
+        activeDataSource = addressContacts
+        keyboardForContactType = 3
         contactFieldTableView.reloadData()
     }
     @IBAction func socialButtonPressed() {
-        //TODO: set active data source, set keyboard type, reload tableView data
-        if let user = userData {
-            activeDataSource = user.socialTestData
-            keyboardForContactType = 4
-        }
-        
+        selectedContactColor.backgroundColor = UIColor(red: 138/255.0, green: 194/255.0,
+                                                      blue: 81/255.0, alpha: 1)
+        activeDataSource = socialContacts
+        keyboardForContactType = 4
         contactFieldTableView.reloadData()
     }
 
