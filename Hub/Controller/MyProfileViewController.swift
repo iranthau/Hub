@@ -178,7 +178,7 @@ extension MyProfileViewController: EditMyProfileViewControllerDelegate {
     }
     
     func editMyProfileViewController(controller: EditMyProfileViewController,
-        didFinishEditingProfile userProfile: MyProfileTestData) {
+        didFinishEditingProfile userProfile: User) {
 //            userData.userFirstName = userProfile.userFirstName
 //            userData.userLastName = userProfile.userLastName
 //            userData.userNickname = userProfile.userNickname
