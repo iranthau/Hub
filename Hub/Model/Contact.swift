@@ -76,6 +76,8 @@ class Contact {
                 return ContactSubType.LinkedIn.image
             case (_, ContactSubType.Skype.label):
                 return ContactSubType.Skype.image
+            case (_, ContactSubType.Whatsapp.label):
+                return ContactSubType.Whatsapp.image
             case (_, ContactSubType.Viber.label):
                 return ContactSubType.Viber.image
             case (_, ContactSubType.Line.label):

@@ -9,15 +9,13 @@
 import UIKit
 
 class EditContactItemCell: UITableViewCell, UITextFieldDelegate {
-    
-    @IBOutlet weak var contactTypeImageView: UIImageView!
+    @IBOutlet weak var contactImage: UIImageView!
     @IBOutlet weak var contactInputTextField: UITextField!
+    var contact: Contact?
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
         initialiseTextField()
-//        self.accessoryType = .DetailButton
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -28,12 +26,12 @@ class EditContactItemCell: UITableViewCell, UITextFieldDelegate {
     
     func configureKeyboardForContactType(contactType: Int) {
         switch contactType {
-        case 1: contactInputTextField.keyboardType = .NumberPad
-        //case 1: contactInputTextField.keyboardType = .NumbersAndPunctuation
-        case 2: contactInputTextField.keyboardType = .EmailAddress
-        case 3: contactInputTextField.keyboardType = .Default
-        case 4: contactInputTextField.keyboardType = .Twitter
-        default: contactInputTextField.keyboardType = .Default
+        case 1:
+            contactInputTextField.keyboardType = .NumberPad
+        case 2:
+            contactInputTextField.keyboardType = .EmailAddress
+        default:
+            contactInputTextField.keyboardType = .Default
         }
     }
 

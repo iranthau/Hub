@@ -46,22 +46,14 @@ enum ContactSubType: Int {
     
     var label: String {
         switch self {
-            case .PhoneHome,
-                 .EmailHome,
-                 .AddressHome:
+            case .PhoneHome, .EmailHome, .AddressHome:
                 return "home"
-            case .PhoneWork,
-                 .EmailWork,
-                 .AddressWork:
+            case .PhoneWork, .EmailWork, .AddressWork:
                 return "work"
-            case .PhoneOther,
-                 .EmailOther,
-                 .AddressOther,
-                 .SocialOther:
+            case .PhoneOther, .EmailOther, .AddressOther, .SocialOther:
                 return "other"
             case .PhonePersonal: return "mobile"
-            case .EmailSchool,
-                 .AddressSchool:
+            case .EmailSchool, .AddressSchool:
                 return "school"
             case .Facebook: return "facebook"
             case .Twitter: return "twitter"

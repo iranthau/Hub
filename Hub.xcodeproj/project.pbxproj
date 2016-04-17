@@ -68,7 +68,6 @@
 		BDBB6A801C6224D800143087 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDBB6A7F1C6224D800143087 /* Social.framework */; };
 		BDC7AB5E1C798CE40093D5F4 /* AddContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC7AB5D1C798CE40093D5F4 /* AddContactTableViewController.swift */; };
 		BDD83EEB1CB7D329008C0515 /* MFMailComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD83EEA1CB7D329008C0515 /* MFMailComposer.swift */; };
-		BDD912961CB0FBB400533279 /* MyProfileTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD912951CB0FBB400533279 /* MyProfileTestData.swift */; };
 		BDEBFDA71CA9687C002E48CE /* ContactSubType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD910CEF1C6C8102003B099C /* ContactSubType.swift */; };
 		BDEBFDA81CA9688B002E48CE /* TermsConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4E59871C213FC70046C8E8 /* TermsConditionsViewController.swift */; };
 		BDEBFDA91CA96893002E48CE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA812041C6613EC00219C4A /* User.swift */; };
@@ -177,7 +176,6 @@
 		BDAE7A2D1C101F6B0085264A /* HubUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HubUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDAE7A311C101F6B0085264A /* HubUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubUITests.swift; sourceTree = "<group>"; };
 		BDAE7A331C101F6B0085264A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BDB921771CBD276400EDA96C /* HubPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = HubPlayground.playground; sourceTree = "<group>"; };
 		BDBB6A731C62117200143087 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		BDBB6A741C62117200143087 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		BDBB6A751C62117200143087 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
@@ -187,7 +185,6 @@
 		BDBB6A7F1C6224D800143087 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		BDC7AB5D1C798CE40093D5F4 /* AddContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactTableViewController.swift; sourceTree = "<group>"; };
 		BDD83EEA1CB7D329008C0515 /* MFMailComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MFMailComposer.swift; sourceTree = "<group>"; };
-		BDD912951CB0FBB400533279 /* MyProfileTestData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyProfileTestData.swift; sourceTree = "<group>"; };
 		BDF7B9B91CAFF1D3004B5F65 /* ContactType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactType.swift; sourceTree = "<group>"; };
 		BDF7B9BB1CB01486004B5F65 /* SharedPermission.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedPermission.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -300,7 +297,6 @@
 				9AA47EB01C7AD5110034FBE8 /* Contact.swift */,
 				BDF7B9B91CAFF1D3004B5F65 /* ContactType.swift */,
 				BDF7B9BB1CB01486004B5F65 /* SharedPermission.swift */,
-				BDD912951CB0FBB400533279 /* MyProfileTestData.swift */,
 				BDD83EEA1CB7D329008C0515 /* MFMailComposer.swift */,
 			);
 			path = Model;
@@ -385,7 +381,6 @@
 		BDAE7A101C101F6B0085264A /* Hub */ = {
 			isa = PBXGroup;
 			children = (
-				BDB921771CBD276400EDA96C /* HubPlayground.playground */,
 				BDAE7A111C101F6B0085264A /* AppDelegate.swift */,
 				BD423AF21C1326F3001D25E7 /* View */,
 				BD423AF31C132728001D25E7 /* Controller */,
@@ -556,7 +551,6 @@
 				BDD83EEB1CB7D329008C0515 /* MFMailComposer.swift in Sources */,
 				BD5869811C6E5179009408EA /* HeyyaTabBarController.swift in Sources */,
 				BD19009D1C7341F600D82DA6 /* ContactRequestTableViewController.swift in Sources */,
-				BDD912961CB0FBB400533279 /* MyProfileTestData.swift in Sources */,
 				BD9032C21C5474C300C323A9 /* HubModel.swift in Sources */,
 				BD910CEA1C6C7FF4003B099C /* ContactItemCell.swift in Sources */,
 				9AD9296D1C7C958000B764B7 /* AddContactCell.swift in Sources */,

@@ -22,7 +22,7 @@ class User: Hashable {
     var profileIsVisible: Bool?
     var availableTime: String?
     var city: String?
-    var contacts: [Contact]?
+    var contacts = [Contact]()
     var profileImage: PFFile?
     var friends: [User]?
     var requests: [User]?
@@ -186,6 +186,7 @@ class User: Hashable {
                     
                     let contact = Contact(parseObject: fetchedContact!)
                     contact.buildContact()
+                    self.contacts.append(contact)
                     switch contact.type! {
                     case ContactType.Phone.label:
                         myProfileVC.sharedPhoneContacts.append(contact)
@@ -235,6 +236,11 @@ class User: Hashable {
     
     func hideProfile(isHidden: Bool) {
         matchingParseObject["profileIsVisible"] = isHidden
+        matchingParseObject.saveInBackground()
+    }
+    
+    func saveContacts(contacts: [PFObject]) {
+        matchingParseObject["contacts"] = contacts
         matchingParseObject.saveInBackground()
     }
 }

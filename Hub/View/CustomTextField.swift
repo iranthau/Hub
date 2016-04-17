@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 class CustomTextField: UITextField {
+    var image: UIImage?
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
         let border = CALayer()
@@ -17,7 +19,7 @@ class CustomTextField: UITextField {
         
         let imageView = UIImageView();
         
-        let image = selectImage(self.placeholder!)
+        image = selectImage(self.placeholder!)
         imageView.image = image
         imageView.frame = CGRect(x: 5, y: 0, width: 20, height: 20)
         
@@ -39,25 +41,20 @@ class CustomTextField: UITextField {
     
     // Display the correct icon for each text field based on placeholder texts
     func selectImage(placeholder: String) -> UIImage? {
-        var image: UIImage?
+        var imageName: String?
         
         switch placeholder {
-        case "First name":
-            image = UIImage(named: "user.png")
-        case "Last name":
-            image = UIImage(named: "user.png")
+        case "First name", "Last name", "Username", "Nickname":
+            imageName = "user.png"
         case "Email":
-            image = UIImage(named: "email.png")
-        case "Username":
-            image = UIImage(named: "user.png")
-        case "Password":
-            image = UIImage(named: "lock.png")
-        case "Confirm password":
-            image = UIImage(named: "lock.png")
+            imageName = "email.png"
+        case "Password", "Confirm password":
+            imageName = "lock.png"
         default:
-            image = nil
+            imageName =  "user.png"
         }
         
-        return image
+        return UIImage(named: imageName!)
     }
 }
+
