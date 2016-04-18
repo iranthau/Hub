@@ -65,6 +65,11 @@ class HubModel {
         }
     }
     
+    func roundImage(profileImageView: UIImageView) {
+        profileImageView.layer.cornerRadius = profileImageView.bounds.size.width / 2
+        profileImageView.clipsToBounds = true
+    }
+    
     func readProfileImageFromFacebook(userID: String) -> UIImage {
         let userProfileUrl = "https://graph.facebook.com/\(userID)/picture?type=large"
         let profilePictureUrl = NSURL(string: userProfileUrl)!
@@ -72,51 +77,22 @@ class HubModel {
         return UIImage(data: profilePicturedata)!
     }
     
-    func initialisePhoneContacts(parseObject: PFObject) -> [Contact] {
-        var contacts = [Contact]()
-        for index in 1...4 {
-            let contact = Contact(parseObject: parseObject)
-            contact.type = ContactType.Phone.label
-            contact.subType = ContactSubType(rawValue: index)!.label
-            contacts.append(contact)
-        }
+    func openGallary(imagePicker: UIImagePickerController, view: UIViewController) {
+        imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         
-        return contacts
+        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
+            view.presentViewController(imagePicker, animated: true, completion: nil)
+        } else {
+            
+        }
     }
     
-    func initialiseEmailContacts(parseObject: PFObject) -> [Contact] {
-        var contacts = [Contact]()
-        for index in 5...8 {
-            let contact = Contact(parseObject: parseObject)
-            contact.type = ContactType.Email.label
-            contact.subType = ContactSubType(rawValue: index)!.label
-            contacts.append(contact)
+    func openCamera(imagePicker: UIImagePickerController, view: UIViewController) {
+        if (UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)) {
+            imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
+            view.presentViewController(imagePicker, animated: true, completion: nil)
+        } else {
+            openGallary(imagePicker, view: view)
         }
-        
-        return contacts
-    }
-    
-    func initialiseAddressContacts(parseObject: PFObject) -> [Contact] {
-        var contacts = [Contact]()
-        for index in 9...12 {
-            let contact = Contact(parseObject: parseObject)
-            contact.type = ContactType.Address.label
-            contact.subType = ContactSubType(rawValue: index)!.label
-            contacts.append(contact)
-        }
-        
-        return contacts
-    }
-    
-    func initialiseSocialContacts(parseObject: PFObject) -> [Contact] {
-        var contacts = [Contact]()
-        for index in 13...23 {
-            let contact = Contact(parseObject: parseObject)
-            contact.type = ContactType.Social.label
-            contact.subType = ContactSubType(rawValue: index)!.label
-            contacts.append(contact)
-        }
-        
-        return contacts
-    }
+    }    
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyProfileViewController: UIViewController {
+class MyProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, EditMyProfileDelegate {
     
     //outlet vars:
     @IBOutlet weak var profileImageView: UIImageView!
@@ -28,7 +28,6 @@ class MyProfileViewController: UIViewController {
     var sharedAddressContacts = [Contact]()
     var sharedSocialContacts = [Contact]()
     
-    var keyboardState = 0
     let hubModel = HubModel.sharedInstance
     var user: User?
 
@@ -80,7 +79,6 @@ class MyProfileViewController: UIViewController {
         
         user!.getContacts(self)
         
-        keyboardState = 1
     }
 
     override func didReceiveMemoryWarning() {
@@ -91,28 +89,24 @@ class MyProfileViewController: UIViewController {
         activeDataSource = sharedPhoneContacts
         selectedContactView.backgroundColor = UIColor(red: 240/255.0, green: 148/255.0,
             blue: 27/255.0, alpha: 1)
-        keyboardState = 1
         tableView.reloadData()
     }
     @IBAction func emailButtonPressed() {
         activeDataSource = sharedEmailContacts
         selectedContactView.backgroundColor = UIColor(red: 234/255.0, green: 176/255.0,
             blue: 51/255.0, alpha: 1)
-        keyboardState = 2
         tableView.reloadData()
     }
     @IBAction func addressButtonPressed() {
         activeDataSource = sharedAddressContacts
         selectedContactView.backgroundColor = UIColor(red: 212/255.0, green: 149/255.0,
             blue: 225/255.0, alpha: 1)
-        keyboardState = 3
         tableView.reloadData()
     }
     @IBAction func socialButtonPressed() {
         activeDataSource = sharedSocialContacts
         selectedContactView.backgroundColor = UIColor(red: 138/255.0, green: 194/255.0,
             blue: 81/255.0, alpha: 1)
-        keyboardState = 4
         tableView.reloadData()
     }
 
@@ -124,7 +118,6 @@ class MyProfileViewController: UIViewController {
             let navigationController = segue.destinationViewController as! UINavigationController
             let controller = navigationController.topViewController as! EditMyProfileViewController
             
-            controller.doneIsEnabled = false
             // #warning: replace with model data!
 //            controller.userData = userData
 //            controller.activeDataSource = activeDataSource
@@ -134,11 +127,6 @@ class MyProfileViewController: UIViewController {
             controller.delegate = self
         }
     }
-    
-
-}
-
-extension MyProfileViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return activeDataSource.count
@@ -157,39 +145,23 @@ extension MyProfileViewController: UITableViewDataSource {
         
         return cell
     }
-}
-
-extension MyProfileViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     func tableView(tableView: UITableView,
-        willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+                   willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
         return nil
     }
-}
-
-extension MyProfileViewController: EditMyProfileViewControllerDelegate {
     
     func editMyProfileViewControllerDidCancel(controller: EditMyProfileViewController) {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
     func editMyProfileViewController(controller: EditMyProfileViewController,
-        didFinishEditingProfile userProfile: User) {
-//            userData.userFirstName = userProfile.userFirstName
-//            userData.userLastName = userProfile.userLastName
-//            userData.userNickname = userProfile.userNickname
-//            userData.userAvailability = userProfile.userAvailability
-//            userData.userImage = userProfile.userImage
-//            profileImageView.image = userData.userImage
-        
-//            title = userData.userFirstName + " " + userData.userLastName
-        
-            tableView.reloadData()
-        
+                                     didFinishEditingProfile userProfile: User) {
+        tableView.reloadData()
         dismissViewControllerAnimated(true, completion: nil)
     }
 }

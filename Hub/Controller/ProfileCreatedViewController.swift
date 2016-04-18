@@ -20,8 +20,10 @@ class ProfileCreatedViewController: UIViewController {
         
         let parseEmailObject = PFObject(className: "Contact")
         let emailContact = Contact(parseObject: parseEmailObject)
-        emailContact.buildParseObject(user.email!, type: "email", subType: "home")
-        user.saveContacts([emailContact.matchingParseObject])
+        emailContact.value = user.email!
+        emailContact.type = "email"
+        emailContact.subType = "home"
+        user.setContacts([emailContact])
         
         profileImage.layer.cornerRadius = 0.5 * profileImage.bounds.size.width
         profileImage.clipsToBounds = true
