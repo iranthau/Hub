@@ -25,6 +25,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var profileImageChangeButton: UIButton!
     @IBOutlet weak var selectedContactColor: UIView!
+    @IBOutlet weak var finishEditingButton: UIBarButtonItem!
     
     weak var delegate: EditMyProfileDelegate?
     var imagePicker = UIImagePickerController()
@@ -90,6 +91,8 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
         //Move the view up when a textfield is coverd by the keyboard
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditMyProfileViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: self.view.window)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditMyProfileViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: self.view.window)
+        
+        finishEditingButton.enabled = false
     }
 
     //Cancel editing will dismiss the edit view controller
@@ -209,12 +212,14 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
     }
     
     func keyboardWillHide(sender: NSNotification) {
+        finishEditingButton.enabled = true
         let userInfo: [NSObject : AnyObject] = sender.userInfo!
         userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
         self.view.frame.origin.y = defaultViewFrameOriginY
     }
     
     func keyboardWillShow(sender: NSNotification) {
+        finishEditingButton.enabled = false
         let userInfo: [NSObject : AnyObject] = sender.userInfo!
         let keyboardSize: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
         let offset: CGSize = userInfo[UIKeyboardFrameEndUserInfoKey]!.CGRectValue.size

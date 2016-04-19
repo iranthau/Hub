@@ -240,20 +240,43 @@ class User: Hashable {
     }
     
     func setContacts(contacts: [Contact]) {
-        var contactsToSave = [PFObject]()
-        self.contacts.removeAll()
-        for contact in contacts {
-            contact.matchingParseObject.objectId = contact.objectId
-            if contact.value == "" {
-                contact.matchingParseObject.deleteInBackground()
-            } else {
-                self.contacts.append(contact)
-                contact.buildParseObject(contact.value!, type: contact.type!, subType: contact.subType!)
-                contactsToSave.append(contact.matchingParseObject)
+        let contactsToSave = contactsToSaveArray(contacts)
+        let contactsToDelete = contactsToDeleteArray(contacts)
+        
+        self.matchingParseObject["contacts"] = contactsToSave
+        self.matchingParseObject.saveInBackgroundWithBlock {
+            (success: Bool, error: NSError?) in
+            if success {
+                for contactToDelete in contactsToDelete {
+                    contactToDelete.deleteInBackground()
+                }
             }
         }
-        matchingParseObject["contacts"] = contactsToSave
-        matchingParseObject.saveInBackground()
+    }
+    
+    // Private method that needs set contacts to work properly
+    func contactsToDeleteArray(contacts: [Contact]) -> [PFObject] {
+        var returnArray = [PFObject]()
+        for contact in contacts {
+            if contact.value == "" {
+                contact.buildParseObject("", type: "", subType: "")
+                contact.matchingParseObject.objectId = contact.objectId
+                returnArray.append(contact.matchingParseObject)
+            }
+        }
+        return returnArray
+    }
+    
+    func contactsToSaveArray(contacts: [Contact]) -> [PFObject] {
+        var returnArray = [PFObject]()
+        for contact in contacts {
+            if contact.value != "" {
+                contact.buildParseObject(contact.value!, type: contact.type!, subType: contact.subType!)
+                contact.matchingParseObject.objectId = contact.objectId
+                returnArray.append(contact.matchingParseObject)
+            }
+        }
+        return returnArray
     }
 }
 
