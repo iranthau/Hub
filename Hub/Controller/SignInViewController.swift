@@ -10,7 +10,7 @@ import UIKit
 import Parse
 import ParseFacebookUtilsV4
 
-class SignInViewController: UIViewController {
+class SignInViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var fbSignInButton: UIButton!
     @IBOutlet weak var userNameInput: UITextField!
@@ -25,6 +25,10 @@ class SignInViewController: UIViewController {
         backgroundLayer.backgroundColor = UIColor(white: 0, alpha: 0.5)
         let tap = UITapGestureRecognizer(target: self, action: #selector(SignInViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
+        
+        //set delegates to handle keyboard events for each text field - A.G
+        userNameInput.delegate = self
+        passwordInput.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -82,6 +86,37 @@ class SignInViewController: UIViewController {
         let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
         alertError.addAction(defaultAction)
         self.presentViewController(alertError, animated: true, completion: nil)
+    }
+    
+    //handle the 'return' key events: move to next or go to sign in - A. G.
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+        if textField == self.userNameInput {
+            
+            self.passwordInput.becomeFirstResponder()
+            
+        } else if textField == self.passwordInput {
+            
+            let username = userNameInput.text!
+            let password = passwordInput.text!
+            
+            PFUser.logInWithUsernameInBackground(username, password: password) {
+                (user: PFUser?, error: NSError?) -> Void in
+                if user != nil {
+                    let currentUser = PFUser.currentUser()!
+                    self.hubModel.currentUser = User(parseUser: currentUser)
+                    self.hubModel.currentUser!.buildUser()
+                    self.performSegueWithIdentifier("signInSegue", sender: nil)
+                } else {
+                    let errorMessage = error!.userInfo["error"] as? String
+                    self.showAlert(errorMessage!)
+                }
+            }
+            
+            textField.resignFirstResponder()
+        }
+        
+        return false
     }
     
     func dismissKeyboard() {
