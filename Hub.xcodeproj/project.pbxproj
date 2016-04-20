@@ -69,6 +69,8 @@
 		BDBB6A801C6224D800143087 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDBB6A7F1C6224D800143087 /* Social.framework */; };
 		BDC7AB5E1C798CE40093D5F4 /* AddContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC7AB5D1C798CE40093D5F4 /* AddContactTableViewController.swift */; };
 		BDD83EEB1CB7D329008C0515 /* MFMailComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD83EEA1CB7D329008C0515 /* MFMailComposer.swift */; };
+		BDE7E6E31CC7A9EE00D3BB87 /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE7E6E21CC7A9EE00D3BB87 /* ViewFactory.swift */; };
+		BDE7E6E51CC7C2D300D3BB87 /* HubUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE7E6E41CC7C2D300D3BB87 /* HubUtility.swift */; };
 		BDEBFDA71CA9687C002E48CE /* ContactSubType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD910CEF1C6C8102003B099C /* ContactSubType.swift */; };
 		BDEBFDA81CA9688B002E48CE /* TermsConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4E59871C213FC70046C8E8 /* TermsConditionsViewController.swift */; };
 		BDEBFDA91CA96893002E48CE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA812041C6613EC00219C4A /* User.swift */; };
@@ -187,6 +189,8 @@
 		BDBB6A7F1C6224D800143087 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		BDC7AB5D1C798CE40093D5F4 /* AddContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactTableViewController.swift; sourceTree = "<group>"; };
 		BDD83EEA1CB7D329008C0515 /* MFMailComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MFMailComposer.swift; sourceTree = "<group>"; };
+		BDE7E6E21CC7A9EE00D3BB87 /* ViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewFactory.swift; sourceTree = "<group>"; };
+		BDE7E6E41CC7C2D300D3BB87 /* HubUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HubUtility.swift; sourceTree = "<group>"; };
 		BDF7B9B91CAFF1D3004B5F65 /* ContactType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactType.swift; sourceTree = "<group>"; };
 		BDF7B9BB1CB01486004B5F65 /* SharedPermission.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedPermission.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -300,6 +304,8 @@
 				BDF7B9B91CAFF1D3004B5F65 /* ContactType.swift */,
 				BDF7B9BB1CB01486004B5F65 /* SharedPermission.swift */,
 				BDD83EEA1CB7D329008C0515 /* MFMailComposer.swift */,
+				BDE7E6E21CC7A9EE00D3BB87 /* ViewFactory.swift */,
+				BDE7E6E41CC7C2D300D3BB87 /* HubUtility.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -572,6 +578,7 @@
 				BD5B94DB1C64F43300812FFD /* ProfileCreatedViewController.swift in Sources */,
 				BD03E3BA1CC3647800FB3ED2 /* EditMyProfileDelegate.swift in Sources */,
 				BD7A5E3D1C74909C0019D5F1 /* RequestsTableViewController.swift in Sources */,
+				BDE7E6E51CC7C2D300D3BB87 /* HubUtility.swift in Sources */,
 				9A0CBDBD1C71902C002BD9D0 /* CustomImagePickerController.swift in Sources */,
 				9A4E59881C213FC70046C8E8 /* TermsConditionsViewController.swift in Sources */,
 				BDA812051C6613EC00219C4A /* User.swift in Sources */,
@@ -583,6 +590,7 @@
 				BD644D2E1C60D2CB005657FD /* PassswordRecoveryViewController.swift in Sources */,
 				BD910CEB1C6C7FF4003B099C /* CustomNavigationController.swift in Sources */,
 				9AA824F91C43476800B71364 /* SettingsViewController.swift in Sources */,
+				BDE7E6E31CC7A9EE00D3BB87 /* ViewFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

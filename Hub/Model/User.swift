@@ -1,10 +1,7 @@
-//
 //  User.swift
 //  Hub
-//
 //  Created by Irantha Rajakaruna on 6/02/2016.
 //  Copyright © 2016 88Software. All rights reserved.
-//
 
 import Foundation
 import Parse
@@ -50,11 +47,11 @@ class User: Hashable {
     }
     
     func buildParseUser(email: String, fName: String, lName: String) {
+        let defaultImage = UIImage(named: "placeholder-image")
         matchingParseObject["firstName"] = fName
         matchingParseObject["lastName"] = lName
         matchingParseObject.email = email
-        let defaultImage = UIImage(named: "placeholder-image")
-        matchingParseObject["profileImage"] = imageAsParseFile(defaultImage!)
+        setProfileImage(defaultImage!)
         matchingParseObject["profileIsVisible"] = true
     }
     
@@ -67,12 +64,18 @@ class User: Hashable {
     }
     
     func setProfileImage(image: UIImage) {
-        matchingParseObject["profileImage"] = imageAsParseFile(image)
+        matchingParseObject["profileImage"] = HubUtility.convertImageFileToParseFile(image)
     }
     
-    func imageAsParseFile(image: UIImage) -> PFFile {
-        let profileImageData = image.lowQualityJPEGNSData
-        return PFFile(data: profileImageData)!
+    func getProfileImage(imageView: UIImageView) {
+        profileImage!.getDataInBackgroundWithBlock {
+            (imageData: NSData?, error: NSError?) -> Void in
+            if error == nil {
+                if let imageData = imageData {
+                    imageView.image = UIImage(data:imageData)
+                }
+            }
+        }
     }
     
     func signUp(signUpVC: SignUpViewController) {
@@ -95,22 +98,42 @@ class User: Hashable {
     }
     
     func getFriends(myContactTVC: MyContactsTableViewController) {
-        let relation = matchingParseObject.relationForKey("friends")
-        let query = relation.query()
+        let myFriendQuery = PFQuery(className: "SharedPermission")
+        myFriendQuery.whereKey("user", equalTo: matchingParseObject)
+        myFriendQuery.whereKey("status", equalTo: "accepted")
+        
+        let iAmAFriendOfQuery = PFQuery(className: "SharedPermission")
+        iAmAFriendOfQuery.whereKey("userFriend", equalTo: matchingParseObject)
+        iAmAFriendOfQuery.whereKey("status", equalTo: "accepted")
+        
+        let query = PFQuery.orQueryWithSubqueries([myFriendQuery, iAmAFriendOfQuery])
         
         query.findObjectsInBackgroundWithBlock {
-            (friends: [PFObject]? , error: NSError?) -> Void in
-            
-            if error == nil {
-                if let friends = friends {
-                    var myFriends = [User]()
-                    for friend in friends as! [PFUser] {
-                        let user = User(parseUser: friend)
-                        user.buildUser()
-                        myFriends.append(user)
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            if let objects = objects {
+                var myFriends = [User]()
+                for object in objects {
+                    let fromUser = object["userFriend"] as! PFUser
+                    let toUser = object["user"] as! PFUser
+                    var user: PFUser?
+                    
+                    if fromUser.objectId == self.matchingParseObject.objectId {
+                        user = object["user"] as? PFUser
                     }
-                    myContactTVC.myContacts = myFriends.sort { $0.firstName < $1.firstName }
-                    myContactTVC.refreshTableViewInBackground()
+                    
+                    if toUser.objectId == self.matchingParseObject.objectId {
+                        user = object["userFriend"] as? PFUser
+                    }
+                    
+                    user!.fetchInBackgroundWithBlock {
+                        (fetchedUser: PFObject?, error: NSError?) -> Void in
+                        let fetchedFromUser = fetchedUser as! PFUser
+                        let request = User(parseUser: fetchedFromUser)
+                        request.buildUser()
+                        myFriends.append(request)
+                        myContactTVC.myContacts = myFriends.sort { $0.firstName < $1.firstName }
+                        myContactTVC.refreshTableViewInBackground()
+                    }
                 }
             }
         }

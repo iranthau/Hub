@@ -47,9 +47,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
         super.viewDidLoad()
         title = "Edit Profile"
         currentUser = hubModel.currentUser
-        
-        //Round image
-        hubModel.roundImage(profileImageView)
+        ViewFactory.makeImageViewRound(profileImageView)
         
         //Fill up contacts arrays to have all type of contacts initially
         let pObject = PFObject(className: "Contact")

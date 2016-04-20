@@ -1,15 +1,11 @@
-//
 //  AddContactTableViewCell.swift
 //  Hub
-//
 //  Created by Alexei Gudimenko on 24/02/2016.
 //  Copyright © 2016 88Software. All rights reserved.
-//
 
 import UIKit
 
 class AddContactCell: UITableViewCell {
-    
     weak var cellDelegate: ContactShareCellDelegate?
     
     override func awakeFromNib() {

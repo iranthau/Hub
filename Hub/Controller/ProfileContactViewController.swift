@@ -1,10 +1,7 @@
-//
 //  ProfileContactViewController.swift
 //  Hub
-//
 //  Created by Irantha Rajakaruna on 12/03/2016.
 //  Copyright © 2016 88Software. All rights reserved.
-//
 
 import UIKit
 
@@ -20,64 +17,37 @@ class ProfileContactViewController: UIViewController {
     @IBOutlet weak var mySharedContactsTableView: UITableView!
     
     var contactProfile: User?
-    
+    var currentUser: User?
     var mySharedContacts = [Contact]()
     var activeDataSource = [Contact]()
-    
     var sharedPhoneContacts = [Contact]()
     var sharedEmailContacts = [Contact]()
     var sharedAddressContacts = [Contact]()
     var sharedSocialContacts = [Contact]()
-    
     let hubModel = HubModel.sharedInstance
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "\(contactProfile!.firstName!) \(contactProfile!.lastName!)"
+        currentUser = hubModel.currentUser
         
-        let imageFile = contactProfile!.profileImage
-        imageFile!.getDataInBackgroundWithBlock {
-            (imageData: NSData?, error: NSError?) -> Void in
-            if error == nil {
-                if let imageData = imageData {
-                    self.profileImageView.image = UIImage(data:imageData)
-                }
-            }
+        ViewFactory.hideTableViewSeparator(sharedContactsTableView)
+        ViewFactory.hideTableViewSeparator(mySharedContactsTableView)
+        ViewFactory.makeImageViewRound(profileImageView)
+        
+        if let contactProfile = contactProfile {
+            title = "\(contactProfile.firstName!) \(contactProfile.lastName!)"
+            contactProfile.getProfileImage(profileImageView)
+            ViewFactory.setLabelPlaceholder("nickname", text: contactProfile.nickname, label: nickNameLabel)
+            ViewFactory.setLabelPlaceholder("city", text: contactProfile.city, label: cityLabel)
+            ViewFactory.setTextViewPlaceholder("No prefered time provided", text: contactProfile.availableTime, textView: contactHoursTextView)
         }
         
-        sharedContactsTableView.separatorColor = UIColor(red: 255/255.0,
-                                                           green: 255/255.0, blue: 255/255.0, alpha: 0.0)
-        mySharedContactsTableView.separatorColor = UIColor(red: 255/255.0,
-                                                         green: 255/255.0, blue: 255/255.0, alpha: 0.0)
-        
-        profileImageView.layer.cornerRadius = profileImageView.bounds.size.width / 2
-        profileImageView.clipsToBounds = true
-        
-        if contactProfile!.nickname == nil {
-            nickNameLabel.text = "nickname"
-            nickNameLabel.textColor = UIColor.lightGrayColor()
-        } else {
-            nickNameLabel.text = contactProfile!.nickname!
+        if let currentUser = currentUser {
+            currentUser.getAllSharedContacts(contactProfile!, profileContactVC: self)
+            currentUser.getContactsIShared(contactProfile!, profileContactVC: self)
         }
         
-        if contactProfile!.city == nil {
-            cityLabel.text = "city"
-            cityLabel.textColor = UIColor.lightGrayColor()
-        } else {
-            cityLabel.text = contactProfile!.city!
-        }
-        
-        if contactProfile!.availableTime == nil {
-            contactHoursTextView.text = "No prefered time provided"
-            contactHoursTextView.textColor = UIColor.lightGrayColor()
-        } else {
-            contactHoursTextView.text = contactProfile!.availableTime!
-        }
-        
-        hubModel.currentUser!.getAllSharedContacts(contactProfile!, profileContactVC: self)
-        hubModel.currentUser!.getContactsIShared(contactProfile!, profileContactVC: self)
         activeDataSource = sharedPhoneContacts
-        
         scrollView.contentSize.height = 826
     }
 
