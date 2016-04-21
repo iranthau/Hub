@@ -1,10 +1,7 @@
-//
 //  ContactRequestTableViewController.swift
 //  Hub
-//
 //  Created by Irantha Rajakaruna on 16/02/2016.
 //  Copyright © 2016 88Software. All rights reserved.
-//
 
 import UIKit
 import Parse
@@ -21,12 +18,12 @@ class ContactRequestTableViewController: UITableViewController, ContactShareCell
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = requestContact!.firstName!
-        
         currentUser = hubModel.currentUser
-        currentUser?.getRequestedContacts(requestContact!, contactRequestTVC: self)
+        ViewFactory.hideTableViewSeparator(self.tableView)
         
-        self.tableView.separatorColor = UIColor(red: 255/255.0, green: 255/255.0,
-            blue: 255/255.0, alpha: 0.0)
+        if let currentUser = currentUser {
+            currentUser.getRequestedContacts(requestContact!, contactRequestTVC: self)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,31 +40,20 @@ class ContactRequestTableViewController: UITableViewController, ContactShareCell
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("contactTypeCell", forIndexPath: indexPath) as! ContactShareCell
-        
         let contact = contacts[indexPath.row]
+        let contactLabel = cell.viewWithTag(1) as! UILabel
+        let contactImage = cell.viewWithTag(2) as! UIImageView
+        let sharedSwitch = cell.viewWithTag(3) as! UISwitch
         
-        if let contactLabel = cell.viewWithTag(1) as? UILabel {
-            contactLabel.text = contact.value!
-        }
-        
-        if let sharedSwitch = cell.viewWithTag(3) as? UISwitch {
-            sharedSwitch.setOn(contact.selected!, animated: true)
-        }
-        
-        if let contactImage = cell.viewWithTag(2) as? UIImageView {
-            let image = UIImage(named: contact.getImageName())
-            contactImage.image = image
-        }
-        
+        contactLabel.text = contact.value!
+        sharedSwitch.setOn(contact.selected!, animated: true)
+        contactImage.image = UIImage(named: contact.getImageName())
         cell.cellDelegate = self
-        
         return cell
     }
     
-    override func tableView(tableView: UITableView,
-        titleForHeaderInSection section: Int)
-        -> String {
-            return "Select what \(requestContact!.firstName!) can see"
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String {
+        return "Select what \(requestContact!.firstName!) can see"
     }
     
     @IBAction func back(sender: UIBarButtonItem) {
@@ -83,7 +69,6 @@ class ContactRequestTableViewController: UITableViewController, ContactShareCell
         pushQuery.whereKey("userFriend", equalTo: friend)
         pushQuery.whereKey("user", equalTo: currentUser!.matchingParseObject)
         
-        // Send the push notification created above
         let push = PFPush()
         push.setQuery(pushQuery)
         let message = "\(requestContact!.firstName!) \(requestContact!.lastName!) accepted your request to connect"
@@ -111,9 +96,10 @@ class ContactRequestTableViewController: UITableViewController, ContactShareCell
                 }
             }
         }
-        self.back(sender)
+        back(sender)
     }
     
+    //-----------------Contact Share Cell Delegate Method--------------------
     func switchStateChanged(sender: AnyObject, isOn: Bool) {
         let indexPath = self.tableView.indexPathForCell(sender as! UITableViewCell)
         let contact = contacts[indexPath!.row]
@@ -122,6 +108,7 @@ class ContactRequestTableViewController: UITableViewController, ContactShareCell
     }
 }
 
+//Array extension so that an object can be removed from an array
 extension Array where Element: Equatable {
     mutating func removeObject(object: Element) {
         if let index = self.indexOf(object) {
