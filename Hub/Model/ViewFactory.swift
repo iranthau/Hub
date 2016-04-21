@@ -33,4 +33,17 @@ class ViewFactory {
             textView.text = text
         }
     }
+    
+    class func backGroundColor(contactType: ContactType) -> UIColor {
+        switch contactType {
+            case ContactType.Phone:
+                return UIColor(red: 240/255.0, green: 148/255.0, blue: 27/255.0, alpha: 1)
+            case ContactType.Email:
+                return UIColor(red: 234/255.0, green: 176/255.0, blue: 51/255.0, alpha: 1)
+            case ContactType.Address:
+                return UIColor(red: 212/255.0, green: 149/255.0, blue: 225/255.0, alpha: 1)
+            case ContactType.Social:
+                return UIColor(red: 138/255.0, green: 194/255.0, blue: 81/255.0, alpha: 1)
+        }
+    }
 }
