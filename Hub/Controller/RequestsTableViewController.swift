@@ -80,12 +80,11 @@ class RequestsTableViewController: UITableViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let dataToSend = sender as! [String: AnyObject]
+        let requestContact = sender as! User
         
         if segue.identifier == "acceptRequestSegue" {
             if let destinationVC = segue.destinationViewController as? ContactRequestTableViewController {
-                destinationVC.requestContact = dataToSend["user"] as? User
-                destinationVC.viewController = dataToSend["vc"] as? RequestsTableViewController
+                destinationVC.friend = requestContact
             }
         }
     }
@@ -93,8 +92,7 @@ class RequestsTableViewController: UITableViewController {
     //-------------------Private Methods------------------------
     func acceptRequest(tableView: UITableView, indexPath: NSIndexPath) {
         let requestContact = requests[indexPath.row]
-        let dataToSend = ["user": requestContact, "vc": self]
-        self.performSegueWithIdentifier("acceptRequestSegue", sender: dataToSend)
+        self.performSegueWithIdentifier("acceptRequestSegue", sender: requestContact)
     }
     
     func declineRequest(tableView: UITableView, indexPath: NSIndexPath) {

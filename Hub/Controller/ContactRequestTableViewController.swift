@@ -8,21 +8,20 @@ import Parse
 
 class ContactRequestTableViewController: UITableViewController, ContactShareCellDelegate {
     
-    var requestContact: User?
+    var friend: User?
     var currentUser: User?
-    var viewController: RequestsTableViewController?
     var contacts = [Contact]()
     var acceptedContacts = [PFObject]()
     let hubModel = HubModel.sharedInstance
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = requestContact!.firstName!
+        self.title = friend!.firstName!
         currentUser = hubModel.currentUser
         ViewFactory.hideTableViewSeparator(self.tableView)
         
         if let currentUser = currentUser {
-            currentUser.getRequestedContacts(requestContact!, contactRequestTVC: self)
+            currentUser.getRequestedContacts(friend!, contactRequestTVC: self)
         }
     }
 
@@ -53,50 +52,26 @@ class ContactRequestTableViewController: UITableViewController, ContactShareCell
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String {
-        return "Select what \(requestContact!.firstName!) can see"
+        return "Select what \(friend!.firstName!) can see"
     }
     
     @IBAction func back(sender: UIBarButtonItem) {
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        navigateBack()
     }
     
     @IBAction func acceptRequest(sender: UIBarButtonItem) {
-        viewController!.requests.removeObject(requestContact!)
-        viewController!.tableView.reloadData()
-        
-        let pushQuery = PFInstallation.query()!
-        let friend = requestContact!.matchingParseObject
-        pushQuery.whereKey("userFriend", equalTo: friend)
-        pushQuery.whereKey("user", equalTo: currentUser!.matchingParseObject)
-        
-        let push = PFPush()
-        push.setQuery(pushQuery)
-        let message = "\(requestContact!.firstName!) \(requestContact!.lastName!) accepted your request to connect"
-        let data = [
-            "alert": message,
-            "badge": "Increment",
-            "sound": "Ambient Hit.mp3"
-        ]
-        push.setData(data)
-        
-        let query = PFQuery(className: "SharedPermission")
-        query.whereKey("user", equalTo: currentUser!.matchingParseObject)
-        query.whereKey("userFriend", equalTo: friend)
-
-        query.getFirstObjectInBackgroundWithBlock {
-            (sharedPermission: PFObject?, error: NSError?) in
-            if let sharedPermission = sharedPermission {
-                sharedPermission["contacts"] = self.acceptedContacts
-                sharedPermission["status"] = "accepted"
-                sharedPermission.saveInBackgroundWithBlock {
-                    (success: Bool, error: NSError?) in
-                    if success {
-                        push.sendPushInBackground()
-                    }
-                }
-            }
+        if let friend = friend {
+            let friendParseObject = friend.matchingParseObject
+            let myParseObject = currentUser!.matchingParseObject
+            let pushQuery = HubUtility.configurePushInstallation(friendParseObject, currentUser: myParseObject)
+            let message = "\(friend.firstName!) \(friend.lastName!) accepted your request to connect"
+            let pushNotification = HubUtility.configurePushNotification(pushQuery, message: message)
+            currentUser!.acceptRequest(friendParseObject, push: pushNotification, viewController: self)
         }
-        back(sender)
+    }
+    
+    func navigateBack() {
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     //-----------------Contact Share Cell Delegate Method--------------------

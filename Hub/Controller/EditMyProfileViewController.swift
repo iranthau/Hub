@@ -1,10 +1,7 @@
-//
 //  EditMyProfileViewController.swift
 //  Hub
-//
 //  Created by Alexei Gudimenko on 11/02/2016.
 //  Copyright © 2016 88Software. All rights reserved.
-//
 
 import UIKit
 import Parse
@@ -16,7 +13,6 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var nicknameTextField: UITextField!
-    @IBOutlet weak var backgroundViewForProfileImage: UIView!
     @IBOutlet weak var contactFieldTableView: UITableView!
     @IBOutlet weak var phoneButton: UIButton!
     @IBOutlet weak var emailButton: UIButton!
@@ -30,12 +26,12 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
     weak var delegate: EditMyProfileDelegate?
     var imagePicker = UIImagePickerController()
     var activeTextField: UITextField?
-    let defaultViewFrameOriginY: CGFloat = 64.0 //point at the bottom of the nav bar
+    let viewInitialPointOfOrigin: CGFloat = 64.0
     
     var currentUser: User?
     let hubModel = HubModel.sharedInstance
     var activeDataSource = [Contact]()
-    var keyboardForContactType = 1
+    var keyboardForContactType = ContactType.Phone.rawValue
     
     var allContacts = [Contact]()
     var phoneContacts = [Contact]()
@@ -45,41 +41,26 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Edit Profile"
         currentUser = hubModel.currentUser
         ViewFactory.makeImageViewRound(profileImageView)
         
         //Fill up contacts arrays to have all type of contacts initially
-        let pObject = PFObject(className: "Contact")
-        phoneContacts = initialisePhoneContacts(pObject)
-        emailContacts = initialiseEmailContacts(pObject)
-        addressContacts = initialiseAddressContacts(pObject)
-        socialContacts = initialiseSocialContacts(pObject)
+        phoneContacts = HubUtility.initialisePhoneContacts()
+        emailContacts = HubUtility.initialiseEmailContacts()
+        addressContacts = HubUtility.initialiseAddressContacts()
+        socialContacts = HubUtility.initialiseSocialContacts()
         
         //When the view load phone contacts are displayed first
         activeDataSource = phoneContacts
-        selectedContactColor.backgroundColor = UIColor(red: 240/255.0, green: 148/255.0, blue: 27/255.0, alpha: 1)
+        selectedContactColor.backgroundColor = ViewFactory.backGroundColor(ContactType.Phone)
 
         //Sets the initial values of the text fields
         if let currentUser = currentUser {
             firstNameTextField.text = currentUser.firstName
             lastNameTextField.text = currentUser.lastName
             nicknameTextField.text = currentUser.nickname
-            if currentUser.availableTime == nil {
-                availabilityTextField.text = "When can others contact you"
-            } else {
-                availabilityTextField.text = currentUser.availableTime
-            }
-            
-            let imageFile = currentUser.profileImage
-            imageFile!.getDataInBackgroundWithBlock {
-                (imageData: NSData?, error: NSError?) -> Void in
-                if error == nil {
-                    if let imageData = imageData {
-                        self.profileImageView.image = UIImage(data:imageData)
-                    }
-                }
-            }
+            ViewFactory.setTextViewPlaceholder("When can others contact you", text: currentUser.availableTime, textView: availabilityTextField)
+            currentUser.getProfileImage(profileImageView)
             allContacts = currentUser.contacts
         }
         
@@ -213,7 +194,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
         finishEditingButton.enabled = true
         let userInfo: [NSObject : AnyObject] = sender.userInfo!
         userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
-        self.view.frame.origin.y = defaultViewFrameOriginY
+        self.view.frame.origin.y = viewInitialPointOfOrigin
     }
     
     func keyboardWillShow(sender: NSNotification) {
@@ -224,7 +205,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
         if activeTextField != availabilityTextField && activeTextField != firstNameTextField &&
             activeTextField != lastNameTextField {
             if keyboardSize == offset {
-                if self.view.frame.origin.y == defaultViewFrameOriginY {
+                if self.view.frame.origin.y == viewInitialPointOfOrigin {
                     UIView.animateWithDuration(0.1, animations: {
                         () -> Void in
                         self.view.frame.origin.y -= keyboardSize.height
@@ -301,54 +282,6 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
             }
         }
         return contactsToSave
-    }
-    
-    func initialisePhoneContacts(parseObject: PFObject) -> [Contact] {
-        var contacts = [Contact]()
-        for index in 1...4 {
-            let contact = Contact(parseObject: parseObject)
-            contact.type = ContactType.Phone.label
-            contact.subType = ContactSubType(rawValue: index)!.label
-            contacts.append(contact)
-        }
-        
-        return contacts
-    }
-    
-    func initialiseEmailContacts(parseObject: PFObject) -> [Contact] {
-        var contacts = [Contact]()
-        for index in 5...8 {
-            let contact = Contact(parseObject: parseObject)
-            contact.type = ContactType.Email.label
-            contact.subType = ContactSubType(rawValue: index)!.label
-            contacts.append(contact)
-        }
-        
-        return contacts
-    }
-    
-    func initialiseAddressContacts(parseObject: PFObject) -> [Contact] {
-        var contacts = [Contact]()
-        for index in 9...12 {
-            let contact = Contact(parseObject: parseObject)
-            contact.type = ContactType.Address.label
-            contact.subType = ContactSubType(rawValue: index)!.label
-            contacts.append(contact)
-        }
-        
-        return contacts
-    }
-    
-    func initialiseSocialContacts(parseObject: PFObject) -> [Contact] {
-        var contacts = [Contact]()
-        for index in 13...23 {
-            let contact = Contact(parseObject: parseObject)
-            contact.type = ContactType.Social.label
-            contact.subType = ContactSubType(rawValue: index)!.label
-            contacts.append(contact)
-        }
-        
-        return contacts
     }
     
     func dismissViewController(user: User) {

@@ -277,6 +277,28 @@ class User: Hashable {
         }
     }
     
+    func acceptRequest(friend: PFUser, push: PFPush, viewController: UIViewController) {
+        let contactRTVC = viewController as! ContactRequestTableViewController
+        let query = PFQuery(className: "SharedPermission")
+        query.whereKey("user", equalTo: matchingParseObject)
+        query.whereKey("userFriend", equalTo: friend)
+        
+        query.getFirstObjectInBackgroundWithBlock {
+            (sharedPermission: PFObject?, error: NSError?) in
+            if let sharedPermission = sharedPermission {
+                sharedPermission["contacts"] = contactRTVC.acceptedContacts
+                sharedPermission["status"] = "accepted"
+                sharedPermission.saveInBackgroundWithBlock {
+                    (success: Bool, error: NSError?) in
+                    if success {
+                        push.sendPushInBackground()
+                        contactRTVC.navigateBack()
+                    }
+                }
+            }
+        }
+    }
+    
     // Private method that needs set contacts to work properly
     func contactsToDeleteArray(contacts: [Contact]) -> [PFObject] {
         var returnArray = [PFObject]()

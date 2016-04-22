@@ -16,19 +16,6 @@ class HubModel {
         
     }
     
-//    var currentUser: User
-//    
-//    private init() {
-//        if PFUser.currentUser() != nil {
-//            let user = PFUser.currentUser()
-//            currentUser = User(parseUser: user!)
-//            currentUser.buildUser()
-//        } else {
-//            let user = PFUser()
-//            currentUser = User(parseUser: user)
-//        }
-//    }
-    
     private struct Static {
         static var instance: HubModel?
     }
