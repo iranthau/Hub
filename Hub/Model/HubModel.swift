@@ -65,6 +65,7 @@ class HubModel {
         }
     }
     
+    /* Read the profile picture data from facebook when given the user ID */
     func readProfileImageFromFacebook(userID: String) -> UIImage {
         let userProfileUrl = "https://graph.facebook.com/\(userID)/picture?type=large"
         let profilePictureUrl = NSURL(string: userProfileUrl)!
@@ -72,6 +73,33 @@ class HubModel {
         return UIImage(data: profilePicturedata)!
     }
     
+    /* Build an alert controller with camera and gallery as default options  */
+    func buildImagePickAlertController(imagePicker: UIImagePickerController, view: UIViewController) -> UIAlertController {
+        let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let cameraAction = UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+            self.openCamera(imagePicker, view: view)
+        }
+        
+        let gallaryAction = UIAlertAction(title: "Gallary", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+            self.openGallary(imagePicker, view: view)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+        }
+        
+        alert.addAction(cameraAction)
+        alert.addAction(gallaryAction)
+        alert.addAction(cancelAction)
+        
+        return alert
+    }
+    
+    //------------------Private Method-----------------------
+    
+    /* Opens the photo gallery */
     func openGallary(imagePicker: UIImagePickerController, view: UIViewController) {
         imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         
@@ -82,6 +110,7 @@ class HubModel {
         }
     }
     
+    /* Opens the camera if the camera is available. Otherwise it will open the gallery */
     func openCamera(imagePicker: UIImagePickerController, view: UIViewController) {
         if (UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)) {
             imagePicker.sourceType = UIImagePickerControllerSourceType.Camera

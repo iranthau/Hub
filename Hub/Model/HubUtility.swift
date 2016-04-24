@@ -34,6 +34,8 @@ class HubUtility {
         return pushQuery
     }
     
+    /* Build an array of phone contacts where each contact has empty value. Used
+     * to initialise the table views in edit my profile view controller */
     class func initialisePhoneContacts() -> [Contact] {
         var contacts = [Contact]()
         for index in 1...4 {
@@ -43,6 +45,7 @@ class HubUtility {
         return contacts
     }
     
+    /* Build an array of email contacts for the same purpose as initialisePhoneContacts */
     class func initialiseEmailContacts() -> [Contact] {
         var contacts = [Contact]()
         for index in 5...8 {
@@ -52,6 +55,7 @@ class HubUtility {
         return contacts
     }
     
+    /* Build an array of address contacts for the same purpose as initialisePhoneContacts */
     class func initialiseAddressContacts() -> [Contact] {
         var contacts = [Contact]()
         for index in 9...12 {
@@ -61,6 +65,7 @@ class HubUtility {
         return contacts
     }
     
+    /* Build an array of social contacts for the same purpose as initialisePhoneContacts */
     class func initialiseSocialContacts() -> [Contact] {
         var contacts = [Contact]()
         for index in 13...23 {
@@ -70,6 +75,40 @@ class HubUtility {
         return contacts
     }
     
+    /* Set the value of a contact when another contact with the value is given */
+    class func putContactsInAppropriateTextfield(contactToMatch: Contact, contacts: [Contact]) {
+        for contact in contacts {
+            if contact.subType == contactToMatch.subType {
+                contact.objectId = contactToMatch.objectId
+                contact.value = contactToMatch.value
+            }
+        }
+    }
+    
+    /* Combines few arrays when given an array of arrays */
+    class func appendContactsArrays(arrays: [[Contact]]) -> [Contact] {
+        var contactsArray = [Contact]()
+        for array in arrays {
+            contactsArray += array
+        }
+        return contactsArray
+    }
+    
+    /* Filter contacts if they didn't exist before and their value is empty */
+    class func filterContacts(editedContacts: [Contact]) -> [Contact] {
+        var contactsToSave = [Contact]()
+        for contact in editedContacts {
+            if contact.objectId != nil || contact.value != nil {
+                contactsToSave.append(contact)
+            }
+        }
+        return contactsToSave
+    }
+    
+    //-------------------Private Methods---------------------------
+    
+    /* Builds a contact with empty value when contact type and the row value of
+     * sub type is provided. */
     class func buildInitialContactForCell(index: Int, type: ContactType) -> Contact {
         let parseObject = PFObject(className: "Contact")
         let contact = Contact(parseObject: parseObject)

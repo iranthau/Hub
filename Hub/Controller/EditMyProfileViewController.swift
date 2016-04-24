@@ -9,7 +9,7 @@ import Parse
 class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate, UINavigationBarDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var profileImageView: UIImageView!
-    @IBOutlet weak var availabilityTextField: UITextView!
+    @IBOutlet weak var availabilityTextView: UITextView!
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var nicknameTextField: UITextField!
@@ -26,6 +26,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
     weak var delegate: EditMyProfileDelegate?
     var imagePicker = UIImagePickerController()
     var activeTextField: UITextField?
+    var activeTextView: UITextView?
     let viewInitialPointOfOrigin: CGFloat = 64.0
     
     var currentUser: User?
@@ -59,12 +60,12 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
             firstNameTextField.text = currentUser.firstName
             lastNameTextField.text = currentUser.lastName
             nicknameTextField.text = currentUser.nickname
-            ViewFactory.setTextViewPlaceholder("When can others contact you", text: currentUser.availableTime, textView: availabilityTextField)
+            ViewFactory.setTextViewPlaceholder("When can others contact you?", text: currentUser.availableTime, textView: availabilityTextView)
             currentUser.getProfileImage(profileImageView)
             allContacts = currentUser.contacts
         }
         
-        //Assigns user contacts to their corresponding textfields
+        registerDelegateForInputFields()
         matchInitialContactsValues()
         
         //Move the view up when a textfield is coverd by the keyboard
@@ -72,6 +73,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditMyProfileViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: self.view.window)
         
         finishEditingButton.enabled = false
+        activeTextView = availabilityTextView
     }
 
     //Cancel editing will dismiss the edit view controller
@@ -85,18 +87,15 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
     // 3. Update the user value to new values
     // 4. Save the user to parse
     @IBAction func done() {
-        var editedContacts = [Contact]()
-        editedContacts += phoneContacts
-        editedContacts += emailContacts
-        editedContacts += addressContacts
-        editedContacts += socialContacts
-        let contactsToSave = filterContacts(editedContacts)
+        let contactsArray = [phoneContacts, emailContacts, addressContacts, socialContacts]
+        let editedContacts = HubUtility.appendContactsArrays(contactsArray)
+        let contactsToSave = HubUtility.filterContacts(editedContacts)
 
         if let currentUser = currentUser {
             currentUser.firstName = firstNameTextField.text!
             currentUser.lastName = lastNameTextField.text!
             currentUser.nickname = nicknameTextField.text!
-            currentUser.availableTime = availabilityTextField.text!
+            currentUser.availableTime = availabilityTextView.text!
             currentUser.setProfileImage(profileImageView.image!)
             currentUser.setContacts(contactsToSave)
             dismissViewController(currentUser)
@@ -104,47 +103,30 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
     }
     
     @IBAction func phoneButtonPressed() {
-        selectedContactColor.backgroundColor = UIColor(red: 240/255.0, green: 148/255.0, blue: 27/255.0, alpha: 1)
+        selectedContactColor.backgroundColor = ViewFactory.backGroundColor(ContactType.Phone)
         activeDataSource = phoneContacts
         keyboardForContactType = 1
         contactFieldTableView.reloadData()
     }
     @IBAction func emailButtonPressed() {
-        selectedContactColor.backgroundColor = UIColor(red: 234/255.0, green: 176/255.0, blue: 51/255.0, alpha: 1)
+        selectedContactColor.backgroundColor = ViewFactory.backGroundColor(ContactType.Email)
         activeDataSource = emailContacts
         keyboardForContactType = 2
         contactFieldTableView.reloadData()
     }
     @IBAction func addressButtonPressed() {
-        selectedContactColor.backgroundColor = UIColor(red: 212/255.0, green: 149/255.0, blue: 225/255.0, alpha: 1)
+        selectedContactColor.backgroundColor = ViewFactory.backGroundColor(ContactType.Address)
         activeDataSource = addressContacts
         contactFieldTableView.reloadData()
     }
     @IBAction func socialButtonPressed() {
-        selectedContactColor.backgroundColor = UIColor(red: 138/255.0, green: 194/255.0, blue: 81/255.0, alpha: 1)
+        selectedContactColor.backgroundColor = ViewFactory.backGroundColor(ContactType.Social)
         activeDataSource = socialContacts
         contactFieldTableView.reloadData()
     }
 
     @IBAction func changeProfileImage() {
-        let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
-        let cameraAction = UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
-            self.hubModel.openCamera(self.imagePicker, view: self)
-        }
-        
-        let gallaryAction = UIAlertAction(title: "Gallary", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
-            self.hubModel.openGallary(self.imagePicker, view: self)
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
-        }
-        
-        alert.addAction(cameraAction)
-        alert.addAction(gallaryAction)
-        alert.addAction(cancelAction)
+        let alert = hubModel.buildImagePickAlertController(imagePicker, view: self)
         imagePicker.delegate = self
         
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
@@ -179,58 +161,73 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
         return .TopAttached
     }
     
-    //track the active text field
+    //Handle text view changes
+    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+        activeTextView = textView
+        return true
+    }
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        activeTextView = textView
+        if textView.text == "When can others contact you?" {
+            textView.text = ""
+        }
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        if textView.text == "" {
+            textView.text = "When can others contact you?"
+        }
+        activeTextView = nil
+    }
+    
+    //Handle textfields changes
     func textFieldDidBeginEditing(textField: UITextField) {
         activeTextField = textField
     }
     
+    //Update contact value when the user click outside of the active textfield
     func textFieldDidEndEditing(textField: UITextField) {
-        let cell = textField.superview!.superview as! EditContactItemCell
-        cell.contact!.value = textField.text!
-        activeTextField = nil
+        if textField != firstNameTextField && textField != lastNameTextField && textField != nicknameTextField {
+            let cell = textField.superview!.superview as! EditContactItemCell
+            cell.contact!.value = textField.text!
+        }
+        activeTextView = nil
     }
     
     func keyboardWillHide(sender: NSNotification) {
         finishEditingButton.enabled = true
-        let userInfo: [NSObject : AnyObject] = sender.userInfo!
-        userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
         self.view.frame.origin.y = viewInitialPointOfOrigin
     }
     
     func keyboardWillShow(sender: NSNotification) {
         finishEditingButton.enabled = false
-        let userInfo: [NSObject : AnyObject] = sender.userInfo!
-        let keyboardSize: CGSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
-        let offset: CGSize = userInfo[UIKeyboardFrameEndUserInfoKey]!.CGRectValue.size
-        if activeTextField != availabilityTextField && activeTextField != firstNameTextField &&
+        let userInfo = sender.userInfo!
+        let keyboardSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
+        let offset = userInfo[UIKeyboardFrameEndUserInfoKey]!.CGRectValue.size
+        if activeTextView != availabilityTextView && activeTextField != firstNameTextField &&
             activeTextField != lastNameTextField {
-            if keyboardSize == offset {
-                if self.view.frame.origin.y == viewInitialPointOfOrigin {
-                    UIView.animateWithDuration(0.1, animations: {
-                        () -> Void in
-                        self.view.frame.origin.y -= keyboardSize.height
-                    })
-                }
-            } else {
-                UIView.animateWithDuration(0.1, animations: {
-                    () -> Void in
-                    self.view.frame.origin.y += keyboardSize.height - offset.height
-                })
-            }
+            showKeyBoard(offset, keyboardSize: keyboardSize)
         }
     }
     
     override func viewWillDisappear(animated: Bool) {
-        NSNotificationCenter.defaultCenter().removeObserver(self,
-                                                            name: UIKeyboardWillShowNotification, object: self.view.window)
-        NSNotificationCenter.defaultCenter().removeObserver(self,
-                                                            name: UIKeyboardWillHideNotification, object: self.view.window)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: self.view.window)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: self.view.window)
     }
     
     //hide keyboard on background tap
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesBegan(touches, withEvent: event)
         self.view.endEditing(true)
+    }
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
     }
     
     //hide keyboard on pressing return key
@@ -247,45 +244,48 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
         profileImageView.image = image
     }
     
-    // Extra methods that needs for this controller to work properly
+    func dismissViewController(user: User) {
+        delegate?.editMyProfileViewController(self, didFinishEditingProfile: user)
+    }
+    
+    //----------------Private Methods--------------------
+    
+    func registerDelegateForInputFields() {
+        firstNameTextField.delegate = self
+        lastNameTextField.delegate = self
+        availabilityTextView.delegate = self
+        nicknameTextField.delegate = self
+    }
+    
+    /* Place appropriate contacts in correct text field when the view load */
     func matchInitialContactsValues() {
         for contact in allContacts {
             switch contact.type! {
             case ContactType.Phone.label:
-                putContactsInAppropriateTextfield(contact, contacts: phoneContacts)
+                HubUtility.putContactsInAppropriateTextfield(contact, contacts: phoneContacts)
             case ContactType.Email.label:
-                putContactsInAppropriateTextfield(contact, contacts: emailContacts)
+                HubUtility.putContactsInAppropriateTextfield(contact, contacts: emailContacts)
             case ContactType.Address.label:
-                putContactsInAppropriateTextfield(contact, contacts: addressContacts)
+                HubUtility.putContactsInAppropriateTextfield(contact, contacts: addressContacts)
             case ContactType.Social.label:
-                putContactsInAppropriateTextfield(contact, contacts: socialContacts)
+                HubUtility.putContactsInAppropriateTextfield(contact, contacts: socialContacts)
             default:
                 break
             }
         }
     }
     
-    func putContactsInAppropriateTextfield(contactToMatch: Contact, contacts: [Contact]) {
-        for contact in contacts {
-            if contact.subType == contactToMatch.subType {
-                contact.objectId = contactToMatch.objectId
-                contact.value = contactToMatch.value
+    func showKeyBoard(offset: CGSize, keyboardSize: CGSize) {
+        UIView.animateWithDuration(0.1, animations: {
+            () -> Void in
+            if keyboardSize == offset {
+                if self.view.frame.origin.y == self.viewInitialPointOfOrigin {
+                    self.view.frame.origin.y -= keyboardSize.height
+                }
+            } else {
+                self.view.frame.origin.y += keyboardSize.height - offset.height
             }
-        }
-    }
-    
-    func filterContacts(editedContacts: [Contact]) -> [Contact] {
-        var contactsToSave = [Contact]()
-        for contact in editedContacts {
-            if contact.objectId != nil || contact.value != nil {
-                contactsToSave.append(contact)
-            }
-        }
-        return contactsToSave
-    }
-    
-    func dismissViewController(user: User) {
-        delegate?.editMyProfileViewController(self, didFinishEditingProfile: user)
+        })
     }
 }
 
