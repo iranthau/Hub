@@ -211,18 +211,18 @@ class User: Hashable {
                     contact.buildContact()
                     self.contacts.append(contact)
                     switch contact.type! {
-                    case ContactType.Phone.label:
-                        myProfileVC.sharedPhoneContacts.append(contact)
-                    case ContactType.Email.label:
-                        myProfileVC.sharedEmailContacts.append(contact)
-                    case ContactType.Address.label:
-                        myProfileVC.sharedAddressContacts.append(contact)
-                    case ContactType.Social.label:
-                        myProfileVC.sharedSocialContacts.append(contact)
-                    default:
-                        return
+                        case ContactType.Phone.label:
+                            myProfileVC.sharedPhoneContacts.append(contact)
+                        case ContactType.Email.label:
+                            myProfileVC.sharedEmailContacts.append(contact)
+                        case ContactType.Address.label:
+                            myProfileVC.sharedAddressContacts.append(contact)
+                        case ContactType.Social.label:
+                            myProfileVC.sharedSocialContacts.append(contact)
+                        default:
+                            return
                     }
-                    myProfileVC.tableView.reloadData()
+                    myProfileVC.phoneButtonPressed()
                 }
             }
         }

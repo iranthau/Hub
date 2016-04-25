@@ -22,11 +22,12 @@ class ViewFactory {
             label.textColor = UIColor.lightGrayColor()
         } else {
             label.text = text
+            label.textColor = UIColor.whiteColor()
         }
     }
     
     class func setTextViewPlaceholder(placeholder: String, text: String?, textView: UITextView) {
-        if text == nil {
+        if text == nil || text == "When can others contact you?" {
             textView.text = placeholder
             textView.textColor = UIColor.lightGrayColor()
         } else {

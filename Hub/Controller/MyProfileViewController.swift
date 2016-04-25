@@ -1,16 +1,12 @@
-//
 //  MyProfileViewController.swift
 //  Hub
-//
 //  Created by Alexei Gudimenko on 7/02/2016.
 //  Copyright © 2016 88Software. All rights reserved.
-//
 
 import UIKit
 
 class MyProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, EditMyProfileDelegate {
     
-    //outlet vars:
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nicknameLabel: UILabel!
     @IBOutlet weak var cityLocationLabel: UILabel!
@@ -33,52 +29,20 @@ class MyProfileViewController: UIViewController, UITableViewDataSource, UITableV
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        tableView.separatorColor = UIColor(red: 255/255.0, green: 255/255.0,
-            blue: 255/255.0, alpha: 0.0)
         user = hubModel.currentUser
-        self.navigationItem.title = "\(user!.firstName!) \(user!.lastName!)"
+        ViewFactory.hideTableViewSeparator(tableView)
+        selectedContactView.backgroundColor = ViewFactory.backGroundColor(ContactType.Phone)
         
-        let imageFile = user!.profileImage
-        
-        imageFile!.getDataInBackgroundWithBlock {
-            (imageData: NSData?, error: NSError?) -> Void in
-            if error == nil {
-                if let imageData = imageData {
-                    self.profileImageView.image = UIImage(data:imageData)
-                }
-            }
+        if let currentUser = user {
+            SetInitialValues(currentUser)
+            currentUser.getContacts(self)
         }
-        
-        profileImageView.layer.cornerRadius = profileImageView.bounds.size.width / 2
-        profileImageView.clipsToBounds = true
-        selectedContactView.backgroundColor = UIColor(red: 240/255.0, green: 148/255.0,
-            blue: 27/255.0, alpha: 1)
-        
-        // Set user info to display on loading:
-        if user!.nickname == nil {
-            nicknameLabel.text = "nickname"
-            nicknameLabel.textColor = UIColor.lightGrayColor()
-        } else {
-            nicknameLabel.text = user!.nickname!
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        if let currentUser = user {
+            SetInitialValues(currentUser)
         }
-        
-        if user!.city == nil {
-            cityLocationLabel.text = "city"
-            cityLocationLabel.textColor = UIColor.lightGrayColor()
-        } else {
-            cityLocationLabel.text = user!.city!
-        }
-        
-        if user!.availableTime == nil {
-            contactHoursDetail.text = "No prefered time provided"
-            contactHoursDetail.textColor = UIColor.lightGrayColor()
-        } else {
-            contactHoursDetail.text = user!.availableTime!
-        }
-        
-        user!.getContacts(self)
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -87,43 +51,29 @@ class MyProfileViewController: UIViewController, UITableViewDataSource, UITableV
     
     @IBAction func phoneButtonPressed() {
         activeDataSource = sharedPhoneContacts
-        selectedContactView.backgroundColor = UIColor(red: 240/255.0, green: 148/255.0,
-            blue: 27/255.0, alpha: 1)
+        selectedContactView.backgroundColor = ViewFactory.backGroundColor(ContactType.Phone)
         tableView.reloadData()
     }
     @IBAction func emailButtonPressed() {
         activeDataSource = sharedEmailContacts
-        selectedContactView.backgroundColor = UIColor(red: 234/255.0, green: 176/255.0,
-            blue: 51/255.0, alpha: 1)
+        selectedContactView.backgroundColor = ViewFactory.backGroundColor(ContactType.Email)
         tableView.reloadData()
     }
     @IBAction func addressButtonPressed() {
         activeDataSource = sharedAddressContacts
-        selectedContactView.backgroundColor = UIColor(red: 212/255.0, green: 149/255.0,
-            blue: 225/255.0, alpha: 1)
+        selectedContactView.backgroundColor = ViewFactory.backGroundColor(ContactType.Address)
         tableView.reloadData()
     }
     @IBAction func socialButtonPressed() {
         activeDataSource = sharedSocialContacts
-        selectedContactView.backgroundColor = UIColor(red: 138/255.0, green: 194/255.0,
-            blue: 81/255.0, alpha: 1)
+        selectedContactView.backgroundColor = ViewFactory.backGroundColor(ContactType.Social)
         tableView.reloadData()
     }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
         if segue.identifier == "EditProfileSegue" {
             let navigationController = segue.destinationViewController as! UINavigationController
             let controller = navigationController.topViewController as! EditMyProfileViewController
-            
-            // #warning: replace with model data!
-//            controller.userData = userData
-//            controller.activeDataSource = activeDataSource
-//            controller.keyboardForContactType = keyboardState
-//            controller.activeContactImage = activeContactImage
-            
             controller.delegate = self
         }
     }
@@ -132,17 +82,14 @@ class MyProfileViewController: UIViewController, UITableViewDataSource, UITableV
         return activeDataSource.count
     }
     
-    func tableView(tableView: UITableView,
-                   cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cellIdentifier = "ContactItemCell"
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier,
-                                                               forIndexPath: indexPath) as! ContactItemCell
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("ContactItemCell", forIndexPath: indexPath) as! ContactItemCell
         let label = cell.viewWithTag(88) as! UILabel
+        let imageView = cell.viewWithTag(87) as! UIImageView
+        let contact = activeDataSource[indexPath.row]
         
         label.text = activeDataSource[indexPath.row].value
-        let imageView = cell.viewWithTag(87) as! UIImageView
-        imageView.image = UIImage(named: activeDataSource[indexPath.row].getImageName())
-        
+        imageView.image = UIImage(named: contact.getImageName())
         return cell
     }
     
@@ -150,18 +97,26 @@ class MyProfileViewController: UIViewController, UITableViewDataSource, UITableV
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
-    func tableView(tableView: UITableView,
-                   willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        return nil
-    }
-    
+    //Delegate method. Called if a user cancel editing
     func editMyProfileViewControllerDidCancel(controller: EditMyProfileViewController) {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func editMyProfileViewController(controller: EditMyProfileViewController,
-                                     didFinishEditingProfile userProfile: User) {
+    //Delegate method. Called after a user finish editing
+    func editMyProfileViewController(controller: EditMyProfileViewController, didFinishEditingProfile userProfile: User) {
         tableView.reloadData()
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    //---------------------Private Methods------------------------
+    
+    //Set the values of lables and views from a user
+    func SetInitialValues(currentUser: User) {
+        self.navigationItem.title = "\(currentUser.firstName!) \(currentUser.lastName!)"
+        currentUser.getProfileImage(profileImageView)
+        ViewFactory.makeImageViewRound(profileImageView)
+        ViewFactory.setLabelPlaceholder("nickname", text: currentUser.nickname, label: nicknameLabel)
+        ViewFactory.setLabelPlaceholder("city", text: currentUser.city, label: cityLocationLabel)
+        ViewFactory.setTextViewPlaceholder("No prefered time provided", text: currentUser.availableTime, textView: contactHoursDetail)
     }
 }
