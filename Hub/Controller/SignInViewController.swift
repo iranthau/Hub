@@ -1,10 +1,7 @@
-//
 //  ViewController.swift
 //  Hub
-//
 //  Created by Irantha Rajakaruna on 3/12/2015.
 //  Copyright © 2015 88Software. All rights reserved.
-//
 
 import UIKit
 import Parse
@@ -26,7 +23,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         let tap = UITapGestureRecognizer(target: self, action: #selector(SignInViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
         
-        //set delegates to handle keyboard events for each text field - A.G
+        //set delegates to handle keyboard events for each text field
         userNameInput.delegate = self
         passwordInput.delegate = self
     }
@@ -34,7 +31,6 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
     
     @IBAction func signIn(sender: AnyObject) {
         let username = userNameInput.text!
