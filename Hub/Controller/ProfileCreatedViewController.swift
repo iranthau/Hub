@@ -25,19 +25,9 @@ class ProfileCreatedViewController: UIViewController {
         emailContact.subType = "home"
         user.setContacts([emailContact])
         
-        profileImage.layer.cornerRadius = 0.5 * profileImage.bounds.size.width
-        profileImage.clipsToBounds = true
-        let imageFile = user.profileImage
+        ViewFactory.makeImageViewRound(profileImage)
+        user.getProfileImage(profileImage)
         firstNameLabel.text = user.firstName!
-        
-        imageFile!.getDataInBackgroundWithBlock {
-            (imageData: NSData?, error: NSError?) -> Void in
-            if error == nil {
-                if let imageData = imageData {
-                    self.profileImage.image = UIImage(data:imageData)
-                }
-            }
-        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,8 +35,7 @@ class ProfileCreatedViewController: UIViewController {
     }
     
     @IBAction func createProfile() {
-        let heyyaTabBarController =
-        self.storyboard?.instantiateViewControllerWithIdentifier("HeyyaTabBarController") as! UITabBarController
+        let heyyaTabBarController = self.storyboard?.instantiateViewControllerWithIdentifier("HeyyaTabBarController") as! UITabBarController
         heyyaTabBarController.selectedIndex = 1
         self.presentViewController(heyyaTabBarController, animated: true, completion: nil)
     }
