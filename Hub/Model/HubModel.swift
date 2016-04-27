@@ -27,52 +27,6 @@ class HubModel {
         return Static.instance!
     }
     
-    func handleFacebookSignUp(parseUser: PFUser, signInVC: SignInViewController) {
-        let requestParameters = ["fields": "id, email, first_name, last_name"]
-        let userDetails = FBSDKGraphRequest(graphPath: "me", parameters: requestParameters)
-        
-        userDetails.startWithCompletionHandler {
-            (connection, result, error: NSError!) -> Void in
-            if(error != nil) {
-                let errorMessage = error.localizedDescription
-                signInVC.showAlert(errorMessage)
-            } else if(result != nil) {
-                let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-                let fName = result["first_name"]! as! String
-                let lName = result["last_name"]! as! String
-                let email = result["email"]! as! String
-                let user = User(parseUser: parseUser)
-                let id = result["id"]! as! String
-                user.buildParseUser(email, fName: fName, lName: lName)
-                self.currentUser = user
-                
-                dispatch_async(dispatch_get_global_queue(priority, 0)) {
-                    let profileImage = self.readProfileImageFromFacebook(id)
-                    user.setProfileImage(profileImage)
-                    self.uploadUserDetailsToParse(user)
-                }
-            }
-        }
-    }
-    
-    func uploadUserDetailsToParse(user: User) {
-        let pfUser = user.matchingParseObject
-        pfUser.saveInBackgroundWithBlock {
-            (success: Bool, error: NSError?) -> Void in
-            if(success) {
-                print("success")
-            }
-        }
-    }
-    
-    /* Read the profile picture data from facebook when given the user ID */
-    func readProfileImageFromFacebook(userID: String) -> UIImage {
-        let userProfileUrl = "https://graph.facebook.com/\(userID)/picture?type=large"
-        let profilePictureUrl = NSURL(string: userProfileUrl)!
-        let profilePicturedata = NSData(contentsOfURL: profilePictureUrl)!
-        return UIImage(data: profilePicturedata)!
-    }
-    
     /* Build an alert controller with camera and gallery as default options  */
     func buildImagePickAlertController(imagePicker: UIImagePickerController, view: UIViewController) -> UIAlertController {
         let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)

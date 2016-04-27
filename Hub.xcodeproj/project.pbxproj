@@ -19,6 +19,18 @@
 		9AA824FA1C43476800B71364 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA824F81C43476800B71364 /* SettingsViewController.swift */; };
 		9AA824FB1C43476800B71364 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA824F81C43476800B71364 /* SettingsViewController.swift */; };
 		9AD9296D1C7C958000B764B7 /* AddContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD9296C1C7C958000B764B7 /* AddContactCell.swift */; };
+		9D293B681CD0C25D00C34BED /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE7E6E21CC7A9EE00D3BB87 /* ViewFactory.swift */; };
+		9D293B691CD0C27B00C34BED /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE7E6E21CC7A9EE00D3BB87 /* ViewFactory.swift */; };
+		9D293B6A1CD0C29100C34BED /* ContactType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF7B9B91CAFF1D3004B5F65 /* ContactType.swift */; };
+		9D293B6B1CD0C29B00C34BED /* ContactType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF7B9B91CAFF1D3004B5F65 /* ContactType.swift */; };
+		9D293B6C1CD0C2BA00C34BED /* HubUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE7E6E41CC7C2D300D3BB87 /* HubUtility.swift */; };
+		9D293B6D1CD0C2C100C34BED /* HubUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE7E6E41CC7C2D300D3BB87 /* HubUtility.swift */; };
+		9D293B6E1CD0CB6700C34BED /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAE7A131C101F6B0085264A /* SignInViewController.swift */; };
+		9D293B6F1CD0CB7200C34BED /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAE7A131C101F6B0085264A /* SignInViewController.swift */; };
+		9D293B701CD0D0FA00C34BED /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD910CE91C6C7FF4003B099C /* MyProfileViewController.swift */; };
+		9D293B711CD0D10300C34BED /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD910CE91C6C7FF4003B099C /* MyProfileViewController.swift */; };
+		9D293B721CD0D11900C34BED /* SharedPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF7B9BB1CB01486004B5F65 /* SharedPermission.swift */; };
+		9D293B731CD0D12100C34BED /* SharedPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF7B9BB1CB01486004B5F65 /* SharedPermission.swift */; };
 		BD03E3BA1CC3647800FB3ED2 /* EditMyProfileDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD03E3B91CC3647800FB3ED2 /* EditMyProfileDelegate.swift */; };
 		BD19009D1C7341F600D82DA6 /* ContactRequestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD19009C1C7341F600D82DA6 /* ContactRequestTableViewController.swift */; };
 		BD2B11B11CBA18C300A68A5D /* Ambient Hit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BD2B11B01CBA18C300A68A5D /* Ambient Hit.mp3 */; };
@@ -594,6 +606,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D293B721CD0D11900C34BED /* SharedPermission.swift in Sources */,
+				9D293B711CD0D10300C34BED /* MyProfileViewController.swift in Sources */,
+				9D293B6E1CD0CB6700C34BED /* SignInViewController.swift in Sources */,
+				9D293B6D1CD0C2C100C34BED /* HubUtility.swift in Sources */,
+				9D293B6A1CD0C29100C34BED /* ContactType.swift in Sources */,
+				9D293B681CD0C25D00C34BED /* ViewFactory.swift in Sources */,
 				BDEBFDBF1CA96D78002E48CE /* ContactShareCell.swift in Sources */,
 				BDEBFDBE1CA96D70002E48CE /* RequestsTableViewController.swift in Sources */,
 				BDEBFDBD1CA96D69002E48CE /* ContactShareCellDelegate.swift in Sources */,
@@ -617,6 +635,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D293B731CD0D12100C34BED /* SharedPermission.swift in Sources */,
+				9D293B701CD0D0FA00C34BED /* MyProfileViewController.swift in Sources */,
+				9D293B6F1CD0CB7200C34BED /* SignInViewController.swift in Sources */,
+				9D293B6C1CD0C2BA00C34BED /* HubUtility.swift in Sources */,
+				9D293B6B1CD0C29B00C34BED /* ContactType.swift in Sources */,
+				9D293B691CD0C27B00C34BED /* ViewFactory.swift in Sources */,
 				BDEBFDC21CA96D97002E48CE /* ContactShareCell.swift in Sources */,
 				BDEBFDC11CA96D90002E48CE /* RequestsTableViewController.swift in Sources */,
 				BDEBFDC01CA96D87002E48CE /* ContactShareCellDelegate.swift in Sources */,

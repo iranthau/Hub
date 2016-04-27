@@ -5,6 +5,7 @@
 
 import Foundation
 import Parse
+import ParseFacebookUtilsV4
 
 class User: Hashable {
     let parseClassName = "User"
@@ -73,6 +74,98 @@ class User: Hashable {
             if error == nil {
                 if let imageData = imageData {
                     imageView.image = UIImage(data:imageData)
+                }
+            }
+        }
+    }
+    
+    func logIn(userDetails: [String: String], vc: UIViewController) {
+        let username = userDetails["username"]!
+        let password = userDetails["password"]!
+        let viewController = vc as! SignInViewController
+        
+        PFUser.logInWithUsernameInBackground(username, password: password) {
+            (user: PFUser?, error: NSError?) -> Void in
+            if user != nil {
+                let currentUser = PFUser.currentUser()!
+                let user = User(parseUser: currentUser)
+                self.hubModel.currentUser = user
+                self.hubModel.currentUser!.buildUser()
+                viewController.performSegueWithIdentifier("signInSegue", sender: nil)
+            } else {
+                let errorMessage = error!.userInfo["error"] as? String
+                viewController.showAlert(errorMessage!)
+            }
+        }
+    }
+    
+    func logInWithFacebook(vc: UIViewController) {
+        let viewController = vc as! SignInViewController
+
+        PFFacebookUtils.logInInBackgroundWithReadPermissions(
+            ["public_profile", "email"], block: {
+                (user: PFUser?, error: NSError?) -> Void in
+                if let error = error {
+                    let errorMessage = error.userInfo["error"] as! String
+                    viewController.showAlert(errorMessage)
+                } else if let user = user {
+                    let currentUser = PFUser.currentUser()!
+                    if user.isNew {
+                        self.signUpWithFacebook(currentUser, signInVC: viewController)
+                        viewController.performSegueWithIdentifier("createAccountSegue", sender: nil)
+                    } else {
+                        self.hubModel.currentUser = User(parseUser: currentUser)
+                        self.hubModel.currentUser!.buildUser()
+                        viewController.performSegueWithIdentifier("signInSegue", sender: nil)
+                    }
+                } else {
+                    viewController.showAlert("Sign up error.")
+                }
+            }
+        )
+    }
+    
+    /* Read the profile picture data from facebook when given the user ID */
+    func getProfileImageFromFacebook(userID: String) -> UIImage {
+        let userProfileUrl = "https://graph.facebook.com/\(userID)/picture?type=large"
+        let profilePictureUrl = NSURL(string: userProfileUrl)!
+        let profilePicturedata = NSData(contentsOfURL: profilePictureUrl)!
+        return UIImage(data: profilePicturedata)!
+    }
+    
+    func saveUser(user: User) {
+        let pfUser = user.matchingParseObject
+        pfUser.saveInBackgroundWithBlock {
+            (success: Bool, error: NSError?) -> Void in
+            if(success) {
+                print("success")
+            }
+        }
+    }
+    
+    func signUpWithFacebook(parseUser: PFUser, signInVC: SignInViewController) {
+        let requestParameters = ["fields": "id, email, first_name, last_name"]
+        let userDetails = FBSDKGraphRequest(graphPath: "me", parameters: requestParameters)
+        
+        userDetails.startWithCompletionHandler {
+            (connection, result, error: NSError!) -> Void in
+            if(error != nil) {
+                let errorMessage = error.localizedDescription
+                signInVC.showAlert(errorMessage)
+            } else if(result != nil) {
+                let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+                let fName = result["first_name"]! as! String
+                let lName = result["last_name"]! as! String
+                let email = result["email"]! as! String
+                let user = User(parseUser: parseUser)
+                let id = result["id"]! as! String
+                user.buildParseUser(email, fName: fName, lName: lName)
+                self.hubModel.currentUser = user
+                
+                dispatch_async(dispatch_get_global_queue(priority, 0)) {
+                    let profileImage = self.getProfileImageFromFacebook(id)
+                    user.setProfileImage(profileImage)
+                    self.saveUser(user)
                 }
             }
         }

@@ -5,7 +5,6 @@
 
 import UIKit
 import Parse
-import ParseFacebookUtilsV4
 
 class SignInViewController: UIViewController, UITextFieldDelegate {
 
@@ -35,42 +34,17 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     @IBAction func signIn(sender: AnyObject) {
         let username = userNameInput.text!
         let password = passwordInput.text!
+        let userDetails = ["username": username, "password": password]
         
-        PFUser.logInWithUsernameInBackground(username, password: password) {
-            (user: PFUser?, error: NSError?) -> Void in
-            if user != nil {
-                let currentUser = PFUser.currentUser()!
-                self.hubModel.currentUser = User(parseUser: currentUser)
-                self.hubModel.currentUser!.buildUser()
-                self.performSegueWithIdentifier("signInSegue", sender: nil)
-            } else {
-                let errorMessage = error!.userInfo["error"] as? String
-                self.showAlert(errorMessage!)
-            }
-        }
+        let parseUser = PFUser()
+        let user = User(parseUser: parseUser)
+        user.logIn(userDetails, vc: self)
     }
     
     @IBAction func facebookSignIn(sender: AnyObject) {
-        PFFacebookUtils.logInInBackgroundWithReadPermissions(
-            ["public_profile", "email"], block: {
-                (user: PFUser?, error: NSError?) -> Void in
-                if let error = error {
-                    let errorMessage = error.userInfo["error"] as? String
-                    self.showAlert(errorMessage!)
-                } else if let user = user {
-                    let currentUser = PFUser.currentUser()!
-                    if user.isNew {
-                        self.hubModel.handleFacebookSignUp(currentUser, signInVC: self)
-                        self.performSegueWithIdentifier("createAccountSegue", sender: nil)
-                    } else {
-                        self.hubModel.currentUser = User(parseUser: currentUser)
-                        self.hubModel.currentUser!.buildUser()
-                        self.performSegueWithIdentifier("signInSegue", sender: nil)
-                    }
-                } else {
-                    self.showAlert("Sign up error.")
-                }
-        })
+        let parseUser = PFUser()
+        let user = User(parseUser: parseUser)
+        user.logInWithFacebook(self)
     }
     
     @IBAction func createAccount(sender: AnyObject) {
