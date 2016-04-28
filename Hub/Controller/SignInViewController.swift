@@ -32,13 +32,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func signIn(sender: AnyObject) {
-        let username = userNameInput.text!
-        let password = passwordInput.text!
-        let userDetails = ["username": username, "password": password]
-        
-        let parseUser = PFUser()
-        let user = User(parseUser: parseUser)
-        user.logIn(userDetails, vc: self)
+        logUserIn()
     }
     
     @IBAction func facebookSignIn(sender: AnyObject) {
@@ -51,6 +45,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         self.performSegueWithIdentifier("createAccountSegue", sender: nil)
     }
     
+    //Create and display an allert. May be move the function to a more centric place later.
     func showAlert(message: String) {
         let alertError = UIAlertController(title: "Sign In", message: message, preferredStyle: .Alert)
         let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
@@ -58,35 +53,26 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         self.presentViewController(alertError, animated: true, completion: nil)
     }
     
-    //handle the 'return' key events: move to next or go to sign in - A. G.
+    //Handle keyboard return key(Done, Go etc) function
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        
         if textField == self.userNameInput {
-            
             self.passwordInput.becomeFirstResponder()
-            
         } else if textField == self.passwordInput {
-            
-            let username = userNameInput.text!
-            let password = passwordInput.text!
-            
-            PFUser.logInWithUsernameInBackground(username, password: password) {
-                (user: PFUser?, error: NSError?) -> Void in
-                if user != nil {
-                    let currentUser = PFUser.currentUser()!
-                    self.hubModel.currentUser = User(parseUser: currentUser)
-                    self.hubModel.currentUser!.buildUser()
-                    self.performSegueWithIdentifier("signInSegue", sender: nil)
-                } else {
-                    let errorMessage = error!.userInfo["error"] as? String
-                    self.showAlert(errorMessage!)
-                }
-            }
-            
+            logUserIn()
             textField.resignFirstResponder()
         }
-        
         return false
+    }
+    
+    //----------------------Private methods---------------------------
+    func logUserIn() {
+        let username = userNameInput.text!
+        let password = passwordInput.text!
+        let userDetails = ["username": username, "password": password]
+        let parseUser = PFUser()
+        let user = User(parseUser: parseUser)
+        
+        user.logIn(userDetails, vc: self)
     }
     
     func dismissKeyboard() {
