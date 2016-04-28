@@ -47,4 +47,12 @@ class ViewFactory {
                 return UIColor(red: 138/255.0, green: 194/255.0, blue: 81/255.0, alpha: 1)
         }
     }
+    
+    class func setTabBarItemImageColorToOriginal(items: [UITabBarItem]) {
+        for item in items {
+            if let image = item.image {
+                item.image = image.imageWithRenderingMode(.AlwaysOriginal)
+            }
+        }
+    }
 }
