@@ -172,7 +172,6 @@ class User: Hashable {
     }
     
     func signUp(signUpVC: SignUpViewController) {
-        
         matchingParseObject.signUpInBackgroundWithBlock {
             (success: Bool, error: NSError?) in
             if let error = error {

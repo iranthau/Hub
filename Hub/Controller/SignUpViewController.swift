@@ -1,10 +1,7 @@
-//
 //  SignUpViewController.swift
 //  Hub
-//
 //  Created by Irantha Rajakaruna on 24/01/2016.
 //  Copyright © 2016 88Software. All rights reserved.
-//
 
 import UIKit
 import Parse
@@ -26,7 +23,6 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Disable back button
         self.navigationItem.hidesBackButton = true
         activityIndicator.hidesWhenStopped = true
         
@@ -39,26 +35,16 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     @IBAction func signMeUp(sender: AnyObject) {
-        let password    = passwordTextfield.text!
+        let password_1    = passwordTextfield.text!
         let password_2  = cPasswordTextfield.text!
         
-        if password == password_2 {
+        if password_1 == password_2 {
             activityIndicator.startAnimating()
             let firstName = fNameTextfield.text!.capitalizedString
             let lastName = lNameTextfield.text!.capitalizedString
             let email = emailTextfield.text!
-            
-            let parseUser = PFUser()
-            let user = User(parseUser: parseUser)
-            user.buildParseUser(email, fName: firstName, lName: lastName)
-            user.setUsername(email)
-            user.setPassword(password)
-            
-            let buttonBgImage = profilePicture.imageForState(.Normal)!
-            if !buttonBgImage.isEqual(UIImage(named: "profile-pic")) {
-                user.setProfileImage(buttonBgImage)
-            }
-            
+            let userDetails: [String: String] = ["firstName": firstName, "lastName": lastName, "email": email, "password": password_1]
+            let user = createNewUser(userDetails)
             user.signUp(self)
         } else {
             self.activityIndicator.stopAnimating()
@@ -67,50 +53,11 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     @IBAction func addProfilePicture(sender: AnyObject) {
-        let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
-        
-        let cameraAction = UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
-            self.openCamera()
-        }
-        
-        let gallaryAction = UIAlertAction(title: "Gallary", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
-            self.openGallary()
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
-        }
-        
-        alert.addAction(cameraAction)
-        alert.addAction(gallaryAction)
-        alert.addAction(cancelAction)
+        let alert = hubModel.buildImagePickAlertController(imagePicker, view: self)
         imagePicker.delegate = self
         
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
             self.presentViewController(alert, animated: true, completion: nil)
-        } else {
-            
-        }
-    }
-    
-    func openCamera() {
-        if (UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)) {
-            imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
-            self.presentViewController(imagePicker, animated: true, completion: nil)
-        } else {
-            openGallary()
-        }
-    }
-    
-    func openGallary() {
-        imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            self.presentViewController(imagePicker, animated: true, completion: nil)
-        } else {
-            
         }
     }
     
@@ -120,13 +67,6 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         profilePicture.layer.cornerRadius = 0.5 * profilePicture.bounds.size.width
         profilePicture.clipsToBounds = true
         profilePicture.setImage(image, forState: .Normal)
-    }
-    
-    func showAlert(message: String) {
-        let alertError = UIAlertController(title: "Sign Up", message: message, preferredStyle: .Alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-        alertError.addAction(defaultAction)
-        self.presentViewController(alertError, animated: true, completion: nil)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -141,6 +81,29 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     func keyboardWillHide(notification:NSNotification) {
         profilePicture.hidden = false
         adjustingHeight(false, notification: notification)
+    }
+    
+    //-----------------------Private methods---------------------------
+    func createNewUser(userDetails: [String: String]) -> User {
+        let parseUser = PFUser()
+        let user = User(parseUser: parseUser)
+        
+        user.buildParseUser(userDetails["email"]!, fName: userDetails["firstName"]!, lName: userDetails["lastName"]!)
+        user.setUsername(userDetails["email"]!)
+        user.setPassword(userDetails["password"]!)
+        
+        let buttonBgImage = profilePicture.imageForState(.Normal)!
+        if !buttonBgImage.isEqual(UIImage(named: "profile-pic")) {
+            user.setProfileImage(buttonBgImage)
+        }
+        return user
+    }
+    
+    func showAlert(message: String) {
+        let alertError = UIAlertController(title: "Sign Up", message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertError.addAction(defaultAction)
+        self.presentViewController(alertError, animated: true, completion: nil)
     }
     
     func adjustingHeight(show:Bool, notification:NSNotification) {
@@ -158,28 +121,10 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
 }
 
+/* Upload a low quality version of the profile picture to parse to avoid big data handling
+ * and longer waiting times. */
 extension UIImage {
-    var uncompressedPNGData: NSData {
-        return UIImagePNGRepresentation(self)!
-    }
-    
-    var highestQualityJPEGNSData: NSData {
-        return UIImageJPEGRepresentation(self, 1.0)!
-    }
-    
-    var highQualityJPEGNSData: NSData {
-        return UIImageJPEGRepresentation(self, 0.75)!
-    }
-    
-    var mediumQualityJPEGNSData: NSData {
-        return UIImageJPEGRepresentation(self, 0.5)!
-    }
-    
     var lowQualityJPEGNSData: NSData {
         return UIImageJPEGRepresentation(self, 0.25)!
-    }
-    
-    var lowestQualityJPEGNSData:NSData {
-        return UIImageJPEGRepresentation(self, 0.0)!
     }
 }
