@@ -417,6 +417,20 @@ class User: Hashable {
         })
     }
     
+    //TODO: Move show alert method to different class so that it can be reuse across
+    //views
+    func resetPassword(email: String, vc: PassswordRecoveryViewController) {
+        PFUser.requestPasswordResetForEmailInBackground(email) {
+            (success: Bool, error: NSError?) -> Void in
+            if let error = error {
+                let errorMessage = error.userInfo["error"] as? String
+                vc.showAlert(errorMessage!)
+            } else {
+                vc.showAlert("Email sent to \(email)")
+            }
+        }
+    }
+    
     func deleteUser(settingsVC: SettingsViewController) {
         matchingParseObject.deleteInBackgroundWithBlock {
             (success: Bool, error: NSError?) in
