@@ -220,12 +220,13 @@ class User: Hashable {
                     
                     user!.fetchInBackgroundWithBlock {
                         (fetchedUser: PFObject?, error: NSError?) -> Void in
-                        let fetchedFromUser = fetchedUser as! PFUser
-                        let request = User(parseUser: fetchedFromUser)
-                        request.buildUser()
-                        myFriends.append(request)
-                        myContactTVC.myContacts = myFriends.sort { $0.firstName < $1.firstName }
-                        myContactTVC.refreshTableViewInBackground()
+                        if let fetchedFromUser = fetchedUser as? PFUser {
+                            let request = User(parseUser: fetchedFromUser)
+                            request.buildUser()
+                            myFriends.append(request)
+                            myContactTVC.myContacts = myFriends.sort { $0.firstName < $1.firstName }
+                            myContactTVC.refreshTableViewInBackground()
+                        }
                     }
                 }
             }
@@ -387,6 +388,79 @@ class User: Hashable {
                         push.sendPushInBackground()
                         contactRTVC.navigateBack()
                     }
+                }
+            }
+        }
+    }
+    
+    func deleteAccount(vc: UIViewController) {
+        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        let settingsVC = vc as! SettingsViewController
+        let contacts = matchingParseObject.objectForKey("contacts") as? [PFObject]
+        deleteEntriesAsUserInSharedPermission()
+        deleteEntriesAsFriendFromSharedPermission()
+        
+        dispatch_async(dispatch_get_global_queue(priority, 0)) {
+            self.deleteContacts(contacts)
+            dispatch_async(dispatch_get_main_queue()) {
+                self.deleteUser(settingsVC)
+            }
+        }
+    }
+    
+    func logOut(vc: UIViewController) {
+        let settingsVC = vc as! SettingsViewController
+        
+        PFUser.logOutInBackgroundWithBlock({ (error: NSError?) -> Void in
+            if(error == nil) {
+                settingsVC.performSegueWithIdentifier("signOutSegue", sender: nil)
+            }
+        })
+    }
+    
+    func deleteUser(settingsVC: SettingsViewController) {
+        matchingParseObject.deleteInBackgroundWithBlock {
+            (success: Bool, error: NSError?) in
+            if success {
+                PFUser.logOut()
+                settingsVC.performSegueWithIdentifier("signOutSegue", sender: nil)
+            }
+        }
+    }
+    
+    func deleteContacts(contacts: [PFObject]?) {
+        if let contacts = contacts {
+            for contact in contacts {
+                do {
+                    try contact.delete()
+                } catch {
+                    print("\(contact.objectId) could not be deleted")
+                }
+            }
+        }
+    }
+    
+    func deleteEntriesAsFriendFromSharedPermission() {
+        let query = PFQuery(className: "SharedPermission")
+        query.whereKey("userFriend", equalTo: matchingParseObject)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]?, error: NSError?) in
+            if let objects = objects {
+                for object in objects {
+                    object.deleteInBackground()
+                }
+            }
+        }
+    }
+    
+    func deleteEntriesAsUserInSharedPermission() {
+        let query = PFQuery(className: "SharedPermission")
+        query.whereKey("user", equalTo: matchingParseObject)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]?, error: NSError?) in
+            if let objects = objects {
+                for object in objects {
+                    object.deleteInBackground()
                 }
             }
         }

@@ -2289,10 +2289,10 @@
         <image name="tick" width="24" height="18"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="uaK-In-Vgu"/>
         <segue reference="Vdt-ou-q38"/>
-        <segue reference="fw5-Wl-lpU"/>
         <segue reference="aD6-kq-Qqs"/>
+        <segue reference="uaK-In-Vgu"/>
         <segue reference="IgN-O4-3Ep"/>
+        <segue reference="9Ig-ZG-LB3"/>
     </inferredMetricsTieBreakers>
 </document>
