@@ -1,10 +1,8 @@
-//
 //  AddContactController.swift
 //  Hub
 //
 //  Created by Alexei Gudimenko on 18/02/2016.
 //  Copyright © 2016 88Software. All rights reserved.
-//
 
 import UIKit
 import Parse
@@ -20,72 +18,30 @@ class AddContactViewController: UIViewController, ContactShareCellDelegate {
     var contactProfile: User?
     var contacts = [Contact]()
     var requestedContacts = [PFObject]()
-    var parseObjects: AnyObject?
     let hubModel = HubModel.sharedInstance
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "\(contactProfile!.firstName!)" + " " + "\(contactProfile!.lastName!)"
+        ViewFactory.hideTableViewSeparator(contactSelectionTableView)
+        ViewFactory.makeImageViewRound(profileImageView)
         
-        //hide table view separator
-        contactSelectionTableView.separatorColor = UIColor(red: 255/255.0,
-                                                           green: 255/255.0, blue: 255/255.0, alpha: 0.0)
-        let imageFile = contactProfile!.profileImage
-        imageFile!.getDataInBackgroundWithBlock {
-            (imageData: NSData?, error: NSError?) -> Void in
-            if error == nil {
-                if let imageData = imageData {
-                    self.profileImageView.image = UIImage(data:imageData)
-                }
+        if let friend = contactProfile {
+            title = "\(friend.firstName!) \(friend.lastName!)"
+            friend.getProfileImage(profileImageView)
+            friend.getAvailableContacts(self)
+            ViewFactory.setLabelPlaceholder("nickname", text: friend.nickname, label: nicknameLabel)
+            ViewFactory.setLabelPlaceholder("city", text: friend.city, label: locationLabel)
+            if friend.hasSharedContacts() {
+                howToContactLabel.text = "How would you like to connect with \(friend.firstName!)?"
+            } else {
+                howToContactLabel.text = "\(friend.firstName!) has not shared any details"
             }
-        }
-        
-        parseObjects = contactProfile!.matchingParseObject.objectForKey("contacts")
-        
-        //Load the contacts that the profile owner has shared
-        if parseObjects != nil {
-            howToContactLabel.text = "How would you like to connect with \(contactProfile!.firstName!)?"
-            getContactsToShare()
-        } else {
-            howToContactLabel.text = "\(contactProfile!.firstName!) has not shared any details"
-        }
-        
-        //set profile image to circular shape
-        profileImageView.layer.cornerRadius = profileImageView.bounds.size.width / 2
-        profileImageView.clipsToBounds = true
-        
-        if contactProfile!.nickname == nil {
-            nicknameLabel.text = "nickname"
-            nicknameLabel.textColor = UIColor.lightGrayColor()
-        } else {
-            nicknameLabel.text = contactProfile!.nickname!
-        }
-        
-        if contactProfile!.city == nil {
-            locationLabel.text = "city"
-            locationLabel.textColor = UIColor.lightGrayColor()
-        } else {
-            locationLabel.text = contactProfile!.city!
         }
     }
     
     @IBAction func back(sender: AnyObject) {
         self.navigationController?.popToRootViewControllerAnimated(true)
-    }
-    
-    func getContactsToShare() {
-        for parseObject in parseObjects as! [PFObject] {
-            
-            parseObject.fetchInBackgroundWithBlock {
-                (fetchedContact: PFObject?, error: NSError?) -> Void in
-                
-                let contact = Contact(parseObject: fetchedContact!)
-                contact.buildContact()
-                self.contacts.append(contact)
-                self.contactSelectionTableView.reloadData()
-            }
-        }
     }
     
     func switchStateChanged(sender: AnyObject, isOn: Bool) {

@@ -31,6 +31,8 @@
 		9D293B711CD0D10300C34BED /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD910CE91C6C7FF4003B099C /* MyProfileViewController.swift */; };
 		9D293B721CD0D11900C34BED /* SharedPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF7B9BB1CB01486004B5F65 /* SharedPermission.swift */; };
 		9D293B731CD0D12100C34BED /* SharedPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF7B9BB1CB01486004B5F65 /* SharedPermission.swift */; };
+		9DC6F68B1CD35263004FD173 /* PassswordRecoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD644D2D1C60D2CB005657FD /* PassswordRecoveryViewController.swift */; };
+		9DC6F68C1CD3526A004FD173 /* PassswordRecoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD644D2D1C60D2CB005657FD /* PassswordRecoveryViewController.swift */; };
 		BD03E3BA1CC3647800FB3ED2 /* EditMyProfileDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD03E3B91CC3647800FB3ED2 /* EditMyProfileDelegate.swift */; };
 		BD19009D1C7341F600D82DA6 /* ContactRequestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD19009C1C7341F600D82DA6 /* ContactRequestTableViewController.swift */; };
 		BD2B11B11CBA18C300A68A5D /* Ambient Hit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BD2B11B01CBA18C300A68A5D /* Ambient Hit.mp3 */; };
@@ -606,6 +608,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DC6F68B1CD35263004FD173 /* PassswordRecoveryViewController.swift in Sources */,
 				9D293B721CD0D11900C34BED /* SharedPermission.swift in Sources */,
 				9D293B711CD0D10300C34BED /* MyProfileViewController.swift in Sources */,
 				9D293B6E1CD0CB6700C34BED /* SignInViewController.swift in Sources */,
@@ -635,6 +638,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DC6F68C1CD3526A004FD173 /* PassswordRecoveryViewController.swift in Sources */,
 				9D293B731CD0D12100C34BED /* SharedPermission.swift in Sources */,
 				9D293B701CD0D0FA00C34BED /* MyProfileViewController.swift in Sources */,
 				9D293B6F1CD0CB7200C34BED /* SignInViewController.swift in Sources */,

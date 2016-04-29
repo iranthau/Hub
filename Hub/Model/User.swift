@@ -321,6 +321,27 @@ class User: Hashable {
         }
     }
     
+    func hasSharedContacts() -> Bool {
+        return matchingParseObject.objectForKey("contacts") != nil
+    }
+    
+    func getAvailableContacts(tableVC: AddContactViewController) {
+        let parseObjects = matchingParseObject.objectForKey("contacts")
+        
+        if let parseObjects = parseObjects as? [PFObject] {
+            for parseObject in parseObjects {
+                parseObject.fetchInBackgroundWithBlock {
+                    (fetchedContact: PFObject?, error: NSError?) -> Void in
+                    
+                    let contact = Contact(parseObject: fetchedContact!)
+                    contact.buildContact()
+                    tableVC.contacts.append(contact)
+                    tableVC.contactSelectionTableView.reloadData()
+                }
+            }
+        }
+    }
+    
     func getRequests(requestsTVC: RequestsTableViewController) {
         let query = PFQuery(className: "SharedPermission")
         query.whereKey("user", equalTo: matchingParseObject)
