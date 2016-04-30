@@ -1,10 +1,7 @@
-//
 //  Contact.swift
 //  Hub
-//
 //  Created by Alexei Gudimenko on 22/02/2016.
 //  Copyright © 2016 88Software. All rights reserved.
-//
 
 import Foundation
 import Parse
@@ -31,64 +28,105 @@ class Contact {
         selected = false
     }
     
-    func buildParseObject(value: String, type: String, subType: String) {
-        matchingParseObject = PFObject(className: parseClassName)
-        matchingParseObject["value"] = value
-        matchingParseObject["type"] = type
-        matchingParseObject["subType"] = subType
+    func buildParseContact() {
+        updateParseObjectField("value", value: value)
+        updateParseObjectField("type", value: type)
+        updateParseObjectField("subType", value: subType)
+    }
+    
+    func setObjectId() {
+        if let objectId = objectId {
+            matchingParseObject.objectId = objectId
+        }
     }
     
     func getImageName() -> String {
-        let contactType = (type!, subType!)
-        switch contactType {
-            case (ContactType.Phone.label, ContactSubType.PhoneHome.label):
+        switch type! {
+            case ContactType.Phone.label:
+                return getPhoneImageIconName()
+            case ContactType.Email.label:
+                return getEmailImageIconName()
+            case ContactType.Address.label:
+                return getAddressImageIconName()
+            case ContactType.Social.label:
+                return getSocialImageIcon()
+            default: return ""
+        }
+    }
+    
+    //-----------------------Private methods--------------------------
+    
+    func updateParseObjectField(attribute: String, value: String?) {
+        if let value = value {
+            matchingParseObject[attribute] = value
+        }
+    }
+    
+    func getPhoneImageIconName() -> String {
+        switch subType! {
+            case ContactSubType.PhoneHome.label:
                 return ContactSubType.PhoneHome.image
-            case (ContactType.Phone.label, ContactSubType.PhoneWork.label):
+            case ContactSubType.PhoneWork.label:
                 return ContactSubType.PhoneWork.image
-            case (ContactType.Phone.label, ContactSubType.PhoneOther.label):
+            case ContactSubType.PhoneOther.label:
                 return ContactSubType.PhoneOther.image
-            case (_, ContactSubType.PhonePersonal.label):
+            case ContactSubType.PhonePersonal.label:
                 return ContactSubType.PhonePersonal.image
-            
-            case (ContactType.Email.label, ContactSubType.EmailHome.label):
+            default: return ""
+        }
+    }
+    
+    func getEmailImageIconName() -> String {
+        switch subType! {
+            case ContactSubType.EmailHome.label:
                 return ContactSubType.EmailHome.image
-            case (ContactType.Email.label, ContactSubType.EmailWork.label):
+            case ContactSubType.EmailWork.label:
                 return ContactSubType.EmailWork.image
-            case (ContactType.Email.label, ContactSubType.EmailOther.label):
+            case ContactSubType.EmailOther.label:
                 return ContactSubType.EmailOther.image
-            case (ContactType.Email.label, ContactSubType.EmailSchool.label):
+            case ContactSubType.EmailSchool.label:
                 return ContactSubType.EmailSchool.image
-            
-            case (ContactType.Address.label, ContactSubType.AddressHome.label):
+            default: return ""
+        }
+    }
+    
+    func getAddressImageIconName() -> String {
+        switch subType! {
+            case ContactSubType.AddressHome.label:
                 return ContactSubType.AddressHome.image
-            case (ContactType.Address.label, ContactSubType.AddressWork.label):
+            case ContactSubType.AddressWork.label:
                 return ContactSubType.AddressWork.image
-            case (ContactType.Address.label, ContactSubType.AddressOther.label):
+            case ContactSubType.AddressOther.label:
                 return ContactSubType.AddressOther.image
-            case (ContactType.Address.label, ContactSubType.AddressSchool.label):
+            case ContactSubType.AddressSchool.label:
                 return ContactSubType.AddressSchool.image
-            
-            case (_, ContactSubType.Facebook.label):
+            default: return ""
+        }
+    }
+    
+    func getSocialImageIcon() -> String {
+        switch subType! {
+            case ContactSubType.Facebook.label:
                 return ContactSubType.Facebook.image
-            case (_, ContactSubType.Twitter.label):
+            case ContactSubType.Twitter.label:
                 return ContactSubType.Twitter.image
-            case (_, ContactSubType.LinkedIn.label):
+            case ContactSubType.LinkedIn.label:
                 return ContactSubType.LinkedIn.image
-            case (_, ContactSubType.Skype.label):
+            case ContactSubType.Skype.label:
                 return ContactSubType.Skype.image
-            case (_, ContactSubType.Whatsapp.label):
+            case ContactSubType.Whatsapp.label:
                 return ContactSubType.Whatsapp.image
-            case (_, ContactSubType.Viber.label):
+            case ContactSubType.Viber.label:
                 return ContactSubType.Viber.image
-            case (_, ContactSubType.Line.label):
+            case ContactSubType.Line.label:
                 return ContactSubType.Line.image
-            case (_, ContactSubType.Snapchat.label):
+            case ContactSubType.Snapchat.label:
                 return ContactSubType.Snapchat.image
-            case (_, ContactSubType.Instagram.label):
+            case ContactSubType.Instagram.label:
                 return ContactSubType.Instagram.image
-            case (_, ContactSubType.Tumblr.label):
+            case ContactSubType.Tumblr.label:
                 return ContactSubType.Tumblr.image
-            case (ContactType.Social.label, ContactSubType.SocialOther.label):
+            case ContactSubType.SocialOther.label:
                 return ContactSubType.SocialOther.image
             default: return ""
         }

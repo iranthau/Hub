@@ -20,7 +20,7 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
         currentUser = hubModel.currentUser
         
         if let currentUser = currentUser {
-            currentUser.getFriends(self)
+            currentUser.getAllFriends(self)
         }
         
         searchController.searchResultsUpdater = self

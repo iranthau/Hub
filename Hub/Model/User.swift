@@ -1,39 +1,39 @@
-//  User.swift
-//  Hub
-//  Created by Irantha Rajakaruna on 6/02/2016.
-//  Copyright © 2016 88Software. All rights reserved.
+// User.swift
+// Hub
+// Created by Irantha Rajakaruna on 6/02/2016.
+// Copyright © 2016 88Software. All rights reserved.
 
 import Foundation
 import Parse
 import ParseFacebookUtilsV4
 
 class User: Hashable {
-    let parseClassName = "User"
-    var matchingParseObject: PFUser
     var objectId: String?
     var username: String?
     var password: String?
-    var email: String?
     var firstName: String?
     var lastName: String?
     var nickname: String?
+    var email: String?
     var profileIsVisible: Bool?
     var availableTime: String?
     var city: String?
-    var contacts = [Contact]()
     var profileImage: PFFile?
+    let defaultProfileImage: UIImage
+    var matchingParseObject: PFUser
+    var contacts = [Contact]()
     var friends: [User]?
     var requests: [User]?
     let hubModel = HubModel.sharedInstance
     
-    var hashValue: Int {
-        return email!.hashValue
-    }
-    
+    // A user can be intialise with a parse user object
     init(parseUser: PFUser) {
         matchingParseObject = parseUser
+        defaultProfileImage = UIImage(named: "placeholder-image")!
     }
     
+    /* Whenever a user is being initialise the object need to be build using the method.
+     * Assigns values to user attributes from parse object */
     func buildUser() {
         objectId = matchingParseObject.objectId!
         username = matchingParseObject.username!
@@ -47,12 +47,12 @@ class User: Hashable {
         profileImage = matchingParseObject["profileImage"] as? PFFile
     }
     
-    func buildParseUser(email: String, fName: String, lName: String) {
-        let defaultImage = UIImage(named: "placeholder-image")
-        matchingParseObject["firstName"] = fName
-        matchingParseObject["lastName"] = lName
-        matchingParseObject.email = email
-        setProfileImage(defaultImage!)
+    // Build the parse object with provided values
+    func buildParseUser() {
+        matchingParseObject["firstName"] = firstName!
+        matchingParseObject["lastName"] = lastName!
+        matchingParseObject.email = email!
+        setProfileImage(defaultProfileImage)
         matchingParseObject["profileIsVisible"] = true
     }
     
@@ -68,6 +68,21 @@ class User: Hashable {
         matchingParseObject["profileImage"] = HubUtility.convertImageFileToParseFile(image)
     }
     
+    // Return true if a user has any contacts to share
+    func hasSharedContacts() -> Bool {
+        return matchingParseObject.objectForKey("contacts") != nil
+    }
+    
+    func hideProfile(isHidden: Bool) {
+        matchingParseObject["profileIsVisible"] = isHidden
+        matchingParseObject.saveInBackground()
+    }
+    
+    func sendRequest(sharedPermission: SharedPermission, pushNotification: PFPush) {
+        sharedPermission.saveInParse(pushNotification)
+    }
+    
+    /* Get the profile image from parse and assignes it to an imageview */
     func getProfileImage(imageView: UIImageView) {
         profileImage!.getDataInBackgroundWithBlock {
             (imageData: NSData?, error: NSError?) -> Void in
@@ -88,9 +103,9 @@ class User: Hashable {
             (user: PFUser?, error: NSError?) -> Void in
             if user != nil {
                 let currentUser = PFUser.currentUser()!
-                let user = User(parseUser: currentUser)
-                self.hubModel.currentUser = user
-                self.hubModel.currentUser!.buildUser()
+                self.matchingParseObject = currentUser
+                self.buildUser()
+                self.hubModel.setCurrentUser(self)
                 viewController.performSegueWithIdentifier("signInSegue", sender: nil)
             } else {
                 let errorMessage = error!.userInfo["error"] as? String
@@ -114,8 +129,9 @@ class User: Hashable {
                         self.signUpWithFacebook(currentUser, signInVC: viewController)
                         viewController.performSegueWithIdentifier("createAccountSegue", sender: nil)
                     } else {
-                        self.hubModel.currentUser = User(parseUser: currentUser)
-                        self.hubModel.currentUser!.buildUser()
+                        self.matchingParseObject = currentUser
+                        self.buildUser()
+                        self.hubModel.setCurrentUser(self)
                         viewController.performSegueWithIdentifier("signInSegue", sender: nil)
                     }
                 } else {
@@ -123,52 +139,6 @@ class User: Hashable {
                 }
             }
         )
-    }
-    
-    /* Read the profile picture data from facebook when given the user ID */
-    func getProfileImageFromFacebook(userID: String) -> UIImage {
-        let userProfileUrl = "https://graph.facebook.com/\(userID)/picture?type=large"
-        let profilePictureUrl = NSURL(string: userProfileUrl)!
-        let profilePicturedata = NSData(contentsOfURL: profilePictureUrl)!
-        return UIImage(data: profilePicturedata)!
-    }
-    
-    func saveUser(user: User) {
-        let pfUser = user.matchingParseObject
-        pfUser.saveInBackgroundWithBlock {
-            (success: Bool, error: NSError?) -> Void in
-            if(success) {
-                print("success")
-            }
-        }
-    }
-    
-    func signUpWithFacebook(parseUser: PFUser, signInVC: SignInViewController) {
-        let requestParameters = ["fields": "id, email, first_name, last_name"]
-        let userDetails = FBSDKGraphRequest(graphPath: "me", parameters: requestParameters)
-        
-        userDetails.startWithCompletionHandler {
-            (connection, result, error: NSError!) -> Void in
-            if(error != nil) {
-                let errorMessage = error.localizedDescription
-                signInVC.showAlert(errorMessage)
-            } else if(result != nil) {
-                let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-                let fName = result["first_name"]! as! String
-                let lName = result["last_name"]! as! String
-                let email = result["email"]! as! String
-                let user = User(parseUser: parseUser)
-                let id = result["id"]! as! String
-                user.buildParseUser(email, fName: fName, lName: lName)
-                self.hubModel.currentUser = user
-                
-                dispatch_async(dispatch_get_global_queue(priority, 0)) {
-                    let profileImage = self.getProfileImageFromFacebook(id)
-                    user.setProfileImage(profileImage)
-                    self.saveUser(user)
-                }
-            }
-        }
     }
     
     func signUp(signUpVC: SignUpViewController) {
@@ -180,16 +150,27 @@ class User: Hashable {
                 signUpVC.showAlert(errorMessage!)
             } else {
                 signUpVC.activityIndicator.stopAnimating()
-                let parseUser = PFUser.currentUser()!
-                let user = User(parseUser: parseUser)
-                user.buildUser()
-                self.hubModel.currentUser = user
+                self.matchingParseObject = PFUser.currentUser()!
+                self.buildUser()
+                self.hubModel.setCurrentUser(self)
                 signUpVC.performSegueWithIdentifier("signUpSegue", sender: nil)
             }
         }
     }
     
-    func getFriends(myContactTVC: MyContactsTableViewController) {
+    func logOut(vc: UIViewController) {
+        let settingsVC = vc as! SettingsViewController
+        
+        PFUser.logOutInBackgroundWithBlock({ (error: NSError?) -> Void in
+            if(error == nil) {
+                settingsVC.performSegueWithIdentifier("signOutSegue", sender: nil)
+            }
+        })
+    }
+    
+    /* Get a list of all my friends from Parse. Need two queries to perform the 
+     * the action since we need both friends that I am a friend of and my friends */
+    func getAllFriends(myContactTVC: MyContactsTableViewController) {
         let myFriendQuery = PFQuery(className: "SharedPermission")
         myFriendQuery.whereKey("user", equalTo: matchingParseObject)
         myFriendQuery.whereKey("status", equalTo: "accepted")
@@ -209,11 +190,11 @@ class User: Hashable {
                     let toUser = object["user"] as! PFUser
                     var user: PFUser?
                     
-                    if fromUser.objectId == self.matchingParseObject.objectId {
+                    if fromUser.objectId == self.objectId! {
                         user = object["user"] as? PFUser
                     }
                     
-                    if toUser.objectId == self.matchingParseObject.objectId {
+                    if toUser.objectId == self.objectId! {
                         user = object["userFriend"] as? PFUser
                     }
                     
@@ -232,6 +213,7 @@ class User: Hashable {
         }
     }
     
+    /* Get all contacts that a friend has shared with me */
     func getAllSharedContacts(friend: User, profileContactVC: ProfileContactViewController) {
         let query = PFQuery(className: "SharedPermission")
         query.whereKey("user", equalTo: friend.matchingParseObject)
@@ -268,6 +250,7 @@ class User: Hashable {
         }
     }
     
+    // Get contacts I shared with a friend
     func getContactsIShared(friend: User, profileContactVC: ProfileContactViewController) {
         let query = PFQuery(className: "SharedPermission")
         query.whereKey("userFriend", equalTo: friend.matchingParseObject)
@@ -293,6 +276,7 @@ class User: Hashable {
         }
     }
     
+    //Get my own contacts
     func getContacts(myProfileVC: MyProfileViewController) {
         let myContacts = matchingParseObject.objectForKey("contacts")
         if let myContacts = myContacts {
@@ -321,10 +305,7 @@ class User: Hashable {
         }
     }
     
-    func hasSharedContacts() -> Bool {
-        return matchingParseObject.objectForKey("contacts") != nil
-    }
-    
+    // Get a list of contacts that a friend has offered to share
     func getAvailableContacts(tableVC: AddContactViewController) {
         let parseObjects = matchingParseObject.objectForKey("contacts")
         
@@ -342,6 +323,7 @@ class User: Hashable {
         }
     }
     
+    //Get a list of friends that asked to connect with me
     func getRequests(requestsTVC: RequestsTableViewController) {
         let query = PFQuery(className: "SharedPermission")
         query.whereKey("user", equalTo: matchingParseObject)
@@ -365,17 +347,15 @@ class User: Hashable {
         }
     }
     
+    //Get a list of contacts that a friend has asked to share
     func getRequestedContacts(friend: User, contactRequestTVC: ContactRequestTableViewController) {
         let parseSPObject = PFObject(className: "SharedPermission")
         let sharedPermisson = SharedPermission(parseObject: parseSPObject)
         sharedPermisson.getContacts(self, friend: friend, contactRequestTVC: contactRequestTVC)
     }
     
-    func hideProfile(isHidden: Bool) {
-        matchingParseObject["profileIsVisible"] = isHidden
-        matchingParseObject.saveInBackground()
-    }
-    
+    /* Update contacts for a user when the user update them. Also will remove
+     * the deleted/ empty contacts from parse for the user */
     func setContacts(contacts: [Contact]) {
         let contactsToSave = contactsToSaveArray(contacts)
         let contactsToDelete = contactsToDeleteArray(contacts)
@@ -413,10 +393,7 @@ class User: Hashable {
         }
     }
     
-    func sendRequest(sharedPermission: SharedPermission, pushNotification: PFPush) {
-        sharedPermission.saveInParse(pushNotification)
-    }
-    
+    //Current user can delete his account. This will delete all records for that user.
     func deleteAccount(vc: UIViewController) {
         let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
         let settingsVC = vc as! SettingsViewController
@@ -430,16 +407,6 @@ class User: Hashable {
                 self.deleteUser(settingsVC)
             }
         }
-    }
-    
-    func logOut(vc: UIViewController) {
-        let settingsVC = vc as! SettingsViewController
-        
-        PFUser.logOutInBackgroundWithBlock({ (error: NSError?) -> Void in
-            if(error == nil) {
-                settingsVC.performSegueWithIdentifier("signOutSegue", sender: nil)
-            }
-        })
     }
     
     func searchForFriends(textToSearch: String, tvc: UITableViewController) {
@@ -480,26 +447,81 @@ class User: Hashable {
         }
     }
     
-    func deleteUser(settingsVC: SettingsViewController) {
-        matchingParseObject.deleteInBackgroundWithBlock {
-            (success: Bool, error: NSError?) in
-            if success {
-                PFUser.logOut()
-                settingsVC.performSegueWithIdentifier("signOutSegue", sender: nil)
+    /* Enable a unique hash value for each user based on email. So the value can be used
+     * to compare user with other users for equality */
+    var hashValue: Int {
+        return email!.hashValue
+    }
+    
+    //---------------------Private methods-----------------------------
+    func signUpWithFacebook(parseUser: PFUser, signInVC: SignInViewController) {
+        let requestParameters = ["fields": "id, email, first_name, last_name"]
+        let userDetails = FBSDKGraphRequest(graphPath: "me", parameters: requestParameters)
+        
+        userDetails.startWithCompletionHandler {
+            (connection, result, error: NSError!) -> Void in
+            if(error != nil) {
+                let errorMessage = error.localizedDescription
+                signInVC.showAlert(errorMessage)
+            } else if(result != nil) {
+                let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+                self.firstName = result["first_name"]! as? String
+                self.lastName = result["last_name"]! as? String
+                self.email = result["email"]! as? String
+                self.matchingParseObject = parseUser
+                self.objectId = result["id"]! as? String
+                self.buildParseUser()
+                self.hubModel.setCurrentUser(self)
+                dispatch_async(dispatch_get_global_queue(priority, 0)) {
+                    let profileImage = self.getProfileImageFromFacebook()
+                    self.setProfileImage(profileImage)
+                    self.saveUser()
+                }
             }
         }
     }
     
-    func deleteContacts(contacts: [PFObject]?) {
-        if let contacts = contacts {
-            for contact in contacts {
-                do {
-                    try contact.delete()
-                } catch {
-                    print("\(contact.objectId) could not be deleted")
-                }
+    /* Read the profile picture data from facebook when given the user ID */
+    func getProfileImageFromFacebook() -> UIImage {
+        let userProfileUrl = "https://graph.facebook.com/\(objectId!)/picture?type=large"
+        let profilePictureUrl = NSURL(string: userProfileUrl)!
+        let profilePicturedata = NSData(contentsOfURL: profilePictureUrl)!
+        return UIImage(data: profilePicturedata)!
+    }
+    
+    func saveUser() {
+        matchingParseObject.saveInBackgroundWithBlock {
+            (success: Bool, error: NSError?) -> Void in
+            if(success) {
+                print("success")
             }
         }
+    }
+    
+    /* If the contact value is empty after a user update his contacts those contacts
+     * will be deleted from parse */
+    func contactsToDeleteArray(contacts: [Contact]) -> [PFObject] {
+        var returnArray = [PFObject]()
+        for contact in contacts {
+            if contact.value == "" {
+                contact.buildParseContact()
+                contact.setObjectId()
+                returnArray.append(contact.matchingParseObject)
+            }
+        }
+        return returnArray
+    }
+    
+    func contactsToSaveArray(contacts: [Contact]) -> [PFObject] {
+        var returnArray = [PFObject]()
+        for contact in contacts {
+            if contact.value != "" {
+                contact.buildParseContact()
+                contact.setObjectId()
+                returnArray.append(contact.matchingParseObject)
+            }
+        }
+        return returnArray
     }
     
     func deleteEntriesAsFriendFromSharedPermission() {
@@ -528,32 +550,30 @@ class User: Hashable {
         }
     }
     
-    // Private method that needs set contacts to work properly
-    func contactsToDeleteArray(contacts: [Contact]) -> [PFObject] {
-        var returnArray = [PFObject]()
-        for contact in contacts {
-            if contact.value == "" {
-                contact.buildParseObject("", type: "", subType: "")
-                contact.matchingParseObject.objectId = contact.objectId
-                returnArray.append(contact.matchingParseObject)
+    func deleteUser(settingsVC: SettingsViewController) {
+        matchingParseObject.deleteInBackgroundWithBlock {
+            (success: Bool, error: NSError?) in
+            if success {
+                PFUser.logOut()
+                settingsVC.performSegueWithIdentifier("signOutSegue", sender: nil)
             }
         }
-        return returnArray
     }
     
-    func contactsToSaveArray(contacts: [Contact]) -> [PFObject] {
-        var returnArray = [PFObject]()
-        for contact in contacts {
-            if contact.value != "" {
-                contact.buildParseObject(contact.value!, type: contact.type!, subType: contact.subType!)
-                contact.matchingParseObject.objectId = contact.objectId
-                returnArray.append(contact.matchingParseObject)
+    func deleteContacts(contacts: [PFObject]?) {
+        if let contacts = contacts {
+            for contact in contacts {
+                do {
+                    try contact.delete()
+                } catch {
+                    print("\(contact.objectId) could not be deleted")
+                }
             }
         }
-        return returnArray
     }
 }
 
+//Enable user comparing
 func == (lhs: User, rhs: User) -> Bool {
     return lhs.hashValue == rhs.hashValue
 }

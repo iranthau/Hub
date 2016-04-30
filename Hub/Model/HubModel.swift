@@ -27,6 +27,10 @@ class HubModel {
         return Static.instance!
     }
     
+    func setCurrentUser(user: User) {
+        currentUser = user
+    }
+    
     /* Build an alert controller with camera and gallery as default options  */
     func buildImagePickAlertController(imagePicker: UIImagePickerController, view: UIViewController) -> UIAlertController {
         let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
@@ -40,18 +44,15 @@ class HubModel {
             self.openGallary(imagePicker, view: view)
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default) {
-            UIAlertAction in
-        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default) { UIAlertAction in }
         
         alert.addAction(cameraAction)
         alert.addAction(gallaryAction)
         alert.addAction(cancelAction)
-        
         return alert
     }
     
-    //------------------Private Method-----------------------
+    //------------------Private methods-----------------------
     
     /* Opens the photo gallery */
     func openGallary(imagePicker: UIImagePickerController, view: UIViewController) {

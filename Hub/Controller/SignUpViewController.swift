@@ -40,11 +40,19 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         if password_1 == password_2 {
             activityIndicator.startAnimating()
-            let firstName = fNameTextfield.text!.capitalizedString
-            let lastName = lNameTextfield.text!.capitalizedString
             let email = emailTextfield.text!
-            let userDetails: [String: String] = ["firstName": firstName, "lastName": lastName, "email": email, "password": password_1]
-            let user = createNewUser(userDetails)
+            let buttonBgImage = profilePicture.imageForState(.Normal)!
+            let parseUser = PFUser()
+            let user = User(parseUser: parseUser)
+            user.firstName = fNameTextfield.text!.capitalizedString
+            user.lastName = lNameTextfield.text!.capitalizedString
+            user.email = email
+            user.buildParseUser()
+            user.setUsername(email)
+            user.setPassword(password_1)
+            if !buttonBgImage.isEqual(UIImage(named: "profile-pic")) {
+                user.setProfileImage(buttonBgImage)
+            }
             user.signUp(self)
         } else {
             self.activityIndicator.stopAnimating()
@@ -84,20 +92,6 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     //-----------------------Private methods---------------------------
-    func createNewUser(userDetails: [String: String]) -> User {
-        let parseUser = PFUser()
-        let user = User(parseUser: parseUser)
-        
-        user.buildParseUser(userDetails["email"]!, fName: userDetails["firstName"]!, lName: userDetails["lastName"]!)
-        user.setUsername(userDetails["email"]!)
-        user.setPassword(userDetails["password"]!)
-        
-        let buttonBgImage = profilePicture.imageForState(.Normal)!
-        if !buttonBgImage.isEqual(UIImage(named: "profile-pic")) {
-            user.setProfileImage(buttonBgImage)
-        }
-        return user
-    }
     
     func showAlert(message: String) {
         let alertError = UIAlertController(title: "Sign Up", message: message, preferredStyle: .Alert)
