@@ -1,13 +1,12 @@
 //  AddContactController.swift
 //  Hub
-//
 //  Created by Alexei Gudimenko on 18/02/2016.
 //  Copyright © 2016 88Software. All rights reserved.
 
 import UIKit
 import Parse
 
-class AddContactViewController: UIViewController, ContactShareCellDelegate {
+class AddContactViewController: UIViewController, ContactShareCellDelegate, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nicknameLabel: UILabel!
@@ -16,13 +15,14 @@ class AddContactViewController: UIViewController, ContactShareCellDelegate {
     @IBOutlet weak var howToContactLabel: UILabel!
     
     var contactProfile: User?
+    var currentUser: User?
     var contacts = [Contact]()
     var requestedContacts = [PFObject]()
     let hubModel = HubModel.sharedInstance
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        currentUser = hubModel.currentUser
         ViewFactory.hideTableViewSeparator(contactSelectionTableView)
         ViewFactory.makeImageViewRound(profileImageView)
         
@@ -52,66 +52,47 @@ class AddContactViewController: UIViewController, ContactShareCellDelegate {
     }
     
     @IBAction func sendRequest(sender: UIBarButtonItem) {
-        let pushQuery = PFInstallation.query()!
         let friend = contactProfile!.matchingParseObject
-        pushQuery.whereKey("user", equalTo: friend)
-        
-        // Send the push notification created above
-        let push = PFPush()
-        push.setQuery(pushQuery)
-        let message = "You have a request from \(contactProfile!.firstName!) \(contactProfile!.lastName!)"
-        let data = [
-            "alert": message,
-            "badge": "Increment",
-            "sound": "Ambient Hit.mp3"
-        ]
-        push.setData(data)
-        
+        let pushQuery = HubUtility.configurePushInstallation(friend)
         let parseObject = PFObject(className: "SharedPermission")
         let sharedPermission = SharedPermission(parseObject: parseObject)
-        let currentUser = hubModel.currentUser?.matchingParseObject
-        sharedPermission.buildParseObject(friend, toUser: currentUser!, contacts: requestedContacts, status: "pending")
-        sharedPermission.matchingParseObject.saveInBackgroundWithBlock {
-            (success, error) -> Void in
-            if success {
-                push.sendPushInBackground()
-            }
+        if let currentUser = currentUser {
+            let message = "You have a request from \(currentUser.firstName!) \(currentUser.lastName!)"
+            let pushNotification = HubUtility.configurePushNotification(pushQuery, message: message)
+            sharedPermission.buildParseObject(friend, toUser: currentUser.matchingParseObject, contacts: requestedContacts, status: "pending")
+            currentUser.sendRequest(sharedPermission, pushNotification: pushNotification)
         }
     }
-}
-
-extension AddContactViewController: UITableViewDataSource {
+    
+    //Table view methods
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return contacts.count
     }
     
-    func tableView(tableView: UITableView,
-                   cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cellIdentifier = "AddProfileContactCell"
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier,
-                                                               forIndexPath: indexPath) as! AddContactCell
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("AddProfileContactCell", forIndexPath: indexPath) as! AddContactCell
         let contact = contacts[indexPath.row]
         let imageView = cell.viewWithTag(1) as! UIImageView
-        imageView.image = UIImage(named: contact.getImageName())
-        
         let label = cell.viewWithTag(2) as! UILabel
-        if contact.type! == ContactType.Social.label {
-            label.text = "\(contact.subType!)"
-        } else {
-            label.text = "\(contact.subType!) \(contact.type!)"
-        }
-        
-        if let sharedSwitch = cell.viewWithTag(3) as? UISwitch {
-            sharedSwitch.setOn(contact.selected!, animated: true)
-        }
+        let sharedSwitch = cell.viewWithTag(3) as! UISwitch
         
         cell.cellDelegate = self
+        imageView.image = UIImage(named: contact.getImageName())
+        sharedSwitch.setOn(contact.selected!, animated: true)
+        label.text = contactDisplayName(contact)
         return cell
     }
-}
-
-extension AddContactViewController: UITableViewDelegate {
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    //---------------------------Private methods------------------
+    func contactDisplayName(contact: Contact) -> String {
+        if contact.type! == ContactType.Social.label {
+            return "\(contact.subType!)"
+        } else {
+            return "\(contact.subType!) \(contact.type!)"
+        }
     }
 }

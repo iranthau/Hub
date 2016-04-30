@@ -70,4 +70,13 @@ class SharedPermission {
             }
         }
     }
+    
+    func saveInParse(pushNotification: PFPush) {
+        matchingParseObject.saveInBackgroundWithBlock {
+            (success, error) -> Void in
+            if success {
+                pushNotification.sendPushInBackground()
+            }
+        }
+    }
 }

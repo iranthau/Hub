@@ -413,6 +413,10 @@ class User: Hashable {
         }
     }
     
+    func sendRequest(sharedPermission: SharedPermission, pushNotification: PFPush) {
+        sharedPermission.saveInParse(pushNotification)
+    }
+    
     func deleteAccount(vc: UIViewController) {
         let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
         let settingsVC = vc as! SettingsViewController

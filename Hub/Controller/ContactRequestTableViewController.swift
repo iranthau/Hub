@@ -62,9 +62,8 @@ class ContactRequestTableViewController: UITableViewController, ContactShareCell
     @IBAction func acceptRequest(sender: UIBarButtonItem) {
         if let friend = friend {
             let friendParseObject = friend.matchingParseObject
-            let myParseObject = currentUser!.matchingParseObject
-            let pushQuery = HubUtility.configurePushInstallation(friendParseObject, currentUser: myParseObject)
-            let message = "\(friend.firstName!) \(friend.lastName!) accepted your request to connect"
+            let pushQuery = HubUtility.configurePushInstallation(friendParseObject)
+            let message = "\(currentUser!.firstName!) \(currentUser!.lastName!) accepted your request to connect"
             let pushNotification = HubUtility.configurePushNotification(pushQuery, message: message)
             currentUser!.acceptRequest(friendParseObject, push: pushNotification, viewController: self)
         }
