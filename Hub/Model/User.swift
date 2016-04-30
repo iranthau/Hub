@@ -442,6 +442,30 @@ class User: Hashable {
         })
     }
     
+    func searchForFriends(textToSearch: String, tvc: UITableViewController) {
+        let addContactTVC = tvc as! AddContactTableViewController
+        let query = PFUser.query()
+        query!.whereKey("firstName", hasPrefix: textToSearch)
+        query!.whereKey("profileIsVisible", equalTo: true)
+        query!.whereKey("objectId", notEqualTo: objectId!)
+        
+        query!.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            if error == nil {
+                var profiles = [User]()
+                if let objects = objects {
+                    for userObject in objects as! [PFUser] {
+                        let user = User(parseUser: userObject)
+                        user.buildUser()
+                        profiles.append(user)
+                    }
+                    addContactTVC.filteredContacts = profiles
+                    addContactTVC.tableView.reloadData()
+                }
+            }
+        }
+    }
+    
     //TODO: Move show alert method to different class so that it can be reuse across
     //views
     func resetPassword(email: String, vc: PassswordRecoveryViewController) {

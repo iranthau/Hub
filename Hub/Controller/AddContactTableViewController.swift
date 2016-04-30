@@ -1,10 +1,7 @@
-//
 //  AddContactTableTableViewController.swift
 //  Hub
-//
 //  Created by Irantha Rajakaruna on 21/02/2016.
 //  Copyright © 2016 88Software. All rights reserved.
-//
 
 import UIKit
 import Parse
@@ -23,18 +20,14 @@ class AddContactTableViewController: UITableViewController, UISearchResultsUpdat
         super.viewDidLoad()
         
         currentUser = hubModel.currentUser
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.placeholder = "Search contacts by their name"
-        searchController.dimsBackgroundDuringPresentation = false
+        configureSearchController()
         definesPresentationContext = true
-        searchController.hidesNavigationBarDuringPresentation = false
         self.tableView.tableHeaderView = searchController.searchBar
         mailComposer = MFMailComposer(tableVC: self)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -45,88 +38,33 @@ class AddContactTableViewController: UITableViewController, UISearchResultsUpdat
         if searchController.active {
             return filteredContacts.count
         }
-        
         return 0
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-
-        let cell = tableView.dequeueReusableCellWithIdentifier("addContactCell",
-            forIndexPath: indexPath)
-        
+        let cell = tableView.dequeueReusableCellWithIdentifier("addContactCell", forIndexPath: indexPath)
         let contact = filteredContacts[indexPath.row]
+        let profileImage = cell.viewWithTag(1) as! UIImageView
+        let nameLabel = cell.viewWithTag(2) as! UILabel
+        let nickNameLabel = cell.viewWithTag(3) as! UILabel
+        let cityLabel = cell.viewWithTag(4) as! UILabel
         
-        if let profileImage = cell.viewWithTag(1) as? UIImageView {
-            
-            let imageFile = contact.profileImage
-            profileImage.layer.cornerRadius = 0.5 * profileImage.bounds.size.width
-            profileImage.clipsToBounds = true
-            imageFile!.getDataInBackgroundWithBlock {
-                (imageData: NSData?, error: NSError?) -> Void in
-                if error == nil {
-                    if let imageData = imageData {
-                        profileImage.image = UIImage(data:imageData)
-                    }
-                }
-            }
-        }
-        
-        if let nameLabel = cell.viewWithTag(2) as? UILabel {
-            nameLabel.text = "\(contact.firstName!) \(contact.lastName!)"
-        }
-        
-        if let nickNameLabel = cell.viewWithTag(3) as? UILabel {
-            if contact.nickname == nil {
-                nickNameLabel.text = "nickname"
-                nickNameLabel.textColor = UIColor.lightGrayColor()
-            } else {
-                nickNameLabel.text = contact.nickname!
-            }
-        }
-        
-        if let cityLabel = cell.viewWithTag(4) as? UILabel {
-            if contact.city == nil {
-                cityLabel.text = "city"
-                cityLabel.textColor = UIColor.lightGrayColor()
-            } else {
-                cityLabel.text = contact.city!
-            }
-        }
-
+        contact.getProfileImage(profileImage)
+        nameLabel.text = "\(contact.firstName!) \(contact.lastName!)"
+        ViewFactory.setLabelPlaceholder("nickname", text: contact.nickname, label: nickNameLabel)
+        ViewFactory.setLabelPlaceholder("city", text: contact.city, label: cityLabel)
         return cell
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         let textToSearch = searchController.searchBar.text!
-        
         if !textToSearch.isEmpty {
             filterContentForSearchText(textToSearch)
         }
     }
     
     func filterContentForSearchText(searchText: String) {
-        let query = PFUser.query()
-        
-        query!.whereKey("firstName", hasPrefix: searchText)
-        query!.whereKey("profileIsVisible", equalTo: true)
-        query!.whereKey("objectId", notEqualTo: currentUser!.objectId!)
-        
-        query!.findObjectsInBackgroundWithBlock {
-            (objects: [PFObject]?, error: NSError?) -> Void in
-            
-            if error == nil {
-                var profiles = [User]()
-                if let objects = objects {
-                    for userObject in objects as! [PFUser] {
-                        let user = User(parseUser: userObject)
-                        user.buildUser()
-                        profiles.append(user)
-                    }
-                    self.filteredContacts = profiles
-                    self.tableView.reloadData()
-                }
-            }
-        }
+        currentUser!.searchForFriends(searchText, tvc: self)
     }
     
     @IBAction func back(sender: UIBarButtonItem) {
@@ -143,13 +81,11 @@ class AddContactTableViewController: UITableViewController, UISearchResultsUpdat
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        // make sure the row does not remain selected after the user touched it
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let contact = filteredContacts[indexPath.row]
         self.performSegueWithIdentifier("addContactSegue", sender: contact)
     }
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "addContactSegue" {
             let profileToAdd = sender as! User
@@ -157,5 +93,13 @@ class AddContactTableViewController: UITableViewController, UISearchResultsUpdat
                 destinationVC.contactProfile = profileToAdd
             }
         }
+    }
+    
+    //-----------------------Private methods----------------------------
+    func configureSearchController() {
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.placeholder = "Search contacts by their name"
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
     }
 }
