@@ -1,10 +1,7 @@
-//
 //  SharedPermission.swift
 //  Hub
-//
 //  Created by Irantha Rajakaruna on 3/04/2016.
 //  Copyright © 2016 88Software. All rights reserved.
-//
 
 import Foundation
 import Parse
@@ -23,16 +20,8 @@ class SharedPermission {
     
     func buildSharedPermission() {
         objectId = matchingParseObject.objectId
-        
-        let parseFromUser = matchingParseObject["user"] as! PFUser
-        let fromUser = User(parseUser: parseFromUser)
-        fromUser.buildUser()
-        user = fromUser
-        
-        let parseToUser = matchingParseObject["userFriend"] as! PFUser
-        let toUser = User(parseUser: parseToUser)
-        toUser.buildUser()
-        userFriend = toUser
+        user = getUserObject("user")
+        userFriend = getUserObject("userFriend")
         status = matchingParseObject["status"] as? Bool
     }
     
@@ -78,5 +67,13 @@ class SharedPermission {
                 pushNotification.sendPushInBackground()
             }
         }
+    }
+    
+    //---------------------Private methods----------------------
+    func getUserObject(attribute: String) -> User {
+        let user = matchingParseObject[attribute] as! PFUser
+        let fromUser = User(parseUser: user)
+        fromUser.buildUser()
+        return fromUser
     }
 }

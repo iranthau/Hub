@@ -1,10 +1,7 @@
-//
 //  MFMailComposer.swift
 //  Hub
-//
 //  Created by Irantha Rajakaruna on 8/04/2016.
 //  Copyright © 2016 88Software. All rights reserved.
-//
 
 import Foundation
 import MessageUI
