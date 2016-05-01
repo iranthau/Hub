@@ -6,13 +6,14 @@
 import UIKit
 import Parse
 
-class AddContactViewController: UIViewController, ContactShareCellDelegate, UITableViewDataSource, UITableViewDelegate {
+class AddContactViewController: BaseViewController, ContactShareCellDelegate, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nicknameLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var contactSelectionTableView: UITableView!
     @IBOutlet weak var howToContactLabel: UILabel!
+    @IBOutlet weak var sendRequestButton: UIBarButtonItem!
     
     var contactProfile: User?
     var currentUser: User?
@@ -38,6 +39,7 @@ class AddContactViewController: UIViewController, ContactShareCellDelegate, UITa
                 howToContactLabel.text = "\(friend.firstName!) has not shared any details"
             }
         }
+        disableSendRequestButton()
     }
     
     @IBAction func back(sender: AnyObject) {
@@ -48,7 +50,8 @@ class AddContactViewController: UIViewController, ContactShareCellDelegate, UITa
         let indexPath = contactSelectionTableView.indexPathForCell(sender as! UITableViewCell)
         let contact = contacts[indexPath!.row]
         contact.selected = isOn
-        requestedContacts.append(contact.matchingParseObject)
+        addContactToArray(contact)
+        disableSendRequestButton()
     }
     
     @IBAction func sendRequest(sender: UIBarButtonItem) {
@@ -60,7 +63,7 @@ class AddContactViewController: UIViewController, ContactShareCellDelegate, UITa
             let message = "You have a request from \(currentUser.firstName!) \(currentUser.lastName!)"
             let pushNotification = HubUtility.configurePushNotification(pushQuery, message: message)
             sharedPermission.buildParseObject(friend, toUser: currentUser.matchingParseObject, contacts: requestedContacts, status: "pending")
-            currentUser.sendRequest(sharedPermission, pushNotification: pushNotification)
+            currentUser.sendRequest(sharedPermission, pushNotification: pushNotification, vc: self)
         }
     }
     
@@ -87,12 +90,39 @@ class AddContactViewController: UIViewController, ContactShareCellDelegate, UITa
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
+    override func showAlert(message: String) {
+        let alertError = UIAlertController(title: "Add contact", message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertError.addAction(defaultAction)
+        self.presentViewController(alertError, animated: true, completion: nil)
+    }
+    
+    override func disableUIBarbutton() {
+        sendRequestButton.enabled = false
+    }
+    
     //---------------------------Private methods------------------
     private func contactDisplayName(contact: Contact) -> String {
         if contact.type! == ContactType.Social.label {
             return "\(contact.subType!)"
         } else {
             return "\(contact.subType!) \(contact.type!)"
+        }
+    }
+    
+    private func disableSendRequestButton() {
+        if requestedContacts.isEmpty {
+            sendRequestButton.enabled = false
+        } else {
+            sendRequestButton.enabled = true
+        }
+    }
+    
+    func addContactToArray(contact: Contact) {
+        if contact.selected! {
+            requestedContacts.append(contact.matchingParseObject)
+        } else {
+            requestedContacts.removeObject(contact.matchingParseObject)
         }
     }
 }

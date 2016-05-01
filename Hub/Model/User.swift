@@ -22,7 +22,7 @@ class User: Hashable {
     let defaultProfileImage: UIImage
     var matchingParseObject: PFUser
     var contacts = [Contact]()
-    var friends: [User]?
+    var friends = [User]()
     var requests: [User]?
     let hubModel = HubModel.sharedInstance
     
@@ -78,8 +78,8 @@ class User: Hashable {
         matchingParseObject.saveInBackground()
     }
     
-    func sendRequest(sharedPermission: SharedPermission, pushNotification: PFPush) {
-        sharedPermission.saveInParse(pushNotification)
+    func sendRequest(sharedPermission: SharedPermission, pushNotification: PFPush, vc: BaseViewController) {
+        sharedPermission.saveInParse(pushNotification, vc: vc)
     }
     
     /* Get the profile image from parse and assignes it to an imageview */
@@ -94,10 +94,9 @@ class User: Hashable {
         }
     }
     
-    func logIn(userDetails: [String: String], vc: UIViewController) {
+    func logIn(userDetails: [String: String], vc: BaseViewController) {
         let username = userDetails["username"]!
         let password = userDetails["password"]!
-        let viewController = vc as! SignInViewController
         
         PFUser.logInWithUsernameInBackground(username, password: password) {
             (user: PFUser?, error: NSError?) -> Void in
@@ -106,36 +105,34 @@ class User: Hashable {
                 self.matchingParseObject = currentUser
                 self.buildUser()
                 self.hubModel.setCurrentUser(self)
-                viewController.performSegueWithIdentifier("signInSegue", sender: nil)
+                vc.performSegueWithIdentifier("signInSegue", sender: nil)
             } else {
                 let errorMessage = error!.userInfo["error"] as? String
-                viewController.showAlert(errorMessage!)
+                vc.showAlert(errorMessage!)
             }
         }
     }
     
-    func logInWithFacebook(vc: UIViewController) {
-        let viewController = vc as! SignInViewController
-
+    func logInWithFacebook(vc: BaseViewController) {
         PFFacebookUtils.logInInBackgroundWithReadPermissions(
             ["public_profile", "email"], block: {
                 (user: PFUser?, error: NSError?) -> Void in
                 if let error = error {
                     let errorMessage = error.userInfo["error"] as! String
-                    viewController.showAlert(errorMessage)
+                    vc.showAlert(errorMessage)
                 } else if let user = user {
                     let currentUser = PFUser.currentUser()!
                     if user.isNew {
-                        self.signUpWithFacebook(currentUser, signInVC: viewController)
-                        viewController.performSegueWithIdentifier("createAccountSegue", sender: nil)
+                        self.signUpWithFacebook(currentUser, signInVC: vc)
+                        vc.performSegueWithIdentifier("createAccountSegue", sender: nil)
                     } else {
                         self.matchingParseObject = currentUser
                         self.buildUser()
                         self.hubModel.setCurrentUser(self)
-                        viewController.performSegueWithIdentifier("signInSegue", sender: nil)
+                        vc.performSegueWithIdentifier("signInSegue", sender: nil)
                     }
                 } else {
-                    viewController.showAlert("Sign up error.")
+                    vc.showAlert("Sign up error.")
                 }
             }
         )
@@ -160,7 +157,6 @@ class User: Hashable {
     
     func logOut(vc: UIViewController) {
         let settingsVC = vc as! SettingsViewController
-        
         PFUser.logOutInBackgroundWithBlock({ (error: NSError?) -> Void in
             if(error == nil) {
                 settingsVC.performSegueWithIdentifier("signOutSegue", sender: nil)
@@ -171,40 +167,24 @@ class User: Hashable {
     /* Get a list of all my friends from Parse. Need two queries to perform the 
      * the action since we need both friends that I am a friend of and my friends */
     func getAllFriends(myContactTVC: MyContactsTableViewController) {
-        let myFriendQuery = PFQuery(className: "SharedPermission")
-        myFriendQuery.whereKey("user", equalTo: matchingParseObject)
-        myFriendQuery.whereKey("status", equalTo: "accepted")
-        
-        let iAmAFriendOfQuery = PFQuery(className: "SharedPermission")
-        iAmAFriendOfQuery.whereKey("userFriend", equalTo: matchingParseObject)
-        iAmAFriendOfQuery.whereKey("status", equalTo: "accepted")
-        
+        let sPParseObject = PFObject(className: "SharedPermission")
+        let sharedPermission = SharedPermission(parseObject: sPParseObject)
+        let myFriendQuery = sharedPermission.buildFriendQuery("user", objectForTheField: matchingParseObject)
+        let iAmAFriendOfQuery = sharedPermission.buildFriendQuery("userFriend", objectForTheField: matchingParseObject)
         let query = PFQuery.orQueryWithSubqueries([myFriendQuery, iAmAFriendOfQuery])
         
         query.findObjectsInBackgroundWithBlock {
-            (objects: [PFObject]?, error: NSError?) -> Void in
-            if let objects = objects {
-                var myFriends = [User]()
-                for object in objects {
-                    let fromUser = object["userFriend"] as! PFUser
-                    let toUser = object["user"] as! PFUser
-                    var user: PFUser?
-                    
-                    if fromUser.objectId == self.objectId! {
-                        user = object["user"] as? PFUser
-                    }
-                    
-                    if toUser.objectId == self.objectId! {
-                        user = object["userFriend"] as? PFUser
-                    }
-                    
-                    user!.fetchInBackgroundWithBlock {
+            (sharedPermissionObjects: [PFObject]?, error: NSError?) -> Void in
+            if let sPObjects = sharedPermissionObjects {
+                for sPObject in sPObjects {
+                    let user = self.getMatchingUser(sPObject)
+                    user.fetchInBackgroundWithBlock {
                         (fetchedUser: PFObject?, error: NSError?) -> Void in
                         if let fetchedFromUser = fetchedUser as? PFUser {
                             let request = User(parseUser: fetchedFromUser)
                             request.buildUser()
-                            myFriends.append(request)
-                            myContactTVC.myContacts = myFriends.sort { $0.firstName < $1.firstName }
+                            self.friends.append(request)
+                            myContactTVC.myContacts = self.friends.sort { $0.firstName < $1.firstName }
                             myContactTVC.refreshTableViewInBackground()
                         }
                     }
@@ -232,16 +212,16 @@ class User: Hashable {
                         sharedContact.buildContact()
                         
                         switch sharedContact.type! {
-                        case ContactType.Phone.label:
-                            profileContactVC.sharedPhoneContacts.append(sharedContact)
-                        case ContactType.Email.label:
-                            profileContactVC.sharedEmailContacts.append(sharedContact)
-                        case ContactType.Address.label:
-                            profileContactVC.sharedAddressContacts.append(sharedContact)
-                        case ContactType.Social.label:
-                            profileContactVC.sharedSocialContacts.append(sharedContact)
-                        default:
-                            return
+                            case ContactType.Phone.label:
+                                profileContactVC.sharedPhoneContacts.append(sharedContact)
+                            case ContactType.Email.label:
+                                profileContactVC.sharedEmailContacts.append(sharedContact)
+                            case ContactType.Address.label:
+                                profileContactVC.sharedAddressContacts.append(sharedContact)
+                            case ContactType.Social.label:
+                                profileContactVC.sharedSocialContacts.append(sharedContact)
+                            default:
+                                return
                         }
                         profileContactVC.refreshTableView()
                     }
@@ -433,8 +413,6 @@ class User: Hashable {
         }
     }
     
-    //TODO: Move show alert method to different class so that it can be reuse across
-    //views
     func resetPassword(email: String, vc: PassswordRecoveryViewController) {
         PFUser.requestPasswordResetForEmailInBackground(email) {
             (success: Bool, error: NSError?) -> Void in
@@ -454,7 +432,7 @@ class User: Hashable {
     }
     
     //---------------------Private methods-----------------------------
-    private func signUpWithFacebook(parseUser: PFUser, signInVC: SignInViewController) {
+    private func signUpWithFacebook(parseUser: PFUser, signInVC: BaseViewController) {
         let requestParameters = ["fields": "id, email, first_name, last_name"]
         let userDetails = FBSDKGraphRequest(graphPath: "me", parameters: requestParameters)
         
@@ -570,6 +548,21 @@ class User: Hashable {
                 }
             }
         }
+    }
+    
+    /* Returns a parse user object that doesn't match the current user */
+    private func getMatchingUser(sPObject: PFObject) -> PFUser {
+        let fromUser = sPObject["userFriend"] as! PFUser
+        let toUser = sPObject["user"] as! PFUser
+        var user: PFUser?
+        if fromUser.objectId == self.objectId! {
+            user = sPObject["user"] as? PFUser
+        }
+        
+        if toUser.objectId == self.objectId! {
+            user = sPObject["userFriend"] as? PFUser
+        }
+        return user!
     }
 }
 

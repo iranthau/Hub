@@ -60,13 +60,22 @@ class SharedPermission {
         }
     }
     
-    func saveInParse(pushNotification: PFPush) {
+    func saveInParse(pushNotification: PFPush, vc: BaseViewController) {
         matchingParseObject.saveInBackgroundWithBlock {
             (success, error) -> Void in
             if success {
                 pushNotification.sendPushInBackground()
+                vc.showAlert("Request is sent")
+                vc.disableUIBarbutton()
             }
         }
+    }
+    
+    func buildFriendQuery(fieldToMatch: String, objectForTheField: PFUser) -> PFQuery {
+        let query = PFQuery(className: parseClassName)
+        query.whereKey(fieldToMatch, equalTo: objectForTheField)
+        query.whereKey("status", equalTo: "accepted")
+        return query
     }
     
     //---------------------Private methods----------------------
