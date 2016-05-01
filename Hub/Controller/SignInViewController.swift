@@ -64,8 +64,12 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         return false
     }
     
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
     //----------------------Private methods---------------------------
-    func logUserIn() {
+    private func logUserIn() {
         let username = userNameInput.text!
         let password = passwordInput.text!
         let userDetails = ["username": username, "password": password]
@@ -73,10 +77,6 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         let user = User(parseUser: parseUser)
         
         user.logIn(userDetails, vc: self)
-    }
-    
-    func dismissKeyboard() {
-        view.endEditing(true)
     }
 }
 

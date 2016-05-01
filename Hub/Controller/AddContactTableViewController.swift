@@ -97,7 +97,7 @@ class AddContactTableViewController: UITableViewController, UISearchResultsUpdat
     }
     
     //-----------------------Private methods----------------------------
-    func configureSearchController() {
+    private func configureSearchController() {
         searchController.searchResultsUpdater = self
         searchController.searchBar.placeholder = "Search contacts by their name"
         searchController.dimsBackgroundDuringPresentation = false

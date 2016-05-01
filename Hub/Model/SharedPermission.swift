@@ -70,7 +70,7 @@ class SharedPermission {
     }
     
     //---------------------Private methods----------------------
-    func getUserObject(attribute: String) -> User {
+    private func getUserObject(attribute: String) -> User {
         let user = matchingParseObject[attribute] as! PFUser
         let fromUser = User(parseUser: user)
         fromUser.buildUser()

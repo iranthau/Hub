@@ -121,13 +121,13 @@ class ProfileContactViewController: UIViewController, UITableViewDataSource {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
-    //-------------------------Private Methods------------------------
     func refreshTableView() {
         activeDataSource = sharedPhoneContacts
         sharedContactsTableView.reloadData()
     }
     
-    func setUpContactCell(label: UILabel, icon: UIImageView, contact: Contact) {
+    //-------------------------Private Methods------------------------
+    private func setUpContactCell(label: UILabel, icon: UIImageView, contact: Contact) {
         label.text = contact.value
         icon.image = UIImage(named: contact.getImageName())
     }

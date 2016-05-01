@@ -15,15 +15,4 @@ class HubTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
     }
-    
-    func testExample() {
-
-    }
-    
-    func testPerformanceExample() {
-        self.measureBlock {
-            
-        }
-    }
-    
 }

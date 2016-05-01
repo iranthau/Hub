@@ -250,7 +250,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
     
     //----------------Private Methods--------------------
     
-    func registerDelegateForInputFields() {
+    private func registerDelegateForInputFields() {
         firstNameTextField.delegate = self
         lastNameTextField.delegate = self
         availabilityTextView.delegate = self
@@ -258,7 +258,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
     }
     
     /* Place appropriate contacts in correct text field when the view load */
-    func matchInitialContactsValues() {
+    private func matchInitialContactsValues() {
         for contact in allContacts {
             switch contact.type! {
             case ContactType.Phone.label:
@@ -275,7 +275,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
         }
     }
     
-    func showKeyBoard(offset: CGSize, keyboardSize: CGSize) {
+    private func showKeyBoard(offset: CGSize, keyboardSize: CGSize) {
         UIView.animateWithDuration(0.1, animations: {
             () -> Void in
             if keyboardSize == offset {

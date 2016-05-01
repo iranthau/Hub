@@ -56,13 +56,13 @@ class Contact {
     
     //-----------------------Private methods--------------------------
     
-    func updateParseObjectField(attribute: String, value: String?) {
+    private func updateParseObjectField(attribute: String, value: String?) {
         if let value = value {
             matchingParseObject[attribute] = value
         }
     }
     
-    func getPhoneImageIconName() -> String {
+    private func getPhoneImageIconName() -> String {
         switch subType! {
             case ContactSubType.PhoneHome.label:
                 return ContactSubType.PhoneHome.image
@@ -76,7 +76,7 @@ class Contact {
         }
     }
     
-    func getEmailImageIconName() -> String {
+    private func getEmailImageIconName() -> String {
         switch subType! {
             case ContactSubType.EmailHome.label:
                 return ContactSubType.EmailHome.image
@@ -90,7 +90,7 @@ class Contact {
         }
     }
     
-    func getAddressImageIconName() -> String {
+    private func getAddressImageIconName() -> String {
         switch subType! {
             case ContactSubType.AddressHome.label:
                 return ContactSubType.AddressHome.image
@@ -104,7 +104,7 @@ class Contact {
         }
     }
     
-    func getSocialImageIcon() -> String {
+    private func getSocialImageIcon() -> String {
         switch subType! {
             case ContactSubType.Facebook.label:
                 return ContactSubType.Facebook.image

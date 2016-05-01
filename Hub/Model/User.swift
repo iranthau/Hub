@@ -454,7 +454,7 @@ class User: Hashable {
     }
     
     //---------------------Private methods-----------------------------
-    func signUpWithFacebook(parseUser: PFUser, signInVC: SignInViewController) {
+    private func signUpWithFacebook(parseUser: PFUser, signInVC: SignInViewController) {
         let requestParameters = ["fields": "id, email, first_name, last_name"]
         let userDetails = FBSDKGraphRequest(graphPath: "me", parameters: requestParameters)
         
@@ -482,14 +482,14 @@ class User: Hashable {
     }
     
     /* Read the profile picture data from facebook when given the user ID */
-    func getProfileImageFromFacebook() -> UIImage {
+    private func getProfileImageFromFacebook() -> UIImage {
         let userProfileUrl = "https://graph.facebook.com/\(objectId!)/picture?type=large"
         let profilePictureUrl = NSURL(string: userProfileUrl)!
         let profilePicturedata = NSData(contentsOfURL: profilePictureUrl)!
         return UIImage(data: profilePicturedata)!
     }
     
-    func saveUser() {
+    private func saveUser() {
         matchingParseObject.saveInBackgroundWithBlock {
             (success: Bool, error: NSError?) -> Void in
             if(success) {
@@ -500,7 +500,7 @@ class User: Hashable {
     
     /* If the contact value is empty after a user update his contacts those contacts
      * will be deleted from parse */
-    func contactsToDeleteArray(contacts: [Contact]) -> [PFObject] {
+    private func contactsToDeleteArray(contacts: [Contact]) -> [PFObject] {
         var returnArray = [PFObject]()
         for contact in contacts {
             if contact.value == "" {
@@ -512,7 +512,7 @@ class User: Hashable {
         return returnArray
     }
     
-    func contactsToSaveArray(contacts: [Contact]) -> [PFObject] {
+    private func contactsToSaveArray(contacts: [Contact]) -> [PFObject] {
         var returnArray = [PFObject]()
         for contact in contacts {
             if contact.value != "" {
@@ -524,7 +524,7 @@ class User: Hashable {
         return returnArray
     }
     
-    func deleteEntriesAsFriendFromSharedPermission() {
+    private func deleteEntriesAsFriendFromSharedPermission() {
         let query = PFQuery(className: "SharedPermission")
         query.whereKey("userFriend", equalTo: matchingParseObject)
         query.findObjectsInBackgroundWithBlock {
@@ -537,7 +537,7 @@ class User: Hashable {
         }
     }
     
-    func deleteEntriesAsUserInSharedPermission() {
+    private func deleteEntriesAsUserInSharedPermission() {
         let query = PFQuery(className: "SharedPermission")
         query.whereKey("user", equalTo: matchingParseObject)
         query.findObjectsInBackgroundWithBlock {
@@ -550,7 +550,7 @@ class User: Hashable {
         }
     }
     
-    func deleteUser(settingsVC: SettingsViewController) {
+    private func deleteUser(settingsVC: SettingsViewController) {
         matchingParseObject.deleteInBackgroundWithBlock {
             (success: Bool, error: NSError?) in
             if success {
@@ -560,7 +560,7 @@ class User: Hashable {
         }
     }
     
-    func deleteContacts(contacts: [PFObject]?) {
+    private func deleteContacts(contacts: [PFObject]?) {
         if let contacts = contacts {
             for contact in contacts {
                 do {

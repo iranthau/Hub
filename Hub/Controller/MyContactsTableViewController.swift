@@ -165,7 +165,7 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
     
     //----------------------Private Methods-------------------------
     
-    func createNewIndexSection(index: Int, length: Int) -> (index: Int, length: Int, title: String) {
+    private func createNewIndexSection(index: Int, length: Int) -> (index: Int, length: Int, title: String) {
         let friend = myContacts[index]
         let string = friend.firstName!.uppercaseString
         let firstCharacter = string[string.startIndex]

@@ -90,12 +90,12 @@ class RequestsTableViewController: UITableViewController {
     }
     
     //-------------------Private Methods------------------------
-    func acceptRequest(tableView: UITableView, indexPath: NSIndexPath) {
+    private func acceptRequest(tableView: UITableView, indexPath: NSIndexPath) {
         let requestContact = requests[indexPath.row]
         self.performSegueWithIdentifier("acceptRequestSegue", sender: requestContact)
     }
     
-    func declineRequest(tableView: UITableView, indexPath: NSIndexPath) {
+    private func declineRequest(tableView: UITableView, indexPath: NSIndexPath) {
         requests.removeAtIndex(indexPath.row)
         tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
     }

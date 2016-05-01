@@ -128,7 +128,7 @@ class SettingsViewController: UITableViewController {
     
     //----------------------Private methods-------------------------
     
-    func handleDeletion() {
+    private func handleDeletion() {
         if let currentUser = currentUser {
             currentUser.deleteAccount(self)
         }

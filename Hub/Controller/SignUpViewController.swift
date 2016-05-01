@@ -91,8 +91,6 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         adjustingHeight(false, notification: notification)
     }
     
-    //-----------------------Private methods---------------------------
-    
     func showAlert(message: String) {
         let alertError = UIAlertController(title: "Sign Up", message: message, preferredStyle: .Alert)
         let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
@@ -100,7 +98,9 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         self.presentViewController(alertError, animated: true, completion: nil)
     }
     
-    func adjustingHeight(show:Bool, notification:NSNotification) {
+    //-----------------------Private methods---------------------------
+    
+    private func adjustingHeight(show:Bool, notification:NSNotification) {
         var userInfo = notification.userInfo!
         let keyboardFrame:CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
         let animationDurarion = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSTimeInterval

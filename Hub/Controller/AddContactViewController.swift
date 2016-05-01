@@ -88,7 +88,7 @@ class AddContactViewController: UIViewController, ContactShareCellDelegate, UITa
     }
     
     //---------------------------Private methods------------------
-    func contactDisplayName(contact: Contact) -> String {
+    private func contactDisplayName(contact: Contact) -> String {
         if contact.type! == ContactType.Social.label {
             return "\(contact.subType!)"
         } else {

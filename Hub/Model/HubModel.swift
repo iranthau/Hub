@@ -55,7 +55,7 @@ class HubModel {
     //------------------Private methods-----------------------
     
     /* Opens the photo gallery */
-    func openGallary(imagePicker: UIImagePickerController, view: UIViewController) {
+    private func openGallary(imagePicker: UIImagePickerController, view: UIViewController) {
         imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
@@ -66,7 +66,7 @@ class HubModel {
     }
     
     /* Opens the camera if the camera is available. Otherwise it will open the gallery */
-    func openCamera(imagePicker: UIImagePickerController, view: UIViewController) {
+    private func openCamera(imagePicker: UIImagePickerController, view: UIViewController) {
         if (UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)) {
             imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
             view.presentViewController(imagePicker, animated: true, completion: nil)
