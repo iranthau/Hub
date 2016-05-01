@@ -4,7 +4,6 @@
 //  Copyright © 2016 88Software. All rights reserved.
 
 import UIKit
-import Parse
 
 class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate, UINavigationBarDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     

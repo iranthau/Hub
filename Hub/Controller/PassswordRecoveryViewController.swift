@@ -4,7 +4,6 @@
 //  Copyright © 2016 88Software. All rights reserved.
 
 import UIKit
-import Parse
 
 class PassswordRecoveryViewController: UIViewController {
     
