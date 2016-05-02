@@ -19,6 +19,7 @@ class MyProfileViewController: UIViewController, UITableViewDataSource, UITableV
     @IBOutlet weak var selectedContactView: UIView!
     
     var activeDataSource = [Contact]()
+    var allContacts = [Contact]()
     var sharedPhoneContacts = [Contact]()
     var sharedEmailContacts = [Contact]()
     var sharedAddressContacts = [Contact]()
@@ -42,6 +43,9 @@ class MyProfileViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewWillAppear(animated: Bool) {
         if let currentUser = user {
             SetInitialValues(currentUser)
+            allContacts = currentUser.contacts
+            groupContacts()
+            tableView.reloadData()
         }
     }
 
@@ -104,11 +108,35 @@ class MyProfileViewController: UIViewController, UITableViewDataSource, UITableV
     
     //Delegate method. Called after a user finish editing
     func editMyProfileViewController(controller: EditMyProfileViewController, didFinishEditingProfile userProfile: User) {
-        tableView.reloadData()
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    func groupContacts() {
+        clearArrays()
+        for contact in allContacts {
+            switch contact.type! {
+            case ContactType.Phone.label:
+                sharedPhoneContacts.append(contact)
+            case ContactType.Email.label:
+                sharedEmailContacts.append(contact)
+            case ContactType.Address.label:
+                sharedAddressContacts.append(contact)
+            case ContactType.Social.label:
+                sharedSocialContacts.append(contact)
+            default:
+                return
+            }
+        }
+    }
+    
     //---------------------Private Methods------------------------
+    
+    private func clearArrays() {
+        sharedPhoneContacts.removeAll()
+        sharedEmailContacts.removeAll()
+        sharedAddressContacts.removeAll()
+        sharedSocialContacts.removeAll()
+    }
     
     //Set the values of lables and views from a user
     private func SetInitialValues(currentUser: User) {

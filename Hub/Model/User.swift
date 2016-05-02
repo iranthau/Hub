@@ -66,6 +66,27 @@ class User: Hashable {
     
     func setProfileImage(image: UIImage) {
         matchingParseObject["profileImage"] = HubUtility.convertImageFileToParseFile(image)
+        profileImage = HubUtility.convertImageFileToParseFile(image)
+    }
+    
+    func setAvailableTime() {
+        matchingParseObject["availableTime"] = availableTime!
+    }
+    
+    func setFirstName() {
+        matchingParseObject["firstName"] = firstName!
+    }
+    
+    func setLastName() {
+        matchingParseObject["lastName"] = lastName!
+    }
+    
+    func setNickame() {
+        matchingParseObject["nickName"] = nickname!
+    }
+    
+    func setCity() {
+        matchingParseObject["city"] = city!
     }
     
     // Return true if a user has any contacts to share
@@ -267,17 +288,9 @@ class User: Hashable {
                     let contact = Contact(parseObject: fetchedContact!)
                     contact.buildContact()
                     self.contacts.append(contact)
-                    switch contact.type! {
-                        case ContactType.Phone.label:
-                            myProfileVC.sharedPhoneContacts.append(contact)
-                        case ContactType.Email.label:
-                            myProfileVC.sharedEmailContacts.append(contact)
-                        case ContactType.Address.label:
-                            myProfileVC.sharedAddressContacts.append(contact)
-                        case ContactType.Social.label:
-                            myProfileVC.sharedSocialContacts.append(contact)
-                        default:
-                            return
+                    myProfileVC.allContacts.append(contact)
+                    if myContacts.lastObject as! PFObject == parseObject {
+                        myProfileVC.groupContacts()
                     }
                     myProfileVC.phoneButtonPressed()
                 }
@@ -340,6 +353,11 @@ class User: Hashable {
         let contactsToSave = contactsToSaveArray(contacts)
         let contactsToDelete = contactsToDeleteArray(contacts)
         
+        self.setAvailableTime()
+        self.setFirstName()
+        self.setLastName()
+        self.setNickame()
+        self.setCity()
         self.matchingParseObject["contacts"] = contactsToSave
         self.matchingParseObject.saveInBackgroundWithBlock {
             (success: Bool, error: NSError?) in
@@ -492,11 +510,13 @@ class User: Hashable {
     
     private func contactsToSaveArray(contacts: [Contact]) -> [PFObject] {
         var returnArray = [PFObject]()
+        self.contacts.removeAll()
         for contact in contacts {
             if contact.value != "" {
                 contact.buildParseContact()
                 contact.setObjectId()
                 returnArray.append(contact.matchingParseObject)
+                self.contacts.append(contact)
             }
         }
         return returnArray

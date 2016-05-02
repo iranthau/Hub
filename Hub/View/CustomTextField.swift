@@ -30,6 +30,8 @@ class CustomTextField: UITextField {
                 return UIImage(named: "user.png")
             case "Email":
                 return UIImage(named: "email.png")
+            case "City":
+                return UIImage(named: "location")
             case "Password", "Confirm password":
                 return UIImage(named: "lock.png")
             default:

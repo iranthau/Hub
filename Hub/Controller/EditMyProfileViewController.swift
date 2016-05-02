@@ -12,6 +12,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var nicknameTextField: UITextField!
+    @IBOutlet weak var cityTextField: UITextField!
     @IBOutlet weak var contactFieldTableView: UITableView!
     @IBOutlet weak var phoneButton: UIButton!
     @IBOutlet weak var emailButton: UIButton!
@@ -59,6 +60,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
             firstNameTextField.text = currentUser.firstName
             lastNameTextField.text = currentUser.lastName
             nicknameTextField.text = currentUser.nickname
+            cityTextField.text = currentUser.city
             ViewFactory.setTextViewPlaceholder("When can others contact you?", text: currentUser.availableTime, textView: availabilityTextView)
             currentUser.getProfileImage(profileImageView)
             allContacts = currentUser.contacts
@@ -80,11 +82,6 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
         delegate?.editMyProfileViewControllerDidCancel(self)
     }
     
-    //Once editing is finished
-    // 1. append all contacts in to an array
-    // 2. Filter contacts out if their value is empty && if they did not exist previosly
-    // 3. Update the user value to new values
-    // 4. Save the user to parse
     @IBAction func done() {
         let contactsArray = [phoneContacts, emailContacts, addressContacts, socialContacts]
         let editedContacts = HubUtility.appendContactsArrays(contactsArray)
@@ -94,6 +91,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
             currentUser.firstName = firstNameTextField.text!
             currentUser.lastName = lastNameTextField.text!
             currentUser.nickname = nicknameTextField.text!
+            currentUser.city = cityTextField.text!
             currentUser.availableTime = availabilityTextView.text!
             currentUser.setProfileImage(profileImageView.image!)
             currentUser.setContacts(contactsToSave)
@@ -187,7 +185,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
     
     //Update contact value when the user click outside of the active textfield
     func textFieldDidEndEditing(textField: UITextField) {
-        if textField != firstNameTextField && textField != lastNameTextField && textField != nicknameTextField {
+        if textField != firstNameTextField && textField != lastNameTextField && textField != nicknameTextField && textField != cityTextField {
             let cell = textField.superview!.superview as! EditContactItemCell
             cell.contact!.value = textField.text!
         }
@@ -254,6 +252,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
         lastNameTextField.delegate = self
         availabilityTextView.delegate = self
         nicknameTextField.delegate = self
+        cityTextField.delegate = self
     }
     
     /* Place appropriate contacts in correct text field when the view load */
