@@ -38,6 +38,7 @@
 		BD2B11B11CBA18C300A68A5D /* Ambient Hit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BD2B11B01CBA18C300A68A5D /* Ambient Hit.mp3 */; };
 		BD45F1B71C66FF4E00DBE5DB /* MyContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45F1B61C66FF4E00DBE5DB /* MyContactsTableViewController.swift */; };
 		BD5869811C6E5179009408EA /* HeyyaTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5869801C6E5179009408EA /* HeyyaTabBarController.swift */; };
+		BD5A0AD71CD8DFEF00FE1299 /* HubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5A0AD61CD8DFEF00FE1299 /* HubAPI.swift */; };
 		BD5B94DB1C64F43300812FFD /* ProfileCreatedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5B94DA1C64F43300812FFD /* ProfileCreatedViewController.swift */; };
 		BD644D2E1C60D2CB005657FD /* PassswordRecoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD644D2D1C60D2CB005657FD /* PassswordRecoveryViewController.swift */; };
 		BD6FF1CE1C93E8560069D7D9 /* ProfileContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6FF1CD1C93E8560069D7D9 /* ProfileContactViewController.swift */; };
@@ -152,6 +153,7 @@
 		BD2B11B01CBA18C300A68A5D /* Ambient Hit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Ambient Hit.mp3"; path = "Sound/Ambient Hit.mp3"; sourceTree = "<group>"; };
 		BD45F1B61C66FF4E00DBE5DB /* MyContactsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyContactsTableViewController.swift; sourceTree = "<group>"; };
 		BD5869801C6E5179009408EA /* HeyyaTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeyyaTabBarController.swift; sourceTree = "<group>"; };
+		BD5A0AD61CD8DFEF00FE1299 /* HubAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HubAPI.swift; sourceTree = "<group>"; };
 		BD5B94DA1C64F43300812FFD /* ProfileCreatedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCreatedViewController.swift; sourceTree = "<group>"; };
 		BD644D2D1C60D2CB005657FD /* PassswordRecoveryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassswordRecoveryViewController.swift; sourceTree = "<group>"; };
 		BD6FF1CD1C93E8560069D7D9 /* ProfileContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileContactViewController.swift; sourceTree = "<group>"; };
@@ -335,6 +337,15 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		BD5A0AD51CD8DF0A00FE1299 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				BD5A0AD61CD8DFEF00FE1299 /* HubAPI.swift */,
+			);
+			name = API;
+			path = Model;
+			sourceTree = "<group>";
+		};
 		BD8513341C784057002470A2 /* customCells */ = {
 			isa = PBXGroup;
 			children = (
@@ -409,6 +420,7 @@
 				BD423AF21C1326F3001D25E7 /* View */,
 				BD423AF31C132728001D25E7 /* Controller */,
 				BD423AF41C132747001D25E7 /* Model */,
+				BD5A0AD51CD8DF0A00FE1299 /* API */,
 				BD2B11AD1CB9CA6000A68A5D /* Sound */,
 				BD423AF51C13276A001D25E7 /* Supporting Files */,
 				BDCE5DCE1CD624AE001ABD11 /* HubPlayground.playground */,
@@ -572,6 +584,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD5A0AD71CD8DFEF00FE1299 /* HubAPI.swift in Sources */,
 				BDAE7A141C101F6B0085264A /* SignInViewController.swift in Sources */,
 				BDD83EEB1CB7D329008C0515 /* MFMailComposer.swift in Sources */,
 				BD5869811C6E5179009408EA /* HeyyaTabBarController.swift in Sources */,

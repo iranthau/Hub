@@ -115,21 +115,16 @@ class User: Hashable {
         }
     }
     
-    func logIn(userDetails: [String: String], completion: (success: NSDictionary?, error: String?) -> Void) {
-        let username = userDetails["username"]!
-        let password = userDetails["password"]!
-        
-        PFUser.logInWithUsernameInBackground(username, password: password) {
-            (user: PFUser?, error: NSError?) -> Void in
-            if user != nil {
-                let currentUser = PFUser.currentUser()!
-                self.matchingParseObject = currentUser
-                self.buildUser()
-                let result = ["user": self]
-                completion(success: result, error: nil)
-            } else {
+    func logIn(userDetails: [String: String], completion: (success: User?, error: String?) -> Void) {
+        HubAPI.logIn(userDetails) {
+            (pfUser: PFUser?, error: NSError?) -> Void in
+            if error != nil {
                 let errorMessage = error!.userInfo["error"] as? String
                 completion(success: nil, error: errorMessage)
+            } else {
+                self.matchingParseObject = pfUser!
+                self.buildUser()
+                completion(success: self, error: nil)
             }
         }
     }
