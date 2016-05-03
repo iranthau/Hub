@@ -115,7 +115,7 @@ class User: Hashable {
         }
     }
     
-    func logIn(userDetails: [String: String], vc: BaseViewController) {
+    func logIn(userDetails: [String: String], completion: (success: NSDictionary?, error: String?) -> Void) {
         let username = userDetails["username"]!
         let password = userDetails["password"]!
         
@@ -125,11 +125,11 @@ class User: Hashable {
                 let currentUser = PFUser.currentUser()!
                 self.matchingParseObject = currentUser
                 self.buildUser()
-                self.hubModel.setCurrentUser(self)
-                vc.performSegueWithIdentifier("signInSegue", sender: nil)
+                let result = ["user": self]
+                completion(success: result, error: nil)
             } else {
                 let errorMessage = error!.userInfo["error"] as? String
-                vc.showAlert(errorMessage!)
+                completion(success: nil, error: errorMessage)
             }
         }
     }

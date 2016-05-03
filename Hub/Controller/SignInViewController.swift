@@ -76,7 +76,16 @@ class SignInViewController: BaseViewController, UITextFieldDelegate {
         let parseUser = PFUser()
         let user = User(parseUser: parseUser)
         
-        user.logIn(userDetails, vc: self)
+        user.logIn(userDetails) {
+            (success: NSDictionary?, error: String?) -> Void in
+            if error != nil {
+                self.showAlert(error!)
+            } else {
+                let currentUser = success!["user"] as! User
+                self.hubModel.setCurrentUser(currentUser)
+                self.performSegueWithIdentifier("signInSegue", sender: nil)
+            }
+        }
     }
 }
 
