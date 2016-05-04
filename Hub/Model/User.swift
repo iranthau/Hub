@@ -24,6 +24,7 @@ class User: Hashable {
     var contacts = [Contact]()
     var friends = [User]()
     var requests: [User]?
+    var isNew = false
     let hubModel = HubModel.sharedInstance
     
     // A user can be intialise with a parse user object
@@ -70,7 +71,9 @@ class User: Hashable {
     }
     
     func setAvailableTime() {
-        matchingParseObject["availableTime"] = availableTime!
+        if let availableTime = availableTime {
+            matchingParseObject["availableTime"] = availableTime
+        }
     }
     
     func setFirstName() {
@@ -82,11 +85,15 @@ class User: Hashable {
     }
     
     func setNickame() {
-        matchingParseObject["nickName"] = nickname!
+        if let nickname = nickname {
+            matchingParseObject["nickName"] = nickname
+        }
     }
     
     func setCity() {
-        matchingParseObject["city"] = city!
+        if let city = city {
+            matchingParseObject["city"] = city
+        }
     }
     
     // Return true if a user has any contacts to share
@@ -118,8 +125,8 @@ class User: Hashable {
     func logIn(userDetails: [String: String], completion: (success: User?, error: String?) -> Void) {
         HubAPI.logIn(userDetails) {
             (pfUser: PFUser?, error: NSError?) -> Void in
-            if error != nil {
-                let errorMessage = error!.userInfo["error"] as? String
+            if let error = error {
+                let errorMessage = error.userInfo["error"] as? String
                 completion(success: nil, error: errorMessage)
             } else {
                 self.matchingParseObject = pfUser!
@@ -129,29 +136,38 @@ class User: Hashable {
         }
     }
     
-    func logInWithFacebook(vc: BaseViewController) {
-        PFFacebookUtils.logInInBackgroundWithReadPermissions(
-            ["public_profile", "email"], block: {
-                (user: PFUser?, error: NSError?) -> Void in
-                if let error = error {
-                    let errorMessage = error.userInfo["error"] as! String
-                    vc.showAlert(errorMessage)
-                } else if let user = user {
-                    let currentUser = PFUser.currentUser()!
-                    if user.isNew {
-                        self.signUpWithFacebook(currentUser, signInVC: vc)
-                        vc.performSegueWithIdentifier("createAccountSegue", sender: nil)
-                    } else {
-                        self.matchingParseObject = currentUser
-                        self.buildUser()
-                        self.hubModel.setCurrentUser(self)
-                        vc.performSegueWithIdentifier("signInSegue", sender: nil)
+    func logInWithFacebook(completion: (success: User?, error: String?) -> Void) {
+        HubAPI.logInWithFacebook {
+            (user: PFUser?, error: NSError?) in
+            if let error = error {
+                let errorMessage = error.userInfo["error"] as! String
+                completion(success: nil, error: errorMessage)
+            } else if let user = user {
+                if user.isNew {
+                    HubAPI.readFacebookPublicProfile {
+                        (result: NSDictionary?, error: NSError?) in
+                        if let error = error {
+                            let errorMessage = error.userInfo["error"] as! String
+                            completion(success: nil, error: errorMessage)
+                        } else {
+                            self.matchingParseObject = user
+                            self.firstName = result!["first_name"]! as? String
+                            self.lastName = result!["last_name"]! as? String
+                            self.email = result!["email"]! as? String
+                            self.isNew = true
+                            self.buildParseUser()
+                            let image = result!["profile-image"] as? UIImage
+                            self.setProfileImage(image!)
+                            completion(success: self, error: nil)
+                        }
                     }
                 } else {
-                    vc.showAlert("Sign up error.")
+                    self.matchingParseObject = user
+                    self.buildUser()
+                    completion(success: self, error: nil)
                 }
             }
-        )
+        }
     }
     
     func signUp(signUpVC: SignUpViewController) {
@@ -438,6 +454,15 @@ class User: Hashable {
         }
     }
     
+    func saveUser() {
+        matchingParseObject.saveInBackgroundWithBlock {
+            (success: Bool, error: NSError?) -> Void in
+            if(success) {
+                print("success")
+            }
+        }
+    }
+    
     /* Enable a unique hash value for each user based on email. So the value can be used
      * to compare user with other users for equality */
     var hashValue: Int {
@@ -478,15 +503,6 @@ class User: Hashable {
         let profilePictureUrl = NSURL(string: userProfileUrl)!
         let profilePicturedata = NSData(contentsOfURL: profilePictureUrl)!
         return UIImage(data: profilePicturedata)!
-    }
-    
-    private func saveUser() {
-        matchingParseObject.saveInBackgroundWithBlock {
-            (success: Bool, error: NSError?) -> Void in
-            if(success) {
-                print("success")
-            }
-        }
     }
     
     /* If the contact value is empty after a user update his contacts those contacts
