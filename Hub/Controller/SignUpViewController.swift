@@ -53,9 +53,18 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
             if !buttonBgImage.isEqual(UIImage(named: "profile-pic")) {
                 user.setProfileImage(buttonBgImage)
             }
-            user.signUp(self)
+            user.signUp {
+                (user, error) in
+                if let error = error {
+                    self.activityIndicator.stopAnimating()
+                    self.showAlert(error)
+                } else {
+                    self.activityIndicator.stopAnimating()
+                    self.hubModel.setCurrentUser(user!)
+                    self.performSegueWithIdentifier("signUpSegue", sender: nil)
+                }
+            }
         } else {
-            self.activityIndicator.stopAnimating()
             self.showAlert("Password doesn't match")
         }
     }

@@ -8,17 +8,17 @@ import Parse
 import ParseFacebookUtilsV4
 
 class HubAPI {
-    typealias logInresultObject = (PFUser?, NSError?) -> Void
+    typealias authResponse = (PFUser?, NSError?) -> Void
     typealias facebookProfileResponse = (NSDictionary?, NSError?) -> Void
     
-    class func logIn(userDetails: [String: String], completion: logInresultObject) {
+    class func logIn(userDetails: [String: String], completion: authResponse) {
         let username = userDetails["username"]!
         let password = userDetails["password"]!
         
         PFUser.logInWithUsernameInBackground(username, password: password) {
             (user: PFUser?, error: NSError?) -> Void in
             if user != nil {
-                let currentUser = PFUser.currentUser()!
+                let currentUser = PFUser.currentUser()
                 completion(currentUser, nil)
             } else {
                 completion(nil, error)
@@ -26,7 +26,7 @@ class HubAPI {
         }
     }
     
-    class func logInWithFacebook(completion: logInresultObject) {
+    class func logInWithFacebook(completion: authResponse) {
         PFFacebookUtils.logInInBackgroundWithReadPermissions(["public_profile", "email"]) {
             (user: PFUser?, error: NSError?) -> Void in
             if error != nil {
@@ -61,8 +61,93 @@ class HubAPI {
         }
     }
     
+    class func signUp(pUser: PFUser?, completion: authResponse) {
+        if let pUser = pUser {
+            pUser.signUpInBackgroundWithBlock {
+                (success: Bool, error: NSError?) in
+                if let error = error {
+                    completion(nil, error)
+                } else {
+                    let curretUser = PFUser.currentUser()
+                    completion(curretUser, nil)
+                }
+            }
+        }
+    }
+    
+    class func logOut(completion: (error: NSError?) -> Void) {
+        PFUser.logOutInBackgroundWithBlock {
+            (error: NSError?) in
+            if let error = error {
+                completion(error: error)
+            } else {
+                completion(error: nil)
+            }
+        }
+    }
+    
+//    class func getAllFriends(pUser: PFUser?, query: PFQuery?, completion: (pUsers: [PFUser]?, error: NSError?) -> Void) {
+//        if let query = query {
+//            query.findObjectsInBackgroundWithBlock {
+//                (objects: [PFObject]?, error: NSError?) in
+//                if let error = error {
+//                    completion(pUsers: nil, error: error)
+//                } else {
+//                    var friends = [PFUser]()
+//                    for object in objects! {
+//                        let friend = self.getMatchingUser(pUser, sPObject: object)
+//                        friends.append(friend!)
+//                    }
+//                    completion(pUsers: friends, error: nil)
+//                }
+//            }
+//        }
+//    }
+    
+    //---------------------Private methods-----------------------------
+//    class func fetchObjects(pUser: PFUser?, objects: [PFUser]?, completion: (pUsers: [PFUser]?, error: NSError?) -> Void) {
+//        var friends = [PFUser]()
+//        let fetchGroup = dispatch_group_create()
+//        if let objects = objects {
+//            for object in objects {
+//                dispatch_group_enter(fetchGroup)
+//                let friend = self.getMatchingUser(pUser, sPObject: object)
+//                friend?.fetchInBackgroundWithBlock {
+//                    (fetchedFriend: PFObject?, error: NSError?) in
+//                    if let error = error {
+//                        completion(pUsers: nil, error: error)
+//                    } else {
+//                        friends.append(fetchedFriend as! PFUser)
+//                    }
+//                    dispatch_group_leave(fetchGroup)
+//                }
+//            }
+//            dispatch_group_notify(fetchGroup, dispatch_get_main_queue()) {
+//                completion(pUsers: friends, error: nil)
+//            }
+//        }
+//    }
+//    
+//    private class func getMatchingUser(curretUser: PFUser?, sPObject: PFObject?) -> PFUser? {
+//        var user: PFUser?
+//        if let sPObject = sPObject {
+//            let fromUser = sPObject["userFriend"] as! PFUser
+//            let toUser = sPObject["user"] as! PFUser
+//            if let curretUser = curretUser {
+//                if fromUser.objectId == curretUser.objectId! {
+//                    user = sPObject["user"] as? PFUser
+//                }
+//                
+//                if toUser.objectId == curretUser.objectId! {
+//                    user = sPObject["userFriend"] as? PFUser
+//                }
+//            }
+//        }
+//        return user
+//    }
+    
     /* Read the profile picture data from facebook when given the user ID */
-    class func getProfileImageFromFacebook(id: String?, completion: (image: UIImage?, error: NSError?) -> Void) {
+    private class func getProfileImageFromFacebook(id: String?, completion: (image: UIImage?, error: NSError?) -> Void) {
         if let id = id {
             let userProfileUrl = "https://graph.facebook.com/\(id)/picture?type=large"
             let profilePictureUrl = NSURL(string: userProfileUrl)!

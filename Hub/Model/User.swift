@@ -11,10 +11,10 @@ class User: Hashable {
     var objectId: String?
     var username: String?
     var password: String?
+    var email: String?
     var firstName: String?
     var lastName: String?
     var nickname: String?
-    var email: String?
     var profileIsVisible: Bool?
     var availableTime: String?
     var city: String?
@@ -170,34 +170,32 @@ class User: Hashable {
         }
     }
     
-    func signUp(signUpVC: SignUpViewController) {
-        matchingParseObject.signUpInBackgroundWithBlock {
-            (success: Bool, error: NSError?) in
+    func signUp(completion: (user: User?, error: String?) -> Void) {
+        HubAPI.signUp(matchingParseObject) {
+            (user: PFUser?, error: NSError?) in
             if let error = error {
-                signUpVC.activityIndicator.stopAnimating()
                 let errorMessage = error.userInfo["error"] as? String
-                signUpVC.showAlert(errorMessage!)
+                completion(user: nil, error: errorMessage)
             } else {
-                signUpVC.activityIndicator.stopAnimating()
-                self.matchingParseObject = PFUser.currentUser()!
+                self.matchingParseObject = user!
                 self.buildUser()
-                self.hubModel.setCurrentUser(self)
-                signUpVC.performSegueWithIdentifier("signUpSegue", sender: nil)
+                completion(user: self, error: nil)
             }
         }
     }
     
-    func logOut(vc: UIViewController) {
-        let settingsVC = vc as! SettingsViewController
-        PFUser.logOutInBackgroundWithBlock({ (error: NSError?) -> Void in
-            if(error == nil) {
-                settingsVC.performSegueWithIdentifier("signOutSegue", sender: nil)
+    func logOut(completion: (error: String?) -> Void) {
+        HubAPI.logOut {
+            (error) in
+            if let error = error {
+                let errorMessage = error.userInfo["error"] as? String
+                completion(error: errorMessage)
+            } else {
+                completion(error: nil)
             }
-        })
+        }
     }
     
-    /* Get a list of all my friends from Parse. Need two queries to perform the 
-     * the action since we need both friends that I am a friend of and my friends */
     func getAllFriends(myContactTVC: MyContactsTableViewController) {
         let sPParseObject = PFObject(className: "SharedPermission")
         let sharedPermission = SharedPermission(parseObject: sPParseObject)
@@ -470,40 +468,6 @@ class User: Hashable {
     }
     
     //---------------------Private methods-----------------------------
-    private func signUpWithFacebook(parseUser: PFUser, signInVC: BaseViewController) {
-        let requestParameters = ["fields": "id, email, first_name, last_name"]
-        let userDetails = FBSDKGraphRequest(graphPath: "me", parameters: requestParameters)
-        
-        userDetails.startWithCompletionHandler {
-            (connection, result, error: NSError!) -> Void in
-            if(error != nil) {
-                let errorMessage = error.localizedDescription
-                signInVC.showAlert(errorMessage)
-            } else if(result != nil) {
-                let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-                self.firstName = result["first_name"]! as? String
-                self.lastName = result["last_name"]! as? String
-                self.email = result["email"]! as? String
-                self.matchingParseObject = parseUser
-                self.objectId = result["id"]! as? String
-                self.buildParseUser()
-                self.hubModel.setCurrentUser(self)
-                dispatch_async(dispatch_get_global_queue(priority, 0)) {
-                    let profileImage = self.getProfileImageFromFacebook()
-                    self.setProfileImage(profileImage)
-                    self.saveUser()
-                }
-            }
-        }
-    }
-    
-    /* Read the profile picture data from facebook when given the user ID */
-    private func getProfileImageFromFacebook() -> UIImage {
-        let userProfileUrl = "https://graph.facebook.com/\(objectId!)/picture?type=large"
-        let profilePictureUrl = NSURL(string: userProfileUrl)!
-        let profilePicturedata = NSData(contentsOfURL: profilePictureUrl)!
-        return UIImage(data: profilePicturedata)!
-    }
     
     /* If the contact value is empty after a user update his contacts those contacts
      * will be deleted from parse */
