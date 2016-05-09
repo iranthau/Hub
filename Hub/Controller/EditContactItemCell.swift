@@ -22,11 +22,11 @@ class EditContactItemCell: UITableViewCell, UITextFieldDelegate {
     func configureKeyboardForContactType(contactType: Int) {
         switch contactType {
         case 1:
-            contactInputTextField.keyboardType = .NumberPad
+            contactInputTextField.keyboardType = .PhonePad
         case 2:
             contactInputTextField.keyboardType = .EmailAddress
         default:
-            contactInputTextField.keyboardType = .Default
+            contactInputTextField.keyboardType = .ASCIICapable
         }
     }
 

@@ -114,11 +114,13 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
     @IBAction func addressButtonPressed() {
         selectedContactColor.backgroundColor = ViewFactory.backGroundColor(ContactType.Address)
         activeDataSource = addressContacts
+        keyboardForContactType = 3
         contactFieldTableView.reloadData()
     }
     @IBAction func socialButtonPressed() {
         selectedContactColor.backgroundColor = ViewFactory.backGroundColor(ContactType.Social)
         activeDataSource = socialContacts
+        keyboardForContactType = 3
         contactFieldTableView.reloadData()
     }
 
