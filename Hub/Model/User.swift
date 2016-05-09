@@ -70,7 +70,9 @@ class User: Hashable {
     }
     
     func setAvailableTime() {
-        matchingParseObject["availableTime"] = availableTime!
+        if let availableTime = availableTime {
+            matchingParseObject["availableTime"] = availableTime
+        }
     }
     
     func setFirstName() {
@@ -82,11 +84,15 @@ class User: Hashable {
     }
     
     func setNickame() {
-        matchingParseObject["nickName"] = nickname!
+        if let nickname = nickname {
+            matchingParseObject["nickName"] = nickname
+        }
     }
     
     func setCity() {
-        matchingParseObject["city"] = city!
+        if let city = city {
+            matchingParseObject["city"] = city
+        }
     }
     
     // Return true if a user has any contacts to share
