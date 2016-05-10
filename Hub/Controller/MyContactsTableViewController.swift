@@ -19,7 +19,15 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
         currentUser = hubModel.currentUser
         
         if let currentUser = currentUser {
-            currentUser.getAllFriends(self)
+            currentUser.getAllFriends {
+                (friends, error) in
+                if let error = error {
+                    print(error)
+                } else if let friends = friends {
+                    self.myContacts = friends.sort { $0.firstName < $1.firstName }
+                    self.refreshTableViewInBackground()
+                }
+            }
         }
         
         searchController.searchResultsUpdater = self

@@ -46,8 +46,40 @@ class ProfileContactViewController: UIViewController, UITableViewDataSource {
         }
         
         if let currentUser = currentUser {
-            currentUser.getAllSharedContacts(contactProfile!, profileContactVC: self)
-            currentUser.getContactsIShared(contactProfile!, profileContactVC: self)
+            currentUser.getAllSharedContacts(contactProfile, completion: {
+                (contacts, error) in
+                if let error = error {
+                    print(error)
+                } else if let contacts = contacts {
+                    for sharedContact in contacts {
+                        switch sharedContact.type! {
+                        case ContactType.Phone.label:
+                            self.sharedPhoneContacts.append(sharedContact)
+                        case ContactType.Email.label:
+                            self.sharedEmailContacts.append(sharedContact)
+                        case ContactType.Address.label:
+                            self.sharedAddressContacts.append(sharedContact)
+                        case ContactType.Social.label:
+                            self.sharedSocialContacts.append(sharedContact)
+                        default:
+                            return
+                        }
+                    }
+                }
+                self.refreshTableView()
+            })
+            
+            currentUser.getContactsIShared(contactProfile, completion: {
+                (contacts, error) in
+                if let error = error {
+                    print(error)
+                } else if let contacts = contacts {
+                    for sharedContact in contacts {
+                        self.mySharedContacts.append(sharedContact)
+                    }
+                }
+                self.mySharedContactsTableView.reloadData()
+            })
         }
     }
 

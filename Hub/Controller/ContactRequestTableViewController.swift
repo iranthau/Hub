@@ -89,4 +89,14 @@ extension Array where Element: Equatable {
             self.removeAtIndex(index)
         }
     }
+    
+    func removeDuplicates() -> [Element] {
+        var uniqueValues: [Element] = []
+        forEach { item in
+            if !uniqueValues.contains(item) {
+                uniqueValues += [item]
+            }
+        }
+        return uniqueValues
+    }
 }
