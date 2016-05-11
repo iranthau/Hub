@@ -120,6 +120,31 @@ class HubAPI {
         }
     }
     
+    class func getContacts(pUser: PFUser?, completion: ([PFObject]?, NSError?) -> Void) {
+        if let pUser = pUser {
+            let myContacts = pUser.objectForKey("contacts") as? [PFObject]
+            let contactsGroup = dispatch_group_create()
+            if let myContacts = myContacts {
+                var contacts = [PFObject]()
+                for parseObject in myContacts {
+                    dispatch_group_enter(contactsGroup)
+                    parseObject.fetchInBackgroundWithBlock {
+                        (fetchedContact: PFObject?, error: NSError?) -> Void in
+                        if let error = error {
+                            completion(nil, error)
+                        } else if let fetchedContact = fetchedContact {
+                            contacts.append(fetchedContact)
+                        }
+                        dispatch_group_leave(contactsGroup)
+                    }
+                }
+                dispatch_group_notify(contactsGroup, dispatch_get_main_queue()) {
+                    completion(contacts, nil)
+                }
+            }
+        }
+    }
+    
     //---------------------Private methods-----------------------------
     private class func fetchFriendsFromIds(pUser: PFUser?, objects: [PFObject]?, completion: (pUsers: [PFUser]?, error: NSError?) -> Void) {
         var friends = [PFUser]()

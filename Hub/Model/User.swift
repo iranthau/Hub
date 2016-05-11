@@ -278,40 +278,20 @@ class User: Hashable {
     }
     
     //Get my own contacts
-    func getContacts(myProfileVC: MyProfileViewController) {
-        let myContacts = matchingParseObject.objectForKey("contacts")
-        if let myContacts = myContacts {
-            for parseObject in myContacts as! [PFObject] {
-                parseObject.fetchInBackgroundWithBlock {
-                    (fetchedContact: PFObject?, error: NSError?) -> Void in
-                    
-                    let contact = Contact(parseObject: fetchedContact!)
+    func getContacts(completion: (contacts: [Contact]?, error: String?) -> Void) {
+        var contactsToReturn = [Contact]()
+        HubAPI.getContacts(matchingParseObject) {
+            (contacts: [PFObject]?, error: NSError?) in
+            if let error = error {
+                let errorMessage = error.userInfo["error"] as? String
+                completion(contacts: nil, error: errorMessage)
+            } else if let contacts = contacts {
+                for pContact in contacts {
+                    let contact = Contact(parseObject: pContact)
                     contact.buildContact()
-                    self.contacts.append(contact)
-                    myProfileVC.allContacts.append(contact)
-                    if myContacts.lastObject as! PFObject == parseObject {
-                        myProfileVC.groupContacts()
-                    }
-                    myProfileVC.phoneButtonPressed()
+                    contactsToReturn.append(contact)
                 }
-            }
-        }
-    }
-    
-    // Get a list of contacts that a friend has offered to share
-    func getAvailableContacts(tableVC: AddContactViewController) {
-        let parseObjects = matchingParseObject.objectForKey("contacts")
-        
-        if let parseObjects = parseObjects as? [PFObject] {
-            for parseObject in parseObjects {
-                parseObject.fetchInBackgroundWithBlock {
-                    (fetchedContact: PFObject?, error: NSError?) -> Void in
-                    
-                    let contact = Contact(parseObject: fetchedContact!)
-                    contact.buildContact()
-                    tableVC.contacts.append(contact)
-                    tableVC.contactSelectionTableView.reloadData()
-                }
+                completion(contacts: contactsToReturn, error: nil)
             }
         }
     }

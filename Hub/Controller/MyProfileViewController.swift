@@ -36,7 +36,16 @@ class MyProfileViewController: UIViewController, UITableViewDataSource, UITableV
         
         if let currentUser = user {
             SetInitialValues(currentUser)
-            currentUser.getContacts(self)
+            currentUser.getContacts {
+                (contacts, error) in
+                if let error = error {
+                    print(error)
+                } else if let contacts = contacts {
+                    self.allContacts = contacts
+                    self.groupContacts()
+                    self.phoneButtonPressed()
+                }
+            }
         }
     }
     
