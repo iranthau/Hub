@@ -46,8 +46,14 @@ class SignInViewController: BaseViewController, UITextFieldDelegate {
                 if let user = user {
                     if user.isNew {
                         self.hubModel.setCurrentUser(user)
-                        user.saveUser()
-                        self.performSegueWithIdentifier("createAccountSegue", sender: nil)
+                        user.saveUser {
+                            (success, error) in
+                            if let error = error {
+                                print(error)
+                            } else {
+                                self.performSegueWithIdentifier("createAccountSegue", sender: nil)
+                            }
+                        }
                     } else {
                         self.hubModel.setCurrentUser(user)
                         self.performSegueWithIdentifier("signInSegue", sender: nil)

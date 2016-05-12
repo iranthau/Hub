@@ -52,9 +52,16 @@ class MyProfileViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewWillAppear(animated: Bool) {
         if let currentUser = user {
             SetInitialValues(currentUser)
-            allContacts = currentUser.contacts
-            groupContacts()
-            tableView.reloadData()
+            currentUser.getContacts {
+                (contacts, error) in
+                if let error = error {
+                    print(error)
+                } else if let contacts = contacts {
+                    self.allContacts = contacts
+                    self.groupContacts()
+                    self.phoneButtonPressed()
+                }
+            }
         }
     }
 

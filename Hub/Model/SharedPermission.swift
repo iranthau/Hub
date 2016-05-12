@@ -32,34 +32,6 @@ class SharedPermission {
         matchingParseObject["status"] = status
     }
     
-    func setContacts(contacts: [PFObject]) {
-        matchingParseObject["contacts"] = contacts
-    }
-    
-    func getContacts(me: User, friend: User, contactRequestTVC: ContactRequestTableViewController) {
-        let query = PFQuery(className: parseClassName)
-        query.whereKey("userFriend", equalTo: friend.matchingParseObject)
-        query.whereKey("user", equalTo: me.matchingParseObject)
-        
-        query.getFirstObjectInBackgroundWithBlock {
-            (sharedPermission: PFObject?, error: NSError?) -> Void in
-            
-            if let sharedPermission = sharedPermission {
-                let contacts = sharedPermission.objectForKey("contacts") as! [PFObject]
-                
-                for contact in contacts {
-                    contact.fetchInBackgroundWithBlock {
-                        (fetchedContact: PFObject?, error: NSError?) -> Void in
-                        let sharedContact = Contact(parseObject: fetchedContact!)
-                        sharedContact.buildContact()
-                        contactRequestTVC.contacts.append(sharedContact)
-                        contactRequestTVC.tableView.reloadData()
-                    }
-                }
-            }
-        }
-    }
-    
     func saveInParse(pushNotification: PFPush, vc: BaseViewController) {
         matchingParseObject.saveInBackgroundWithBlock {
             (success, error) -> Void in

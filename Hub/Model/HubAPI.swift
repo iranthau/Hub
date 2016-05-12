@@ -145,6 +145,58 @@ class HubAPI {
         }
     }
     
+    class func getRequests(query: PFQuery?, completion: ([PFUser]?, NSError?) -> Void) {
+        if let query = query {
+            query.findObjectsInBackgroundWithBlock {
+                (pRequests: [PFObject]?, error: NSError?) in
+                if let error = error {
+                    completion(nil, error)
+                } else if let pRequests = pRequests {
+                    var requests = [PFUser]()
+                    for pRequest in pRequests {
+                        let request = pRequest["userFriend"] as? PFUser
+                        if let request = request {
+                            requests.append(request)
+                        }
+                    }
+                    completion(requests, nil)
+                }
+            }
+        }
+    }
+    
+    class func saveParseUser(pUser: PFUser?, completion: (Bool, NSError?) -> Void) {
+        if let pUser = pUser {
+            pUser.saveInBackgroundWithBlock {
+                (success: Bool, error: NSError?) in
+                if let error = error {
+                    completion(success, error)
+                } else {
+                    completion(success, nil)
+                }
+            }
+        }
+    }
+    
+    class func deleteABatchOfObjects(objects: [PFObject]?, completion: (success: Bool, error: NSError?) -> Void) {
+        if let objects = objects {
+            let deleteGroup = dispatch_group_create()
+            for object in objects {
+                dispatch_group_enter(deleteGroup)
+                object.deleteInBackgroundWithBlock {
+                    (success: Bool, error: NSError?) in
+                    if success == false {
+                        completion(success: success, error: error)
+                    }
+                    dispatch_group_leave(deleteGroup)
+                }
+            }
+            dispatch_group_notify(deleteGroup, dispatch_get_main_queue()) {
+                completion(success: true, error: nil)
+            }
+        }
+    }
+    
     //---------------------Private methods-----------------------------
     private class func fetchFriendsFromIds(pUser: PFUser?, objects: [PFObject]?, completion: (pUsers: [PFUser]?, error: NSError?) -> Void) {
         var friends = [PFUser]()

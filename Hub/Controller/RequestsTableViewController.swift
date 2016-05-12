@@ -15,7 +15,15 @@ class RequestsTableViewController: UITableViewController {
         super.viewDidLoad()
         currentUser = hubModel.currentUser
         if let currentUser = currentUser {
-            currentUser.getRequests(self)
+            currentUser.getRequests {
+                (requests, error) in
+                if let error = error {
+                    print(error)
+                } else if let requests = requests {
+                    self.requests = requests
+                    self.tableView.reloadData()
+                }
+            }
         }
     }
 

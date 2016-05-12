@@ -21,7 +21,15 @@ class ContactRequestTableViewController: UITableViewController, ContactShareCell
         ViewFactory.hideTableViewSeparator(self.tableView)
         
         if let currentUser = currentUser {
-            currentUser.getRequestedContacts(friend!, contactRequestTVC: self)
+            currentUser.getRequestedContacts(friend, completion: {
+                (contacts, error) in
+                if let error = error {
+                    print(error)
+                } else if let contacts = contacts {
+                    self.contacts = contacts
+                    self.tableView.reloadData()
+                }
+            })
         }
     }
 

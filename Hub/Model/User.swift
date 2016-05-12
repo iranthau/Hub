@@ -290,6 +290,7 @@ class User: Hashable {
                     let contact = Contact(parseObject: pContact)
                     contact.buildContact()
                     contactsToReturn.append(contact)
+                    self.contacts.append(contact)
                 }
                 completion(contacts: contactsToReturn, error: nil)
             }
@@ -297,39 +298,59 @@ class User: Hashable {
     }
     
     //Get a list of friends that asked to connect with me
-    func getRequests(requestsTVC: RequestsTableViewController) {
+    func getRequests(completion: (requests: [User]?, error: String?) -> Void) {
         let query = PFQuery(className: "SharedPermission")
         query.whereKey("user", equalTo: matchingParseObject)
         query.whereKey("status", equalTo: "pending")
+        query.includeKey("userFriend")
         
-        query.findObjectsInBackgroundWithBlock {
-            (objects: [PFObject]?, error: NSError?) -> Void in
-            if let objects = objects {
-                for object in objects {
-                    let fromUser = object["userFriend"] as! PFUser
-                    fromUser.fetchInBackgroundWithBlock {
-                        (fetchedUser: PFObject?, error: NSError?) -> Void in
-                        let fetchedFromUser = fetchedUser as! PFUser
-                        let request = User(parseUser: fetchedFromUser)
-                        request.buildUser()
-                        requestsTVC.requests.append(request)
-                        requestsTVC.tableView.reloadData()
-                    }
+        HubAPI.getRequests(query) {
+            (pRequests: [PFUser]?, error: NSError?) in
+            if let error = error {
+                let errorMessage = error.userInfo["error"] as? String
+                completion(requests: nil, error: errorMessage)
+            } else if let pRequests = pRequests {
+                var requests = [User]()
+                for pRequest in pRequests {
+                    let request = User(parseUser: pRequest)
+                    request.buildUser()
+                    requests.append(request)
                 }
+                completion(requests: requests, error: nil)
             }
         }
     }
     
     //Get a list of contacts that a friend has asked to share
-    func getRequestedContacts(friend: User, contactRequestTVC: ContactRequestTableViewController) {
-        let parseSPObject = PFObject(className: "SharedPermission")
-        let sharedPermisson = SharedPermission(parseObject: parseSPObject)
-        sharedPermisson.getContacts(self, friend: friend, contactRequestTVC: contactRequestTVC)
+    func getRequestedContacts(friend: User?, completion: (contacts: [Contact]?, error: String?) -> Void) {
+        if let friend = friend {
+            let query = PFQuery(className: "SharedPermission")
+            query.whereKey("userFriend", equalTo: friend.matchingParseObject)
+            query.whereKey("user", equalTo: matchingParseObject)
+            query.whereKey("status", equalTo: "pending")
+            query.includeKey("contacts")
+            
+            HubAPI.getSharedContacts(query) {
+                (pContacts: [PFObject]?, error: NSError?) in
+                if let error = error {
+                    let errorMessage = error.userInfo["error"] as? String
+                    completion(contacts: nil, error: errorMessage)
+                } else if let pContacts = pContacts {
+                    var contacts = [Contact]()
+                    for pContact in pContacts {
+                        let contact = Contact(parseObject: pContact)
+                        contact.buildContact()
+                        contacts.append(contact)
+                    }
+                    completion(contacts: contacts, error: nil)
+                }
+            }
+        }
     }
     
     /* Update contacts for a user when the user update them. Also will remove
      * the deleted/ empty contacts from parse for the user */
-    func setContacts(contacts: [Contact]) {
+    func setContacts(contacts: [Contact], completion: (Bool, String?) -> Void) {
         let contactsToSave = contactsToSaveArray(contacts)
         let contactsToDelete = contactsToDeleteArray(contacts)
         
@@ -339,12 +360,21 @@ class User: Hashable {
         self.setNickame()
         self.setCity()
         self.matchingParseObject["contacts"] = contactsToSave
-        self.matchingParseObject.saveInBackgroundWithBlock {
+        HubAPI.saveParseUser(matchingParseObject) {
             (success: Bool, error: NSError?) in
             if success {
-                for contactToDelete in contactsToDelete {
-                    contactToDelete.deleteInBackground()
-                }
+                HubAPI.deleteABatchOfObjects(contactsToDelete, completion: {
+                    (success, error) in
+                    if success {
+                        completion(true, nil)
+                    } else if let error = error {
+                        let errorMessage = error.userInfo["error"] as? String
+                        completion(false, errorMessage)
+                    }
+                })
+            } else if let error = error {
+                let errorMessage = error.userInfo["error"] as? String
+                completion(false, errorMessage)
             }
         }
     }
@@ -423,11 +453,14 @@ class User: Hashable {
         }
     }
     
-    func saveUser() {
-        matchingParseObject.saveInBackgroundWithBlock {
-            (success: Bool, error: NSError?) -> Void in
-            if(success) {
-                print("success")
+    func saveUser(completion: (success: Bool, error: String?) -> Void) {
+        HubAPI.saveParseUser(matchingParseObject) {
+            (success: Bool, error: NSError?) in
+            if let error = error {
+                let errorMessage = error.userInfo["error"] as? String
+                completion(success: success, error: errorMessage)
+            } else {
+                completion(success: success, error: nil)
             }
         }
     }

@@ -23,7 +23,12 @@ class ProfileCreatedViewController: UIViewController {
         emailContact.value = user.email!
         emailContact.type = "email"
         emailContact.subType = "home"
-        user.setContacts([emailContact])
+        user.setContacts([emailContact]) {
+            (success: Bool, error: String?) in
+            if success {
+                print("Email saved")
+            }
+        }
         
         ViewFactory.makeImageViewRound(profileImage)
         user.getProfileImage(profileImage)
