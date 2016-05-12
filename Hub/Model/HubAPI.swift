@@ -197,6 +197,39 @@ class HubAPI {
         }
     }
     
+    class func acceptRequest(query: PFQuery?, contacts: [PFObject]?, completion: (Bool, NSError?) -> Void) {
+        if let query = query {
+            query.getFirstObjectInBackgroundWithBlock {
+                (sharedPermission: PFObject?, error: NSError?) in
+                if let error = error {
+                    completion(false, error)
+                } else if let sharedPermission = sharedPermission {
+                    if let contacts = contacts {
+                        sharedPermission["contacts"] = contacts
+                        sharedPermission["status"] = "accepted"
+                        sharedPermission.saveInBackgroundWithBlock {
+                            (success: Bool, error: NSError?) in
+                            if success {
+                                completion(true, nil)
+                            } else if let error = error {
+                                completion(false, error)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    class func declineRequest(query: PFQuery?) {
+        if let query = query {
+            query.getFirstObjectInBackgroundWithBlock {
+                (sharedPermission: PFObject?, error: NSError?) in
+                sharedPermission?.deleteInBackground()
+            }
+        }
+    }
+    
     //---------------------Private methods-----------------------------
     private class func fetchFriendsFromIds(pUser: PFUser?, objects: [PFObject]?, completion: (pUsers: [PFUser]?, error: NSError?) -> Void) {
         var friends = [PFUser]()

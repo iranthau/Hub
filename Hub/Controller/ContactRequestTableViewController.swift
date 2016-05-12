@@ -11,7 +11,7 @@ class ContactRequestTableViewController: UITableViewController, ContactShareCell
     var friend: User?
     var currentUser: User?
     var contacts = [Contact]()
-    var acceptedContacts = [PFObject]()
+    var acceptedContacts = [Contact]()
     let hubModel = HubModel.sharedInstance
 
     override func viewDidLoad() {
@@ -69,11 +69,16 @@ class ContactRequestTableViewController: UITableViewController, ContactShareCell
     
     @IBAction func acceptRequest(sender: UIBarButtonItem) {
         if let friend = friend {
-            let friendParseObject = friend.matchingParseObject
-            let pushQuery = HubUtility.configurePushInstallation(friendParseObject)
-            let message = "\(currentUser!.firstName!) \(currentUser!.lastName!) accepted your request to connect"
-            let pushNotification = HubUtility.configurePushNotification(pushQuery, message: message)
-            currentUser!.acceptRequest(friendParseObject, push: pushNotification, viewController: self)
+            if let user = currentUser {
+                user.acceptRequest(friend, contacts: acceptedContacts, completion: {
+                    (success: Bool, error: String?) in
+                    if let error = error {
+                        print(error)
+                    } else if success {
+                        self.navigateBack()
+                    }
+                })
+            }
         }
     }
     
@@ -86,7 +91,7 @@ class ContactRequestTableViewController: UITableViewController, ContactShareCell
         let indexPath = self.tableView.indexPathForCell(sender as! UITableViewCell)
         let contact = contacts[indexPath!.row]
         contact.selected = isOn
-        acceptedContacts.append(contact.matchingParseObject)
+        acceptedContacts.append(contact)
     }
 }
 

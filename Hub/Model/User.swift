@@ -379,25 +379,50 @@ class User: Hashable {
         }
     }
     
-    func acceptRequest(friend: PFUser, push: PFPush, viewController: UIViewController) {
-        let contactRTVC = viewController as! ContactRequestTableViewController
-        let query = PFQuery(className: "SharedPermission")
-        query.whereKey("user", equalTo: matchingParseObject)
-        query.whereKey("userFriend", equalTo: friend)
-        
-        query.getFirstObjectInBackgroundWithBlock {
-            (sharedPermission: PFObject?, error: NSError?) in
-            if let sharedPermission = sharedPermission {
-                sharedPermission["contacts"] = contactRTVC.acceptedContacts
-                sharedPermission["status"] = "accepted"
-                sharedPermission.saveInBackgroundWithBlock {
-                    (success: Bool, error: NSError?) in
-                    if success {
-                        push.sendPushInBackground()
-                        contactRTVC.navigateBack()
-                    }
+    func acceptRequest(friend: User?, contacts: [Contact]?, completion: (Bool, String?) -> Void) {
+        if let friend = friend {
+            let pFriend = friend.matchingParseObject
+            let query = PFQuery(className: "SharedPermission")
+            query.whereKey("user", equalTo: matchingParseObject)
+            query.whereKey("userFriend", equalTo: pFriend)
+            
+            let pushQuery = PFInstallation.query()!
+            pushQuery.whereKey("user", equalTo: pFriend)
+            let message = "\(self.firstName!) \(self.lastName!) accepted your request to connect"
+            let push = PFPush()
+            push.setQuery(pushQuery)
+            let data = [ "alert": message, "badge": "Increment", "sound": "Ambient Hit.mp3" ]
+            push.setData(data)
+            
+            var pContacts = [PFObject]()
+            if let contacts = contacts {
+                for contact in contacts {
+                    pContacts.append(contact.matchingParseObject)
                 }
             }
+            
+            HubAPI.acceptRequest(query, contacts: pContacts) {
+                (success: Bool, errror: NSError?) in
+                if let errror = errror {
+                    let errorMessage = errror.userInfo["error"] as? String
+                    completion(false, errorMessage)
+                } else if success {
+                    push.sendPushInBackground()
+                    completion(true, nil)
+                }
+            }
+        }
+    }
+    
+    func declineRequest(friend: User?) {
+        if let friend = friend {
+            let pFriend = friend.matchingParseObject
+            let query = PFQuery(className: "SharedPermission")
+            query.whereKey("user", equalTo: matchingParseObject)
+            query.whereKey("userFriend", equalTo: pFriend)
+            query.whereKey("status", equalTo: "pending")
+            
+            HubAPI.declineRequest(query)
         }
     }
     
