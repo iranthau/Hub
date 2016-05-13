@@ -63,7 +63,17 @@ class AddContactTableViewController: UITableViewController, UISearchResultsUpdat
     }
     
     func filterContentForSearchText(searchText: String) {
-        currentUser!.searchForFriends(searchText, tvc: self)
+        if let user = currentUser {
+            user.searchForFriends(searchText, completion: {
+                (users: [User]?, error: String?) in
+                if let error = error {
+                    print(error)
+                } else if let users = users {
+                    self.filteredContacts = users
+                    self.tableView.reloadData()
+                }
+            })
+        }
     }
     
     @IBAction func back(sender: UIBarButtonItem) {

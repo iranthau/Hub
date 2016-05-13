@@ -426,55 +426,52 @@ class User: Hashable {
         }
     }
     
-    //Current user can delete his account. This will delete all records for that user.
-    func deleteAccount(vc: UIViewController) {
-        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-        let settingsVC = vc as! SettingsViewController
-        let contacts = matchingParseObject.objectForKey("contacts") as? [PFObject]
-        deleteEntriesAsUserInSharedPermission()
-        deleteEntriesAsFriendFromSharedPermission()
-        
-        dispatch_async(dispatch_get_global_queue(priority, 0)) {
-            self.deleteContacts(contacts)
-            dispatch_async(dispatch_get_main_queue()) {
-                self.deleteUser(settingsVC)
-            }
-        }
-    }
-    
-    func searchForFriends(textToSearch: String, tvc: UITableViewController) {
-        let addContactTVC = tvc as! AddContactTableViewController
-        let query = PFUser.query()
-        query!.whereKey("firstName", hasPrefix: textToSearch)
-        query!.whereKey("profileIsVisible", equalTo: true)
-        query!.whereKey("objectId", notEqualTo: objectId!)
-        
-        query!.findObjectsInBackgroundWithBlock {
-            (objects: [PFObject]?, error: NSError?) -> Void in
-            if error == nil {
-                var profiles = [User]()
-                if let objects = objects {
-                    for userObject in objects as! [PFUser] {
-                        let user = User(parseUser: userObject)
-                        user.buildUser()
-                        profiles.append(user)
-                    }
-                    addContactTVC.filteredContacts = profiles
-                    addContactTVC.tableView.reloadData()
-                }
-            }
-        }
-    }
-    
-    func resetPassword(email: String, vc: PassswordRecoveryViewController) {
-        PFUser.requestPasswordResetForEmailInBackground(email) {
-            (success: Bool, error: NSError?) -> Void in
+    func deleteAccount(completion: (success: Bool, error: String?) -> Void) {
+        HubAPI.deleteAccount(matchingParseObject) { (success, error) in
             if let error = error {
                 let errorMessage = error.userInfo["error"] as? String
-                vc.showAlert(errorMessage!)
-            } else {
-                vc.showAlert("Email sent to \(email)")
+                completion(success: false, error: errorMessage)
+            } else if success {
+                completion(success: true, error: nil)
             }
+        }
+    }
+    
+    func searchForFriends(textToSearch: String, completion: ([User]?, String?) -> Void) {
+        if let query = PFUser.query() {
+            query.whereKey("firstName", hasPrefix: textToSearch)
+            query.whereKey("profileIsVisible", equalTo: true)
+            query.whereKey("objectId", notEqualTo: objectId!)
+            
+            HubAPI.searchUsers(query, completion: {
+                (pUsers, error) in
+                if let error = error {
+                    let errorMessage = error.userInfo["error"] as? String
+                    completion(nil, errorMessage)
+                } else if let pUsers = pUsers {
+                    var users = [User]()
+                    for pUser in pUsers {
+                        let user = User(parseUser: pUser)
+                        user.buildUser()
+                        users.append(user)
+                    }
+                    completion(users, nil)
+                }
+            })
+        }
+    }
+    
+    func resetPassword(email: String?, completion: (success: Bool, error: String?) -> Void) {
+        if let email = email {
+            HubAPI.recoverPassword(email, completion: {
+                (success, error) in
+                if let error = error {
+                    let errorMessage = error.userInfo["error"] as? String
+                    completion(success: false, error: errorMessage)
+                } else if success {
+                    completion(success: true, error: nil)
+                }
+            })
         }
     }
     
@@ -524,54 +521,6 @@ class User: Hashable {
             }
         }
         return returnArray
-    }
-    
-    private func deleteEntriesAsFriendFromSharedPermission() {
-        let query = PFQuery(className: "SharedPermission")
-        query.whereKey("userFriend", equalTo: matchingParseObject)
-        query.findObjectsInBackgroundWithBlock {
-            (objects: [PFObject]?, error: NSError?) in
-            if let objects = objects {
-                for object in objects {
-                    object.deleteInBackground()
-                }
-            }
-        }
-    }
-    
-    private func deleteEntriesAsUserInSharedPermission() {
-        let query = PFQuery(className: "SharedPermission")
-        query.whereKey("user", equalTo: matchingParseObject)
-        query.findObjectsInBackgroundWithBlock {
-            (objects: [PFObject]?, error: NSError?) in
-            if let objects = objects {
-                for object in objects {
-                    object.deleteInBackground()
-                }
-            }
-        }
-    }
-    
-    private func deleteUser(settingsVC: SettingsViewController) {
-        matchingParseObject.deleteInBackgroundWithBlock {
-            (success: Bool, error: NSError?) in
-            if success {
-                PFUser.logOut()
-                settingsVC.performSegueWithIdentifier("signOutSegue", sender: nil)
-            }
-        }
-    }
-    
-    private func deleteContacts(contacts: [PFObject]?) {
-        if let contacts = contacts {
-            for contact in contacts {
-                do {
-                    try contact.delete()
-                } catch {
-                    print("\(contact.objectId) could not be deleted")
-                }
-            }
-        }
     }
 }
 

@@ -36,7 +36,8 @@ class HubAPI {
             }
         }
     }
-
+    
+    //Mark: Can be placed in the cloud code
     class func readFacebookPublicProfile(completion: facebookProfileResponse) {
         let requestParameters = ["fields": "id, email, first_name, last_name"]
         let userDetails = FBSDKGraphRequest(graphPath: "me", parameters: requestParameters)
@@ -86,6 +87,7 @@ class HubAPI {
         }
     }
     
+    //Mark: Can be placed in the cloud code
     class func getAllFriends(pUser: PFUser?, query: PFQuery?, completion: (pUsers: [PFUser]?, error: NSError?) -> Void) {
         if let query = query {
             query.findObjectsInBackgroundWithBlock {
@@ -120,6 +122,7 @@ class HubAPI {
         }
     }
     
+    //Mark: Can be placed in the cloud code
     class func getContacts(pUser: PFUser?, completion: ([PFObject]?, NSError?) -> Void) {
         if let pUser = pUser {
             let myContacts = pUser.objectForKey("contacts") as? [PFObject]
@@ -178,6 +181,7 @@ class HubAPI {
         }
     }
     
+    //Mark: Can be placed in the cloud code
     class func deleteABatchOfObjects(objects: [PFObject]?, completion: (success: Bool, error: NSError?) -> Void) {
         if let objects = objects {
             let deleteGroup = dispatch_group_create()
@@ -197,6 +201,7 @@ class HubAPI {
         }
     }
     
+    //Mark: Can be placed in the cloud code
     class func acceptRequest(query: PFQuery?, contacts: [PFObject]?, completion: (Bool, NSError?) -> Void) {
         if let query = query {
             query.getFirstObjectInBackgroundWithBlock {
@@ -230,7 +235,48 @@ class HubAPI {
         }
     }
     
+    class func deleteAccount(pUser: PFUser?, completion: (success: Bool, error: NSError?) -> Void) {
+        if let user = pUser {
+            user.deleteInBackgroundWithBlock {
+                (success: Bool, error: NSError?) in
+                if let error = error {
+                    completion(success: false, error: error)
+                } else if success {
+                    PFUser.logOut()
+                    completion(success: true, error: nil)
+                }
+            }
+        }
+    }
+    
+    class func searchUsers(query: PFQuery?, completion: (pUsers: [PFUser]?, error: NSError?) -> Void) {
+        if let query = query {
+            query.findObjectsInBackgroundWithBlock {
+                (objects: [PFObject]?, error: NSError?) -> Void in
+                if let error = error {
+                    completion(pUsers: nil, error: error)
+                } else if let objects = objects {
+                    completion(pUsers: objects as? [PFUser], error: nil)
+                }
+            }
+        }
+    }
+    
+    class func recoverPassword(email: String?, completion: (success: Bool, error: NSError?) -> Void) {
+        if let email = email {
+            PFUser.requestPasswordResetForEmailInBackground(email) {
+                (success: Bool, error: NSError?) -> Void in
+                if let error = error {
+                    completion(success: false, error: error)
+                } else {
+                    completion(success: true, error: nil)
+                }
+            }
+        }
+    }
+    
     //---------------------Private methods-----------------------------
+    //Mark: Can be placed in the cloud code
     private class func fetchFriendsFromIds(pUser: PFUser?, objects: [PFObject]?, completion: (pUsers: [PFUser]?, error: NSError?) -> Void) {
         var friends = [PFUser]()
         let fetchGroup = dispatch_group_create()
@@ -256,6 +302,7 @@ class HubAPI {
         }
     }
     
+    //Mark: Can be placed in the cloud code
     private class func getMatchingUser(curretUser: PFUser?, sPObject: PFObject?) -> PFUser? {
         var user: PFUser?
         if let sPObject = sPObject {
@@ -275,6 +322,7 @@ class HubAPI {
     }
     
     /* Read the profile picture data from facebook when given the user ID */
+    //Mark: Can be placed in the cloud code
     private class func getProfileImageFromFacebook(id: String?, completion: (image: UIImage?, error: NSError?) -> Void) {
         if let id = id {
             let userProfileUrl = "https://graph.facebook.com/\(id)/picture?type=large"

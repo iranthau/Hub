@@ -143,7 +143,14 @@ class SettingsViewController: UITableViewController {
     
     private func handleDeletion() {
         if let currentUser = currentUser {
-            currentUser.deleteAccount(self)
+            currentUser.deleteAccount {
+                (success, error) in
+                if let error = error {
+                    print(error)
+                } else if success {
+                    self.performSegueWithIdentifier("signOutSegue", sender: nil)
+                }
+            }
         }
     }
 }

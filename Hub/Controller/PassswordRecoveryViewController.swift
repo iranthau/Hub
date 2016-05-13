@@ -19,11 +19,18 @@ class PassswordRecoveryViewController: UIViewController {
     }
     
     @IBAction func recoverPassword(sender: AnyObject) {
-        let email = emailTextField.text!
+        let email = emailTextField.text
         let currentUser = hubModel.currentUser
         
         if let currentUser = currentUser {
-            currentUser.resetPassword(email, vc: self)
+            currentUser.resetPassword(email, completion: {
+                (success, error) in
+                if let error = error {
+                    self.showAlert(error)
+                } else if success {
+                    self.showAlert("Email sent to \(email)")
+                }
+            })
         }
     }
     
