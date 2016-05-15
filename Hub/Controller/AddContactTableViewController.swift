@@ -50,8 +50,8 @@ class AddContactTableViewController: UITableViewController, UISearchResultsUpdat
         contact.getProfileImage(profileImage)
         ViewFactory.makeImageViewRound(profileImage)
         nameLabel.text = "\(contact.firstName!) \(contact.lastName!)"
-        ViewFactory.setLabelPlaceholder("nickname", text: contact.nickname, label: nickNameLabel)
-        ViewFactory.setLabelPlaceholder("city", text: contact.city, label: cityLabel)
+        ViewFactory.setCellLabelPlaceholder("nickname", text: contact.nickname, label: nickNameLabel)
+        ViewFactory.setCellLabelPlaceholder("city", text: contact.city, label: cityLabel)
         return cell
     }
     
@@ -63,7 +63,17 @@ class AddContactTableViewController: UITableViewController, UISearchResultsUpdat
     }
     
     func filterContentForSearchText(searchText: String) {
-        currentUser!.searchForFriends(searchText, tvc: self)
+        if let user = currentUser {
+            user.searchForFriends(searchText, completion: {
+                (users: [User]?, error: String?) in
+                if let error = error {
+                    print(error)
+                } else if let users = users {
+                    self.filteredContacts = users
+                    self.tableView.reloadData()
+                }
+            })
+        }
     }
     
     @IBAction func back(sender: UIBarButtonItem) {

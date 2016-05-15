@@ -30,7 +30,15 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
         if let friend = contactProfile {
             title = "\(friend.firstName!) \(friend.lastName!)"
             friend.getProfileImage(profileImageView)
-            friend.getAvailableContacts(self)
+            friend.getContacts {
+                (contacts, error) in
+                if let error = error {
+                    print(error)
+                } else if let contacts = contacts {
+                    self.contacts = contacts
+                    self.contactSelectionTableView.reloadData()
+                }
+            }
             ViewFactory.setLabelPlaceholder("nickname", text: friend.nickname, label: nicknameLabel)
             ViewFactory.setLabelPlaceholder("city", text: friend.city, label: locationLabel)
             if friend.hasSharedContacts() {

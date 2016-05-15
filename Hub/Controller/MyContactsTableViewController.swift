@@ -19,7 +19,15 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
         currentUser = hubModel.currentUser
         
         if let currentUser = currentUser {
-            currentUser.getAllFriends(self)
+            currentUser.getAllFriends {
+                (friends, error) in
+                if let error = error {
+                    print(error)
+                } else if let friends = friends {
+                    self.myContacts = friends.sort { $0.firstName < $1.firstName }
+                    self.refreshTableViewInBackground()
+                }
+            }
         }
         
         searchController.searchResultsUpdater = self
@@ -27,6 +35,20 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
         definesPresentationContext = true
         searchController.hidesNavigationBarDuringPresentation = false
         tableView.tableHeaderView = searchController.searchBar
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        if let currentUser = currentUser {
+            currentUser.getAllFriends {
+                (friends, error) in
+                if let error = error {
+                    print(error)
+                } else if let friends = friends {
+                    self.myContacts = friends.sort { $0.firstName < $1.firstName }
+                    self.refreshTableViewInBackground()
+                }
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -65,8 +87,8 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
         ViewFactory.makeImageViewRound(profileImage)
         contact.getProfileImage(profileImage)
         nameLabel.text = "\(contact.firstName!) \(contact.lastName!)"
-        ViewFactory.setLabelPlaceholder("nickname", text: contact.nickname, label: nickNameLabel)
-        ViewFactory.setLabelPlaceholder("city", text: contact.city, label: cityLabel)
+        ViewFactory.setCellLabelPlaceholder("nickname", text: contact.nickname, label: nickNameLabel)
+        ViewFactory.setCellLabelPlaceholder("city", text: contact.city, label: cityLabel)
         return cell
     }
     

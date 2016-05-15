@@ -26,6 +26,16 @@ class ViewFactory {
         }
     }
     
+    class func setCellLabelPlaceholder(placeholder: String, text: String?, label: UILabel) {
+        if text == nil {
+            label.text = placeholder
+            label.textColor = UIColor.lightGrayColor()
+        } else {
+            label.text = text
+            label.textColor = UIColor.blackColor()
+        }
+    }
+    
     class func setTextViewPlaceholder(placeholder: String, text: String?, textView: UITextView) {
         if text == nil || text == "When can others contact you?" {
             textView.text = placeholder

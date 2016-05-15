@@ -15,7 +15,29 @@ class RequestsTableViewController: UITableViewController {
         super.viewDidLoad()
         currentUser = hubModel.currentUser
         if let currentUser = currentUser {
-            currentUser.getRequests(self)
+            currentUser.getRequests {
+                (requests, error) in
+                if let error = error {
+                    print(error)
+                } else if let requests = requests {
+                    self.requests = requests
+                    self.tableView.reloadData()
+                }
+            }
+        }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        if let currentUser = currentUser {
+            currentUser.getRequests {
+                (requests, error) in
+                if let error = error {
+                    print(error)
+                } else if let requests = requests {
+                    self.requests = requests
+                    self.tableView.reloadData()
+                }
+            }
         }
     }
 
@@ -42,8 +64,8 @@ class RequestsTableViewController: UITableViewController {
         request.getProfileImage(profileImageView)
         ViewFactory.makeImageViewRound(profileImageView)
         nameLabel.text = "\(request.firstName!) \(request.lastName!)"
-        ViewFactory.setLabelPlaceholder("nickname", text: request.nickname, label: nickNameLabel)
-        ViewFactory.setLabelPlaceholder("city", text: request.city, label: cityLabel)
+        ViewFactory.setCellLabelPlaceholder("nickname", text: request.nickname, label: nickNameLabel)
+        ViewFactory.setCellLabelPlaceholder("city", text: request.city, label: cityLabel)
         return cell
     }
     
@@ -96,7 +118,11 @@ class RequestsTableViewController: UITableViewController {
     }
     
     private func declineRequest(tableView: UITableView, indexPath: NSIndexPath) {
+        let friend = requests[indexPath.row]
         requests.removeAtIndex(indexPath.row)
         tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        if let currentUser = currentUser {
+            currentUser.declineRequest(friend)
+        }
     }
 }

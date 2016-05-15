@@ -115,7 +115,14 @@ class SettingsViewController: UITableViewController {
         let okAction = UIAlertAction(title: "Ok", style: .Default, handler: {
             (action: UIAlertAction!) in
             if let currentUser = self.currentUser {
-                currentUser.logOut(self)
+                currentUser.logOut {
+                    (error) in
+                    if let error = error {
+                        self.showAlert(error)
+                    } else {
+                        self.performSegueWithIdentifier("signOutSegue", sender: nil)
+                    }
+                }
             }
         })
         
@@ -127,9 +134,23 @@ class SettingsViewController: UITableViewController {
     
     //----------------------Private methods-------------------------
     
+    func showAlert(message: String) {
+        let alertError = UIAlertController(title: "Settings", message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertError.addAction(defaultAction)
+        self.presentViewController(alertError, animated: true, completion: nil)
+    }
+    
     private func handleDeletion() {
         if let currentUser = currentUser {
-            currentUser.deleteAccount(self)
+            currentUser.deleteAccount {
+                (success, error) in
+                if let error = error {
+                    print(error)
+                } else if success {
+                    self.performSegueWithIdentifier("signOutSegue", sender: nil)
+                }
+            }
         }
     }
 }

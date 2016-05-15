@@ -5,7 +5,7 @@
 
 import UIKit
 
-class ContactRequestTableViewController: UITableViewController, ContactShareCellDelegate {
+class ConfigureSharedContactTVC: UITableViewController, ContactShareCellDelegate {
     
     var friend: User?
     var currentUser: User?
@@ -19,17 +19,7 @@ class ContactRequestTableViewController: UITableViewController, ContactShareCell
         currentUser = hubModel.currentUser
         ViewFactory.hideTableViewSeparator(self.tableView)
         
-        if let currentUser = currentUser {
-            currentUser.getRequestedContacts(friend, completion: {
-                (contacts, error) in
-                if let error = error {
-                    print(error)
-                } else if let contacts = contacts {
-                    self.contacts = contacts
-                    self.tableView.reloadData()
-                }
-            })
-        }
+        //TODO Populate table view with my contacts and indicate already shared contacts
     }
 
     override func didReceiveMemoryWarning() {
@@ -63,26 +53,15 @@ class ContactRequestTableViewController: UITableViewController, ContactShareCell
     }
     
     @IBAction func back(sender: UIBarButtonItem) {
-        navigateBack()
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func acceptRequest(sender: UIBarButtonItem) {
         if let friend = friend {
             if let user = currentUser {
-                user.acceptRequest(friend, contacts: acceptedContacts, completion: {
-                    (success: Bool, error: String?) in
-                    if let error = error {
-                        print(error)
-                    } else if success {
-                        self.navigateBack()
-                    }
-                })
+                //TODO Handle saving edited shared contacts
             }
         }
-    }
-    
-    func navigateBack() {
-        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     //-----------------Contact Share Cell Delegate Method--------------------
@@ -91,24 +70,5 @@ class ContactRequestTableViewController: UITableViewController, ContactShareCell
         let contact = contacts[indexPath!.row]
         contact.selected = isOn
         acceptedContacts.append(contact)
-    }
-}
-
-//Array extension so that an object can be removed from an array
-extension Array where Element: Equatable {
-    mutating func removeObject(object: Element) {
-        if let index = self.indexOf(object) {
-            self.removeAtIndex(index)
-        }
-    }
-    
-    func removeDuplicates() -> [Element] {
-        var uniqueValues: [Element] = []
-        forEach { item in
-            if !uniqueValues.contains(item) {
-                uniqueValues += [item]
-            }
-        }
-        return uniqueValues
     }
 }

@@ -38,7 +38,29 @@ class SignInViewController: BaseViewController, UITextFieldDelegate {
     @IBAction func facebookSignIn(sender: AnyObject) {
         let parseUser = PFUser()
         let user = User(parseUser: parseUser)
-        user.logInWithFacebook(self)
+        user.logInWithFacebook() {
+            (user: User?, error: String?) -> Void in
+            if let error = error {
+                self.showAlert(error)
+            } else {
+                if let user = user {
+                    if user.isNew {
+                        self.hubModel.setCurrentUser(user)
+                        user.saveUser {
+                            (success, error) in
+                            if let error = error {
+                                print(error)
+                            } else {
+                                self.performSegueWithIdentifier("createAccountSegue", sender: nil)
+                            }
+                        }
+                    } else {
+                        self.hubModel.setCurrentUser(user)
+                        self.performSegueWithIdentifier("signInSegue", sender: nil)
+                    }
+                }
+            }
+        }
     }
     
     @IBAction func createAccount(sender: AnyObject) {
@@ -78,8 +100,8 @@ class SignInViewController: BaseViewController, UITextFieldDelegate {
         
         user.logIn(userDetails) {
             (currentUser: User?, error: String?) -> Void in
-            if error != nil {
-                self.showAlert(error!)
+            if let error = error {
+                self.showAlert(error)
             } else {
                 self.hubModel.setCurrentUser(currentUser!)
                 self.performSegueWithIdentifier("signInSegue", sender: nil)
