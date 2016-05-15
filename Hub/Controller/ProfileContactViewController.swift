@@ -112,7 +112,16 @@ class ProfileContactViewController: UIViewController, UITableViewDataSource {
     }
     
     @IBAction func configureSharedContacts(sender: UIBarButtonItem) {
-        self.performSegueWithIdentifier("configureSharedContactsSegue", sender: nil)
+        self.performSegueWithIdentifier("configureSharedContactsSegue", sender: contactProfile)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "configureSharedContactsSegue" {
+            let navigationController = segue.destinationViewController as! UINavigationController
+            if let destinationVC = navigationController.topViewController as? ConfigureSharedContactTVC {
+                destinationVC.friend = self.contactProfile
+            }
+        }
     }
     
     @IBAction func back(sender: AnyObject) {
@@ -163,14 +172,4 @@ class ProfileContactViewController: UIViewController, UITableViewDataSource {
         label.text = contact.value
         icon.image = UIImage(named: contact.getImageName())
     }
-    
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        let user = User(fName: userData.userFirstName, lName: userData.userLastName, email: "iranthau@asas.com")
-//        
-//        if segue.identifier == "configureSharedContactsSegue" {
-//            if let destinationVC = segue.destinationViewController as? ContactRequestTableViewController {
-//                destinationVC.requestContact = user
-//            }
-//        }
-//    }
 }

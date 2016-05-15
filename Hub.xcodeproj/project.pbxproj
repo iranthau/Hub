@@ -35,6 +35,7 @@
 		9DC6F68C1CD3526A004FD173 /* PassswordRecoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD644D2D1C60D2CB005657FD /* PassswordRecoveryViewController.swift */; };
 		BD03E3BA1CC3647800FB3ED2 /* EditMyProfileDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD03E3B91CC3647800FB3ED2 /* EditMyProfileDelegate.swift */; };
 		BD19009D1C7341F600D82DA6 /* ContactRequestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD19009C1C7341F600D82DA6 /* ContactRequestTableViewController.swift */; };
+		BD206EC51CE7369B005DA278 /* ConfigureSharedContactTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD206EC41CE7369B005DA278 /* ConfigureSharedContactTVC.swift */; };
 		BD2B11B11CBA18C300A68A5D /* Ambient Hit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BD2B11B01CBA18C300A68A5D /* Ambient Hit.mp3 */; };
 		BD45F1B71C66FF4E00DBE5DB /* MyContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45F1B61C66FF4E00DBE5DB /* MyContactsTableViewController.swift */; };
 		BD4EE32A1CDE1699007A3205 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4EE3291CDE1699007A3205 /* UserRepository.swift */; };
@@ -151,6 +152,7 @@
 		9AD9296C1C7C958000B764B7 /* AddContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddContactCell.swift; path = ../Controller/AddContactCell.swift; sourceTree = "<group>"; };
 		BD03E3B91CC3647800FB3ED2 /* EditMyProfileDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditMyProfileDelegate.swift; path = Hub/EditMyProfileDelegate.swift; sourceTree = SOURCE_ROOT; };
 		BD19009C1C7341F600D82DA6 /* ContactRequestTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactRequestTableViewController.swift; sourceTree = "<group>"; };
+		BD206EC41CE7369B005DA278 /* ConfigureSharedContactTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigureSharedContactTVC.swift; sourceTree = "<group>"; };
 		BD2B11B01CBA18C300A68A5D /* Ambient Hit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Ambient Hit.mp3"; path = "Sound/Ambient Hit.mp3"; sourceTree = "<group>"; };
 		BD45F1B61C66FF4E00DBE5DB /* MyContactsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyContactsTableViewController.swift; sourceTree = "<group>"; };
 		BD4EE3291CDE1699007A3205 /* UserRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 				BD6FF1CD1C93E8560069D7D9 /* ProfileContactViewController.swift */,
 				BD7A5E3C1C74909C0019D5F1 /* RequestsTableViewController.swift */,
 				BD19009C1C7341F600D82DA6 /* ContactRequestTableViewController.swift */,
+				BD206EC41CE7369B005DA278 /* ConfigureSharedContactTVC.swift */,
 				BD910CE81C6C7FF4003B099C /* EditMyProfileViewController.swift */,
 				BD910CE91C6C7FF4003B099C /* MyProfileViewController.swift */,
 				BD45F1B61C66FF4E00DBE5DB /* MyContactsTableViewController.swift */,
@@ -603,6 +606,7 @@
 				BD9032C21C5474C300C323A9 /* HubModel.swift in Sources */,
 				BDCE5DCD1CD5F18D001ABD11 /* BaseViewController.swift in Sources */,
 				BD910CEA1C6C7FF4003B099C /* ContactItemCell.swift in Sources */,
+				BD206EC51CE7369B005DA278 /* ConfigureSharedContactTVC.swift in Sources */,
 				9AD9296D1C7C958000B764B7 /* AddContactCell.swift in Sources */,
 				BDC7AB5E1C798CE40093D5F4 /* AddContactTableViewController.swift in Sources */,
 				BD45F1B71C66FF4E00DBE5DB /* MyContactsTableViewController.swift in Sources */,
