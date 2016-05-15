@@ -16,21 +16,27 @@ class HubUtility {
     /* Create a parse push query when given the from user and the to user parse
      * objects. The query is configured to query shared permission class by default.
      */
-    class func configurePushInstallation(user: PFUser) -> PFQuery {
-        let pushQuery = PFInstallation.query()!
-        pushQuery.whereKey("user", equalTo: user)
-        return pushQuery
+    class func configurePushInstallation(user: User?) -> PFQuery? {
+        if let user = user {
+            let pushQuery = PFInstallation.query()!
+            pushQuery.whereKey("user", equalTo: user.matchingParseObject)
+            return pushQuery
+        }
+        return nil
     }
     
     /* Create and return a parse push notification object when given
      * the query and the message to send. The sound and badge configurations
      * are set to following configs by default. */
-    class func configurePushNotification(query: PFQuery, message: String) -> PFPush {
-        let push = PFPush()
-        push.setQuery(query)
-        let data = [ "alert": message, "badge": "Increment", "sound": "Ambient Hit.mp3" ]
-        push.setData(data)
-        return push
+    class func configurePushNotification(query: PFQuery?, message: String) -> PFPush? {
+        if let query = query {
+            let push = PFPush()
+            push.setQuery(query)
+            let data = [ "alert": message, "badge": "Increment", "sound": "Ambient Hit.mp3" ]
+            push.setData(data)
+            return push
+        }
+        return nil
     }
     
     /* Build an array of phone contacts where each contact has empty value. Used

@@ -18,7 +18,7 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
     var contactProfile: User?
     var currentUser: User?
     var contacts = [Contact]()
-    var requestedContacts = [PFObject]()
+    var requestedContacts = [Contact]()
     let hubModel = HubModel.sharedInstance
     
     override func viewDidLoad() {
@@ -63,15 +63,18 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
     }
     
     @IBAction func sendRequest(sender: UIBarButtonItem) {
-        let friend = contactProfile!.matchingParseObject
-        let pushQuery = HubUtility.configurePushInstallation(friend)
+        let pushQuery = HubUtility.configurePushInstallation(contactProfile)
         let parseObject = PFObject(className: "SharedPermission")
         let sharedPermission = SharedPermission(parseObject: parseObject)
         if let currentUser = currentUser {
             let message = "You have a request from \(currentUser.firstName!) \(currentUser.lastName!)"
             let pushNotification = HubUtility.configurePushNotification(pushQuery, message: message)
-            sharedPermission.buildParseObject(friend, toUser: currentUser.matchingParseObject, contacts: requestedContacts, status: "pending")
-            currentUser.sendRequest(sharedPermission, pushNotification: pushNotification, vc: self)
+            sharedPermission.buildParseObject(contactProfile, toUser: currentUser, contacts: requestedContacts, status: "pending")
+            sharedPermission.sendRequest(pushNotification, completion: {
+                (success, error) in
+                self.showAlert("Request is sent")
+                self.back(sender)
+            })
         }
     }
     
@@ -128,9 +131,9 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
     
     func addContactToArray(contact: Contact) {
         if contact.selected! {
-            requestedContacts.append(contact.matchingParseObject)
+            requestedContacts.append(contact)
         } else {
-            requestedContacts.removeObject(contact.matchingParseObject)
+            requestedContacts.removeObject(contact)
         }
     }
 }

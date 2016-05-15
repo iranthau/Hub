@@ -112,7 +112,7 @@ class ProfileContactViewController: UIViewController, UITableViewDataSource {
     }
     
     @IBAction func configureSharedContacts(sender: UIBarButtonItem) {
-        self.performSegueWithIdentifier("configureSharedContactsSegue", sender: contactProfile)
+        self.performSegueWithIdentifier("configureSharedContactsSegue", sender: nil)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -120,6 +120,7 @@ class ProfileContactViewController: UIViewController, UITableViewDataSource {
             let navigationController = segue.destinationViewController as! UINavigationController
             if let destinationVC = navigationController.topViewController as? ConfigureSharedContactTVC {
                 destinationVC.friend = self.contactProfile
+                destinationVC.sharedContacts = self.mySharedContacts
             }
         }
     }

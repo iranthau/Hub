@@ -106,10 +106,6 @@ class User: Hashable {
         matchingParseObject.saveInBackground()
     }
     
-    func sendRequest(sharedPermission: SharedPermission, pushNotification: PFPush, vc: BaseViewController) {
-        sharedPermission.saveInParse(pushNotification, vc: vc)
-    }
-    
     /* Get the profile image from parse and assignes it to an imageview */
     func getProfileImage(imageView: UIImageView) {
         profileImage!.getDataInBackgroundWithBlock {

@@ -4,13 +4,14 @@
 //  Copyright © 2016 88Software. All rights reserved.
 
 import UIKit
+import Parse
 
 class ConfigureSharedContactTVC: UITableViewController, ContactShareCellDelegate {
     
     var friend: User?
     var currentUser: User?
     var contacts = [Contact]()
-    var acceptedContacts = [Contact]()
+    var sharedContacts = [Contact]()
     let hubModel = HubModel.sharedInstance
 
     override func viewDidLoad() {
@@ -19,7 +20,24 @@ class ConfigureSharedContactTVC: UITableViewController, ContactShareCellDelegate
         currentUser = hubModel.currentUser
         ViewFactory.hideTableViewSeparator(self.tableView)
         
-        //TODO Populate table view with my contacts and indicate already shared contacts
+        if let currentUser = currentUser {
+            currentUser.getContacts {
+                (contacts, error) in
+                if let error = error {
+                    print(error)
+                } else if let contacts = contacts {
+                    for a in contacts {
+                        for b in self.sharedContacts {
+                            if b.objectId == a.objectId {
+                                a.selected = true
+                            }
+                        }
+                    }
+                    self.contacts = contacts
+                    self.tableView.reloadData()
+                }
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -56,12 +74,32 @@ class ConfigureSharedContactTVC: UITableViewController, ContactShareCellDelegate
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    @IBAction func acceptRequest(sender: UIBarButtonItem) {
+    @IBAction func confirm(sender: UIBarButtonItem) {
         if let friend = friend {
-            if let user = currentUser {
-                //TODO Handle saving edited shared contacts
+            let pushQuery = HubUtility.configurePushInstallation(friend)
+            let parseObject = PFObject(className: "SharedPermission")
+            let sharedPermission = SharedPermission(parseObject: parseObject)
+            if let currentUser = currentUser {
+                let message = "\(currentUser.firstName!) \(currentUser.lastName!) has updated his shared contacts"
+                let pushNotification = HubUtility.configurePushNotification(pushQuery, message: message)
+                sharedPermission.buildParseObject(friend, toUser: currentUser, contacts: sharedContacts, status: "")
+                sharedPermission.updateSharedContacts(pushNotification, completion: {
+                    (success, error) in
+                    if let error = error {
+                        print(error)
+                    } else if success {
+                        self.back(sender)
+                    }
+                })
             }
         }
+    }
+    
+    func showAlert(message: String) {
+        let alertError = UIAlertController(title: "Add contact", message: message, preferredStyle: .Alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertError.addAction(defaultAction)
+        self.presentViewController(alertError, animated: true, completion: nil)
     }
     
     //-----------------Contact Share Cell Delegate Method--------------------
@@ -69,6 +107,14 @@ class ConfigureSharedContactTVC: UITableViewController, ContactShareCellDelegate
         let indexPath = self.tableView.indexPathForCell(sender as! UITableViewCell)
         let contact = contacts[indexPath!.row]
         contact.selected = isOn
-        acceptedContacts.append(contact)
+        addContactToArray(contact)
+    }
+    
+    func addContactToArray(contact: Contact) {
+        if contact.selected! {
+            sharedContacts.append(contact)
+        } else {
+            sharedContacts.removeObject(contact)
+        }
     }
 }

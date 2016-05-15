@@ -25,21 +25,59 @@ class SharedPermission {
         status = matchingParseObject["status"] as? Bool
     }
     
-    func buildParseObject(fromUser: PFUser, toUser: PFUser, contacts: [PFObject], status: String) {
-        matchingParseObject["user"] = fromUser
-        matchingParseObject["userFriend"] = toUser
-        matchingParseObject["contacts"] = contacts
-        matchingParseObject["status"] = status
+    func buildParseObject(fromUser: User?, toUser: User?, contacts: [Contact]?, status: String?) {
+        if let fromUser = fromUser {
+            matchingParseObject["user"] = fromUser.matchingParseObject
+        }
+        if let toUser = toUser {
+            matchingParseObject["userFriend"] = toUser.matchingParseObject
+        }
+        if let contacts = contacts {
+            var pContacts = [PFObject]()
+            for c in contacts {
+                pContacts.append(c.matchingParseObject)
+            }
+            matchingParseObject["contacts"] = pContacts
+        }
+        if let status = status {
+            matchingParseObject["status"] = status
+        }
     }
     
-    func saveInParse(pushNotification: PFPush, vc: BaseViewController) {
-        matchingParseObject.saveInBackgroundWithBlock {
-            (success, error) -> Void in
-            if success {
-                pushNotification.sendPushInBackground()
-                vc.showAlert("Request is sent")
-                vc.disableUIBarbutton()
-            }
+    func sendRequest(pushNotification: PFPush?, completion: (success: Bool, error: String?) -> Void) {
+        if let pushNotification = pushNotification {
+            HubAPI.saveParseObject(matchingParseObject, completion: {
+                (success: Bool, error: NSError?) in
+                if let error = error {
+                    let errorMessage = error.userInfo["error"] as? String
+                    completion(success: false, error: errorMessage)
+                }
+                if success {
+                    pushNotification.sendPushInBackground()
+                    completion(success: true, error: nil)
+                }
+            })
+        }
+    }
+    
+    func updateSharedContacts(pushNotification: PFPush?, completion: (success: Bool, error: String?) -> Void) {
+        if let pushNotification = pushNotification {
+            let query = PFQuery(className: parseClassName)
+            query.whereKey("user", equalTo: matchingParseObject["userFriend"])
+            query.whereKey("userFriend", equalTo: matchingParseObject["user"])
+            query.whereKey("status", equalTo: "accepted")
+            
+            HubAPI.updateContacts(query, pContacts: matchingParseObject["contacts"] as? [PFObject], completion: {
+                (success: Bool, error: NSError?) in
+                if let error = error {
+                    let errorMessage = error.userInfo["error"] as? String
+                    completion(success: false, error: errorMessage)
+                }
+                if success {
+                    pushNotification.sendPushInBackground()
+                    completion(success: true, error: nil)
+                }
+            })
         }
     }
     

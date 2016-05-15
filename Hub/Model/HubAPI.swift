@@ -148,6 +148,21 @@ class HubAPI {
         }
     }
     
+    class func updateContacts(query: PFQuery?, pContacts: [PFObject]?, completion: (Bool, NSError?) -> Void) {
+        if let query = query {
+            query.getFirstObjectInBackgroundWithBlock {
+                (sharedPermission: PFObject?, error: NSError?) in
+                if let error = error {
+                    completion(false, error)
+                } else if let sharedPermission = sharedPermission {
+                    sharedPermission["contacts"] = pContacts
+                    sharedPermission.saveInBackground()
+                    completion(true, nil)
+                }
+            }
+        }
+    }
+    
     class func getRequests(query: PFQuery?, completion: ([PFUser]?, NSError?) -> Void) {
         if let query = query {
             query.findObjectsInBackgroundWithBlock {
@@ -176,6 +191,19 @@ class HubAPI {
                     completion(success, error)
                 } else {
                     completion(success, nil)
+                }
+            }
+        }
+    }
+    
+    class func saveParseObject(object: PFObject?, completion: (Bool, NSError?) -> Void) {
+        if let object = object {
+            object.saveInBackgroundWithBlock {
+                (success, error) -> Void in
+                if let error = error {
+                    completion(false, error)
+                } else if success {
+                    completion(true, nil)
                 }
             }
         }

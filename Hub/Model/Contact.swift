@@ -6,7 +6,7 @@
 import Foundation
 import Parse
 
-class Contact {
+class Contact: Hashable {
     
     let parseClassName = "Contact"
     var matchingParseObject: PFObject
@@ -52,6 +52,10 @@ class Contact {
                 return getSocialImageIcon()
             default: return ""
         }
+    }
+    
+    var hashValue: Int {
+        return objectId!.hashValue
     }
     
     //-----------------------Private methods--------------------------
@@ -131,4 +135,8 @@ class Contact {
             default: return ""
         }
     }
+}
+
+func == (lhs: Contact, rhs: Contact) -> Bool {
+    return lhs.hashValue == rhs.hashValue
 }
