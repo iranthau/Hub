@@ -1,21 +1,24 @@
-//
 //  AppDelegate.swift
 //  Hub
-//
 //  Created by Irantha Rajakaruna on 3/12/2015.
 //  Copyright © 2015 88Software. All rights reserved.
-//
 
 import UIKit
+import Parse
+import Bolts
+import FBSDKCoreKit
+import ParseFacebookUtilsV4
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        // Parse.enableLocalDatastore() // Use local datastore
+        configureParseAPI(launchOptions)
+        configureNotifications(application)
+        customizeAppearance()
         return true
     }
 
@@ -35,12 +38,82 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        FBSDKAppEvents.activateApp()
+        clearBadges()
     }
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
+    
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url,
+            sourceApplication: sourceApplication,
+            annotation: annotation)
+    }
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        confgureCurrentParseInstallation(deviceToken)
+    }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        if application.applicationState == UIApplicationState.Active {
+            PFPush.handlePush(userInfo)
+        } else {
+            showRequestVC()
+        }
+    }
+    
+    //----------------------Private functions---------------------------------
+    
+    func configureParseAPI(launchOptions: [NSObject: AnyObject]?) {
+        Parse.setApplicationId("inQev5jlG1BWu0LdsRHBK5XbyQrADMJ6BwGXweEF", clientKey: "p2C6htbwjtzV0syI7zXsjiWxbQajREwoJdreYDL0")
+        PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
+    }
+    
+    func configureNotifications(application: UIApplication) {
+        let userNotificationTypes: UIUserNotificationType = [.Alert, .Badge, .Sound]
+        let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
+        
+        application.registerUserNotificationSettings(settings)
+        application.registerForRemoteNotifications()
+    }
+    
+    func customizeAppearance() {
+        UINavigationBar.appearance().barTintColor = UIColor(red: 74/255.0, green: 144/255.0, blue: 226/255.0, alpha: 1.0)
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        UITabBar.appearance().barTintColor = UIColor(red: 74/255.0, green: 144/255.0, blue: 226/255.0, alpha: 1.0)
+        let tintColor = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1.0)
+        UITabBar.appearance().tintColor = tintColor
+        UIBarButtonItem.appearance().tintColor = UIColor.whiteColor()
+    }
+    
+    func confgureCurrentParseInstallation(deviceToken: NSData) {
+        let installation = PFInstallation.currentInstallation()
+        if PFUser.currentUser() != nil {
+            installation["user"] = PFUser.currentUser()
+        }
+        installation.setDeviceTokenFromData(deviceToken)
+        installation.saveInBackground()
+    }
+    
+    func showRequestVC() {
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let tabBarController = storyBoard.instantiateViewControllerWithIdentifier("HeyyaTabBarController") as! UITabBarController
+        if PFUser.currentUser() != nil {
+            tabBarController.selectedIndex = 2
+            self.window!.rootViewController = tabBarController
+        }
+    }
+    
+    func clearBadges() {
+        let installation = PFInstallation.currentInstallation()
+        installation.badge = 0
+        installation.saveInBackgroundWithBlock {
+            (success, error) -> Void in
+            if success {
+                UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+            }
+        }
+    }
 }
-

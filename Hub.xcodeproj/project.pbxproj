@@ -7,13 +7,123 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A0CBDBD1C71902C002BD9D0 /* CustomImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0CBDBC1C71902C002BD9D0 /* CustomImagePickerController.swift */; };
+		9A4E59881C213FC70046C8E8 /* TermsConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4E59871C213FC70046C8E8 /* TermsConditionsViewController.swift */; };
+		9AA47EAD1C7576310034FBE8 /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA47EAC1C7576310034FBE8 /* AddContactViewController.swift */; };
+		9AA47EAE1C7576310034FBE8 /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA47EAC1C7576310034FBE8 /* AddContactViewController.swift */; };
+		9AA47EAF1C7576310034FBE8 /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA47EAC1C7576310034FBE8 /* AddContactViewController.swift */; };
+		9AA47EB11C7AD5110034FBE8 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA47EB01C7AD5110034FBE8 /* Contact.swift */; };
+		9AA47EB21C7AD5110034FBE8 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA47EB01C7AD5110034FBE8 /* Contact.swift */; };
+		9AA47EB31C7AD5110034FBE8 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA47EB01C7AD5110034FBE8 /* Contact.swift */; };
+		9AA824F91C43476800B71364 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA824F81C43476800B71364 /* SettingsViewController.swift */; };
+		9AA824FA1C43476800B71364 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA824F81C43476800B71364 /* SettingsViewController.swift */; };
+		9AA824FB1C43476800B71364 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA824F81C43476800B71364 /* SettingsViewController.swift */; };
+		9AD9296D1C7C958000B764B7 /* AddContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD9296C1C7C958000B764B7 /* AddContactCell.swift */; };
+		9D293B681CD0C25D00C34BED /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE7E6E21CC7A9EE00D3BB87 /* ViewFactory.swift */; };
+		9D293B691CD0C27B00C34BED /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE7E6E21CC7A9EE00D3BB87 /* ViewFactory.swift */; };
+		9D293B6A1CD0C29100C34BED /* ContactType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF7B9B91CAFF1D3004B5F65 /* ContactType.swift */; };
+		9D293B6B1CD0C29B00C34BED /* ContactType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF7B9B91CAFF1D3004B5F65 /* ContactType.swift */; };
+		9D293B6C1CD0C2BA00C34BED /* HubUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE7E6E41CC7C2D300D3BB87 /* HubUtility.swift */; };
+		9D293B6D1CD0C2C100C34BED /* HubUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE7E6E41CC7C2D300D3BB87 /* HubUtility.swift */; };
+		9D293B6E1CD0CB6700C34BED /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAE7A131C101F6B0085264A /* SignInViewController.swift */; };
+		9D293B6F1CD0CB7200C34BED /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAE7A131C101F6B0085264A /* SignInViewController.swift */; };
+		9D293B701CD0D0FA00C34BED /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD910CE91C6C7FF4003B099C /* MyProfileViewController.swift */; };
+		9D293B711CD0D10300C34BED /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD910CE91C6C7FF4003B099C /* MyProfileViewController.swift */; };
+		9D293B721CD0D11900C34BED /* SharedPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF7B9BB1CB01486004B5F65 /* SharedPermission.swift */; };
+		9D293B731CD0D12100C34BED /* SharedPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF7B9BB1CB01486004B5F65 /* SharedPermission.swift */; };
+		9DC6F68B1CD35263004FD173 /* PassswordRecoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD644D2D1C60D2CB005657FD /* PassswordRecoveryViewController.swift */; };
+		9DC6F68C1CD3526A004FD173 /* PassswordRecoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD644D2D1C60D2CB005657FD /* PassswordRecoveryViewController.swift */; };
+		BD03E3BA1CC3647800FB3ED2 /* EditMyProfileDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD03E3B91CC3647800FB3ED2 /* EditMyProfileDelegate.swift */; };
+		BD19009D1C7341F600D82DA6 /* ContactRequestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD19009C1C7341F600D82DA6 /* ContactRequestTableViewController.swift */; };
+		BD206EC51CE7369B005DA278 /* ConfigureSharedContactTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD206EC41CE7369B005DA278 /* ConfigureSharedContactTVC.swift */; };
+		BD2B11B11CBA18C300A68A5D /* Ambient Hit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BD2B11B01CBA18C300A68A5D /* Ambient Hit.mp3 */; };
+		BD45F1B71C66FF4E00DBE5DB /* MyContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45F1B61C66FF4E00DBE5DB /* MyContactsTableViewController.swift */; };
+		BD4EE32A1CDE1699007A3205 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4EE3291CDE1699007A3205 /* UserRepository.swift */; };
+		BD5869811C6E5179009408EA /* HeyyaTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5869801C6E5179009408EA /* HeyyaTabBarController.swift */; };
+		BD5A0AD71CD8DFEF00FE1299 /* HubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5A0AD61CD8DFEF00FE1299 /* HubAPI.swift */; };
+		BD5B94DB1C64F43300812FFD /* ProfileCreatedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5B94DA1C64F43300812FFD /* ProfileCreatedViewController.swift */; };
+		BD644D2E1C60D2CB005657FD /* PassswordRecoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD644D2D1C60D2CB005657FD /* PassswordRecoveryViewController.swift */; };
+		BD6FF1CE1C93E8560069D7D9 /* ProfileContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6FF1CD1C93E8560069D7D9 /* ProfileContactViewController.swift */; };
+		BD78B8D81C40D0210056AACE /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD78B8D71C40D0210056AACE /* AboutViewController.swift */; };
+		BD7A5E3D1C74909C0019D5F1 /* RequestsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7A5E3C1C74909C0019D5F1 /* RequestsTableViewController.swift */; };
+		BD8513331C784043002470A2 /* ContactShareCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8513321C784043002470A2 /* ContactShareCell.swift */; };
+		BD8513361C789994002470A2 /* ContactShareCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8513351C789994002470A2 /* ContactShareCellDelegate.swift */; };
+		BD9032C21C5474C300C323A9 /* HubModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9032C11C5474C300C323A9 /* HubModel.swift */; };
+		BD9032C41C54A5D600C323A9 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9032C31C54A5D600C323A9 /* SignUpViewController.swift */; };
+		BD9032C61C54E1BD00C323A9 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9032C51C54E1BD00C323A9 /* CustomTextField.swift */; };
+		BD910CEA1C6C7FF4003B099C /* ContactItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD910CE51C6C7FF4003B099C /* ContactItemCell.swift */; };
+		BD910CEC1C6C7FF4003B099C /* EditContactItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD910CE71C6C7FF4003B099C /* EditContactItemCell.swift */; };
+		BD910CED1C6C7FF4003B099C /* EditMyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD910CE81C6C7FF4003B099C /* EditMyProfileViewController.swift */; };
+		BD910CEE1C6C7FF4003B099C /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD910CE91C6C7FF4003B099C /* MyProfileViewController.swift */; };
+		BD910CF11C6C8102003B099C /* ContactSubType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD910CEF1C6C8102003B099C /* ContactSubType.swift */; };
+		BDA812051C6613EC00219C4A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA812041C6613EC00219C4A /* User.swift */; };
+		BDA966551C4E6D0900FDDD33 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966531C4E6D0900FDDD33 /* Bolts.framework */; };
+		BDA966561C4E6D0900FDDD33 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966541C4E6D0900FDDD33 /* Parse.framework */; };
+		BDA966581C4E6D6900FDDD33 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966571C4E6D6900FDDD33 /* AudioToolbox.framework */; };
+		BDA9665A1C4E6D7300FDDD33 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966591C4E6D7300FDDD33 /* CFNetwork.framework */; };
+		BDA9665C1C4E6D7C00FDDD33 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA9665B1C4E6D7C00FDDD33 /* CoreGraphics.framework */; };
+		BDA9665E1C4E6D8500FDDD33 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA9665D1C4E6D8500FDDD33 /* CoreLocation.framework */; };
+		BDA966601C4E6D8D00FDDD33 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA9665F1C4E6D8D00FDDD33 /* QuartzCore.framework */; };
+		BDA966621C4E6D9500FDDD33 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966611C4E6D9500FDDD33 /* Security.framework */; };
+		BDA966641C4E6D9D00FDDD33 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966631C4E6D9D00FDDD33 /* StoreKit.framework */; };
+		BDA966661C4E6DA500FDDD33 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966651C4E6DA500FDDD33 /* SystemConfiguration.framework */; };
+		BDA966681C4E6DAD00FDDD33 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966671C4E6DAD00FDDD33 /* libz.tbd */; };
+		BDA9666A1C4E6DBB00FDDD33 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966691C4E6DBB00FDDD33 /* libsqlite3.tbd */; };
 		BDAE7A121C101F6B0085264A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAE7A111C101F6B0085264A /* AppDelegate.swift */; };
-		BDAE7A141C101F6B0085264A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAE7A131C101F6B0085264A /* ViewController.swift */; };
+		BDAE7A141C101F6B0085264A /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAE7A131C101F6B0085264A /* SignInViewController.swift */; };
 		BDAE7A171C101F6B0085264A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BDAE7A151C101F6B0085264A /* Main.storyboard */; };
 		BDAE7A191C101F6B0085264A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDAE7A181C101F6B0085264A /* Assets.xcassets */; };
 		BDAE7A1C1C101F6B0085264A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BDAE7A1A1C101F6B0085264A /* LaunchScreen.storyboard */; };
 		BDAE7A271C101F6B0085264A /* HubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAE7A261C101F6B0085264A /* HubTests.swift */; };
 		BDAE7A321C101F6B0085264A /* HubUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAE7A311C101F6B0085264A /* HubUITests.swift */; };
+		BDBB6A761C62117200143087 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDBB6A731C62117200143087 /* FBSDKCoreKit.framework */; };
+		BDBB6A771C62117200143087 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDBB6A741C62117200143087 /* FBSDKLoginKit.framework */; };
+		BDBB6A781C62117200143087 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDBB6A751C62117200143087 /* FBSDKShareKit.framework */; };
+		BDBB6A7B1C62225900143087 /* ParseFacebookUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDBB6A791C62225900143087 /* ParseFacebookUtils.framework */; };
+		BDBB6A7C1C62225900143087 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDBB6A7A1C62225900143087 /* ParseFacebookUtilsV4.framework */; };
+		BDBB6A7E1C6224A600143087 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDBB6A7D1C6224A600143087 /* Accounts.framework */; };
+		BDBB6A801C6224D800143087 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDBB6A7F1C6224D800143087 /* Social.framework */; };
+		BDC7AB5E1C798CE40093D5F4 /* AddContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC7AB5D1C798CE40093D5F4 /* AddContactTableViewController.swift */; };
+		BDCE5DCD1CD5F18D001ABD11 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCE5DCC1CD5F18D001ABD11 /* BaseViewController.swift */; };
+		BDD83EEB1CB7D329008C0515 /* MFMailComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD83EEA1CB7D329008C0515 /* MFMailComposer.swift */; };
+		BDE7E6E31CC7A9EE00D3BB87 /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE7E6E21CC7A9EE00D3BB87 /* ViewFactory.swift */; };
+		BDE7E6E51CC7C2D300D3BB87 /* HubUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE7E6E41CC7C2D300D3BB87 /* HubUtility.swift */; };
+		BDEBFDA71CA9687C002E48CE /* ContactSubType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD910CEF1C6C8102003B099C /* ContactSubType.swift */; };
+		BDEBFDA81CA9688B002E48CE /* TermsConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4E59871C213FC70046C8E8 /* TermsConditionsViewController.swift */; };
+		BDEBFDA91CA96893002E48CE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA812041C6613EC00219C4A /* User.swift */; };
+		BDEBFDAB1CA968A9002E48CE /* AddContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD9296C1C7C958000B764B7 /* AddContactCell.swift */; };
+		BDEBFDAC1CA968E2002E48CE /* ContactSubType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD910CEF1C6C8102003B099C /* ContactSubType.swift */; };
+		BDEBFDAD1CA968F8002E48CE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA812041C6613EC00219C4A /* User.swift */; };
+		BDEBFDAF1CA9690A002E48CE /* AddContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD9296C1C7C958000B764B7 /* AddContactCell.swift */; };
+		BDEBFDB01CA96911002E48CE /* TermsConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4E59871C213FC70046C8E8 /* TermsConditionsViewController.swift */; };
+		BDEBFDB11CA96C34002E48CE /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966541C4E6D0900FDDD33 /* Parse.framework */; };
+		BDEBFDB21CA96C3C002E48CE /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966541C4E6D0900FDDD33 /* Parse.framework */; };
+		BDEBFDB31CA96C78002E48CE /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9032C31C54A5D600C323A9 /* SignUpViewController.swift */; };
+		BDEBFDB41CA96C81002E48CE /* MyContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45F1B61C66FF4E00DBE5DB /* MyContactsTableViewController.swift */; };
+		BDEBFDB51CA96C88002E48CE /* HubModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9032C11C5474C300C323A9 /* HubModel.swift */; };
+		BDEBFDB61CA96CCA002E48CE /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9032C31C54A5D600C323A9 /* SignUpViewController.swift */; };
+		BDEBFDB71CA96CD1002E48CE /* MyContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45F1B61C66FF4E00DBE5DB /* MyContactsTableViewController.swift */; };
+		BDEBFDB81CA96CD7002E48CE /* HubModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9032C11C5474C300C323A9 /* HubModel.swift */; };
+		BDEBFDB91CA96D00002E48CE /* ProfileContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6FF1CD1C93E8560069D7D9 /* ProfileContactViewController.swift */; };
+		BDEBFDBA1CA96D08002E48CE /* ProfileContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6FF1CD1C93E8560069D7D9 /* ProfileContactViewController.swift */; };
+		BDEBFDBB1CA96D38002E48CE /* ContactRequestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD19009C1C7341F600D82DA6 /* ContactRequestTableViewController.swift */; };
+		BDEBFDBC1CA96D3F002E48CE /* ContactRequestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD19009C1C7341F600D82DA6 /* ContactRequestTableViewController.swift */; };
+		BDEBFDBD1CA96D69002E48CE /* ContactShareCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8513351C789994002470A2 /* ContactShareCellDelegate.swift */; };
+		BDEBFDBE1CA96D70002E48CE /* RequestsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7A5E3C1C74909C0019D5F1 /* RequestsTableViewController.swift */; };
+		BDEBFDBF1CA96D78002E48CE /* ContactShareCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8513321C784043002470A2 /* ContactShareCell.swift */; };
+		BDEBFDC01CA96D87002E48CE /* ContactShareCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8513351C789994002470A2 /* ContactShareCellDelegate.swift */; };
+		BDEBFDC11CA96D90002E48CE /* RequestsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7A5E3C1C74909C0019D5F1 /* RequestsTableViewController.swift */; };
+		BDEBFDC21CA96D97002E48CE /* ContactShareCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8513321C784043002470A2 /* ContactShareCell.swift */; };
+		BDEBFDC31CA96E31002E48CE /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966531C4E6D0900FDDD33 /* Bolts.framework */; };
+		BDEBFDC41CA96E39002E48CE /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966531C4E6D0900FDDD33 /* Bolts.framework */; };
+		BDEBFDC51CA96E86002E48CE /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966691C4E6DBB00FDDD33 /* libsqlite3.tbd */; };
+		BDEBFDC61CA96E92002E48CE /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966691C4E6DBB00FDDD33 /* libsqlite3.tbd */; };
+		BDEBFDC71CA96EFC002E48CE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966651C4E6DA500FDDD33 /* SystemConfiguration.framework */; };
+		BDEBFDC81CA96F03002E48CE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966651C4E6DA500FDDD33 /* SystemConfiguration.framework */; };
+		BDEBFDC91CA96F33002E48CE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966571C4E6D6900FDDD33 /* AudioToolbox.framework */; };
+		BDEBFDCA1CA96F3B002E48CE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDA966571C4E6D6900FDDD33 /* AudioToolbox.framework */; };
+		BDF7B9BA1CAFF1D3004B5F65 /* ContactType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF7B9B91CAFF1D3004B5F65 /* ContactType.swift */; };
+		BDF7B9BC1CB01486004B5F65 /* SharedPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF7B9BB1CB01486004B5F65 /* SharedPermission.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,19 +144,76 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9A0CBDBC1C71902C002BD9D0 /* CustomImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomImagePickerController.swift; sourceTree = "<group>"; };
+		9A4E59871C213FC70046C8E8 /* TermsConditionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsConditionsViewController.swift; sourceTree = "<group>"; };
+		9AA47EAC1C7576310034FBE8 /* AddContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
+		9AA47EB01C7AD5110034FBE8 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		9AA824F81C43476800B71364 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		9AD9296C1C7C958000B764B7 /* AddContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddContactCell.swift; path = ../Controller/AddContactCell.swift; sourceTree = "<group>"; };
+		BD03E3B91CC3647800FB3ED2 /* EditMyProfileDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditMyProfileDelegate.swift; path = Hub/EditMyProfileDelegate.swift; sourceTree = SOURCE_ROOT; };
+		BD19009C1C7341F600D82DA6 /* ContactRequestTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactRequestTableViewController.swift; sourceTree = "<group>"; };
+		BD206EC41CE7369B005DA278 /* ConfigureSharedContactTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigureSharedContactTVC.swift; sourceTree = "<group>"; };
+		BD2B11B01CBA18C300A68A5D /* Ambient Hit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Ambient Hit.mp3"; path = "Sound/Ambient Hit.mp3"; sourceTree = "<group>"; };
+		BD45F1B61C66FF4E00DBE5DB /* MyContactsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyContactsTableViewController.swift; sourceTree = "<group>"; };
+		BD4EE3291CDE1699007A3205 /* UserRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		BD5869801C6E5179009408EA /* HeyyaTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeyyaTabBarController.swift; sourceTree = "<group>"; };
+		BD5A0AD61CD8DFEF00FE1299 /* HubAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HubAPI.swift; sourceTree = "<group>"; };
+		BD5B94DA1C64F43300812FFD /* ProfileCreatedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCreatedViewController.swift; sourceTree = "<group>"; };
+		BD644D2D1C60D2CB005657FD /* PassswordRecoveryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassswordRecoveryViewController.swift; sourceTree = "<group>"; };
+		BD6FF1CD1C93E8560069D7D9 /* ProfileContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileContactViewController.swift; sourceTree = "<group>"; };
+		BD78B8D71C40D0210056AACE /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutViewController.swift; path = Hub/Controller/AboutViewController.swift; sourceTree = SOURCE_ROOT; };
+		BD7A5E3C1C74909C0019D5F1 /* RequestsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestsTableViewController.swift; sourceTree = "<group>"; };
+		BD8513321C784043002470A2 /* ContactShareCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactShareCell.swift; sourceTree = "<group>"; };
+		BD8513351C789994002470A2 /* ContactShareCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactShareCellDelegate.swift; path = Hub/View/ContactShareCellDelegate.swift; sourceTree = SOURCE_ROOT; };
+		BD9032C11C5474C300C323A9 /* HubModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HubModel.swift; sourceTree = "<group>"; };
+		BD9032C31C54A5D600C323A9 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		BD9032C51C54E1BD00C323A9 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomTextField.swift; path = View/CustomTextField.swift; sourceTree = "<group>"; };
+		BD910CE51C6C7FF4003B099C /* ContactItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactItemCell.swift; path = ../Controller/ContactItemCell.swift; sourceTree = "<group>"; };
+		BD910CE71C6C7FF4003B099C /* EditContactItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditContactItemCell.swift; path = ../Controller/EditContactItemCell.swift; sourceTree = "<group>"; };
+		BD910CE81C6C7FF4003B099C /* EditMyProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditMyProfileViewController.swift; sourceTree = "<group>"; };
+		BD910CE91C6C7FF4003B099C /* MyProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
+		BD910CEF1C6C8102003B099C /* ContactSubType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactSubType.swift; sourceTree = "<group>"; };
+		BDA812041C6613EC00219C4A /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		BDA966531C4E6D0900FDDD33 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		BDA966541C4E6D0900FDDD33 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		BDA966571C4E6D6900FDDD33 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		BDA966591C4E6D7300FDDD33 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		BDA9665B1C4E6D7C00FDDD33 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		BDA9665D1C4E6D8500FDDD33 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		BDA9665F1C4E6D8D00FDDD33 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		BDA966611C4E6D9500FDDD33 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		BDA966631C4E6D9D00FDDD33 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		BDA966651C4E6DA500FDDD33 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		BDA966671C4E6DAD00FDDD33 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		BDA966691C4E6DBB00FDDD33 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		BDAE7A0E1C101F6B0085264A /* Hub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDAE7A111C101F6B0085264A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		BDAE7A131C101F6B0085264A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		BDAE7A131C101F6B0085264A /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		BDAE7A161C101F6B0085264A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BDAE7A181C101F6B0085264A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BDAE7A1B1C101F6B0085264A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		BDAE7A1D1C101F6B0085264A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BDAE7A1D1C101F6B0085264A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Hub/Info.plist; sourceTree = SOURCE_ROOT; };
 		BDAE7A221C101F6B0085264A /* HubTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HubTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDAE7A261C101F6B0085264A /* HubTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubTests.swift; sourceTree = "<group>"; };
 		BDAE7A281C101F6B0085264A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BDAE7A2D1C101F6B0085264A /* HubUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HubUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDAE7A311C101F6B0085264A /* HubUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubUITests.swift; sourceTree = "<group>"; };
 		BDAE7A331C101F6B0085264A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BDBB6A731C62117200143087 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		BDBB6A741C62117200143087 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		BDBB6A751C62117200143087 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		BDBB6A791C62225900143087 /* ParseFacebookUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtils.framework; sourceTree = "<group>"; };
+		BDBB6A7A1C62225900143087 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
+		BDBB6A7D1C6224A600143087 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		BDBB6A7F1C6224D800143087 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		BDC7AB5D1C798CE40093D5F4 /* AddContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactTableViewController.swift; sourceTree = "<group>"; };
+		BDCE5DCC1CD5F18D001ABD11 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		BDCE5DCE1CD624AE001ABD11 /* HubPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = HubPlayground.playground; path = Hub/HubPlayground.playground; sourceTree = "<group>"; };
+		BDD83EEA1CB7D329008C0515 /* MFMailComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MFMailComposer.swift; sourceTree = "<group>"; };
+		BDE7E6E21CC7A9EE00D3BB87 /* ViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewFactory.swift; sourceTree = "<group>"; };
+		BDE7E6E41CC7C2D300D3BB87 /* HubUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HubUtility.swift; sourceTree = "<group>"; };
+		BDF7B9B91CAFF1D3004B5F65 /* ContactType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactType.swift; sourceTree = "<group>"; };
+		BDF7B9BB1CB01486004B5F65 /* SharedPermission.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedPermission.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +221,25 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDBB6A801C6224D800143087 /* Social.framework in Frameworks */,
+				BDBB6A7E1C6224A600143087 /* Accounts.framework in Frameworks */,
+				BDA9666A1C4E6DBB00FDDD33 /* libsqlite3.tbd in Frameworks */,
+				BDA966681C4E6DAD00FDDD33 /* libz.tbd in Frameworks */,
+				BDBB6A781C62117200143087 /* FBSDKShareKit.framework in Frameworks */,
+				BDA966661C4E6DA500FDDD33 /* SystemConfiguration.framework in Frameworks */,
+				BDA966641C4E6D9D00FDDD33 /* StoreKit.framework in Frameworks */,
+				BDBB6A771C62117200143087 /* FBSDKLoginKit.framework in Frameworks */,
+				BDA966621C4E6D9500FDDD33 /* Security.framework in Frameworks */,
+				BDA966601C4E6D8D00FDDD33 /* QuartzCore.framework in Frameworks */,
+				BDA9665E1C4E6D8500FDDD33 /* CoreLocation.framework in Frameworks */,
+				BDA9665C1C4E6D7C00FDDD33 /* CoreGraphics.framework in Frameworks */,
+				BDBB6A761C62117200143087 /* FBSDKCoreKit.framework in Frameworks */,
+				BDA9665A1C4E6D7300FDDD33 /* CFNetwork.framework in Frameworks */,
+				BDA966581C4E6D6900FDDD33 /* AudioToolbox.framework in Frameworks */,
+				BDA966561C4E6D0900FDDD33 /* Parse.framework in Frameworks */,
+				BDBB6A7C1C62225900143087 /* ParseFacebookUtilsV4.framework in Frameworks */,
+				BDBB6A7B1C62225900143087 /* ParseFacebookUtils.framework in Frameworks */,
+				BDA966551C4E6D0900FDDD33 /* Bolts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +247,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDEBFDC91CA96F33002E48CE /* AudioToolbox.framework in Frameworks */,
+				BDEBFDC71CA96EFC002E48CE /* SystemConfiguration.framework in Frameworks */,
+				BDEBFDC51CA96E86002E48CE /* libsqlite3.tbd in Frameworks */,
+				BDEBFDB11CA96C34002E48CE /* Parse.framework in Frameworks */,
+				BDEBFDC31CA96E31002E48CE /* Bolts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,19 +259,162 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDEBFDCA1CA96F3B002E48CE /* AudioToolbox.framework in Frameworks */,
+				BDEBFDC81CA96F03002E48CE /* SystemConfiguration.framework in Frameworks */,
+				BDEBFDC61CA96E92002E48CE /* libsqlite3.tbd in Frameworks */,
+				BDEBFDB21CA96C3C002E48CE /* Parse.framework in Frameworks */,
+				BDEBFDC41CA96E39002E48CE /* Bolts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BD2B11AD1CB9CA6000A68A5D /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+				BD2B11B01CBA18C300A68A5D /* Ambient Hit.mp3 */,
+			);
+			name = Sound;
+			sourceTree = "<group>";
+		};
+		BD423AF21C1326F3001D25E7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BD8513341C784057002470A2 /* customCells */,
+				BD9032C71C54EDDD00C323A9 /* CustomTextFields */,
+				BDAE7A151C101F6B0085264A /* Main.storyboard */,
+				BDAE7A181C101F6B0085264A /* Assets.xcassets */,
+				BDAE7A1A1C101F6B0085264A /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		BD423AF31C132728001D25E7 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				BD6FF1CD1C93E8560069D7D9 /* ProfileContactViewController.swift */,
+				BD7A5E3C1C74909C0019D5F1 /* RequestsTableViewController.swift */,
+				BD19009C1C7341F600D82DA6 /* ContactRequestTableViewController.swift */,
+				BD206EC41CE7369B005DA278 /* ConfigureSharedContactTVC.swift */,
+				BD910CE81C6C7FF4003B099C /* EditMyProfileViewController.swift */,
+				BD910CE91C6C7FF4003B099C /* MyProfileViewController.swift */,
+				BD45F1B61C66FF4E00DBE5DB /* MyContactsTableViewController.swift */,
+				BD5B94DA1C64F43300812FFD /* ProfileCreatedViewController.swift */,
+				BD78B8D71C40D0210056AACE /* AboutViewController.swift */,
+				BDAE7A131C101F6B0085264A /* SignInViewController.swift */,
+				9A4E59871C213FC70046C8E8 /* TermsConditionsViewController.swift */,
+				9AA824F81C43476800B71364 /* SettingsViewController.swift */,
+				BD9032C31C54A5D600C323A9 /* SignUpViewController.swift */,
+				BD644D2D1C60D2CB005657FD /* PassswordRecoveryViewController.swift */,
+				BD5869801C6E5179009408EA /* HeyyaTabBarController.swift */,
+				9A0CBDBC1C71902C002BD9D0 /* CustomImagePickerController.swift */,
+				9AA47EAC1C7576310034FBE8 /* AddContactViewController.swift */,
+				BDC7AB5D1C798CE40093D5F4 /* AddContactTableViewController.swift */,
+				BDCE5DCC1CD5F18D001ABD11 /* BaseViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		BD423AF41C132747001D25E7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BD910CEF1C6C8102003B099C /* ContactSubType.swift */,
+				BD9032C11C5474C300C323A9 /* HubModel.swift */,
+				BDA812041C6613EC00219C4A /* User.swift */,
+				9AA47EB01C7AD5110034FBE8 /* Contact.swift */,
+				BDF7B9B91CAFF1D3004B5F65 /* ContactType.swift */,
+				BDF7B9BB1CB01486004B5F65 /* SharedPermission.swift */,
+				BDD83EEA1CB7D329008C0515 /* MFMailComposer.swift */,
+				BDE7E6E21CC7A9EE00D3BB87 /* ViewFactory.swift */,
+				BDE7E6E41CC7C2D300D3BB87 /* HubUtility.swift */,
+				BD4EE3291CDE1699007A3205 /* UserRepository.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		BD423AF51C13276A001D25E7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BDAE7A1D1C101F6B0085264A /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BD4EE3281CDE153E007A3205 /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				BDAE7A111C101F6B0085264A /* AppDelegate.swift */,
+				BD8513351C789994002470A2 /* ContactShareCellDelegate.swift */,
+				BD03E3B91CC3647800FB3ED2 /* EditMyProfileDelegate.swift */,
+			);
+			name = Delegate;
+			sourceTree = "<group>";
+		};
+		BD5A0AD51CD8DF0A00FE1299 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				BD5A0AD61CD8DFEF00FE1299 /* HubAPI.swift */,
+			);
+			name = API;
+			path = Model;
+			sourceTree = "<group>";
+		};
+		BD8513341C784057002470A2 /* customCells */ = {
+			isa = PBXGroup;
+			children = (
+				9AD9296C1C7C958000B764B7 /* AddContactCell.swift */,
+				BD8513321C784043002470A2 /* ContactShareCell.swift */,
+				BD910CE51C6C7FF4003B099C /* ContactItemCell.swift */,
+				BD910CE71C6C7FF4003B099C /* EditContactItemCell.swift */,
+			);
+			name = customCells;
+			sourceTree = "<group>";
+		};
+		BD9032C71C54EDDD00C323A9 /* CustomTextFields */ = {
+			isa = PBXGroup;
+			children = (
+				BD9032C51C54E1BD00C323A9 /* CustomTextField.swift */,
+			);
+			name = CustomTextFields;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		BDA9666B1C4E6E5C00FDDD33 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BDBB6A7F1C6224D800143087 /* Social.framework */,
+				BDBB6A7D1C6224A600143087 /* Accounts.framework */,
+				BDBB6A791C62225900143087 /* ParseFacebookUtils.framework */,
+				BDBB6A7A1C62225900143087 /* ParseFacebookUtilsV4.framework */,
+				BDBB6A731C62117200143087 /* FBSDKCoreKit.framework */,
+				BDBB6A741C62117200143087 /* FBSDKLoginKit.framework */,
+				BDBB6A751C62117200143087 /* FBSDKShareKit.framework */,
+				BDA966691C4E6DBB00FDDD33 /* libsqlite3.tbd */,
+				BDA966671C4E6DAD00FDDD33 /* libz.tbd */,
+				BDA966651C4E6DA500FDDD33 /* SystemConfiguration.framework */,
+				BDA966631C4E6D9D00FDDD33 /* StoreKit.framework */,
+				BDA966611C4E6D9500FDDD33 /* Security.framework */,
+				BDA9665F1C4E6D8D00FDDD33 /* QuartzCore.framework */,
+				BDA9665D1C4E6D8500FDDD33 /* CoreLocation.framework */,
+				BDA9665B1C4E6D7C00FDDD33 /* CoreGraphics.framework */,
+				BDA966591C4E6D7300FDDD33 /* CFNetwork.framework */,
+				BDA966571C4E6D6900FDDD33 /* AudioToolbox.framework */,
+				BDA966531C4E6D0900FDDD33 /* Bolts.framework */,
+				BDA966541C4E6D0900FDDD33 /* Parse.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		BDAE7A051C101F6B0085264A = {
 			isa = PBXGroup;
 			children = (
 				BDAE7A101C101F6B0085264A /* Hub */,
+				BDCE5DCE1CD624AE001ABD11 /* HubPlayground.playground */,
 				BDAE7A251C101F6B0085264A /* HubTests */,
 				BDAE7A301C101F6B0085264A /* HubUITests */,
 				BDAE7A0F1C101F6B0085264A /* Products */,
+				BDA9666B1C4E6E5C00FDDD33 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -97,12 +431,13 @@
 		BDAE7A101C101F6B0085264A /* Hub */ = {
 			isa = PBXGroup;
 			children = (
-				BDAE7A111C101F6B0085264A /* AppDelegate.swift */,
-				BDAE7A131C101F6B0085264A /* ViewController.swift */,
-				BDAE7A151C101F6B0085264A /* Main.storyboard */,
-				BDAE7A181C101F6B0085264A /* Assets.xcassets */,
-				BDAE7A1A1C101F6B0085264A /* LaunchScreen.storyboard */,
-				BDAE7A1D1C101F6B0085264A /* Info.plist */,
+				BD4EE3281CDE153E007A3205 /* Delegate */,
+				BD423AF21C1326F3001D25E7 /* View */,
+				BD423AF31C132728001D25E7 /* Controller */,
+				BD423AF41C132747001D25E7 /* Model */,
+				BD5A0AD51CD8DF0A00FE1299 /* API */,
+				BD2B11AD1CB9CA6000A68A5D /* Sound */,
+				BD423AF51C13276A001D25E7 /* Supporting Files */,
 			);
 			path = Hub;
 			sourceTree = "<group>";
@@ -187,12 +522,18 @@
 		BDAE7A061C101F6B0085264A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0710;
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = 88Software;
 				TargetAttributes = {
 					BDAE7A0D1C101F6B0085264A = {
 						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = 5AY47B6KDZ;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					BDAE7A211C101F6B0085264A = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -231,6 +572,7 @@
 			files = (
 				BDAE7A1C1C101F6B0085264A /* LaunchScreen.storyboard in Resources */,
 				BDAE7A191C101F6B0085264A /* Assets.xcassets in Resources */,
+				BD2B11B11CBA18C300A68A5D /* Ambient Hit.mp3 in Resources */,
 				BDAE7A171C101F6B0085264A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -256,8 +598,44 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BDAE7A141C101F6B0085264A /* ViewController.swift in Sources */,
+				BD5A0AD71CD8DFEF00FE1299 /* HubAPI.swift in Sources */,
+				BDAE7A141C101F6B0085264A /* SignInViewController.swift in Sources */,
+				BDD83EEB1CB7D329008C0515 /* MFMailComposer.swift in Sources */,
+				BD5869811C6E5179009408EA /* HeyyaTabBarController.swift in Sources */,
+				BD19009D1C7341F600D82DA6 /* ContactRequestTableViewController.swift in Sources */,
+				BD9032C21C5474C300C323A9 /* HubModel.swift in Sources */,
+				BDCE5DCD1CD5F18D001ABD11 /* BaseViewController.swift in Sources */,
+				BD910CEA1C6C7FF4003B099C /* ContactItemCell.swift in Sources */,
+				BD206EC51CE7369B005DA278 /* ConfigureSharedContactTVC.swift in Sources */,
+				9AD9296D1C7C958000B764B7 /* AddContactCell.swift in Sources */,
+				BDC7AB5E1C798CE40093D5F4 /* AddContactTableViewController.swift in Sources */,
+				BD45F1B71C66FF4E00DBE5DB /* MyContactsTableViewController.swift in Sources */,
 				BDAE7A121C101F6B0085264A /* AppDelegate.swift in Sources */,
+				BD910CED1C6C7FF4003B099C /* EditMyProfileViewController.swift in Sources */,
+				BD910CEC1C6C7FF4003B099C /* EditContactItemCell.swift in Sources */,
+				BD4EE32A1CDE1699007A3205 /* UserRepository.swift in Sources */,
+				BD9032C61C54E1BD00C323A9 /* CustomTextField.swift in Sources */,
+				BD8513361C789994002470A2 /* ContactShareCellDelegate.swift in Sources */,
+				BDF7B9BA1CAFF1D3004B5F65 /* ContactType.swift in Sources */,
+				BD78B8D81C40D0210056AACE /* AboutViewController.swift in Sources */,
+				BDF7B9BC1CB01486004B5F65 /* SharedPermission.swift in Sources */,
+				BD6FF1CE1C93E8560069D7D9 /* ProfileContactViewController.swift in Sources */,
+				BD910CEE1C6C7FF4003B099C /* MyProfileViewController.swift in Sources */,
+				BD5B94DB1C64F43300812FFD /* ProfileCreatedViewController.swift in Sources */,
+				BD03E3BA1CC3647800FB3ED2 /* EditMyProfileDelegate.swift in Sources */,
+				BD7A5E3D1C74909C0019D5F1 /* RequestsTableViewController.swift in Sources */,
+				BDE7E6E51CC7C2D300D3BB87 /* HubUtility.swift in Sources */,
+				9A0CBDBD1C71902C002BD9D0 /* CustomImagePickerController.swift in Sources */,
+				9A4E59881C213FC70046C8E8 /* TermsConditionsViewController.swift in Sources */,
+				BDA812051C6613EC00219C4A /* User.swift in Sources */,
+				BD8513331C784043002470A2 /* ContactShareCell.swift in Sources */,
+				BD9032C41C54A5D600C323A9 /* SignUpViewController.swift in Sources */,
+				9AA47EB11C7AD5110034FBE8 /* Contact.swift in Sources */,
+				BD910CF11C6C8102003B099C /* ContactSubType.swift in Sources */,
+				9AA47EAD1C7576310034FBE8 /* AddContactViewController.swift in Sources */,
+				BD644D2E1C60D2CB005657FD /* PassswordRecoveryViewController.swift in Sources */,
+				9AA824F91C43476800B71364 /* SettingsViewController.swift in Sources */,
+				BDE7E6E31CC7A9EE00D3BB87 /* ViewFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,7 +643,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DC6F68B1CD35263004FD173 /* PassswordRecoveryViewController.swift in Sources */,
+				9D293B721CD0D11900C34BED /* SharedPermission.swift in Sources */,
+				9D293B711CD0D10300C34BED /* MyProfileViewController.swift in Sources */,
+				9D293B6E1CD0CB6700C34BED /* SignInViewController.swift in Sources */,
+				9D293B6D1CD0C2C100C34BED /* HubUtility.swift in Sources */,
+				9D293B6A1CD0C29100C34BED /* ContactType.swift in Sources */,
+				9D293B681CD0C25D00C34BED /* ViewFactory.swift in Sources */,
+				BDEBFDBF1CA96D78002E48CE /* ContactShareCell.swift in Sources */,
+				BDEBFDBE1CA96D70002E48CE /* RequestsTableViewController.swift in Sources */,
+				BDEBFDBD1CA96D69002E48CE /* ContactShareCellDelegate.swift in Sources */,
+				BDEBFDBC1CA96D3F002E48CE /* ContactRequestTableViewController.swift in Sources */,
+				BDEBFDB91CA96D00002E48CE /* ProfileContactViewController.swift in Sources */,
+				BDEBFDB51CA96C88002E48CE /* HubModel.swift in Sources */,
+				BDEBFDB41CA96C81002E48CE /* MyContactsTableViewController.swift in Sources */,
+				BDEBFDB31CA96C78002E48CE /* SignUpViewController.swift in Sources */,
+				BDEBFDB01CA96911002E48CE /* TermsConditionsViewController.swift in Sources */,
+				BDEBFDAF1CA9690A002E48CE /* AddContactCell.swift in Sources */,
+				BDEBFDAD1CA968F8002E48CE /* User.swift in Sources */,
+				BDEBFDAC1CA968E2002E48CE /* ContactSubType.swift in Sources */,
+				9AA47EB21C7AD5110034FBE8 /* Contact.swift in Sources */,
+				9AA47EAE1C7576310034FBE8 /* AddContactViewController.swift in Sources */,
 				BDAE7A271C101F6B0085264A /* HubTests.swift in Sources */,
+				9AA824FA1C43476800B71364 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,7 +673,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DC6F68C1CD3526A004FD173 /* PassswordRecoveryViewController.swift in Sources */,
+				9D293B731CD0D12100C34BED /* SharedPermission.swift in Sources */,
+				9D293B701CD0D0FA00C34BED /* MyProfileViewController.swift in Sources */,
+				9D293B6F1CD0CB7200C34BED /* SignInViewController.swift in Sources */,
+				9D293B6C1CD0C2BA00C34BED /* HubUtility.swift in Sources */,
+				9D293B6B1CD0C29B00C34BED /* ContactType.swift in Sources */,
+				9D293B691CD0C27B00C34BED /* ViewFactory.swift in Sources */,
+				BDEBFDC21CA96D97002E48CE /* ContactShareCell.swift in Sources */,
+				BDEBFDC11CA96D90002E48CE /* RequestsTableViewController.swift in Sources */,
+				BDEBFDC01CA96D87002E48CE /* ContactShareCellDelegate.swift in Sources */,
+				BDEBFDBB1CA96D38002E48CE /* ContactRequestTableViewController.swift in Sources */,
+				BDEBFDBA1CA96D08002E48CE /* ProfileContactViewController.swift in Sources */,
+				BDEBFDB81CA96CD7002E48CE /* HubModel.swift in Sources */,
+				BDEBFDB71CA96CD1002E48CE /* MyContactsTableViewController.swift in Sources */,
+				BDEBFDB61CA96CCA002E48CE /* SignUpViewController.swift in Sources */,
+				BDEBFDAB1CA968A9002E48CE /* AddContactCell.swift in Sources */,
+				BDEBFDA91CA96893002E48CE /* User.swift in Sources */,
+				BDEBFDA81CA9688B002E48CE /* TermsConditionsViewController.swift in Sources */,
+				BDEBFDA71CA9687C002E48CE /* ContactSubType.swift in Sources */,
+				9AA47EB31C7AD5110034FBE8 /* Contact.swift in Sources */,
+				9AA47EAF1C7576310034FBE8 /* AddContactViewController.swift in Sources */,
 				BDAE7A321C101F6B0085264A /* HubUITests.swift in Sources */,
+				9AA824FB1C43476800B71364 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,7 +721,8 @@
 				BDAE7A161C101F6B0085264A /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
+			path = Hub;
+			sourceTree = SOURCE_ROOT;
 		};
 		BDAE7A1A1C101F6B0085264A /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -307,7 +730,8 @@
 				BDAE7A1B1C101F6B0085264A /* Base */,
 			);
 			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
+			path = Hub;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXVariantGroup section */
 
@@ -397,11 +821,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Hub/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.88Software.Hub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -409,11 +843,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Hub/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.88Software.Hub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Release;
 		};
@@ -421,6 +864,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = HubTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.88Software.HubTests;
@@ -433,6 +880,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = HubTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.88Software.HubTests;
@@ -444,6 +895,10 @@
 		BDAE7A3D1C101F6B0085264A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = HubUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.88Software.HubUITests;
@@ -456,6 +911,10 @@
 		BDAE7A3E1C101F6B0085264A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = HubUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.88Software.HubUITests;
@@ -484,6 +943,7 @@
 				BDAE7A381C101F6B0085264A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BDAE7A391C101F6B0085264A /* Build configuration list for PBXNativeTarget "HubTests" */ = {
 			isa = XCConfigurationList;
@@ -492,6 +952,7 @@
 				BDAE7A3B1C101F6B0085264A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BDAE7A3C1C101F6B0085264A /* Build configuration list for PBXNativeTarget "HubUITests" */ = {
 			isa = XCConfigurationList;
@@ -500,6 +961,7 @@
 				BDAE7A3E1C101F6B0085264A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
