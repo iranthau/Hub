@@ -66,12 +66,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     //----------------------Private functions---------------------------------
     
-    func configureParseAPI(launchOptions: [NSObject: AnyObject]?) {
+    private func configureParseAPI(launchOptions: [NSObject: AnyObject]?) {
         Parse.setApplicationId("inQev5jlG1BWu0LdsRHBK5XbyQrADMJ6BwGXweEF", clientKey: "p2C6htbwjtzV0syI7zXsjiWxbQajREwoJdreYDL0")
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
     }
     
-    func configureNotifications(application: UIApplication) {
+    private func configureNotifications(application: UIApplication) {
         let userNotificationTypes: UIUserNotificationType = [.Alert, .Badge, .Sound]
         let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
         
@@ -79,7 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerForRemoteNotifications()
     }
     
-    func customizeAppearance() {
+    private func customizeAppearance() {
         UINavigationBar.appearance().barTintColor = UIColor(red: 74/255.0, green: 144/255.0, blue: 226/255.0, alpha: 1.0)
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         UITabBar.appearance().barTintColor = UIColor(red: 74/255.0, green: 144/255.0, blue: 226/255.0, alpha: 1.0)
@@ -88,7 +88,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIBarButtonItem.appearance().tintColor = UIColor.whiteColor()
     }
     
-    func confgureCurrentParseInstallation(deviceToken: NSData) {
+    private func confgureCurrentParseInstallation(deviceToken: NSData) {
         let installation = PFInstallation.currentInstallation()
         if PFUser.currentUser() != nil {
             installation["user"] = PFUser.currentUser()
@@ -97,7 +97,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         installation.saveInBackground()
     }
     
-    func showRequestVC() {
+    private func showRequestVC() {
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let tabBarController = storyBoard.instantiateViewControllerWithIdentifier("HeyyaTabBarController") as! UITabBarController
         if PFUser.currentUser() != nil {
@@ -106,7 +106,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func clearBadges() {
+    private func clearBadges() {
         let installation = PFInstallation.currentInstallation()
         installation.badge = 0
         installation.saveInBackgroundWithBlock {

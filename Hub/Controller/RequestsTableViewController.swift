@@ -82,7 +82,7 @@ class RequestsTableViewController: UITableViewController {
             self.declineRequest(tableView, indexPath: indexPath)
         })
         
-        return [declineAction, acceptAction]
+        return [acceptAction, declineAction]
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -92,7 +92,7 @@ class RequestsTableViewController: UITableViewController {
         let background = cell!.viewWithTag(6)! as UIView
         container.layer.transform = animation
         container.layer.backgroundColor = UIColor.whiteColor().CGColor
-        background.layer.backgroundColor = UIColor.redColor().CGColor
+        background.layer.backgroundColor = UIColor(hue: 0.3, saturation: 1, brightness: 0.67, alpha: 1.0).CGColor
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         UIView.animateWithDuration(1.0, animations: {

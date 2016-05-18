@@ -51,10 +51,12 @@ class SignInViewController: BaseViewController, UITextFieldDelegate {
                             if let error = error {
                                 print(error)
                             } else {
+                                HubAPI.registerForPushNotification()
                                 self.performSegueWithIdentifier("createAccountSegue", sender: nil)
                             }
                         }
                     } else {
+                        HubAPI.registerForPushNotification()
                         self.hubModel.setCurrentUser(user)
                         self.performSegueWithIdentifier("signInSegue", sender: nil)
                     }
@@ -103,6 +105,7 @@ class SignInViewController: BaseViewController, UITextFieldDelegate {
             if let error = error {
                 self.showAlert(error)
             } else {
+                HubAPI.registerForPushNotification()
                 self.hubModel.setCurrentUser(currentUser!)
                 self.performSegueWithIdentifier("signInSegue", sender: nil)
             }

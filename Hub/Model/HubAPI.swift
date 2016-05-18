@@ -303,6 +303,14 @@ class HubAPI {
         }
     }
     
+    class func registerForPushNotification() {
+        let installation = PFInstallation.currentInstallation()
+        if PFUser.currentUser() != nil {
+            installation["user"] = PFUser.currentUser()
+        }
+        installation.saveInBackground()
+    }
+    
     //---------------------Private methods-----------------------------
     //Mark: Can be placed in the cloud code
     private class func fetchFriendsFromIds(pUser: PFUser?, objects: [PFObject]?, completion: (pUsers: [PFUser]?, error: NSError?) -> Void) {

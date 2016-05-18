@@ -42,7 +42,7 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
             ViewFactory.setLabelPlaceholder("nickname", text: friend.nickname, label: nicknameLabel)
             ViewFactory.setLabelPlaceholder("city", text: friend.city, label: locationLabel)
             if friend.hasSharedContacts() {
-                howToContactLabel.text = "How would you like to connect with \(friend.firstName!)?"
+                howToContactLabel.text = "What contact details of \(friend.firstName!) do you want to view?"
             } else {
                 howToContactLabel.text = "\(friend.firstName!) has not shared any details"
             }
