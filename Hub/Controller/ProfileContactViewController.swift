@@ -74,6 +74,24 @@ class ProfileContactViewController: UIViewController, UITableViewDataSource {
                 if let error = error {
                     print(error)
                 } else if let contacts = contacts {
+                    self.mySharedContacts.removeAll()
+                    for sharedContact in contacts {
+                        self.mySharedContacts.append(sharedContact)
+                    }
+                }
+                self.mySharedContactsTableView.reloadData()
+            })
+        }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        if let currentUser = currentUser {
+            currentUser.getContactsIShared(contactProfile, completion: {
+                (contacts, error) in
+                if let error = error {
+                    print(error)
+                } else if let contacts = contacts {
+                    self.mySharedContacts.removeAll()
                     for sharedContact in contacts {
                         self.mySharedContacts.append(sharedContact)
                     }
