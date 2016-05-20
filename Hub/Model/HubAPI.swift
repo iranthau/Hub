@@ -237,20 +237,13 @@ class HubAPI {
                 if let error = error {
                     completion(false, error)
                 } else if let sharedPermission = sharedPermission {
-                    let status = sharedPermission["status"] as? String
-                    if let status = status {
-                        if status == "pending" {
-                            sharedPermission["status"] = "accepted"
-                            sharedPermission.saveInBackgroundWithBlock {
-                                (success: Bool, error: NSError?) in
-                                if success {
-                                    completion(true, nil)
-                                } else if let error = error {
-                                    completion(false, error)
-                                }
-                            }
-                        } else {
-                            completion(false, nil)
+                    sharedPermission["status"] = "accepted"
+                    sharedPermission.saveInBackgroundWithBlock {
+                        (success: Bool, error: NSError?) in
+                        if success {
+                            completion(true, nil)
+                        } else if let error = error {
+                            completion(false, error)
                         }
                     }
                 }
@@ -313,6 +306,19 @@ class HubAPI {
             installation["user"] = PFUser.currentUser()
         }
         installation.saveInBackground()
+    }
+    
+    class func isFriends(query: PFQuery?, completion: (Bool) -> Void) {
+        if let query = query {
+            query.getFirstObjectInBackgroundWithBlock {
+                (pObject: PFObject?, error: NSError?) in
+                if pObject == nil {
+                    completion(false)
+                } else {
+                    completion(true)
+                }
+            }
+        }
     }
     
     //---------------------Private methods-----------------------------

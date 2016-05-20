@@ -96,7 +96,7 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
         cell.cellDelegate = self
         imageView.image = UIImage(named: contact.getImageName())
         sharedSwitch.setOn(contact.selected!, animated: true)
-        label.text = contactDisplayName(contact)
+        label.text = contact.value!
         return cell
     }
     
@@ -116,14 +116,6 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
     }
     
     //---------------------------Private methods------------------
-    private func contactDisplayName(contact: Contact) -> String {
-        if contact.type! == ContactType.Social.label {
-            return "\(contact.subType!)"
-        } else {
-            return "\(contact.subType!) \(contact.type!)"
-        }
-    }
-    
     private func disableSendRequestButton() {
         if requestedContacts.isEmpty {
             sendRequestButton.enabled = false

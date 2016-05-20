@@ -398,8 +398,6 @@ class User: Hashable {
                 } else if success {
                     push.sendPushInBackground()
                     completion(true, nil)
-                } else if !success && error == nil {
-                    completion(false, nil)
                 }
             }
         }
@@ -475,6 +473,24 @@ class User: Hashable {
             } else {
                 completion(success: success, error: nil)
             }
+        }
+    }
+    
+    func isFriendsWith(user: User?, completion: (Bool) -> Void) {
+        if let user = user {
+            let pUser = user.matchingParseObject
+            let query = PFQuery(className: "SharedPermission")
+            query.whereKey("userFriend", equalTo: pUser)
+            query.whereKey("user", equalTo: matchingParseObject)
+            
+            HubAPI.isFriends(query, completion: {
+                (success: Bool) in
+                if success {
+                    completion(true)
+                } else {
+                    completion(false)
+                }
+            })
         }
     }
     

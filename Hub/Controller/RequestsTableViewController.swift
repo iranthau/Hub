@@ -120,9 +120,14 @@ class RequestsTableViewController: UITableViewController {
                 if let error = error {
                     print(error)
                 } else if success {
-                    self.performSegueWithIdentifier("acceptRequestSegue", sender: requestContact)
-                } else if !success && error == nil {
-                    self.viewWillAppear(true)
+                    user.isFriendsWith(requestContact, completion: {
+                        (success: Bool) in
+                        if success {
+                            self.viewWillAppear(true)
+                        } else {
+                            self.performSegueWithIdentifier("acceptRequestSegue", sender: requestContact)
+                        }
+                    })
                 }
             })
         }
