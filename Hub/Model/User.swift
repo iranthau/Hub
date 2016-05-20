@@ -375,7 +375,7 @@ class User: Hashable {
         }
     }
     
-    func acceptRequest(friend: User?, contacts: [Contact]?, completion: (Bool, String?) -> Void) {
+    func acceptRequest(friend: User?, completion: (Bool, String?) -> Void) {
         if let friend = friend {
             let pFriend = friend.matchingParseObject
             let query = PFQuery(className: "SharedPermission")
@@ -390,21 +390,16 @@ class User: Hashable {
             let data = [ "alert": message, "badge": "Increment", "sound": "Ambient Hit.mp3" ]
             push.setData(data)
             
-            var pContacts = [PFObject]()
-            if let contacts = contacts {
-                for contact in contacts {
-                    pContacts.append(contact.matchingParseObject)
-                }
-            }
-            
-            HubAPI.acceptRequest(query, contacts: pContacts) {
-                (success: Bool, errror: NSError?) in
-                if let errror = errror {
-                    let errorMessage = errror.userInfo["error"] as? String
+            HubAPI.acceptRequest(query) {
+                (success: Bool, error: NSError?) in
+                if let error = error {
+                    let errorMessage = error.userInfo["error"] as? String
                     completion(false, errorMessage)
                 } else if success {
                     push.sendPushInBackground()
                     completion(true, nil)
+                } else if !success && error == nil {
+                    completion(false, nil)
                 }
             }
         }

@@ -230,23 +230,27 @@ class HubAPI {
     }
     
     //Mark: Can be placed in the cloud code
-    class func acceptRequest(query: PFQuery?, contacts: [PFObject]?, completion: (Bool, NSError?) -> Void) {
+    class func acceptRequest(query: PFQuery?, completion: (Bool, NSError?) -> Void) {
         if let query = query {
             query.getFirstObjectInBackgroundWithBlock {
                 (sharedPermission: PFObject?, error: NSError?) in
                 if let error = error {
                     completion(false, error)
                 } else if let sharedPermission = sharedPermission {
-                    if let contacts = contacts {
-                        sharedPermission["contacts"] = contacts
-                        sharedPermission["status"] = "accepted"
-                        sharedPermission.saveInBackgroundWithBlock {
-                            (success: Bool, error: NSError?) in
-                            if success {
-                                completion(true, nil)
-                            } else if let error = error {
-                                completion(false, error)
+                    let status = sharedPermission["status"] as? String
+                    if let status = status {
+                        if status == "pending" {
+                            sharedPermission["status"] = "accepted"
+                            sharedPermission.saveInBackgroundWithBlock {
+                                (success: Bool, error: NSError?) in
+                                if success {
+                                    completion(true, nil)
+                                } else if let error = error {
+                                    completion(false, error)
+                                }
                             }
+                        } else {
+                            completion(false, nil)
                         }
                     }
                 }

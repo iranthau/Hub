@@ -2187,75 +2187,12 @@
                     <navigationItem key="navigationItem" title="Requests" id="QNI-Z1-dh4"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <segue destination="jdO-bZ-kG5" kind="show" identifier="acceptRequestSegue" id="fw5-Wl-lpU"/>
+                        <segue destination="1u3-W9-zS7" kind="show" identifier="acceptRequestSegue" id="wvc-Hf-59i"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cud-Ua-BIE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1646.5" y="3424.5"/>
-        </scene>
-        <!--ContactRequestTableViewController-->
-        <scene sceneID="fnz-5r-4Ux">
-            <objects>
-                <tableViewController title="ContactRequestTableViewController" id="jdO-bZ-kG5" customClass="ContactRequestTableViewController" customModule="Hub" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" id="dfq-Km-TUf">
-                        <rect key="frame" x="0.0" y="64" width="375" height="554"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="contactTypeCell" rowHeight="60" id="8C6-q2-3jK" customClass="ContactShareCell" customModule="Hub" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="60"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8C6-q2-3jK" id="Wm2-1H-aq6">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="15" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="10i-4C-nA2">
-                                            <rect key="frame" x="46" y="20" width="250" height="20"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <switch opaque="NO" tag="3" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dYK-4L-OFD">
-                                            <rect key="frame" x="304" y="14" width="51" height="31"/>
-                                            <connections>
-                                                <action selector="statusChanged:" destination="8C6-q2-3jK" eventType="valueChanged" id="HZJ-ii-m2c"/>
-                                            </connections>
-                                        </switch>
-                                        <imageView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7b6-PA-hvb">
-                                            <rect key="frame" x="18" y="20" width="20" height="20"/>
-                                        </imageView>
-                                    </subviews>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="jdO-bZ-kG5" id="AT7-Fg-cuH"/>
-                            <outlet property="delegate" destination="jdO-bZ-kG5" id="Vze-Vm-QPm"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Title" id="WaY-rI-qKQ">
-                        <barButtonItem key="leftBarButtonItem" image="back-arrow" id="5AE-pB-MOc">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="back:" destination="jdO-bZ-kG5" id="puj-c9-rk1"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="tick" id="HKs-N7-4qi">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="acceptRequest:" destination="jdO-bZ-kG5" id="N0c-RE-RWr"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                    <connections>
-                        <segue destination="1u3-W9-zS7" kind="show" identifier="sendRequestSegue" id="wwO-V4-tx1"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="uk3-lo-K5x" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1099.5" y="3424.5"/>
         </scene>
         <!--RequestNavigationController-->
         <scene sceneID="oPE-gF-dQC">
@@ -2398,6 +2335,6 @@
         <segue reference="uaK-In-Vgu"/>
         <segue reference="aD6-kq-Qqs"/>
         <segue reference="WnZ-H8-8sI"/>
-        <segue reference="wwO-V4-tx1"/>
+        <segue reference="wvc-Hf-59i"/>
     </inferredMetricsTieBreakers>
 </document>

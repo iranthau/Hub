@@ -105,8 +105,8 @@ class RequestsTableViewController: UITableViewController {
         let requestContact = sender as! User
         
         if segue.identifier == "acceptRequestSegue" {
-            if let destinationVC = segue.destinationViewController as? ContactRequestTableViewController {
-                destinationVC.friend = requestContact
+            if let destinationVC = segue.destinationViewController as? AddContactViewController {
+                destinationVC.contactProfile = requestContact
             }
         }
     }
@@ -114,7 +114,18 @@ class RequestsTableViewController: UITableViewController {
     //-------------------Private Methods------------------------
     private func acceptRequest(tableView: UITableView, indexPath: NSIndexPath) {
         let requestContact = requests[indexPath.row]
-        self.performSegueWithIdentifier("acceptRequestSegue", sender: requestContact)
+        if let user = currentUser {
+            user.acceptRequest(requestContact, completion: {
+                (success: Bool, error: String?) in
+                if let error = error {
+                    print(error)
+                } else if success {
+                    self.performSegueWithIdentifier("acceptRequestSegue", sender: requestContact)
+                } else if !success && error == nil {
+                    self.viewWillAppear(true)
+                }
+            })
+        }
     }
     
     private func declineRequest(tableView: UITableView, indexPath: NSIndexPath) {
