@@ -63,8 +63,8 @@ class SharedPermission {
     func updateSharedContacts(pushNotification: PFPush?, completion: (success: Bool, error: String?) -> Void) {
         if let pushNotification = pushNotification {
             let query = PFQuery(className: parseClassName)
-            query.whereKey("user", equalTo: matchingParseObject["userFriend"])
-            query.whereKey("userFriend", equalTo: matchingParseObject["user"])
+            query.whereKey("userFriend", equalTo: matchingParseObject["userFriend"])
+            query.whereKey("user", equalTo: matchingParseObject["user"])
             query.whereKey("status", equalTo: "accepted")
             
             HubAPI.updateContacts(query, pContacts: matchingParseObject["contacts"] as? [PFObject], completion: {

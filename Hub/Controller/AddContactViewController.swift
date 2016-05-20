@@ -12,7 +12,7 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
     @IBOutlet weak var nicknameLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var contactSelectionTableView: UITableView!
-    @IBOutlet weak var howToContactLabel: UILabel!
+    @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var sendRequestButton: UIBarButtonItem!
     
     var contactProfile: User?
@@ -30,21 +30,24 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
         if let friend = contactProfile {
             title = "\(friend.firstName!) \(friend.lastName!)"
             friend.getProfileImage(profileImageView)
-            friend.getContacts {
-                (contacts, error) in
-                if let error = error {
-                    print(error)
-                } else if let contacts = contacts {
-                    self.contacts = contacts
-                    self.contactSelectionTableView.reloadData()
+            if let user = currentUser {
+                user.getContacts {
+                    (contacts, error) in
+                    if let error = error {
+                        print(error)
+                    } else if let contacts = contacts {
+                        self.contacts = contacts
+                        self.contactSelectionTableView.reloadData()
+                    }
                 }
             }
+            
             ViewFactory.setLabelPlaceholder("nickname", text: friend.nickname, label: nicknameLabel)
             ViewFactory.setLabelPlaceholder("city", text: friend.city, label: locationLabel)
             if friend.hasSharedContacts() {
-                howToContactLabel.text = "What contact details of \(friend.firstName!) do you want to view?"
+                textView.text = "What contact details would you like to share with \(friend.firstName!)?"
             } else {
-                howToContactLabel.text = "\(friend.firstName!) has not shared any details"
+                textView.text = "\(friend.firstName!) has not shared any details"
             }
         }
         disableSendRequestButton()
@@ -69,7 +72,7 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
         if let currentUser = currentUser {
             let message = "You have a request from \(currentUser.firstName!) \(currentUser.lastName!)"
             let pushNotification = HubUtility.configurePushNotification(pushQuery, message: message)
-            sharedPermission.buildParseObject(contactProfile, toUser: currentUser, contacts: requestedContacts, status: "pending")
+            sharedPermission.buildParseObject(currentUser, toUser: contactProfile, contacts: requestedContacts, status: "pending")
             sharedPermission.sendRequest(pushNotification, completion: {
                 (success, error) in
                 self.showAlert("Request is sent")

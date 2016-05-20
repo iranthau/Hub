@@ -296,9 +296,9 @@ class User: Hashable {
     //Get a list of friends that asked to connect with me
     func getRequests(completion: (requests: [User]?, error: String?) -> Void) {
         let query = PFQuery(className: "SharedPermission")
-        query.whereKey("user", equalTo: matchingParseObject)
+        query.whereKey("userFriend", equalTo: matchingParseObject)
         query.whereKey("status", equalTo: "pending")
-        query.includeKey("userFriend")
+        query.includeKey("user")
         
         HubAPI.getRequests(query) {
             (pRequests: [PFUser]?, error: NSError?) in
@@ -321,8 +321,8 @@ class User: Hashable {
     func getRequestedContacts(friend: User?, completion: (contacts: [Contact]?, error: String?) -> Void) {
         if let friend = friend {
             let query = PFQuery(className: "SharedPermission")
-            query.whereKey("userFriend", equalTo: friend.matchingParseObject)
-            query.whereKey("user", equalTo: matchingParseObject)
+            query.whereKey("user", equalTo: friend.matchingParseObject)
+            query.whereKey("userFriend", equalTo: matchingParseObject)
             query.whereKey("status", equalTo: "pending")
             query.includeKey("contacts")
             
@@ -379,8 +379,8 @@ class User: Hashable {
         if let friend = friend {
             let pFriend = friend.matchingParseObject
             let query = PFQuery(className: "SharedPermission")
-            query.whereKey("user", equalTo: matchingParseObject)
-            query.whereKey("userFriend", equalTo: pFriend)
+            query.whereKey("userFriend", equalTo: matchingParseObject)
+            query.whereKey("user", equalTo: pFriend)
             
             let pushQuery = PFInstallation.query()!
             pushQuery.whereKey("user", equalTo: pFriend)
@@ -414,8 +414,8 @@ class User: Hashable {
         if let friend = friend {
             let pFriend = friend.matchingParseObject
             let query = PFQuery(className: "SharedPermission")
-            query.whereKey("user", equalTo: matchingParseObject)
-            query.whereKey("userFriend", equalTo: pFriend)
+            query.whereKey("userFriend", equalTo: matchingParseObject)
+            query.whereKey("user", equalTo: pFriend)
             query.whereKey("status", equalTo: "pending")
             
             HubAPI.declineRequest(query)

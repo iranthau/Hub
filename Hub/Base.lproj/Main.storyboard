@@ -1459,14 +1459,8 @@
                                     <constraint firstItem="UI3-zU-AWY" firstAttribute="leading" secondItem="KCL-hE-z5v" secondAttribute="leading" id="y1L-Eq-Ehf"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="How would you like to connect with user?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WVh-Gv-P9O">
-                                <rect key="frame" x="20" y="212" width="335" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="66" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="xCg-bd-NEh">
-                                <rect key="frame" x="20" y="241" width="335" height="305"/>
+                                <rect key="frame" x="20" y="270" width="335" height="276"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddProfileContactCell" rowHeight="66" id="nff-PB-94J" customClass="AddContactCell" customModule="Hub" customModuleProvider="target">
@@ -1513,6 +1507,13 @@
                                     <outlet property="delegate" destination="1u3-W9-zS7" id="Dld-cu-0GH"/>
                                 </connections>
                             </tableView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="J78-Pt-NT4">
+                                <rect key="frame" x="20" y="212" width="335" height="50"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -1538,11 +1539,11 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="contactSelectionTableView" destination="xCg-bd-NEh" id="g8x-fR-ZsU"/>
-                        <outlet property="howToContactLabel" destination="WVh-Gv-P9O" id="K3i-ki-fdj"/>
                         <outlet property="locationLabel" destination="epe-ly-UAW" id="y4D-tL-HTY"/>
                         <outlet property="nicknameLabel" destination="rpK-5T-cI3" id="TEA-9O-Dm7"/>
                         <outlet property="profileImageView" destination="A1Q-aa-PGt" id="LHH-YO-32p"/>
                         <outlet property="sendRequestButton" destination="0TD-eU-n3M" id="cEz-Zv-4Sf"/>
+                        <outlet property="textView" destination="J78-Pt-NT4" id="7gp-uj-z1M"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4ee-q9-wXd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2248,6 +2249,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <segue destination="1u3-W9-zS7" kind="show" identifier="sendRequestSegue" id="wwO-V4-tx1"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uk3-lo-K5x" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2394,5 +2398,6 @@
         <segue reference="uaK-In-Vgu"/>
         <segue reference="aD6-kq-Qqs"/>
         <segue reference="WnZ-H8-8sI"/>
+        <segue reference="wwO-V4-tx1"/>
     </inferredMetricsTieBreakers>
 </document>

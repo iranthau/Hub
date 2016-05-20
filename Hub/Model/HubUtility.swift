@@ -19,7 +19,7 @@ class HubUtility {
     class func configurePushInstallation(user: User?) -> PFQuery? {
         if let user = user {
             let pushQuery = PFInstallation.query()!
-            pushQuery.whereKey("user", equalTo: user.matchingParseObject)
+            pushQuery.whereKey("userFriend", equalTo: user.matchingParseObject)
             return pushQuery
         }
         return nil

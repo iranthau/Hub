@@ -172,7 +172,7 @@ class HubAPI {
                 } else if let pRequests = pRequests {
                     var requests = [PFUser]()
                     for pRequest in pRequests {
-                        let request = pRequest["userFriend"] as? PFUser
+                        let request = pRequest["user"] as? PFUser
                         if let request = request {
                             requests.append(request)
                         }

@@ -82,7 +82,7 @@ class ConfigureSharedContactTVC: UITableViewController, ContactShareCellDelegate
             if let currentUser = currentUser {
                 let message = "\(currentUser.firstName!) \(currentUser.lastName!) has updated his shared contacts"
                 let pushNotification = HubUtility.configurePushNotification(pushQuery, message: message)
-                sharedPermission.buildParseObject(friend, toUser: currentUser, contacts: sharedContacts, status: "")
+                sharedPermission.buildParseObject(currentUser, toUser: friend, contacts: sharedContacts, status: "")
                 sharedPermission.updateSharedContacts(pushNotification, completion: {
                     (success, error) in
                     if let error = error {

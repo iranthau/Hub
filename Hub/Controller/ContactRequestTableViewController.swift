@@ -74,7 +74,7 @@ class ContactRequestTableViewController: UITableViewController, ContactShareCell
                     if let error = error {
                         print(error)
                     } else if success {
-                        self.navigateBack()
+                        self.performSegueWithIdentifier("sendRequestSegue", sender: friend)
                     }
                 })
             }
