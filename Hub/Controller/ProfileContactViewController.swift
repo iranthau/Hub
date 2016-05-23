@@ -38,8 +38,10 @@ class ProfileContactViewController: UIViewController, UITableViewDataSource {
         scrollView.contentSize.height = 826
         
         if let contactProfile = contactProfile {
-            title = "\(contactProfile.firstName!) \(contactProfile.lastName!)"
-            contactProfile.getProfileImage(profileImageView)
+            title = "\(contactProfile.firstName) \(contactProfile.lastName)"
+            contactProfile.getProfileImage { (image) in
+                self.profileImageView.image = image
+            }
             ViewFactory.setLabelPlaceholder("nickname", text: contactProfile.nickname, label: nickNameLabel)
             ViewFactory.setLabelPlaceholder("city", text: contactProfile.city, label: cityLabel)
             ViewFactory.setTextViewPlaceholder("No prefered time provided", text: contactProfile.availableTime, textView: contactHoursTextView)
@@ -157,7 +159,7 @@ class ProfileContactViewController: UIViewController, UITableViewDataSource {
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if tableView == self.mySharedContactsTableView {
-            return "\(contactProfile!.firstName!) can see"
+            return "\(contactProfile!.firstName) can see"
         }
         return ""
     }

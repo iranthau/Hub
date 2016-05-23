@@ -11,21 +11,6 @@ class HubAPI {
     typealias authResponse = (PFUser?, NSError?) -> Void
     typealias facebookProfileResponse = (NSDictionary?, NSError?) -> Void
     
-    class func logIn(userDetails: [String: String], completion: authResponse) {
-        let username = userDetails["username"]!
-        let password = userDetails["password"]!
-        
-        PFUser.logInWithUsernameInBackground(username, password: password) {
-            (user: PFUser?, error: NSError?) -> Void in
-            if user != nil {
-                let currentUser = PFUser.currentUser()
-                completion(currentUser, nil)
-            } else {
-                completion(nil, error)
-            }
-        }
-    }
-    
     class func logInWithFacebook(completion: authResponse) {
         PFFacebookUtils.logInInBackgroundWithReadPermissions(["public_profile", "email"]) {
             (user: PFUser?, error: NSError?) -> Void in
@@ -178,19 +163,6 @@ class HubAPI {
                         }
                     }
                     completion(requests, nil)
-                }
-            }
-        }
-    }
-    
-    class func saveParseUser(pUser: PFUser?, completion: (Bool, NSError?) -> Void) {
-        if let pUser = pUser {
-            pUser.saveInBackgroundWithBlock {
-                (success: Bool, error: NSError?) in
-                if let error = error {
-                    completion(success, error)
-                } else {
-                    completion(success, nil)
                 }
             }
         }

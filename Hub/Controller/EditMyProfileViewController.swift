@@ -62,7 +62,10 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
             nicknameTextField.text = currentUser.nickname
             cityTextField.text = currentUser.city
             ViewFactory.setTextViewPlaceholder("When can others contact you?", text: currentUser.availableTime, textView: availabilityTextView)
-            currentUser.getProfileImage(profileImageView)
+            currentUser.getProfileImage {
+                (image) in
+                self.profileImageView.image = image
+            }
             allContacts = currentUser.contacts
         }
         
@@ -92,13 +95,13 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
             currentUser.nickname = nicknameTextField.text!
             currentUser.city = cityTextField.text!
             currentUser.availableTime = availabilityTextView.text!
-            currentUser.setProfileImage(profileImageView.image!)
-            currentUser.setContacts(contactsToSave) {
-                (success: Bool, error: String?) in
-                if success {
-                    self.dismissViewController(currentUser)
-                }
-            }
+            currentUser.setProfilePicture(profileImageView.image!)
+//            currentUser.setContacts(contactsToSave) {
+//                (success: Bool, error: String?) in
+//                if success {
+//                    self.dismissViewController(currentUser)
+//                }
+//            }
         }
     }
     

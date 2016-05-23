@@ -28,8 +28,11 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
         ViewFactory.makeImageViewRound(profileImageView)
         
         if let friend = contactProfile {
-            title = "\(friend.firstName!) \(friend.lastName!)"
-            friend.getProfileImage(profileImageView)
+            title = "\(friend.firstName) \(friend.lastName)"
+            friend.getProfileImage {
+                (image) in
+                self.profileImageView.image = image
+            }
             if let user = currentUser {
                 user.getContacts {
                     (contacts, error) in
@@ -44,10 +47,10 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
             
             ViewFactory.setLabelPlaceholder("nickname", text: friend.nickname, label: nicknameLabel)
             ViewFactory.setLabelPlaceholder("city", text: friend.city, label: locationLabel)
-            if friend.hasSharedContacts() {
-                textView.text = "What contact details would you like to share with \(friend.firstName!)?"
+            if friend.hasContactsToShar() {
+                textView.text = "What contact details would you like to share with \(friend.firstName)?"
             } else {
-                textView.text = "\(friend.firstName!) has not shared any details"
+                textView.text = "\(friend.firstName) has not shared any details"
             }
         }
         disableSendRequestButton()
@@ -70,7 +73,7 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
         let parseObject = PFObject(className: "SharedPermission")
         let sharedPermission = SharedPermission(parseObject: parseObject)
         if let currentUser = currentUser {
-            let message = "You have a request from \(currentUser.firstName!) \(currentUser.lastName!)"
+            let message = "You have a request from \(currentUser.firstName) \(currentUser.lastName)"
             let pushNotification = HubUtility.configurePushNotification(pushQuery, message: message)
             sharedPermission.buildParseObject(currentUser, toUser: contactProfile, contacts: requestedContacts, status: "pending")
             sharedPermission.sendRequest(pushNotification, completion: {

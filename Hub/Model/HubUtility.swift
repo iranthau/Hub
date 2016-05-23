@@ -8,18 +8,13 @@ import UIKit
 import Parse
 
 class HubUtility {
-    class func convertImageFileToParseFile(imageFile: UIImage) -> PFFile {
-        let imageData = imageFile.lowQualityJPEGNSData
-        return PFFile(data: imageData)!
-    }
-    
     /* Create a parse push query when given the from user and the to user parse
      * objects. The query is configured to query shared permission class by default.
      */
     class func configurePushInstallation(user: User?) -> PFQuery? {
         if let user = user {
             let pushQuery = PFInstallation.query()!
-            pushQuery.whereKey("userFriend", equalTo: user.matchingParseObject)
+            pushQuery.whereKey("userFriend", equalTo: user)
             return pushQuery
         }
         return nil

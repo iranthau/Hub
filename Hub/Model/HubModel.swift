@@ -25,10 +25,6 @@ class HubModel {
         return Static.instance!
     }
     
-    func setCurrentUser(user: User) {
-        currentUser = user
-    }
-    
     /* Build an alert controller with camera and gallery as default options  */
     func buildImagePickAlertController(imagePicker: UIImagePickerController, view: UIViewController) -> UIAlertController {
         let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)

@@ -61,9 +61,11 @@ class RequestsTableViewController: UITableViewController {
         let nickNameLabel = cell.viewWithTag(3) as! UILabel
         let cityLabel = cell.viewWithTag(4) as! UILabel
         
-        request.getProfileImage(profileImageView)
+        request.getProfileImage { (image) in
+            profileImageView.image = image
+        }
         ViewFactory.makeImageViewRound(profileImageView)
-        nameLabel.text = "\(request.firstName!) \(request.lastName!)"
+        nameLabel.text = "\(request.firstName) \(request.lastName)"
         ViewFactory.setCellLabelPlaceholder("nickname", text: request.nickname, label: nickNameLabel)
         ViewFactory.setCellLabelPlaceholder("city", text: request.city, label: cityLabel)
         return cell

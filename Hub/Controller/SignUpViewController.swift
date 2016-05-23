@@ -40,27 +40,23 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         if password_1 == password_2 {
             activityIndicator.startAnimating()
-            let email = emailTextfield.text!
             let buttonBgImage = profilePicture.imageForState(.Normal)!
-            let parseUser = PFUser()
-            let user = User(parseUser: parseUser)
-            user.firstName = fNameTextfield.text!.capitalizedString
-            user.lastName = lNameTextfield.text!.capitalizedString
-            user.email = email
-            user.buildParseUser()
-            user.setUsername(email)
-            user.setPassword(password_1)
+            let fristName = fNameTextfield.text!.capitalizedString
+            let lastName = lNameTextfield.text!.capitalizedString
+            let email = emailTextfield.text!
+            let user = User(firstName: fristName, lastName: lastName, email: email)
+            user.password = password_1
             if !buttonBgImage.isEqual(UIImage(named: "profile-pic")) {
-                user.setProfileImage(buttonBgImage)
+                user.setProfilePicture(buttonBgImage)
             }
-            user.signUp {
+            user.signMeUp {
                 (user, error) in
                 if let error = error {
                     self.activityIndicator.stopAnimating()
                     self.showAlert(error)
                 } else {
                     self.activityIndicator.stopAnimating()
-                    self.hubModel.setCurrentUser(user!)
+                    self.hubModel.currentUser = user
                     self.performSegueWithIdentifier("signUpSegue", sender: nil)
                 }
             }

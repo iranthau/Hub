@@ -156,8 +156,11 @@ class MyProfileViewController: UIViewController, UITableViewDataSource, UITableV
     
     //Set the values of lables and views from a user
     private func SetInitialValues(currentUser: User) {
-        self.navigationItem.title = "\(currentUser.firstName!) \(currentUser.lastName!)"
-        currentUser.getProfileImage(profileImageView)
+        self.navigationItem.title = "\(currentUser.firstName) \(currentUser.lastName)"
+        print("\(currentUser.firstName) \(currentUser.lastName)")
+        currentUser.getProfileImage { (image) in
+            self.profileImageView.image = image
+        }
         ViewFactory.makeImageViewRound(profileImageView)
         ViewFactory.setLabelPlaceholder("nickname", text: currentUser.nickname, label: nicknameLabel)
         ViewFactory.setLabelPlaceholder("city", text: currentUser.city, label: cityLocationLabel)

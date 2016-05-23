@@ -36,16 +36,14 @@ class SignInViewController: BaseViewController, UITextFieldDelegate {
     }
     
     @IBAction func facebookSignIn(sender: AnyObject) {
-        let parseUser = PFUser()
-        let user = User(parseUser: parseUser)
-        user.logInWithFacebook() {
+        User.logInWithFacebook() {
             (user: User?, error: String?) -> Void in
             if let error = error {
                 self.showAlert(error)
             } else {
                 if let user = user {
                     if user.isNew {
-                        self.hubModel.setCurrentUser(user)
+                        self.hubModel.currentUser = user
                         user.saveUser {
                             (success, error) in
                             if let error = error {
@@ -57,7 +55,7 @@ class SignInViewController: BaseViewController, UITextFieldDelegate {
                         }
                     } else {
                         HubAPI.registerForPushNotification()
-                        self.hubModel.setCurrentUser(user)
+                        self.hubModel.currentUser = user
                         self.performSegueWithIdentifier("signInSegue", sender: nil)
                     }
                 }
@@ -97,16 +95,14 @@ class SignInViewController: BaseViewController, UITextFieldDelegate {
         let username = userNameInput.text!
         let password = passwordInput.text!
         let userDetails = ["username": username, "password": password]
-        let parseUser = PFUser()
-        let user = User(parseUser: parseUser)
         
-        user.logIn(userDetails) {
+        User.logIn(userDetails) {
             (currentUser: User?, error: String?) -> Void in
             if let error = error {
                 self.showAlert(error)
             } else {
                 HubAPI.registerForPushNotification()
-                self.hubModel.setCurrentUser(currentUser!)
+                self.hubModel.currentUser = currentUser
                 self.performSegueWithIdentifier("signInSegue", sender: nil)
             }
         }

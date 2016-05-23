@@ -16,7 +16,7 @@ class ConfigureSharedContactTVC: UITableViewController, ContactShareCellDelegate
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = friend!.firstName!
+        self.title = friend!.firstName
         currentUser = hubModel.currentUser
         ViewFactory.hideTableViewSeparator(self.tableView)
         
@@ -67,7 +67,7 @@ class ConfigureSharedContactTVC: UITableViewController, ContactShareCellDelegate
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String {
-        return "Select what \(friend!.firstName!) can see"
+        return "Select what \(friend!.firstName) can see"
     }
     
     @IBAction func back(sender: UIBarButtonItem) {
@@ -80,7 +80,7 @@ class ConfigureSharedContactTVC: UITableViewController, ContactShareCellDelegate
             let parseObject = PFObject(className: "SharedPermission")
             let sharedPermission = SharedPermission(parseObject: parseObject)
             if let currentUser = currentUser {
-                let message = "\(currentUser.firstName!) \(currentUser.lastName!) has updated his shared contacts"
+                let message = "\(currentUser.firstName) \(currentUser.lastName) has updated his shared contacts"
                 let pushNotification = HubUtility.configurePushNotification(pushQuery, message: message)
                 sharedPermission.buildParseObject(currentUser, toUser: friend, contacts: sharedContacts, status: "")
                 sharedPermission.updateSharedContacts(pushNotification, completion: {

@@ -27,10 +27,10 @@ class SharedPermission {
     
     func buildParseObject(fromUser: User?, toUser: User?, contacts: [Contact]?, status: String?) {
         if let fromUser = fromUser {
-            matchingParseObject["user"] = fromUser.matchingParseObject
+            matchingParseObject["user"] = fromUser
         }
         if let toUser = toUser {
-            matchingParseObject["userFriend"] = toUser.matchingParseObject
+            matchingParseObject["userFriend"] = toUser
         }
         if let contacts = contacts {
             var pContacts = [PFObject]()
@@ -90,9 +90,7 @@ class SharedPermission {
     
     //---------------------Private methods----------------------
     private func getUserObject(attribute: String) -> User {
-        let user = matchingParseObject[attribute] as! PFUser
-        let fromUser = User(parseUser: user)
-        fromUser.buildUser()
-        return fromUser
+        let user = matchingParseObject[attribute] as! User
+        return user
     }
 }
