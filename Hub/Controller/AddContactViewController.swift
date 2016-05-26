@@ -70,12 +70,10 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
     
     @IBAction func sendRequest(sender: UIBarButtonItem) {
         let pushQuery = HubUtility.configurePushInstallation(contactProfile)
-        let parseObject = PFObject(className: "SharedPermission")
-        let sharedPermission = SharedPermission(parseObject: parseObject)
         if let currentUser = currentUser {
             let message = "You have a request from \(currentUser.firstName) \(currentUser.lastName)"
             let pushNotification = HubUtility.configurePushNotification(pushQuery, message: message)
-            sharedPermission.buildParseObject(currentUser, toUser: contactProfile, contacts: requestedContacts, status: "pending")
+            let sharedPermission = SharedPermission(fromUser: currentUser, toUser: contactProfile!, contacts: requestedContacts, status: "pending")
             sharedPermission.sendRequest(pushNotification, completion: {
                 (success, error) in
                 self.showAlert("Request is sent")

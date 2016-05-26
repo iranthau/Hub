@@ -6,47 +6,40 @@
 import Foundation
 import Parse
 
-class SharedPermission {
-    let parseClassName = "SharedPermission"
-    let matchingParseObject: PFObject
-    var objectId: String?
-    var user: User?
-    var userFriend: User?
-    var status: Bool?
+class SharedPermission: PFObject, PFSubclassing {
+    @NSManaged var user: User?
+    @NSManaged var userFriend: User?
+    @NSManaged var status: String
+    @NSManaged var contacts: [Contact]
     
-    init(parseObject: PFObject) {
-        matchingParseObject = parseObject
+    private override init() {
+        super.init()
     }
     
-    func buildSharedPermission() {
-        objectId = matchingParseObject.objectId
-        user = getUserObject("user")
-        userFriend = getUserObject("userFriend")
-        status = matchingParseObject["status"] as? Bool
+    override class func initialize() {
+        struct Static {
+            static var onceToken : dispatch_once_t = 0;
+        }
+        dispatch_once(&Static.onceToken) {
+            self.registerSubclass()
+        }
     }
     
-    func buildParseObject(fromUser: User?, toUser: User?, contacts: [Contact]?, status: String?) {
-        if let fromUser = fromUser {
-            matchingParseObject["user"] = fromUser
-        }
-        if let toUser = toUser {
-            matchingParseObject["userFriend"] = toUser
-        }
-        if let contacts = contacts {
-            var pContacts = [PFObject]()
-            for c in contacts {
-                pContacts.append(c.matchingParseObject)
-            }
-            matchingParseObject["contacts"] = pContacts
-        }
-        if let status = status {
-            matchingParseObject["status"] = status
-        }
+    static func parseClassName() -> String {
+        return "SharedPermission"
+    }
+    
+    convenience init(fromUser: User, toUser: User, contacts: [Contact], status: String) {
+        self.init()
+        user = fromUser
+        userFriend = toUser
+        self.contacts = contacts
+        self.status = status
     }
     
     func sendRequest(pushNotification: PFPush?, completion: (success: Bool, error: String?) -> Void) {
         if let pushNotification = pushNotification {
-            HubAPI.saveParseObject(matchingParseObject, completion: {
+            HubAPI.saveParseObject(self, completion: {
                 (success: Bool, error: NSError?) in
                 if let error = error {
                     let errorMessage = error.userInfo["error"] as? String
@@ -62,12 +55,12 @@ class SharedPermission {
     
     func updateSharedContacts(pushNotification: PFPush?, completion: (success: Bool, error: String?) -> Void) {
         if let pushNotification = pushNotification {
-            let query = PFQuery(className: parseClassName)
-            query.whereKey("userFriend", equalTo: matchingParseObject["userFriend"])
-            query.whereKey("user", equalTo: matchingParseObject["user"])
+            let query = PFQuery(className: "SharedPermission")
+            query.whereKey("userFriend", equalTo: userFriend!)
+            query.whereKey("user", equalTo: user!)
             query.whereKey("status", equalTo: "accepted")
             
-            HubAPI.updateContacts(query, pContacts: matchingParseObject["contacts"] as? [PFObject], completion: {
+            HubAPI.updateContacts(query, pContacts: contacts, completion: {
                 (success: Bool, error: NSError?) in
                 if let error = error {
                     let errorMessage = error.userInfo["error"] as? String
@@ -81,16 +74,10 @@ class SharedPermission {
         }
     }
     
-    func buildFriendQuery(fieldToMatch: String, objectForTheField: PFUser) -> PFQuery {
-        let query = PFQuery(className: parseClassName)
+    class func buildFriendQuery(fieldToMatch: String, objectForTheField: PFUser) -> PFQuery {
+        let query = PFQuery(className: "SharedPermission")
         query.whereKey(fieldToMatch, equalTo: objectForTheField)
         query.whereKey("status", equalTo: "accepted")
         return query
-    }
-    
-    //---------------------Private methods----------------------
-    private func getUserObject(attribute: String) -> User {
-        let user = matchingParseObject[attribute] as! User
-        return user
     }
 }

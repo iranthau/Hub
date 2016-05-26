@@ -96,12 +96,12 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
             currentUser.city = cityTextField.text!
             currentUser.availableTime = availabilityTextView.text!
             currentUser.setProfilePicture(profileImageView.image!)
-//            currentUser.setContacts(contactsToSave) {
-//                (success: Bool, error: String?) in
-//                if success {
-//                    self.dismissViewController(currentUser)
-//                }
-//            }
+            currentUser.setContacts(contactsToSave) {
+                (success: Bool, error: String?) in
+                if success {
+                    self.dismissViewController(currentUser)
+                }
+            }
         }
     }
     

@@ -15,25 +15,22 @@ class ProfileCreatedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let user = hubModel.currentUser!
-        
-        let parseEmailObject = PFObject(className: "Contact")
-        let emailContact = Contact(parseObject: parseEmailObject)
-        emailContact.value = user.email!
-        emailContact.type = "email"
-        emailContact.subType = "home"
-//        user.setContacts([emailContact]) {
-//            (success: Bool, error: String?) in
-//            if success {
-//                print("Email saved")
-//            }
-//        }
+        let user = hubModel.currentUser
+        if let user = user {
+            firstNameLabel.text = user.firstName
+            let emailContact = Contact(value: user.email!, type: "email", subType: "home")
+            user.setContacts([emailContact]) {
+                (success: Bool, error: String?) in
+                if success {
+                    print("Email saved")
+                }
+            }
+            user.getProfileImage { (image) in
+                self.profileImage.image = image
+            }
+        }
         
         ViewFactory.makeImageViewRound(profileImage)
-        user.getProfileImage { (image) in
-            self.profileImage.image = image
-        }
-        firstNameLabel.text = user.firstName
     }
 
     override func didReceiveMemoryWarning() {

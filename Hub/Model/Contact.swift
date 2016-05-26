@@ -6,38 +6,35 @@
 import Foundation
 import Parse
 
-class Contact: Hashable {
-    
-    let parseClassName = "Contact"
-    var matchingParseObject: PFObject
-    var objectId: String?
-    var value: String?
-    var type: String?
-    var subType: String?
+class Contact: PFObject, PFSubclassing {
+    @NSManaged var value: String?
+    @NSManaged var type: String?
+    @NSManaged var subType: String?
     var selected: Bool?
     
-    init(parseObject: PFObject) {
-        matchingParseObject = parseObject
+    private override init() {
+        super.init()
     }
     
-    func buildContact() {
-        objectId = matchingParseObject.objectId!
-        value = matchingParseObject["value"] as? String
-        type = matchingParseObject["type"] as? String
-        subType = matchingParseObject["subType"] as? String
-        selected = false
-    }
-    
-    func buildParseContact() {
-        updateParseObjectField("value", value: value)
-        updateParseObjectField("type", value: type)
-        updateParseObjectField("subType", value: subType)
-    }
-    
-    func setObjectId() {
-        if let objectId = objectId {
-            matchingParseObject.objectId = objectId
+    override class func initialize() {
+        struct Static {
+            static var onceToken : dispatch_once_t = 0;
         }
+        dispatch_once(&Static.onceToken) {
+            self.registerSubclass()
+        }
+    }
+    
+    static func parseClassName() -> String {
+        return "Contact"
+    }
+    
+    convenience init(value: String?, type: String, subType: String) {
+        self.init()
+        self.value = value
+        self.type = type
+        self.subType = subType
+        selected = false
     }
     
     func getImageName() -> String {
@@ -54,18 +51,7 @@ class Contact: Hashable {
         }
     }
     
-    var hashValue: Int {
-        return objectId!.hashValue
-    }
-    
     //-----------------------Private methods--------------------------
-    
-    private func updateParseObjectField(attribute: String, value: String?) {
-        if let value = value {
-            matchingParseObject[attribute] = value
-        }
-    }
-    
     private func getPhoneImageIconName() -> String {
         switch subType! {
             case ContactSubType.PhoneHome.label:
@@ -135,8 +121,4 @@ class Contact: Hashable {
             default: return ""
         }
     }
-}
-
-func == (lhs: Contact, rhs: Contact) -> Bool {
-    return lhs.hashValue == rhs.hashValue
 }

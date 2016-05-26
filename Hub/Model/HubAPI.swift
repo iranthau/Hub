@@ -47,31 +47,6 @@ class HubAPI {
         }
     }
     
-    class func signUp(pUser: PFUser?, completion: authResponse) {
-        if let pUser = pUser {
-            pUser.signUpInBackgroundWithBlock {
-                (success: Bool, error: NSError?) in
-                if let error = error {
-                    completion(nil, error)
-                } else {
-                    let curretUser = PFUser.currentUser()
-                    completion(curretUser, nil)
-                }
-            }
-        }
-    }
-    
-    class func logOut(completion: (error: NSError?) -> Void) {
-        PFUser.logOutInBackgroundWithBlock {
-            (error: NSError?) in
-            if let error = error {
-                completion(error: error)
-            } else {
-                completion(error: nil)
-            }
-        }
-    }
-    
     //Mark: Can be placed in the cloud code
     class func getAllFriends(pUser: PFUser?, query: PFQuery?, completion: (pUsers: [PFUser]?, error: NSError?) -> Void) {
         if let query = query {
@@ -101,32 +76,6 @@ class HubAPI {
                     completion(nil, error)
                 } else if let sharedPermission = sharedPermission {
                     let contacts = sharedPermission.objectForKey("contacts") as? [PFObject]
-                    completion(contacts, nil)
-                }
-            }
-        }
-    }
-    
-    //Mark: Can be placed in the cloud code
-    class func getContacts(pUser: PFUser?, completion: ([PFObject]?, NSError?) -> Void) {
-        if let pUser = pUser {
-            let myContacts = pUser.objectForKey("contacts") as? [PFObject]
-            let contactsGroup = dispatch_group_create()
-            if let myContacts = myContacts {
-                var contacts = [PFObject]()
-                for parseObject in myContacts {
-                    dispatch_group_enter(contactsGroup)
-                    parseObject.fetchInBackgroundWithBlock {
-                        (fetchedContact: PFObject?, error: NSError?) -> Void in
-                        if let error = error {
-                            completion(nil, error)
-                        } else if let fetchedContact = fetchedContact {
-                            contacts.append(fetchedContact)
-                        }
-                        dispatch_group_leave(contactsGroup)
-                    }
-                }
-                dispatch_group_notify(contactsGroup, dispatch_get_main_queue()) {
                     completion(contacts, nil)
                 }
             }
@@ -218,29 +167,6 @@ class HubAPI {
                             completion(false, error)
                         }
                     }
-                }
-            }
-        }
-    }
-    
-    class func declineRequest(query: PFQuery?) {
-        if let query = query {
-            query.getFirstObjectInBackgroundWithBlock {
-                (sharedPermission: PFObject?, error: NSError?) in
-                sharedPermission?.deleteInBackground()
-            }
-        }
-    }
-    
-    class func deleteAccount(pUser: PFUser?, completion: (success: Bool, error: NSError?) -> Void) {
-        if let user = pUser {
-            user.deleteInBackgroundWithBlock {
-                (success: Bool, error: NSError?) in
-                if let error = error {
-                    completion(success: false, error: error)
-                } else if success {
-                    PFUser.logOut()
-                    completion(success: true, error: nil)
                 }
             }
         }

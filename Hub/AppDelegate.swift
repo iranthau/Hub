@@ -68,6 +68,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func configureParseAPI(launchOptions: [NSObject: AnyObject]?) {
         User.registerSubclass()
+        Contact.registerSubclass()
+        SharedPermission.registerSubclass()
         Parse.setApplicationId("inQev5jlG1BWu0LdsRHBK5XbyQrADMJ6BwGXweEF", clientKey: "p2C6htbwjtzV0syI7zXsjiWxbQajREwoJdreYDL0")
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
     }

@@ -110,10 +110,6 @@ class HubUtility {
     /* Builds a contact with empty value when contact type and the row value of
      * sub type is provided. */
     private class func buildInitialContactForCell(index: Int, type: ContactType) -> Contact {
-        let parseObject = PFObject(className: "Contact")
-        let contact = Contact(parseObject: parseObject)
-        contact.type = type.label
-        contact.subType = ContactSubType(rawValue: index)!.label
-        return contact
+        return Contact(value: nil, type: type.label, subType: ContactSubType(rawValue: index)!.label)
     }
 }
