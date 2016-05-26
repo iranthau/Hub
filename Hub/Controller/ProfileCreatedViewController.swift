@@ -30,7 +30,7 @@ class ProfileCreatedViewController: UIViewController {
             }
         }
         
-        ViewFactory.makeImageViewRound(profileImage)
+        ViewFactory.circularImage(profileImage)
     }
 
     override func didReceiveMemoryWarning() {

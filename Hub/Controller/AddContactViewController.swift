@@ -24,8 +24,8 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         currentUser = hubModel.currentUser
-        ViewFactory.hideTableViewSeparator(contactSelectionTableView)
-        ViewFactory.makeImageViewRound(profileImageView)
+        contactSelectionTableView.separatorColor = ViewFactory.hidden()
+        ViewFactory.circularImage(profileImageView)
         
         if let friend = contactProfile {
             title = "\(friend.firstName) \(friend.lastName)"
@@ -34,6 +34,11 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
                 self.profileImageView.image = image
             }
             if let user = currentUser {
+                if user.contacts.isEmpty {
+                    textView.text = "you do not have any contacts to share"
+                } else {
+                    textView.text = "What contact details would you like to share with \(friend.firstName)?"
+                }
                 user.getContacts {
                     (contacts, error) in
                     if let error = error {
@@ -47,11 +52,6 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
             
             ViewFactory.setLabelPlaceholder("nickname", text: friend.nickname, label: nicknameLabel)
             ViewFactory.setLabelPlaceholder("city", text: friend.city, label: locationLabel)
-            if friend.hasContactsToShar() {
-                textView.text = "What contact details would you like to share with \(friend.firstName)?"
-            } else {
-                textView.text = "\(friend.firstName) has not shared any details"
-            }
         }
         disableSendRequestButton()
     }

@@ -21,8 +21,7 @@ class SettingsViewController: UITableViewController {
         if let currentUser = currentUser {
             hideProfileSwitch.on = !currentUser.profileIsVisible
         }
-        
-        ViewFactory.hideTableViewSeparator(tableView)
+        tableView.separatorColor = ViewFactory.hidden()
     }
 
     override func didReceiveMemoryWarning() {

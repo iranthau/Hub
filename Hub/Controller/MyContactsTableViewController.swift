@@ -19,7 +19,7 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
         currentUser = hubModel.currentUser
         
         if let currentUser = currentUser {
-            currentUser.getAllFriends {
+            currentUser.getFriends {
                 (friends, error) in
                 if let error = error {
                     print(error)
@@ -39,7 +39,7 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
     
     override func viewWillAppear(animated: Bool) {
         if let currentUser = currentUser {
-            currentUser.getAllFriends {
+            currentUser.getFriends {
                 (friends, error) in
                 if let error = error {
                     print(error)
@@ -84,7 +84,7 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
             contact = myContacts[sections[indexPath.section].index + indexPath.row]
         }
         
-        ViewFactory.makeImageViewRound(profileImage)
+        ViewFactory.circularImage(profileImage)
         contact.getProfileImage { (image) in
             profileImage.image = image
         }

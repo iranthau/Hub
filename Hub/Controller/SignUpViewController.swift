@@ -66,7 +66,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     @IBAction func addProfilePicture(sender: AnyObject) {
-        let alert = hubModel.buildImagePickAlertController(imagePicker, view: self)
+        let alert = ViewFactory.buildImagePickAlertController(imagePicker, view: self)
         imagePicker.delegate = self
         
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {

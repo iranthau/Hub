@@ -64,7 +64,7 @@ class RequestsTableViewController: UITableViewController {
         request.getProfileImage { (image) in
             profileImageView.image = image
         }
-        ViewFactory.makeImageViewRound(profileImageView)
+        ViewFactory.circularImage(profileImageView)
         nameLabel.text = "\(request.firstName) \(request.lastName)"
         ViewFactory.setCellLabelPlaceholder("nickname", text: request.nickname, label: nickNameLabel)
         ViewFactory.setCellLabelPlaceholder("city", text: request.city, label: cityLabel)

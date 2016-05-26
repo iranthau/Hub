@@ -18,7 +18,7 @@ class ConfigureSharedContactTVC: UITableViewController, ContactShareCellDelegate
         super.viewDidLoad()
         self.title = friend!.firstName
         currentUser = hubModel.currentUser
-        ViewFactory.hideTableViewSeparator(self.tableView)
+        self.tableView.separatorColor = ViewFactory.hidden()
         
         if let currentUser = currentUser {
             currentUser.getContacts {

@@ -29,10 +29,9 @@ class ProfileContactViewController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         currentUser = hubModel.currentUser
-        
-        ViewFactory.hideTableViewSeparator(sharedContactsTableView)
-        ViewFactory.hideTableViewSeparator(mySharedContactsTableView)
-        ViewFactory.makeImageViewRound(profileImageView)
+        sharedContactsTableView.separatorColor = ViewFactory.hidden()
+        mySharedContactsTableView.separatorColor = ViewFactory.hidden()
+        ViewFactory.circularImage(profileImageView)
         SelectedButtonColorView.backgroundColor = ViewFactory.backGroundColor(ContactType.Phone)
         activeDataSource = sharedPhoneContacts
         scrollView.contentSize.height = 826

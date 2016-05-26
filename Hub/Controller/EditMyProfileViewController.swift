@@ -43,7 +43,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
     override func viewDidLoad() {
         super.viewDidLoad()
         currentUser = hubModel.currentUser
-        ViewFactory.makeImageViewRound(profileImageView)
+        ViewFactory.circularImage(profileImageView)
         
         //Fill up contacts arrays to have all type of contacts initially
         phoneContacts = HubUtility.initialisePhoneContacts()
@@ -131,7 +131,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
     }
 
     @IBAction func changeProfileImage() {
-        let alert = hubModel.buildImagePickAlertController(imagePicker, view: self)
+        let alert = ViewFactory.buildImagePickAlertController(imagePicker, view: self)
         imagePicker.delegate = self
         
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
