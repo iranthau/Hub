@@ -46,27 +46,6 @@ class HubAPI {
     }
   }
   
-  //Mark: Can be placed in the cloud code
-  class func getAllFriends(pUser: PFUser?, query: PFQuery?, completion: (pUsers: [PFUser]?, error: NSError?) -> Void) {
-    if let query = query {
-      query.findObjectsInBackgroundWithBlock {
-        (objects: [PFObject]?, error: NSError?) in
-        if let error = error {
-          completion(pUsers: nil, error: error)
-        } else {
-          fetchFriendsFromIds(pUser, objects: objects, completion: {
-            (pUsers, error) in
-            if let error = error {
-              completion(pUsers: nil, error: error)
-            } else {
-              completion(pUsers: pUsers, error: nil)
-            }
-          })
-        }
-      }
-    }
-  }
-  
   class func getSharedContacts(query: PFQuery?, completion: ([PFObject]?, NSError?) -> Void) {
     if let query = query {
       query.getFirstObjectInBackgroundWithBlock {
@@ -219,50 +198,6 @@ class HubAPI {
   }
   
   //---------------------Private methods-----------------------------
-  //Mark: Can be placed in the cloud code
-  private class func fetchFriendsFromIds(pUser: PFUser?, objects: [PFObject]?, completion: (pUsers: [PFUser]?, error: NSError?) -> Void) {
-    var friends = [PFUser]()
-    let fetchGroup = dispatch_group_create()
-    if let objects = objects {
-      for object in objects {
-        let friend = self.getMatchingUser(pUser, sPObject: object)
-        dispatch_group_enter(fetchGroup)
-        if let friend = friend {
-          friend.fetchInBackgroundWithBlock {
-            (fetchedFriend: PFObject?, error: NSError?) in
-            if let error = error {
-              completion(pUsers: nil, error: error)
-            } else {
-              friends.append(fetchedFriend as! PFUser)
-            }
-            dispatch_group_leave(fetchGroup)
-          }
-        }
-      }
-      dispatch_group_notify(fetchGroup, dispatch_get_main_queue()) {
-        completion(pUsers: friends, error: nil)
-      }
-    }
-  }
-  
-  //Mark: Can be placed in the cloud code
-  private class func getMatchingUser(curretUser: PFUser?, sPObject: PFObject?) -> PFUser? {
-    var user: PFUser?
-    if let sPObject = sPObject {
-      let fromUser = sPObject["userFriend"] as! PFUser
-      let toUser = sPObject["user"] as! PFUser
-      if let curretUser = curretUser {
-        if fromUser.objectId == curretUser.objectId! {
-          user = sPObject["user"] as? PFUser
-        }
-        
-        if toUser.objectId == curretUser.objectId! {
-          user = sPObject["userFriend"] as? PFUser
-        }
-      }
-    }
-    return user
-  }
   
   /* Read the profile picture data from facebook when given the user ID */
   //Mark: Can be placed in the cloud code

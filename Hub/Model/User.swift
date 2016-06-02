@@ -134,11 +134,7 @@ class User: PFUser {
   }
   
   func getFriends(completion: (friends: [User]?, error: String?) -> Void) {
-    let myFriendQuery = SharedPermission.buildFriendQuery("user", objectForTheField: self)
-    let iAmAFriendOfQuery = SharedPermission.buildFriendQuery("userFriend", objectForTheField: self)
-    let query = PFQuery.orQueryWithSubqueries([myFriendQuery, iAmAFriendOfQuery])
-    
-    HubAPI.getAllFriends(self, query: query) {
+    SharedPermission.getAllFriends(self) {
       (pUsers, error) in
       if let error = error {
         let errorMessage = error.userInfo["error"] as? String
