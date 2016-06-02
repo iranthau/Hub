@@ -96,7 +96,7 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
         
         cell.cellDelegate = self
         imageView.image = UIImage(named: contact.getImageName())
-        sharedSwitch.setOn(contact.selected!, animated: true)
+        sharedSwitch.setOn(contact.selected, animated: true)
         label.text = contact.value!
         return cell
     }
@@ -126,7 +126,7 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
     }
     
     func addContactToArray(contact: Contact) {
-        if contact.selected! {
+        if contact.selected{
             requestedContacts.append(contact)
         } else {
             requestedContacts.removeObject(contact)

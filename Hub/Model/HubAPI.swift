@@ -11,7 +11,6 @@ class HubAPI {
   typealias authResponse = (PFUser?, NSError?) -> Void
   typealias facebookProfileResponse = (NSDictionary?, NSError?) -> Void
   
-  //Mark: Can be placed in the cloud code
   class func logInWithFacebook(completion: authResponse) {
     PFFacebookUtils.logInInBackgroundWithReadPermissions(["public_profile", "email"]) {
       (user: PFUser?, error: NSError?) -> Void in
@@ -23,7 +22,6 @@ class HubAPI {
     }
   }
   
-  //Mark: Can be placed in the cloud code
   class func readFacebookPublicProfile(completion: facebookProfileResponse) {
     let requestParameters = ["fields": "id, email, first_name, last_name"]
     let userDetails = FBSDKGraphRequest(graphPath: "me", parameters: requestParameters)

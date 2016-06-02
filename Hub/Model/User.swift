@@ -84,19 +84,25 @@ class User: PFUser {
       if let error = error {
         let errorMessage = error.userInfo["error"] as! String
         completion(success: nil, error: errorMessage)
-      } else if let pUser = pUser {
+      } else if let pUser = pUser as? User {
         if pUser.isNew {
           HubAPI.readFacebookPublicProfile {
             (result: NSDictionary?, error: NSError?) in
             if let error = error {
               let errorMessage = error.userInfo["error"] as! String
               completion(success: nil, error: errorMessage)
-            } else if let facebookUser = pUser as? User {
-              completion(success: facebookUser, error: nil)
+            } else if let result = result {
+              pUser.firstName = result["first_name"] as! String
+              pUser.lastName = result["last_name"] as! String
+              pUser.email = result["email"] as? String
+              let pImage = result["profile-image"] as? UIImage
+              pUser.setProfilePicture(pImage)
+              pUser.profileIsVisible = true
+              completion(success: pUser, error: nil)
             }
           }
-        } else if let facebookUser = pUser as? User {
-          completion(success: facebookUser, error: nil)
+        } else {
+          completion(success: pUser, error: nil)
         }
       }
     }
@@ -138,16 +144,10 @@ class User: PFUser {
         let errorMessage = error.userInfo["error"] as? String
         completion(friends: nil, error: errorMessage)
       } else {
-        var allFriends = [User]()
-        if let pUsers = pUsers {
-          for pUser in pUsers {
-            if let friend = pUser as? User {
-              allFriends.append(friend)
-            }
-          }
+        if let pUsers = pUsers as? [User] {
+          let uniqueFriends = pUsers.removeDuplicates()
+          completion(friends: uniqueFriends, error: nil)
         }
-        let uniqueFriends = allFriends.removeDuplicates()
-        completion(friends: uniqueFriends, error: nil)
       }
     }
   }

@@ -60,7 +60,7 @@ class ConfigureSharedContactTVC: UITableViewController, ContactShareCellDelegate
         let sharedSwitch = cell.viewWithTag(3) as! UISwitch
         
         contactLabel.text = contact.value!
-        sharedSwitch.setOn(contact.selected!, animated: true)
+        sharedSwitch.setOn(contact.selected, animated: true)
         contactImage.image = UIImage(named: contact.getImageName())
         cell.cellDelegate = self
         return cell
@@ -109,7 +109,7 @@ class ConfigureSharedContactTVC: UITableViewController, ContactShareCellDelegate
     }
     
     func addContactToArray(contact: Contact) {
-        if contact.selected! {
+        if contact.selected {
             sharedContacts.append(contact)
         } else {
             sharedContacts.removeObject(contact)

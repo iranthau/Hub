@@ -10,7 +10,7 @@ class Contact: PFObject, PFSubclassing {
     @NSManaged var value: String?
     @NSManaged var type: String?
     @NSManaged var subType: String?
-    var selected: Bool?
+    var selected = false
     
     private override init() {
         super.init()
@@ -34,7 +34,6 @@ class Contact: PFObject, PFSubclassing {
         self.value = value
         self.type = type
         self.subType = subType
-        selected = false
     }
     
     func getImageName() -> String {
