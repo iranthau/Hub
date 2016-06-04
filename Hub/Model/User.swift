@@ -149,6 +149,7 @@ class User: PFUser {
   }
   
   /* Get all contacts that a friend has shared with me */
+  // TODO: See if the query can be built in shared permission itself
   func getAllSharedContacts(friend: User?, completion: (contacts: [Contact]?, error: String?) -> Void) {
     if let friend = friend {
       let query = PFQuery(className: "SharedPermission")
@@ -157,7 +158,7 @@ class User: PFUser {
       query.whereKey("status", equalTo: "accepted")
       query.includeKey("contacts")
       
-      HubAPI.getSharedContacts(query) {
+      SharedPermission.getSharedContacts(query) {
         (pContacts: [PFObject]?, error: NSError?) in
         if let error = error {
           let errorMessage = error.userInfo["error"] as? String
@@ -170,6 +171,7 @@ class User: PFUser {
   }
   
   // Get contacts I shared with a friend
+  // TODO: See if the query can be built in shared permission itself
   func getContactsIShared(friend: User?, completion: (contacts: [Contact]?, error: String?) -> Void) {
     if let friend = friend {
       let query = PFQuery(className: "SharedPermission")
@@ -178,7 +180,7 @@ class User: PFUser {
       query.whereKey("status", equalTo: "accepted")
       query.includeKey("contacts")
       
-      HubAPI.getSharedContacts(query) {
+      SharedPermission.getSharedContacts(query) {
         (pContacts: [PFObject]?, error: NSError?) in
         if let error = error {
           let errorMessage = error.userInfo["error"] as? String
@@ -191,6 +193,7 @@ class User: PFUser {
   }
   
   //Get my own contacts
+  // TODO: Use PFUser.query() to get the contacts.
   func getContacts(completion: (contacts: [Contact]?, error: String?) -> Void) {
     let contactsGroup = dispatch_group_create()
     var fetchedContacts = [Contact]()
@@ -214,13 +217,14 @@ class User: PFUser {
   }
   
   //Get a list of friends that asked to connect with me
+  // TODO: See if the query can be built in shared permission itself
   func getRequests(completion: (requests: [User]?, error: String?) -> Void) {
     let query = PFQuery(className: "SharedPermission")
     query.whereKey("userFriend", equalTo: self)
     query.whereKey("status", equalTo: "pending")
     query.includeKey("user")
     
-    HubAPI.getRequests(query) {
+    SharedPermission.getRequests(query) {
       (pRequests: [PFUser]?, error: NSError?) in
       if let error = error {
         let errorMessage = error.userInfo["error"] as? String
@@ -232,27 +236,6 @@ class User: PFUser {
           requests.append(request!)
         }
         completion(requests: requests, error: nil)
-      }
-    }
-  }
-  
-  //Get a list of contacts that a friend has asked to share
-  func getRequestedContacts(friend: User?, completion: (contacts: [Contact]?, error: String?) -> Void) {
-    if let friend = friend {
-      let query = PFQuery(className: "SharedPermission")
-      query.whereKey("user", equalTo: friend)
-      query.whereKey("userFriend", equalTo: self)
-      query.whereKey("status", equalTo: "pending")
-      query.includeKey("contacts")
-      
-      HubAPI.getSharedContacts(query) {
-        (pContacts: [PFObject]?, error: NSError?) in
-        if let error = error {
-          let errorMessage = error.userInfo["error"] as? String
-          completion(contacts: nil, error: errorMessage)
-        } else if let pContacts = pContacts as? [Contact] {
-          completion(contacts: pContacts, error: nil)
-        }
       }
     }
   }
@@ -294,7 +277,7 @@ class User: PFUser {
       let data = [ "alert": message, "badge": "Increment", "sound": "Ambient Hit.mp3" ]
       push.setData(data)
       
-      HubAPI.acceptRequest(query) {
+      SharedPermission.acceptRequest(query) {
         (success: Bool, error: NSError?) in
         if let error = error {
           let errorMessage = error.userInfo["error"] as? String
@@ -357,17 +340,17 @@ class User: PFUser {
     }
   }
   
-  func resetPassword(email: String?, completion: (success: Bool, error: String?) -> Void) {
+  class func resetPassword(email: String?, completion: (success: Bool, error: String?) -> Void) {
     if let email = email {
-      HubAPI.recoverPassword(email, completion: {
-        (success, error) in
+      self.requestPasswordResetForEmailInBackground(email) {
+        (success: Bool, error: NSError?) -> Void in
         if let error = error {
           let errorMessage = error.userInfo["error"] as? String
           completion(success: false, error: errorMessage)
-        } else if success {
+        } else {
           completion(success: true, error: nil)
         }
-      })
+      }
     }
   }
   
@@ -389,14 +372,14 @@ class User: PFUser {
       query.whereKey("userFriend", equalTo: user)
       query.whereKey("user", equalTo: self)
       
-      HubAPI.isFriends(query, completion: {
-        (success: Bool) in
-        if success {
-          completion(true)
-        } else {
+      query.getFirstObjectInBackgroundWithBlock {
+        (pObject: PFObject?, error: NSError?) in
+        if pObject == nil {
           completion(false)
+        } else {
+          completion(true)
         }
-      })
+      }
     }
   }
   

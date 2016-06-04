@@ -75,6 +75,62 @@ class SharedPermission: PFObject, PFSubclassing {
     }
   }
   
+  class func getSharedContacts(query: PFQuery?, completion: ([PFObject]?, NSError?) -> Void) {
+    if let query = query {
+      query.getFirstObjectInBackgroundWithBlock {
+        (sharedPermission: PFObject?, error: NSError?) -> Void in
+        if let error = error {
+          completion(nil, error)
+        } else if let sharedPermission = sharedPermission {
+          let contacts = sharedPermission.objectForKey("contacts") as? [PFObject]
+          completion(contacts, nil)
+        }
+      }
+    }
+  }
+  
+  class func getRequests(query: PFQuery?, completion: ([PFUser]?, NSError?) -> Void) {
+    if let query = query {
+      query.findObjectsInBackgroundWithBlock {
+        (pRequests: [PFObject]?, error: NSError?) in
+        if let error = error {
+          completion(nil, error)
+        } else if let pRequests = pRequests {
+          var requests = [PFUser]()
+          for pRequest in pRequests {
+            let request = pRequest["user"] as? PFUser
+            if let request = request {
+              requests.append(request)
+            }
+          }
+          completion(requests, nil)
+        }
+      }
+    }
+  }
+  
+  //Mark: Can be placed in the cloud code
+  class func acceptRequest(query: PFQuery?, completion: (Bool, NSError?) -> Void) {
+    if let query = query {
+      query.getFirstObjectInBackgroundWithBlock {
+        (sharedPermission: PFObject?, error: NSError?) in
+        if let error = error {
+          completion(false, error)
+        } else if let sharedPermission = sharedPermission {
+          sharedPermission["status"] = "accepted"
+          sharedPermission.saveInBackgroundWithBlock {
+            (success: Bool, error: NSError?) in
+            if success {
+              completion(true, nil)
+            } else if let error = error {
+              completion(false, error)
+            }
+          }
+        }
+      }
+    }
+  }
+  
   func sendRequest(pushNotification: PFPush?, completion: (success: Bool, error: String?) -> Void) {
     if let pushNotification = pushNotification {
       HubAPI.saveParseObject(self, completion: {

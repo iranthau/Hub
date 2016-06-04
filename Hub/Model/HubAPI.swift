@@ -46,20 +46,6 @@ class HubAPI {
     }
   }
   
-  class func getSharedContacts(query: PFQuery?, completion: ([PFObject]?, NSError?) -> Void) {
-    if let query = query {
-      query.getFirstObjectInBackgroundWithBlock {
-        (sharedPermission: PFObject?, error: NSError?) -> Void in
-        if let error = error {
-          completion(nil, error)
-        } else if let sharedPermission = sharedPermission {
-          let contacts = sharedPermission.objectForKey("contacts") as? [PFObject]
-          completion(contacts, nil)
-        }
-      }
-    }
-  }
-  
   class func updateContacts(query: PFQuery?, pContacts: [PFObject]?, completion: (Bool, NSError?) -> Void) {
     if let query = query {
       query.getFirstObjectInBackgroundWithBlock {
@@ -70,26 +56,6 @@ class HubAPI {
           sharedPermission["contacts"] = pContacts
           sharedPermission.saveInBackground()
           completion(true, nil)
-        }
-      }
-    }
-  }
-  
-  class func getRequests(query: PFQuery?, completion: ([PFUser]?, NSError?) -> Void) {
-    if let query = query {
-      query.findObjectsInBackgroundWithBlock {
-        (pRequests: [PFObject]?, error: NSError?) in
-        if let error = error {
-          completion(nil, error)
-        } else if let pRequests = pRequests {
-          var requests = [PFUser]()
-          for pRequest in pRequests {
-            let request = pRequest["user"] as? PFUser
-            if let request = request {
-              requests.append(request)
-            }
-          }
-          completion(requests, nil)
         }
       }
     }
@@ -128,28 +94,6 @@ class HubAPI {
     }
   }
   
-  //Mark: Can be placed in the cloud code
-  class func acceptRequest(query: PFQuery?, completion: (Bool, NSError?) -> Void) {
-    if let query = query {
-      query.getFirstObjectInBackgroundWithBlock {
-        (sharedPermission: PFObject?, error: NSError?) in
-        if let error = error {
-          completion(false, error)
-        } else if let sharedPermission = sharedPermission {
-          sharedPermission["status"] = "accepted"
-          sharedPermission.saveInBackgroundWithBlock {
-            (success: Bool, error: NSError?) in
-            if success {
-              completion(true, nil)
-            } else if let error = error {
-              completion(false, error)
-            }
-          }
-        }
-      }
-    }
-  }
-  
   class func searchUsers(query: PFQuery?, completion: (pUsers: [PFUser]?, error: NSError?) -> Void) {
     if let query = query {
       query.findObjectsInBackgroundWithBlock {
@@ -163,38 +107,12 @@ class HubAPI {
     }
   }
   
-  class func recoverPassword(email: String?, completion: (success: Bool, error: NSError?) -> Void) {
-    if let email = email {
-      PFUser.requestPasswordResetForEmailInBackground(email) {
-        (success: Bool, error: NSError?) -> Void in
-        if let error = error {
-          completion(success: false, error: error)
-        } else {
-          completion(success: true, error: nil)
-        }
-      }
-    }
-  }
-  
   class func registerForPushNotification() {
     let installation = PFInstallation.currentInstallation()
     if PFUser.currentUser() != nil {
       installation["user"] = PFUser.currentUser()
     }
     installation.saveInBackground()
-  }
-  
-  class func isFriends(query: PFQuery?, completion: (Bool) -> Void) {
-    if let query = query {
-      query.getFirstObjectInBackgroundWithBlock {
-        (pObject: PFObject?, error: NSError?) in
-        if pObject == nil {
-          completion(false)
-        } else {
-          completion(true)
-        }
-      }
-    }
   }
   
   //---------------------Private methods-----------------------------
