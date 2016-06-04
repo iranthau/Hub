@@ -29,17 +29,18 @@ class ProfileContactViewController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         currentUser = hubModel.currentUser
-        
-        ViewFactory.hideTableViewSeparator(sharedContactsTableView)
-        ViewFactory.hideTableViewSeparator(mySharedContactsTableView)
-        ViewFactory.makeImageViewRound(profileImageView)
+        sharedContactsTableView.separatorColor = ViewFactory.hidden()
+        mySharedContactsTableView.separatorColor = ViewFactory.hidden()
+        ViewFactory.circularImage(profileImageView)
         SelectedButtonColorView.backgroundColor = ViewFactory.backGroundColor(ContactType.Phone)
         activeDataSource = sharedPhoneContacts
         scrollView.contentSize.height = 826
         
         if let contactProfile = contactProfile {
-            title = "\(contactProfile.firstName!) \(contactProfile.lastName!)"
-            contactProfile.getProfileImage(profileImageView)
+            title = "\(contactProfile.firstName) \(contactProfile.lastName)"
+            contactProfile.getProfileImage { (image) in
+                self.profileImageView.image = image
+            }
             ViewFactory.setLabelPlaceholder("nickname", text: contactProfile.nickname, label: nickNameLabel)
             ViewFactory.setLabelPlaceholder("city", text: contactProfile.city, label: cityLabel)
             ViewFactory.setTextViewPlaceholder("No prefered time provided", text: contactProfile.availableTime, textView: contactHoursTextView)
@@ -74,6 +75,24 @@ class ProfileContactViewController: UIViewController, UITableViewDataSource {
                 if let error = error {
                     print(error)
                 } else if let contacts = contacts {
+                    self.mySharedContacts.removeAll()
+                    for sharedContact in contacts {
+                        self.mySharedContacts.append(sharedContact)
+                    }
+                }
+                self.mySharedContactsTableView.reloadData()
+            })
+        }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        if let currentUser = currentUser {
+            currentUser.getContactsIShared(contactProfile, completion: {
+                (contacts, error) in
+                if let error = error {
+                    print(error)
+                } else if let contacts = contacts {
+                    self.mySharedContacts.removeAll()
                     for sharedContact in contacts {
                         self.mySharedContacts.append(sharedContact)
                     }
@@ -112,7 +131,7 @@ class ProfileContactViewController: UIViewController, UITableViewDataSource {
     }
     
     @IBAction func configureSharedContacts(sender: UIBarButtonItem) {
-        self.performSegueWithIdentifier("configureSharedContactsSegue", sender: contactProfile)
+        self.performSegueWithIdentifier("configureSharedContactsSegue", sender: nil)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -120,6 +139,7 @@ class ProfileContactViewController: UIViewController, UITableViewDataSource {
             let navigationController = segue.destinationViewController as! UINavigationController
             if let destinationVC = navigationController.topViewController as? ConfigureSharedContactTVC {
                 destinationVC.friend = self.contactProfile
+                destinationVC.sharedContacts = self.mySharedContacts
             }
         }
     }
@@ -138,7 +158,7 @@ class ProfileContactViewController: UIViewController, UITableViewDataSource {
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if tableView == self.mySharedContactsTableView {
-            return "\(contactProfile!.firstName!) can see"
+            return "\(contactProfile!.firstName) can see"
         }
         return ""
     }

@@ -12,40 +12,46 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
     @IBOutlet weak var nicknameLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var contactSelectionTableView: UITableView!
-    @IBOutlet weak var howToContactLabel: UILabel!
+    @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var sendRequestButton: UIBarButtonItem!
     
     var contactProfile: User?
     var currentUser: User?
     var contacts = [Contact]()
-    var requestedContacts = [PFObject]()
+    var requestedContacts = [Contact]()
     let hubModel = HubModel.sharedInstance
     
     override func viewDidLoad() {
         super.viewDidLoad()
         currentUser = hubModel.currentUser
-        ViewFactory.hideTableViewSeparator(contactSelectionTableView)
-        ViewFactory.makeImageViewRound(profileImageView)
+        contactSelectionTableView.separatorColor = ViewFactory.hidden()
+        ViewFactory.circularImage(profileImageView)
         
         if let friend = contactProfile {
-            title = "\(friend.firstName!) \(friend.lastName!)"
-            friend.getProfileImage(profileImageView)
-            friend.getContacts {
-                (contacts, error) in
-                if let error = error {
-                    print(error)
-                } else if let contacts = contacts {
-                    self.contacts = contacts
-                    self.contactSelectionTableView.reloadData()
+            title = "\(friend.firstName) \(friend.lastName)"
+            friend.getProfileImage {
+                (image) in
+                self.profileImageView.image = image
+            }
+            if let user = currentUser {
+                if user.contacts.isEmpty {
+                    textView.text = "you do not have any contacts to share"
+                } else {
+                    textView.text = "What contact details would you like to share with \(friend.firstName)?"
+                }
+                user.getContacts {
+                    (contacts, error) in
+                    if let error = error {
+                        print(error)
+                    } else if let contacts = contacts {
+                        self.contacts = contacts
+                        self.contactSelectionTableView.reloadData()
+                    }
                 }
             }
+            
             ViewFactory.setLabelPlaceholder("nickname", text: friend.nickname, label: nicknameLabel)
             ViewFactory.setLabelPlaceholder("city", text: friend.city, label: locationLabel)
-            if friend.hasSharedContacts() {
-                howToContactLabel.text = "How would you like to connect with \(friend.firstName!)?"
-            } else {
-                howToContactLabel.text = "\(friend.firstName!) has not shared any details"
-            }
         }
         disableSendRequestButton()
     }
@@ -63,15 +69,16 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
     }
     
     @IBAction func sendRequest(sender: UIBarButtonItem) {
-        let friend = contactProfile!.matchingParseObject
-        let pushQuery = HubUtility.configurePushInstallation(friend)
-        let parseObject = PFObject(className: "SharedPermission")
-        let sharedPermission = SharedPermission(parseObject: parseObject)
+        let pushQuery = HubUtility.configurePushInstallation(contactProfile)
         if let currentUser = currentUser {
-            let message = "You have a request from \(currentUser.firstName!) \(currentUser.lastName!)"
+            let message = "You have a request from \(currentUser.firstName) \(currentUser.lastName)"
             let pushNotification = HubUtility.configurePushNotification(pushQuery, message: message)
-            sharedPermission.buildParseObject(friend, toUser: currentUser.matchingParseObject, contacts: requestedContacts, status: "pending")
-            currentUser.sendRequest(sharedPermission, pushNotification: pushNotification, vc: self)
+            let sharedPermission = SharedPermission(fromUser: currentUser, toUser: contactProfile!, contacts: requestedContacts, status: "pending")
+            sharedPermission.sendRequest(pushNotification, completion: {
+                (success, error) in
+                self.showAlert("Request is sent")
+                self.back(sender)
+            })
         }
     }
     
@@ -89,8 +96,8 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
         
         cell.cellDelegate = self
         imageView.image = UIImage(named: contact.getImageName())
-        sharedSwitch.setOn(contact.selected!, animated: true)
-        label.text = contactDisplayName(contact)
+        sharedSwitch.setOn(contact.selected, animated: true)
+        label.text = contact.value!
         return cell
     }
     
@@ -110,14 +117,6 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
     }
     
     //---------------------------Private methods------------------
-    private func contactDisplayName(contact: Contact) -> String {
-        if contact.type! == ContactType.Social.label {
-            return "\(contact.subType!)"
-        } else {
-            return "\(contact.subType!) \(contact.type!)"
-        }
-    }
-    
     private func disableSendRequestButton() {
         if requestedContacts.isEmpty {
             sendRequestButton.enabled = false
@@ -127,10 +126,10 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
     }
     
     func addContactToArray(contact: Contact) {
-        if contact.selected! {
-            requestedContacts.append(contact.matchingParseObject)
+        if contact.selected{
+            requestedContacts.append(contact)
         } else {
-            requestedContacts.removeObject(contact.matchingParseObject)
+            requestedContacts.removeObject(contact)
         }
     }
 }

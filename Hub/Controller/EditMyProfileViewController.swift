@@ -43,7 +43,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
     override func viewDidLoad() {
         super.viewDidLoad()
         currentUser = hubModel.currentUser
-        ViewFactory.makeImageViewRound(profileImageView)
+        ViewFactory.circularImage(profileImageView)
         
         //Fill up contacts arrays to have all type of contacts initially
         phoneContacts = HubUtility.initialisePhoneContacts()
@@ -62,7 +62,10 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
             nicknameTextField.text = currentUser.nickname
             cityTextField.text = currentUser.city
             ViewFactory.setTextViewPlaceholder("When can others contact you?", text: currentUser.availableTime, textView: availabilityTextView)
-            currentUser.getProfileImage(profileImageView)
+            currentUser.getProfileImage {
+                (image) in
+                self.profileImageView.image = image
+            }
             allContacts = currentUser.contacts
         }
         
@@ -73,7 +76,6 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditMyProfileViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: self.view.window)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditMyProfileViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: self.view.window)
         
-        finishEditingButton.enabled = false
         activeTextView = availabilityTextView
     }
 
@@ -93,7 +95,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
             currentUser.nickname = nicknameTextField.text!
             currentUser.city = cityTextField.text!
             currentUser.availableTime = availabilityTextView.text!
-            currentUser.setProfileImage(profileImageView.image!)
+            currentUser.setProfilePicture(profileImageView.image!)
             currentUser.setContacts(contactsToSave) {
                 (success: Bool, error: String?) in
                 if success {
@@ -129,7 +131,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
     }
 
     @IBAction func changeProfileImage() {
-        let alert = hubModel.buildImagePickAlertController(imagePicker, view: self)
+        let alert = ViewFactory.buildImagePickAlertController(imagePicker, view: self)
         imagePicker.delegate = self
         
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
@@ -149,6 +151,7 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
         textField.delegate = self
         textField.text = contact.value
         textField.placeholder = contact.subType
+        textField.addTarget(self, action: #selector(EditMyProfileViewController.textFieldChanged(_:)), forControlEvents: UIControlEvents.EditingChanged)
         let imageName = contact.getImageName()
         cell.contactImage.image = UIImage(named: imageName)
         cell.configureKeyboardForContactType(keyboardForContactType)
@@ -189,22 +192,21 @@ class EditMyProfileViewController: UIViewController, UITextFieldDelegate, UIText
         activeTextField = textField
     }
     
+    func textFieldChanged(textField: UITextField) {
+        let cell = textField.superview!.superview as! EditContactItemCell
+        cell.contact!.value = textField.text!
+    }
+    
     //Update contact value when the user click outside of the active textfield
     func textFieldDidEndEditing(textField: UITextField) {
-        if textField != firstNameTextField && textField != lastNameTextField && textField != nicknameTextField && textField != cityTextField {
-            let cell = textField.superview!.superview as! EditContactItemCell
-            cell.contact!.value = textField.text!
-        }
         activeTextView = nil
     }
     
     func keyboardWillHide(sender: NSNotification) {
-        finishEditingButton.enabled = true
         self.view.frame.origin.y = viewInitialPointOfOrigin
     }
     
     func keyboardWillShow(sender: NSNotification) {
-        finishEditingButton.enabled = false
         let userInfo = sender.userInfo!
         let keyboardSize = userInfo[UIKeyboardFrameBeginUserInfoKey]!.CGRectValue.size
         let offset = userInfo[UIKeyboardFrameEndUserInfoKey]!.CGRectValue.size

@@ -31,7 +31,7 @@ class MyProfileViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         user = hubModel.currentUser
-        ViewFactory.hideTableViewSeparator(tableView)
+        tableView.separatorColor = ViewFactory.hidden()
         selectedContactView.backgroundColor = ViewFactory.backGroundColor(ContactType.Phone)
         
         if let currentUser = user {
@@ -156,9 +156,11 @@ class MyProfileViewController: UIViewController, UITableViewDataSource, UITableV
     
     //Set the values of lables and views from a user
     private func SetInitialValues(currentUser: User) {
-        self.navigationItem.title = "\(currentUser.firstName!) \(currentUser.lastName!)"
-        currentUser.getProfileImage(profileImageView)
-        ViewFactory.makeImageViewRound(profileImageView)
+        self.navigationItem.title = "\(currentUser.firstName) \(currentUser.lastName)"
+        currentUser.getProfileImage { (image) in
+            self.profileImageView.image = image
+        }
+        ViewFactory.circularImage(profileImageView)
         ViewFactory.setLabelPlaceholder("nickname", text: currentUser.nickname, label: nicknameLabel)
         ViewFactory.setLabelPlaceholder("city", text: currentUser.city, label: cityLocationLabel)
         ViewFactory.setTextViewPlaceholder("No prefered time provided", text: currentUser.availableTime, textView: contactHoursDetail)

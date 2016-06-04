@@ -5,526 +5,423 @@
 
 import Foundation
 import Parse
-import ParseFacebookUtilsV4
 
-class User: Hashable {
-    var objectId: String?
-    var username: String?
-    var password: String?
-    var email: String?
-    var firstName: String?
-    var lastName: String?
-    var nickname: String?
-    var profileIsVisible: Bool?
-    var availableTime: String?
-    var city: String?
-    var profileImage: PFFile?
-    let defaultProfileImage: UIImage
-    var matchingParseObject: PFUser
-    var contacts = [Contact]()
-    var friends = [User]()
-    var requests: [User]?
-    var isNew = false
-    let hubModel = HubModel.sharedInstance
-    
-    // A user can be intialise with a parse user object
-    init(parseUser: PFUser) {
-        matchingParseObject = parseUser
-        defaultProfileImage = UIImage(named: "placeholder-image")!
+class User: PFUser {
+  @NSManaged var firstName: String
+  @NSManaged var lastName: String
+  @NSManaged var nickname: String?
+  @NSManaged var profileIsVisible: Bool
+  @NSManaged var availableTime: String?
+  @NSManaged var city: String?
+  @NSManaged private var profileImage: PFFile
+  @NSManaged var contacts: [Contact]
+  
+  private override init() {
+    super.init()
+  }
+  
+  override class func initialize() {
+    struct Static {
+      static var onceToken : dispatch_once_t = 0;
     }
-    
-    /* Whenever a user is being initialise the object need to be build using the method.
-     * Assigns values to user attributes from parse object */
-    func buildUser() {
-        objectId = matchingParseObject.objectId!
-        username = matchingParseObject.username!
-        email = matchingParseObject.email!
-        firstName = matchingParseObject["firstName"] as? String
-        lastName = matchingParseObject["lastName"] as? String
-        nickname = matchingParseObject["nickName"] as? String
-        profileIsVisible = matchingParseObject["profileIsVisible"] as? Bool
-        availableTime = matchingParseObject["availableTime"] as? String
-        city = matchingParseObject["city"] as? String
-        profileImage = matchingParseObject["profileImage"] as? PFFile
+    dispatch_once(&Static.onceToken) {
+      self.registerSubclass()
     }
-    
-    // Build the parse object with provided values
-    func buildParseUser() {
-        matchingParseObject["firstName"] = firstName!
-        matchingParseObject["lastName"] = lastName!
-        matchingParseObject.email = email!
-        setProfileImage(defaultProfileImage)
-        matchingParseObject["profileIsVisible"] = true
-    }
-    
-    func setUsername(username: String) {
-        matchingParseObject.username = username
-    }
-    
-    func setPassword(password: String) {
-        matchingParseObject.password = password
-    }
-    
-    func setProfileImage(image: UIImage) {
-        matchingParseObject["profileImage"] = HubUtility.convertImageFileToParseFile(image)
-        profileImage = HubUtility.convertImageFileToParseFile(image)
-    }
-    
-    func setAvailableTime() {
-        if let availableTime = availableTime {
-            matchingParseObject["availableTime"] = availableTime
+  }
+  
+  convenience init(firstName: String, lastName: String, email: String) {
+    self.init()
+    self.firstName = firstName
+    self.lastName = lastName
+    self.email = email
+    self.username = email
+    self.profileIsVisible = true
+  }
+  
+  func getProfileImage(completion: (image: UIImage?) -> Void) {
+    profileImage.getDataInBackgroundWithBlock {
+      (imageData: NSData?, error: NSError?) -> Void in
+      if error == nil {
+        if let imageData = imageData {
+          let image = UIImage(data:imageData)
+          completion(image: image)
         }
+      }
+    }
+  }
+  
+  func setProfilePicture(image: UIImage?) {
+    var imageData: NSData?
+    if let image = image {
+      imageData = image.lowQualityJPEGNSData
+    } else {
+      let defaultImage = UIImage(named: "placeholder-image")
+      imageData = defaultImage?.lowQualityJPEGNSData
     }
     
-    func setFirstName() {
-        matchingParseObject["firstName"] = firstName!
+    if let imageData = imageData {
+      profileImage = PFFile(data: imageData)!
     }
+  }
+  
+  class func logIn(userDetails: [String: String], completion: (success: User?, error: String?) -> Void) {
+    let username = userDetails["username"]!
+    let password = userDetails["password"]!
     
-    func setLastName() {
-        matchingParseObject["lastName"] = lastName!
+    self.logInWithUsernameInBackground(username, password: password) {
+      (pUser: PFUser?, error: NSError?) -> Void in
+      if let error = error {
+        let errorMessage = error.userInfo["error"] as? String
+        completion(success: nil, error: errorMessage)
+      } else if let pUser = pUser as? User {
+        completion(success: pUser, error: nil)
+      }
     }
-    
-    func setNickame() {
-        if let nickname = nickname {
-            matchingParseObject["nickName"] = nickname
-        }
-    }
-    
-    func setCity() {
-        if let city = city {
-            matchingParseObject["city"] = city
-        }
-    }
-    
-    // Return true if a user has any contacts to share
-    func hasSharedContacts() -> Bool {
-        return matchingParseObject.objectForKey("contacts") != nil
-    }
-    
-    func hideProfile(isHidden: Bool) {
-        matchingParseObject["profileIsVisible"] = isHidden
-        matchingParseObject.saveInBackground()
-    }
-    
-    func sendRequest(sharedPermission: SharedPermission, pushNotification: PFPush, vc: BaseViewController) {
-        sharedPermission.saveInParse(pushNotification, vc: vc)
-    }
-    
-    /* Get the profile image from parse and assignes it to an imageview */
-    func getProfileImage(imageView: UIImageView) {
-        profileImage!.getDataInBackgroundWithBlock {
-            (imageData: NSData?, error: NSError?) -> Void in
-            if error == nil {
-                if let imageData = imageData {
-                    imageView.image = UIImage(data:imageData)
-                }
-            }
-        }
-    }
-    
-    func logIn(userDetails: [String: String], completion: (success: User?, error: String?) -> Void) {
-        HubAPI.logIn(userDetails) {
-            (pfUser: PFUser?, error: NSError?) -> Void in
+  }
+  
+  class func logInWithFacebook(completion: (success: User?, error: String?) -> Void) {
+    HubAPI.logInWithFacebook { (pUser: PFUser?, error: NSError?) in
+      if let error = error {
+        let errorMessage = error.userInfo["error"] as! String
+        completion(success: nil, error: errorMessage)
+      } else if let pUser = pUser as? User {
+        if pUser.isNew {
+          HubAPI.readFacebookPublicProfile {
+            (result: NSDictionary?, error: NSError?) in
             if let error = error {
-                let errorMessage = error.userInfo["error"] as? String
-                completion(success: nil, error: errorMessage)
-            } else {
-                self.matchingParseObject = pfUser!
-                self.buildUser()
-                completion(success: self, error: nil)
+              let errorMessage = error.userInfo["error"] as! String
+              completion(success: nil, error: errorMessage)
+            } else if let result = result {
+              pUser.firstName = result["first_name"] as! String
+              pUser.lastName = result["last_name"] as! String
+              pUser.email = result["email"] as? String
+              let pImage = result["profile-image"] as? UIImage
+              pUser.setProfilePicture(pImage)
+              pUser.profileIsVisible = true
+              completion(success: pUser, error: nil)
             }
+          }
+        } else {
+          completion(success: pUser, error: nil)
         }
+      }
     }
-    
-    func logInWithFacebook(completion: (success: User?, error: String?) -> Void) {
-        HubAPI.logInWithFacebook {
-            (user: PFUser?, error: NSError?) in
-            if let error = error {
-                let errorMessage = error.userInfo["error"] as! String
-                completion(success: nil, error: errorMessage)
-            } else if let user = user {
-                if user.isNew {
-                    HubAPI.readFacebookPublicProfile {
-                        (result: NSDictionary?, error: NSError?) in
-                        if let error = error {
-                            let errorMessage = error.userInfo["error"] as! String
-                            completion(success: nil, error: errorMessage)
-                        } else {
-                            self.matchingParseObject = user
-                            self.firstName = result!["first_name"]! as? String
-                            self.lastName = result!["last_name"]! as? String
-                            self.email = result!["email"]! as? String
-                            self.isNew = true
-                            self.buildParseUser()
-                            let image = result!["profile-image"] as? UIImage
-                            self.setProfileImage(image!)
-                            completion(success: self, error: nil)
-                        }
-                    }
-                } else {
-                    self.matchingParseObject = user
-                    self.buildUser()
-                    completion(success: self, error: nil)
-                }
-            }
+  }
+  
+  func signMeUp(completion: (user: User?, error: String?) -> Void) {
+    self.signUpInBackgroundWithBlock {
+      (success: Bool, error: NSError?) in
+      if let error = error {
+        let errorMessage = error.userInfo["error"] as? String
+        completion(user: nil, error: errorMessage)
+      } else {
+        let curretUser = PFUser.currentUser() as? User
+        completion(user: curretUser, error: nil)
+      }
+    }
+  }
+  
+  func logOut(completion: (error: String?) -> Void) {
+    PFUser.logOutInBackgroundWithBlock {
+      (error: NSError?) in
+      if let error = error {
+        let errorMessage = error.userInfo["error"] as? String
+        completion(error: errorMessage)
+      } else {
+        completion(error: nil)
+      }
+    }
+  }
+  
+  func getFriends(completion: (friends: [User]?, error: String?) -> Void) {
+    SharedPermission.getAllFriends(self) {
+      (pUsers, error) in
+      if let error = error {
+        let errorMessage = error.userInfo["error"] as? String
+        completion(friends: nil, error: errorMessage)
+      } else {
+        if let pUsers = pUsers as? [User] {
+          let uniqueFriends = pUsers.removeDuplicates()
+          completion(friends: uniqueFriends, error: nil)
         }
+      }
     }
-    
-    func signUp(completion: (user: User?, error: String?) -> Void) {
-        HubAPI.signUp(matchingParseObject) {
-            (user: PFUser?, error: NSError?) in
-            if let error = error {
-                let errorMessage = error.userInfo["error"] as? String
-                completion(user: nil, error: errorMessage)
-            } else {
-                self.matchingParseObject = user!
-                self.buildUser()
-                completion(user: self, error: nil)
-            }
+  }
+  
+  /* Get all contacts that a friend has shared with me */
+  func getAllSharedContacts(friend: User?, completion: (contacts: [Contact]?, error: String?) -> Void) {
+    if let friend = friend {
+      let query = PFQuery(className: "SharedPermission")
+      query.whereKey("user", equalTo: friend)
+      query.whereKey("userFriend", equalTo: self)
+      query.whereKey("status", equalTo: "accepted")
+      query.includeKey("contacts")
+      
+      HubAPI.getSharedContacts(query) {
+        (pContacts: [PFObject]?, error: NSError?) in
+        if let error = error {
+          let errorMessage = error.userInfo["error"] as? String
+          completion(contacts: nil, error: errorMessage)
+        } else if let pContacts = pContacts as? [Contact] {
+          completion(contacts: pContacts, error: nil)
         }
+      }
     }
-    
-    func logOut(completion: (error: String?) -> Void) {
-        HubAPI.logOut {
-            (error) in
-            if let error = error {
-                let errorMessage = error.userInfo["error"] as? String
-                completion(error: errorMessage)
-            } else {
-                completion(error: nil)
-            }
+  }
+  
+  // Get contacts I shared with a friend
+  func getContactsIShared(friend: User?, completion: (contacts: [Contact]?, error: String?) -> Void) {
+    if let friend = friend {
+      let query = PFQuery(className: "SharedPermission")
+      query.whereKey("userFriend", equalTo: friend)
+      query.whereKey("user", equalTo: self)
+      query.whereKey("status", equalTo: "accepted")
+      query.includeKey("contacts")
+      
+      HubAPI.getSharedContacts(query) {
+        (pContacts: [PFObject]?, error: NSError?) in
+        if let error = error {
+          let errorMessage = error.userInfo["error"] as? String
+          completion(contacts: nil, error: errorMessage)
+        } else if let pContacts = pContacts as? [Contact] {
+          completion(contacts: pContacts, error: nil)
         }
+      }
     }
-    
-    func getAllFriends(completion: (friends: [User]?, error: String?) -> Void) {
-        let sPParseObject = PFObject(className: "SharedPermission")
-        let sharedPermission = SharedPermission(parseObject: sPParseObject)
-        let myFriendQuery = sharedPermission.buildFriendQuery("user", objectForTheField: matchingParseObject)
-        let iAmAFriendOfQuery = sharedPermission.buildFriendQuery("userFriend", objectForTheField: matchingParseObject)
-        let query = PFQuery.orQueryWithSubqueries([myFriendQuery, iAmAFriendOfQuery])
-        
-        HubAPI.getAllFriends(matchingParseObject, query: query) {
-            (pUsers, error) in
-            if let error = error {
-                let errorMessage = error.userInfo["error"] as? String
-                completion(friends: nil, error: errorMessage)
-            } else {
-                var allFriends = [User]()
-                if let pUsers = pUsers {
-                    for pUser in pUsers {
-                        let friend = User(parseUser: pUser)
-                        friend.buildUser()
-                        allFriends.append(friend)
-                    }
-                }
-                let uniqueFriends = allFriends.removeDuplicates()
-                completion(friends: uniqueFriends, error: nil)
-            }
+  }
+  
+  //Get my own contacts
+  func getContacts(completion: (contacts: [Contact]?, error: String?) -> Void) {
+    let contactsGroup = dispatch_group_create()
+    var fetchedContacts = [Contact]()
+    for pObject in contacts {
+      dispatch_group_enter(contactsGroup)
+      pObject.fetchInBackgroundWithBlock {
+        (pContact: PFObject?, error: NSError?) -> Void in
+        if let error = error {
+          let errorMessage = error.userInfo["error"] as? String
+          completion(contacts: nil, error: errorMessage)
+        } else if let pContact = pContact as? Contact {
+          fetchedContacts.append(pContact)
         }
+        dispatch_group_leave(contactsGroup)
+      }
     }
+    dispatch_group_notify(contactsGroup, dispatch_get_main_queue()) {
+      self.contacts = fetchedContacts
+      completion(contacts: fetchedContacts, error: nil)
+    }
+  }
+  
+  //Get a list of friends that asked to connect with me
+  func getRequests(completion: (requests: [User]?, error: String?) -> Void) {
+    let query = PFQuery(className: "SharedPermission")
+    query.whereKey("userFriend", equalTo: self)
+    query.whereKey("status", equalTo: "pending")
+    query.includeKey("user")
     
-    /* Get all contacts that a friend has shared with me */
-    func getAllSharedContacts(friend: User?, completion: (contacts: [Contact]?, error: String?) -> Void) {
-        if let friend = friend {
-            let query = PFQuery(className: "SharedPermission")
-            query.whereKey("user", equalTo: friend.matchingParseObject)
-            query.whereKey("userFriend", equalTo: matchingParseObject)
-            query.whereKey("status", equalTo: "accepted")
-            query.includeKey("contacts")
-            
-            HubAPI.getSharedContacts(query) {
-                (pContacts: [PFObject]?, error: NSError?) in
-                if let error = error {
-                    let errorMessage = error.userInfo["error"] as? String
-                    completion(contacts: nil, error: errorMessage)
-                } else if let pContacts = pContacts {
-                    var contacts = [Contact]()
-                    for pContact in pContacts {
-                        let sharedContact = Contact(parseObject: pContact)
-                        sharedContact.buildContact()
-                        contacts.append(sharedContact)
-                    }
-                    completion(contacts: contacts, error: nil)
-                }
-            }
+    HubAPI.getRequests(query) {
+      (pRequests: [PFUser]?, error: NSError?) in
+      if let error = error {
+        let errorMessage = error.userInfo["error"] as? String
+        completion(requests: nil, error: errorMessage)
+      } else if let pRequests = pRequests {
+        var requests = [User]()
+        for pRequest in pRequests {
+          let request = pRequest as? User
+          requests.append(request!)
         }
+        completion(requests: requests, error: nil)
+      }
     }
-    
-    // Get contacts I shared with a friend
-    func getContactsIShared(friend: User?, completion: (contacts: [Contact]?, error: String?) -> Void) {
-        if let friend = friend {
-            let query = PFQuery(className: "SharedPermission")
-            query.whereKey("userFriend", equalTo: friend.matchingParseObject)
-            query.whereKey("user", equalTo: matchingParseObject)
-            query.whereKey("status", equalTo: "accepted")
-            query.includeKey("contacts")
-            
-            HubAPI.getSharedContacts(query) {
-                (pContacts: [PFObject]?, error: NSError?) in
-                if let error = error {
-                    let errorMessage = error.userInfo["error"] as? String
-                    completion(contacts: nil, error: errorMessage)
-                } else if let pContacts = pContacts {
-                    var contacts = [Contact]()
-                    for pContact in pContacts {
-                        let sharedContact = Contact(parseObject: pContact)
-                        sharedContact.buildContact()
-                        contacts.append(sharedContact)
-                    }
-                    completion(contacts: contacts, error: nil)
-                }
-            }
+  }
+  
+  //Get a list of contacts that a friend has asked to share
+  func getRequestedContacts(friend: User?, completion: (contacts: [Contact]?, error: String?) -> Void) {
+    if let friend = friend {
+      let query = PFQuery(className: "SharedPermission")
+      query.whereKey("user", equalTo: friend)
+      query.whereKey("userFriend", equalTo: self)
+      query.whereKey("status", equalTo: "pending")
+      query.includeKey("contacts")
+      
+      HubAPI.getSharedContacts(query) {
+        (pContacts: [PFObject]?, error: NSError?) in
+        if let error = error {
+          let errorMessage = error.userInfo["error"] as? String
+          completion(contacts: nil, error: errorMessage)
+        } else if let pContacts = pContacts as? [Contact] {
+          completion(contacts: pContacts, error: nil)
         }
+      }
     }
+  }
+  
+  /* Update contacts for a user when the user update them. Also will remove
+   * the deleted/ empty contacts from parse for the user */
+  func setContacts(contacts: [Contact], completion: (Bool, String?) -> Void) {
+    self.contacts = contactsToSaveArray(contacts)
+    let contactsToDelete = contactsToDeleteArray(contacts)
     
-    //Get my own contacts
-    func getContacts(completion: (contacts: [Contact]?, error: String?) -> Void) {
-        var contactsToReturn = [Contact]()
-        HubAPI.getContacts(matchingParseObject) {
-            (contacts: [PFObject]?, error: NSError?) in
-            if let error = error {
-                let errorMessage = error.userInfo["error"] as? String
-                completion(contacts: nil, error: errorMessage)
-            } else if let contacts = contacts {
-                for pContact in contacts {
-                    let contact = Contact(parseObject: pContact)
-                    contact.buildContact()
-                    contactsToReturn.append(contact)
-                    self.contacts.append(contact)
-                }
-                completion(contacts: contactsToReturn, error: nil)
-            }
+    self.saveUser { (success, error) in
+      if success {
+        HubAPI.deleteABatchOfObjects(contactsToDelete, completion: {
+          (success, error) in
+          if success {
+            completion(true, nil)
+          } else if let error = error {
+            let errorMessage = error.userInfo["error"] as? String
+            completion(false, errorMessage)
+          }
+        })
+      } else if let error = error {
+        completion(false, error)
+      }
+    }
+  }
+  
+  func acceptRequest(friend: User?, completion: (Bool, String?) -> Void) {
+    if let friend = friend {
+      let query = PFQuery(className: "SharedPermission")
+      query.whereKey("userFriend", equalTo: self)
+      query.whereKey("user", equalTo: friend)
+      
+      let pushQuery = PFInstallation.query()!
+      pushQuery.whereKey("user", equalTo: friend)
+      let message = "\(self.firstName) \(self.lastName) accepted your request to connect"
+      let push = PFPush()
+      push.setQuery(pushQuery)
+      let data = [ "alert": message, "badge": "Increment", "sound": "Ambient Hit.mp3" ]
+      push.setData(data)
+      
+      HubAPI.acceptRequest(query) {
+        (success: Bool, error: NSError?) in
+        if let error = error {
+          let errorMessage = error.userInfo["error"] as? String
+          completion(false, errorMessage)
+        } else if success {
+          push.sendPushInBackground()
+          completion(true, nil)
         }
+      }
     }
-    
-    //Get a list of friends that asked to connect with me
-    func getRequests(completion: (requests: [User]?, error: String?) -> Void) {
-        let query = PFQuery(className: "SharedPermission")
-        query.whereKey("user", equalTo: matchingParseObject)
-        query.whereKey("status", equalTo: "pending")
-        query.includeKey("userFriend")
-        
-        HubAPI.getRequests(query) {
-            (pRequests: [PFUser]?, error: NSError?) in
-            if let error = error {
-                let errorMessage = error.userInfo["error"] as? String
-                completion(requests: nil, error: errorMessage)
-            } else if let pRequests = pRequests {
-                var requests = [User]()
-                for pRequest in pRequests {
-                    let request = User(parseUser: pRequest)
-                    request.buildUser()
-                    requests.append(request)
-                }
-                completion(requests: requests, error: nil)
-            }
+  }
+  
+  func declineRequest(friend: User?) {
+    if let friend = friend {
+      let query = PFQuery(className: "SharedPermission")
+      query.whereKey("userFriend", equalTo: self)
+      query.whereKey("user", equalTo: friend)
+      query.whereKey("status", equalTo: "pending")
+      
+      query.getFirstObjectInBackgroundWithBlock {
+        (sharedPermission: PFObject?, error: NSError?) in
+        sharedPermission?.deleteInBackground()
+      }
+    }
+  }
+  
+  func deleteAccount(completion: (success: Bool, error: String?) -> Void) {
+    self.deleteInBackgroundWithBlock {
+      (success: Bool, error: NSError?) in
+      if let error = error {
+        let errorMessage = error.userInfo["error"] as? String
+        completion(success: false, error: errorMessage)
+      } else if success {
+        PFUser.logOut()
+        completion(success: true, error: nil)
+      }
+    }
+  }
+  
+  func searchForFriends(textToSearch: String, completion: ([User]?, String?) -> Void) {
+    if let query = PFUser.query() {
+      query.whereKey("firstName", hasPrefix: textToSearch)
+      query.whereKey("profileIsVisible", equalTo: true)
+      query.whereKey("objectId", notEqualTo: objectId!)
+      
+      HubAPI.searchUsers(query, completion: {
+        (pUsers, error) in
+        if let error = error {
+          let errorMessage = error.userInfo["error"] as? String
+          completion(nil, errorMessage)
+        } else if let pUsers = pUsers {
+          var users = [User]()
+          for pUser in pUsers {
+            let user = pUser as? User
+            users.append(user!)
+          }
+          completion(users, nil)
         }
+      })
     }
-    
-    //Get a list of contacts that a friend has asked to share
-    func getRequestedContacts(friend: User?, completion: (contacts: [Contact]?, error: String?) -> Void) {
-        if let friend = friend {
-            let query = PFQuery(className: "SharedPermission")
-            query.whereKey("userFriend", equalTo: friend.matchingParseObject)
-            query.whereKey("user", equalTo: matchingParseObject)
-            query.whereKey("status", equalTo: "pending")
-            query.includeKey("contacts")
-            
-            HubAPI.getSharedContacts(query) {
-                (pContacts: [PFObject]?, error: NSError?) in
-                if let error = error {
-                    let errorMessage = error.userInfo["error"] as? String
-                    completion(contacts: nil, error: errorMessage)
-                } else if let pContacts = pContacts {
-                    var contacts = [Contact]()
-                    for pContact in pContacts {
-                        let contact = Contact(parseObject: pContact)
-                        contact.buildContact()
-                        contacts.append(contact)
-                    }
-                    completion(contacts: contacts, error: nil)
-                }
-            }
+  }
+  
+  func resetPassword(email: String?, completion: (success: Bool, error: String?) -> Void) {
+    if let email = email {
+      HubAPI.recoverPassword(email, completion: {
+        (success, error) in
+        if let error = error {
+          let errorMessage = error.userInfo["error"] as? String
+          completion(success: false, error: errorMessage)
+        } else if success {
+          completion(success: true, error: nil)
         }
+      })
     }
-    
-    /* Update contacts for a user when the user update them. Also will remove
-     * the deleted/ empty contacts from parse for the user */
-    func setContacts(contacts: [Contact], completion: (Bool, String?) -> Void) {
-        let contactsToSave = contactsToSaveArray(contacts)
-        let contactsToDelete = contactsToDeleteArray(contacts)
-        
-        self.setAvailableTime()
-        self.setFirstName()
-        self.setLastName()
-        self.setNickame()
-        self.setCity()
-        self.matchingParseObject["contacts"] = contactsToSave
-        HubAPI.saveParseUser(matchingParseObject) {
-            (success: Bool, error: NSError?) in
-            if success {
-                HubAPI.deleteABatchOfObjects(contactsToDelete, completion: {
-                    (success, error) in
-                    if success {
-                        completion(true, nil)
-                    } else if let error = error {
-                        let errorMessage = error.userInfo["error"] as? String
-                        completion(false, errorMessage)
-                    }
-                })
-            } else if let error = error {
-                let errorMessage = error.userInfo["error"] as? String
-                completion(false, errorMessage)
-            }
+  }
+  
+  func saveUser(completion: (success: Bool, error: String?) -> Void) {
+    self.saveInBackgroundWithBlock {
+      (success: Bool, error: NSError?) in
+      if let error = error {
+        let errorMessage = error.userInfo["error"] as? String
+        completion(success: success, error: errorMessage)
+      } else {
+        completion(success: success, error: nil)
+      }
+    }
+  }
+  
+  func isFriendsWith(user: User?, completion: (Bool) -> Void) {
+    if let user = user {
+      let query = PFQuery(className: "SharedPermission")
+      query.whereKey("userFriend", equalTo: user)
+      query.whereKey("user", equalTo: self)
+      
+      HubAPI.isFriends(query, completion: {
+        (success: Bool) in
+        if success {
+          completion(true)
+        } else {
+          completion(false)
         }
+      })
     }
-    
-    func acceptRequest(friend: User?, contacts: [Contact]?, completion: (Bool, String?) -> Void) {
-        if let friend = friend {
-            let pFriend = friend.matchingParseObject
-            let query = PFQuery(className: "SharedPermission")
-            query.whereKey("user", equalTo: matchingParseObject)
-            query.whereKey("userFriend", equalTo: pFriend)
-            
-            let pushQuery = PFInstallation.query()!
-            pushQuery.whereKey("user", equalTo: pFriend)
-            let message = "\(self.firstName!) \(self.lastName!) accepted your request to connect"
-            let push = PFPush()
-            push.setQuery(pushQuery)
-            let data = [ "alert": message, "badge": "Increment", "sound": "Ambient Hit.mp3" ]
-            push.setData(data)
-            
-            var pContacts = [PFObject]()
-            if let contacts = contacts {
-                for contact in contacts {
-                    pContacts.append(contact.matchingParseObject)
-                }
-            }
-            
-            HubAPI.acceptRequest(query, contacts: pContacts) {
-                (success: Bool, errror: NSError?) in
-                if let errror = errror {
-                    let errorMessage = errror.userInfo["error"] as? String
-                    completion(false, errorMessage)
-                } else if success {
-                    push.sendPushInBackground()
-                    completion(true, nil)
-                }
-            }
-        }
+  }
+  
+  //---------------------Private methods-----------------------------
+  
+  /* If the contact value is empty after a user update his contacts those contacts
+   * will be deleted from parse */
+  private func contactsToDeleteArray(contacts: [Contact]) -> [Contact] {
+    var returnArray = [Contact]()
+    for contact in contacts {
+      if contact.value == "" {
+        returnArray.append(contact)
+      }
     }
-    
-    func declineRequest(friend: User?) {
-        if let friend = friend {
-            let pFriend = friend.matchingParseObject
-            let query = PFQuery(className: "SharedPermission")
-            query.whereKey("user", equalTo: matchingParseObject)
-            query.whereKey("userFriend", equalTo: pFriend)
-            query.whereKey("status", equalTo: "pending")
-            
-            HubAPI.declineRequest(query)
-        }
+    return returnArray
+  }
+  
+  private func contactsToSaveArray(contacts: [Contact]) -> [Contact] {
+    var returnArray = [Contact]()
+    self.contacts.removeAll()
+    for contact in contacts {
+      if contact.value != "" {
+        returnArray.append(contact)
+      }
     }
-    
-    func deleteAccount(completion: (success: Bool, error: String?) -> Void) {
-        HubAPI.deleteAccount(matchingParseObject) { (success, error) in
-            if let error = error {
-                let errorMessage = error.userInfo["error"] as? String
-                completion(success: false, error: errorMessage)
-            } else if success {
-                completion(success: true, error: nil)
-            }
-        }
-    }
-    
-    func searchForFriends(textToSearch: String, completion: ([User]?, String?) -> Void) {
-        if let query = PFUser.query() {
-            query.whereKey("firstName", hasPrefix: textToSearch)
-            query.whereKey("profileIsVisible", equalTo: true)
-            query.whereKey("objectId", notEqualTo: objectId!)
-            
-            HubAPI.searchUsers(query, completion: {
-                (pUsers, error) in
-                if let error = error {
-                    let errorMessage = error.userInfo["error"] as? String
-                    completion(nil, errorMessage)
-                } else if let pUsers = pUsers {
-                    var users = [User]()
-                    for pUser in pUsers {
-                        let user = User(parseUser: pUser)
-                        user.buildUser()
-                        users.append(user)
-                    }
-                    completion(users, nil)
-                }
-            })
-        }
-    }
-    
-    func resetPassword(email: String?, completion: (success: Bool, error: String?) -> Void) {
-        if let email = email {
-            HubAPI.recoverPassword(email, completion: {
-                (success, error) in
-                if let error = error {
-                    let errorMessage = error.userInfo["error"] as? String
-                    completion(success: false, error: errorMessage)
-                } else if success {
-                    completion(success: true, error: nil)
-                }
-            })
-        }
-    }
-    
-    func saveUser(completion: (success: Bool, error: String?) -> Void) {
-        HubAPI.saveParseUser(matchingParseObject) {
-            (success: Bool, error: NSError?) in
-            if let error = error {
-                let errorMessage = error.userInfo["error"] as? String
-                completion(success: success, error: errorMessage)
-            } else {
-                completion(success: success, error: nil)
-            }
-        }
-    }
-    
-    /* Enable a unique hash value for each user based on email. So the value can be used
-     * to compare user with other users for equality */
-    var hashValue: Int {
-        return email!.hashValue
-    }
-    
-    //---------------------Private methods-----------------------------
-    
-    /* If the contact value is empty after a user update his contacts those contacts
-     * will be deleted from parse */
-    private func contactsToDeleteArray(contacts: [Contact]) -> [PFObject] {
-        var returnArray = [PFObject]()
-        for contact in contacts {
-            if contact.value == "" {
-                contact.buildParseContact()
-                contact.setObjectId()
-                returnArray.append(contact.matchingParseObject)
-            }
-        }
-        return returnArray
-    }
-    
-    private func contactsToSaveArray(contacts: [Contact]) -> [PFObject] {
-        var returnArray = [PFObject]()
-        self.contacts.removeAll()
-        for contact in contacts {
-            if contact.value != "" {
-                contact.buildParseContact()
-                contact.setObjectId()
-                returnArray.append(contact.matchingParseObject)
-                self.contacts.append(contact)
-            }
-        }
-        return returnArray
-    }
-}
-
-//Enable user comparing
-func == (lhs: User, rhs: User) -> Bool {
-    return lhs.hashValue == rhs.hashValue
+    return returnArray
+  }
 }

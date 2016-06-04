@@ -19,7 +19,7 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
         currentUser = hubModel.currentUser
         
         if let currentUser = currentUser {
-            currentUser.getAllFriends {
+            currentUser.getFriends {
                 (friends, error) in
                 if let error = error {
                     print(error)
@@ -39,7 +39,7 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
     
     override func viewWillAppear(animated: Bool) {
         if let currentUser = currentUser {
-            currentUser.getAllFriends {
+            currentUser.getFriends {
                 (friends, error) in
                 if let error = error {
                     print(error)
@@ -84,9 +84,11 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
             contact = myContacts[sections[indexPath.section].index + indexPath.row]
         }
         
-        ViewFactory.makeImageViewRound(profileImage)
-        contact.getProfileImage(profileImage)
-        nameLabel.text = "\(contact.firstName!) \(contact.lastName!)"
+        ViewFactory.circularImage(profileImage)
+        contact.getProfileImage { (image) in
+            profileImage.image = image
+        }
+        nameLabel.text = "\(contact.firstName) \(contact.lastName)"
         ViewFactory.setCellLabelPlaceholder("nickname", text: contact.nickname, label: nickNameLabel)
         ViewFactory.setCellLabelPlaceholder("city", text: contact.city, label: cityLabel)
         return cell
@@ -107,7 +109,7 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
         var length: Int
         
         for _ in myContacts {
-            let commonPrefix = myContacts[i].firstName!.commonPrefixWithString(myContacts[index].firstName!, options: .CaseInsensitiveSearch)
+            let commonPrefix = myContacts[i].firstName.commonPrefixWithString(myContacts[index].firstName, options: .CaseInsensitiveSearch)
             if(commonPrefix.characters.count == 0) {
                 length = i - index
                 let newSection = createNewIndexSection(index, length: length)
@@ -130,7 +132,7 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
     
     func filterContentForSearchText(searchText: String, scope: String = "All") {
         filteredContacts = myContacts.filter { contact in
-            let stringGetSearched = contact.firstName! + " " + contact.lastName!
+            let stringGetSearched = contact.firstName + " " + contact.lastName
             return stringGetSearched.lowercaseString.containsString(searchText.lowercaseString)
         }
         tableView.reloadData()
@@ -188,7 +190,7 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
     
     private func createNewIndexSection(index: Int, length: Int) -> (index: Int, length: Int, title: String) {
         let friend = myContacts[index]
-        let string = friend.firstName!.uppercaseString
+        let string = friend.firstName.uppercaseString
         let firstCharacter = string[string.startIndex]
         let title = "\(firstCharacter)"
         return (index: index, length: length, title: title)

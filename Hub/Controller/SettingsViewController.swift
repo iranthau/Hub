@@ -19,10 +19,9 @@ class SettingsViewController: UITableViewController {
         currentUser = hubModel.currentUser
         mailComposer = MFMailComposer(tableVC: self)
         if let currentUser = currentUser {
-            hideProfileSwitch.on = !currentUser.profileIsVisible!
+            hideProfileSwitch.on = !currentUser.profileIsVisible
         }
-        
-        ViewFactory.hideTableViewSeparator(tableView)
+        tableView.separatorColor = ViewFactory.hidden()
     }
 
     override func didReceiveMemoryWarning() {
@@ -65,7 +64,9 @@ class SettingsViewController: UITableViewController {
     }
     
     @IBAction func hideProfileToggle(switchControl: UISwitch) {
-        currentUser!.hideProfile(!switchControl.on)
+        if let currentUser = currentUser {
+            currentUser.profileIsVisible = !switchControl.on
+        }
     }
     
     func performTermsSegue() {

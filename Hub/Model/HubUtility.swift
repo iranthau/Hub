@@ -8,29 +8,30 @@ import UIKit
 import Parse
 
 class HubUtility {
-    class func convertImageFileToParseFile(imageFile: UIImage) -> PFFile {
-        let imageData = imageFile.lowQualityJPEGNSData
-        return PFFile(data: imageData)!
-    }
-    
     /* Create a parse push query when given the from user and the to user parse
      * objects. The query is configured to query shared permission class by default.
      */
-    class func configurePushInstallation(user: PFUser) -> PFQuery {
-        let pushQuery = PFInstallation.query()!
-        pushQuery.whereKey("user", equalTo: user)
-        return pushQuery
+    class func configurePushInstallation(user: User?) -> PFQuery? {
+        if let user = user {
+            let pushQuery = PFInstallation.query()!
+            pushQuery.whereKey("userFriend", equalTo: user)
+            return pushQuery
+        }
+        return nil
     }
     
     /* Create and return a parse push notification object when given
      * the query and the message to send. The sound and badge configurations
      * are set to following configs by default. */
-    class func configurePushNotification(query: PFQuery, message: String) -> PFPush {
-        let push = PFPush()
-        push.setQuery(query)
-        let data = [ "alert": message, "badge": "Increment", "sound": "Ambient Hit.mp3" ]
-        push.setData(data)
-        return push
+    class func configurePushNotification(query: PFQuery?, message: String) -> PFPush? {
+        if let query = query {
+            let push = PFPush()
+            push.setQuery(query)
+            let data = [ "alert": message, "badge": "Increment", "sound": "Ambient Hit.mp3" ]
+            push.setData(data)
+            return push
+        }
+        return nil
     }
     
     /* Build an array of phone contacts where each contact has empty value. Used
@@ -109,10 +110,6 @@ class HubUtility {
     /* Builds a contact with empty value when contact type and the row value of
      * sub type is provided. */
     private class func buildInitialContactForCell(index: Int, type: ContactType) -> Contact {
-        let parseObject = PFObject(className: "Contact")
-        let contact = Contact(parseObject: parseObject)
-        contact.type = type.label
-        contact.subType = ContactSubType(rawValue: index)!.label
-        return contact
+        return Contact(value: nil, type: type.label, subType: ContactSubType(rawValue: index)!.label)
     }
 }

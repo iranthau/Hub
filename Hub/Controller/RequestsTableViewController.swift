@@ -61,9 +61,11 @@ class RequestsTableViewController: UITableViewController {
         let nickNameLabel = cell.viewWithTag(3) as! UILabel
         let cityLabel = cell.viewWithTag(4) as! UILabel
         
-        request.getProfileImage(profileImageView)
-        ViewFactory.makeImageViewRound(profileImageView)
-        nameLabel.text = "\(request.firstName!) \(request.lastName!)"
+        request.getProfileImage { (image) in
+            profileImageView.image = image
+        }
+        ViewFactory.circularImage(profileImageView)
+        nameLabel.text = "\(request.firstName) \(request.lastName)"
         ViewFactory.setCellLabelPlaceholder("nickname", text: request.nickname, label: nickNameLabel)
         ViewFactory.setCellLabelPlaceholder("city", text: request.city, label: cityLabel)
         return cell
@@ -82,7 +84,7 @@ class RequestsTableViewController: UITableViewController {
             self.declineRequest(tableView, indexPath: indexPath)
         })
         
-        return [declineAction, acceptAction]
+        return [acceptAction, declineAction]
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -92,7 +94,7 @@ class RequestsTableViewController: UITableViewController {
         let background = cell!.viewWithTag(6)! as UIView
         container.layer.transform = animation
         container.layer.backgroundColor = UIColor.whiteColor().CGColor
-        background.layer.backgroundColor = UIColor.redColor().CGColor
+        background.layer.backgroundColor = UIColor(hue: 0.3, saturation: 1, brightness: 0.67, alpha: 1.0).CGColor
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         UIView.animateWithDuration(1.0, animations: {
@@ -105,8 +107,8 @@ class RequestsTableViewController: UITableViewController {
         let requestContact = sender as! User
         
         if segue.identifier == "acceptRequestSegue" {
-            if let destinationVC = segue.destinationViewController as? ContactRequestTableViewController {
-                destinationVC.friend = requestContact
+            if let destinationVC = segue.destinationViewController as? AddContactViewController {
+                destinationVC.contactProfile = requestContact
             }
         }
     }
@@ -114,7 +116,23 @@ class RequestsTableViewController: UITableViewController {
     //-------------------Private Methods------------------------
     private func acceptRequest(tableView: UITableView, indexPath: NSIndexPath) {
         let requestContact = requests[indexPath.row]
-        self.performSegueWithIdentifier("acceptRequestSegue", sender: requestContact)
+        if let user = currentUser {
+            user.acceptRequest(requestContact, completion: {
+                (success: Bool, error: String?) in
+                if let error = error {
+                    print(error)
+                } else if success {
+                    user.isFriendsWith(requestContact, completion: {
+                        (success: Bool) in
+                        if success {
+                            self.viewWillAppear(true)
+                        } else {
+                            self.performSegueWithIdentifier("acceptRequestSegue", sender: requestContact)
+                        }
+                    })
+                }
+            })
+        }
     }
     
     private func declineRequest(tableView: UITableView, indexPath: NSIndexPath) {

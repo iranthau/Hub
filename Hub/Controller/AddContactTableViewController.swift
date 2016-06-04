@@ -47,9 +47,12 @@ class AddContactTableViewController: UITableViewController, UISearchResultsUpdat
         let nickNameLabel = cell.viewWithTag(3) as! UILabel
         let cityLabel = cell.viewWithTag(4) as! UILabel
         
-        contact.getProfileImage(profileImage)
-        ViewFactory.makeImageViewRound(profileImage)
-        nameLabel.text = "\(contact.firstName!) \(contact.lastName!)"
+        contact.getProfileImage {
+            (image) in
+            profileImage.image = image
+        }
+        ViewFactory.circularImage(profileImage)
+        nameLabel.text = "\(contact.firstName) \(contact.lastName)"
         ViewFactory.setCellLabelPlaceholder("nickname", text: contact.nickname, label: nickNameLabel)
         ViewFactory.setCellLabelPlaceholder("city", text: contact.city, label: cityLabel)
         return cell
