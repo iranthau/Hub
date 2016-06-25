@@ -76,8 +76,7 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
             let sharedPermission = SharedPermission(fromUser: currentUser, toUser: contactProfile!, contacts: requestedContacts, status: "pending")
             sharedPermission.sendRequest(pushNotification, completion: {
                 (success, error) in
-                self.showAlert("Request is sent")
-                self.back(sender)
+                self.showAlert("Request sent to add contact")
             })
         }
     }
@@ -107,7 +106,9 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
     
     override func showAlert(message: String) {
         let alertError = UIAlertController(title: "Add contact", message: message, preferredStyle: .Alert)
-        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: {
+          (alert: UIAlertAction) in self.back(alert)
+        })
         alertError.addAction(defaultAction)
         self.presentViewController(alertError, animated: true, completion: nil)
     }
