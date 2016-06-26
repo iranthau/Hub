@@ -47,10 +47,8 @@ enum ContactSubType: Int {
       return "home"
     case .PhoneWork, .EmailWork, .AddressWork:
       return "work"
-    case .PhoneOther, .EmailOther, .AddressOther:
+    case .PhoneOther, .EmailOther, .AddressOther, .SocialOther:
       return "other"
-    case .SocialOther:
-      return "website"
     case .PhonePersonal: return "mobile"
     case .EmailSchool, .AddressSchool:
       return "school"
