@@ -141,7 +141,7 @@ class User: PFUser {
         completion(friends: nil, error: errorMessage)
       } else {
         if let pUsers = pUsers as? [User] {
-          let uniqueFriends = pUsers.removeDuplicates()
+          let uniqueFriends = HubModel.removeDuplicates(pUsers)
           completion(friends: uniqueFriends, error: nil)
         }
       }

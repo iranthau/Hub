@@ -134,7 +134,7 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
     if contact.selected{
       requestedContacts.append(contact)
     } else {
-      requestedContacts.removeObject(contact)
+      requestedContacts = HubModel.removeObject(requestedContacts, object: contact)
     }
   }
 }

@@ -112,19 +112,13 @@ class ConfigureSharedContactTVC: UITableViewController, ContactShareCellDelegate
     if contact.selected {
       sharedContacts.append(contact)
     } else {
-      sharedContacts.removeObject(contact)
+      sharedContacts = HubModel.removeObject(sharedContacts, object: contact)
     }
   }
 }
 
 //Array extension so that an object can be removed from an array
 extension Array where Element: Equatable {
-  mutating func removeObject(object: Element) {
-    if let index = self.indexOf(object) {
-      self.removeAtIndex(index)
-    }
-  }
-  
   func removeDuplicates() -> [Element] {
     var uniqueValues: [Element] = []
     forEach { item in
