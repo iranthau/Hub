@@ -116,16 +116,3 @@ class ConfigureSharedContactTVC: UITableViewController, ContactShareCellDelegate
     }
   }
 }
-
-//Array extension so that an object can be removed from an array
-extension Array where Element: Equatable {
-  func removeDuplicates() -> [Element] {
-    var uniqueValues: [Element] = []
-    forEach { item in
-      if !uniqueValues.contains(item) {
-        uniqueValues += [item]
-      }
-    }
-    return uniqueValues
-  }
-}
