@@ -202,7 +202,6 @@
 		BDBB6A7F1C6224D800143087 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		BDC7AB5D1C798CE40093D5F4 /* AddContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactTableViewController.swift; sourceTree = "<group>"; };
 		BDCE5DCC1CD5F18D001ABD11 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
-		BDCE5DCE1CD624AE001ABD11 /* HubPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = HubPlayground.playground; path = Hub/HubPlayground.playground; sourceTree = "<group>"; };
 		BDD83EEA1CB7D329008C0515 /* MFMailComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MFMailComposer.swift; sourceTree = "<group>"; };
 		BDE7E6E21CC7A9EE00D3BB87 /* ViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewFactory.swift; sourceTree = "<group>"; };
 		BDE7E6E41CC7C2D300D3BB87 /* HubUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HubUtility.swift; sourceTree = "<group>"; };
@@ -402,7 +401,6 @@
 			isa = PBXGroup;
 			children = (
 				BDAE7A101C101F6B0085264A /* Hub */,
-				BDCE5DCE1CD624AE001ABD11 /* HubPlayground.playground */,
 				BDAE7A251C101F6B0085264A /* HubTests */,
 				BDAE7A301C101F6B0085264A /* HubUITests */,
 				BDAE7A0F1C101F6B0085264A /* Products */,
