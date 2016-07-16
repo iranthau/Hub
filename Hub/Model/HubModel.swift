@@ -33,7 +33,9 @@ class HubModel {
   
   class func removeDuplicates(array: [User]) -> [User] {
     var uniqueArray = [User]()
-    uniqueArray.append(array[0])
+    if let user = array.first {
+      uniqueArray.append(user)
+    }
     for o1 in array {
       for o2 in uniqueArray {
         if o1.objectId != o2.objectId {

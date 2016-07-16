@@ -83,6 +83,7 @@
 		BDBB6A801C6224D800143087 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDBB6A7F1C6224D800143087 /* Social.framework */; };
 		BDC7AB5E1C798CE40093D5F4 /* AddContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC7AB5D1C798CE40093D5F4 /* AddContactTableViewController.swift */; };
 		BDCE5DCD1CD5F18D001ABD11 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCE5DCC1CD5F18D001ABD11 /* BaseViewController.swift */; };
+		BDD2D6E81D3A81B6001B084F /* ConfigureSharedContactTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD206EC41CE7369B005DA278 /* ConfigureSharedContactTVC.swift */; };
 		BDD83EEB1CB7D329008C0515 /* MFMailComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD83EEA1CB7D329008C0515 /* MFMailComposer.swift */; };
 		BDE7E6E31CC7A9EE00D3BB87 /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE7E6E21CC7A9EE00D3BB87 /* ViewFactory.swift */; };
 		BDE7E6E51CC7C2D300D3BB87 /* HubUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE7E6E41CC7C2D300D3BB87 /* HubUtility.swift */; };
@@ -631,6 +632,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDD2D6E81D3A81B6001B084F /* ConfigureSharedContactTVC.swift in Sources */,
 				9DC6F68B1CD35263004FD173 /* PassswordRecoveryViewController.swift in Sources */,
 				9D293B721CD0D11900C34BED /* SharedPermission.swift in Sources */,
 				9D293B711CD0D10300C34BED /* MyProfileViewController.swift in Sources */,
