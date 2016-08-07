@@ -6,7 +6,7 @@
 import UIKit
 import Parse
 
-class AddContactViewController: BaseViewController, ContactShareCellDelegate, UITableViewDataSource, UITableViewDelegate {
+class AddContactViewController: UIViewController, ContactShareCellDelegate, UITableViewDataSource, UITableViewDelegate {
   
   @IBOutlet weak var profileImageView: UIImageView!
   @IBOutlet weak var nicknameLabel: UILabel!
@@ -104,7 +104,7 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
   }
   
-  override func showAlert(message: String) {
+  func showAlert(message: String) {
     let alertError = UIAlertController(title: "Add contact", message: message, preferredStyle: .Alert)
     let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: {
       (alert: UIAlertAction) in self.back(alert)
@@ -113,7 +113,7 @@ class AddContactViewController: BaseViewController, ContactShareCellDelegate, UI
     self.presentViewController(alertError, animated: true, completion: nil)
   }
   
-  override func disableUIBarbutton() {
+  func disableUIBarbutton() {
     sendRequestButton.enabled = false
   }
   

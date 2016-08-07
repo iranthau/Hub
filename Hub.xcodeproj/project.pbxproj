@@ -82,7 +82,6 @@
 		BDBB6A7E1C6224A600143087 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDBB6A7D1C6224A600143087 /* Accounts.framework */; };
 		BDBB6A801C6224D800143087 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDBB6A7F1C6224D800143087 /* Social.framework */; };
 		BDC7AB5E1C798CE40093D5F4 /* AddContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC7AB5D1C798CE40093D5F4 /* AddContactTableViewController.swift */; };
-		BDCE5DCD1CD5F18D001ABD11 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCE5DCC1CD5F18D001ABD11 /* BaseViewController.swift */; };
 		BDD2D6E81D3A81B6001B084F /* ConfigureSharedContactTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD206EC41CE7369B005DA278 /* ConfigureSharedContactTVC.swift */; };
 		BDD83EEB1CB7D329008C0515 /* MFMailComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD83EEA1CB7D329008C0515 /* MFMailComposer.swift */; };
 		BDE7E6E31CC7A9EE00D3BB87 /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE7E6E21CC7A9EE00D3BB87 /* ViewFactory.swift */; };
@@ -202,7 +201,6 @@
 		BDBB6A7D1C6224A600143087 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		BDBB6A7F1C6224D800143087 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		BDC7AB5D1C798CE40093D5F4 /* AddContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactTableViewController.swift; sourceTree = "<group>"; };
-		BDCE5DCC1CD5F18D001ABD11 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		BDD83EEA1CB7D329008C0515 /* MFMailComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MFMailComposer.swift; sourceTree = "<group>"; };
 		BDE7E6E21CC7A9EE00D3BB87 /* ViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewFactory.swift; sourceTree = "<group>"; };
 		BDE7E6E41CC7C2D300D3BB87 /* HubUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HubUtility.swift; sourceTree = "<group>"; };
@@ -304,7 +302,6 @@
 				9A0CBDBC1C71902C002BD9D0 /* CustomImagePickerController.swift */,
 				9AA47EAC1C7576310034FBE8 /* AddContactViewController.swift */,
 				BDC7AB5D1C798CE40093D5F4 /* AddContactTableViewController.swift */,
-				BDCE5DCC1CD5F18D001ABD11 /* BaseViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -594,7 +591,6 @@
 				BDD83EEB1CB7D329008C0515 /* MFMailComposer.swift in Sources */,
 				BD5869811C6E5179009408EA /* HeyyaTabBarController.swift in Sources */,
 				BD9032C21C5474C300C323A9 /* HubModel.swift in Sources */,
-				BDCE5DCD1CD5F18D001ABD11 /* BaseViewController.swift in Sources */,
 				BD910CEA1C6C7FF4003B099C /* ContactItemCell.swift in Sources */,
 				BD206EC51CE7369B005DA278 /* ConfigureSharedContactTVC.swift in Sources */,
 				9AD9296D1C7C958000B764B7 /* AddContactCell.swift in Sources */,

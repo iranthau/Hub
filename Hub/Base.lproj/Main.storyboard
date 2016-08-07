@@ -1148,7 +1148,7 @@
                                                         <rect key="frame" x="0.0" y="28" width="359" height="60"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jko-eg-kGp" id="qVQ-ad-A96">
-                                                            <rect key="frame" x="0.0" y="0.0" width="359" height="60"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="359" height="59.5"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <textField opaque="NO" clipsSubviews="YES" tag="80" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="mobile" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="XaG-R6-in6">
@@ -1185,6 +1185,9 @@
                                                     <outlet property="delegate" destination="gxG-wg-d2f" id="t59-cc-epq"/>
                                                 </connections>
                                             </tableView>
+                                            <activityIndicatorView hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Dru-aF-BsJ">
+                                                <rect key="frame" x="177" y="149" width="20" height="20"/>
+                                            </activityIndicatorView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -1234,7 +1237,6 @@
                         <outlet property="contactFieldTableView" destination="xnq-O3-4Le" id="SHS-di-vxB"/>
                         <outlet property="containerView" destination="Dfm-sM-8Ij" id="cVa-5x-PeJ"/>
                         <outlet property="emailButton" destination="5ep-em-cRx" id="rzr-nR-j8V"/>
-                        <outlet property="finishEditingButton" destination="r2e-Am-PfX" id="N9c-FO-fHw"/>
                         <outlet property="firstNameTextField" destination="omu-OD-qav" id="fsA-iZ-OKZ"/>
                         <outlet property="lastNameTextField" destination="gfg-m5-cTn" id="45Q-Ne-Z2c"/>
                         <outlet property="nicknameTextField" destination="cDv-5n-HuJ" id="WHz-p3-Euq"/>
@@ -1243,6 +1245,7 @@
                         <outlet property="profileImageView" destination="HbR-ct-KGB" id="uLF-OI-3Vh"/>
                         <outlet property="selectedContactColor" destination="fmu-eC-qIR" id="cNT-Fs-5aa"/>
                         <outlet property="socialButton" destination="IiS-10-nKU" id="6Jb-ac-H3K"/>
+                        <outlet property="spinner" destination="Dru-aF-BsJ" id="41C-vf-ME2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KXS-h2-uMw" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -6,7 +6,7 @@
 import UIKit
 import Parse
 
-class SignInViewController: BaseViewController, UITextFieldDelegate {
+class SignInViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var fbSignInButton: UIButton!
     @IBOutlet weak var userNameInput: UITextField!
@@ -68,7 +68,7 @@ class SignInViewController: BaseViewController, UITextFieldDelegate {
     }
     
     //Create and display an allert. May be move the function to a more centric place later.
-    override func showAlert(message: String) {
+    func showAlert(message: String) {
         let alertError = UIAlertController(title: "Sign In", message: message, preferredStyle: .Alert)
         let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
         alertError.addAction(defaultAction)
