@@ -32,14 +32,13 @@ class HubModel {
   }
   
   class func removeDuplicates(array: [User]) -> [User] {
+    var idSet = Set<String>()
     var uniqueArray = [User]()
-    if let user = array.first {
-      uniqueArray.append(user)
-    }
-    for o1 in array {
-      for o2 in uniqueArray {
-        if o1.objectId != o2.objectId {
-          uniqueArray.append(o1)
+    for o in array {
+      if let id = o.objectId {
+        if !idSet.contains(id) {
+          idSet.insert(id)
+          uniqueArray.append(o)
         }
       }
     }
