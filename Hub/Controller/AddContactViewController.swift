@@ -69,6 +69,7 @@ class AddContactViewController: UIViewController, ContactShareCellDelegate, UITa
   }
   
   @IBAction func sendRequest(sender: UIBarButtonItem) {
+    ViewFactory.stopUIInteraction()
     let pushQuery = HubUtility.configurePushInstallation(contactProfile)
     if let currentUser = currentUser {
       let message = "You have a request from \(currentUser.firstName) \(currentUser.lastName)"
@@ -76,6 +77,7 @@ class AddContactViewController: UIViewController, ContactShareCellDelegate, UITa
       let sharedPermission = SharedPermission(fromUser: currentUser, toUser: self.contactProfile!, contacts: self.requestedContacts, status: "pending")
       sharedPermission.sendRequest(pushNotification, completion: {
         (success, error) in
+        ViewFactory.startUIInteraction()
         self.showAlert("Request sent to add contact")
       })
     }

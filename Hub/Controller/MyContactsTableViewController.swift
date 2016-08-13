@@ -145,11 +145,18 @@ class MyContactsTableViewController: UITableViewController, UISearchResultsUpdat
     return true
   }
   
+  override func tableView(tableView: UITableView, titleForDeleteConfirmationButtonForRowAtIndexPath indexPath: NSIndexPath) -> String? {
+    return "Unfriend"
+  }
+  
   //TODO: Need to handle removing a friend from parse as well.
   override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
     if editingStyle == .Delete {
-      myContacts.removeAtIndex(sections[indexPath.section].index + indexPath.row)
+      let friend = myContacts.removeAtIndex(sections[indexPath.section].index + indexPath.row)
       self.refreshTableViewInBackground()
+      if let currentUser = currentUser {
+        currentUser.unfriend(friend)
+      }
     }
   }
   

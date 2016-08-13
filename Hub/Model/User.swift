@@ -383,6 +383,29 @@ class User: PFUser {
     }
   }
   
+  func unfriend(friend: User) {
+    let query1 = PFQuery(className: "SharedPermission")
+    query1.whereKey("userFriend", equalTo: friend)
+    query1.whereKey("user", equalTo: self)
+    query1.whereKey("status", equalTo: "accepted")
+    
+    let query2 = PFQuery(className: "SharedPermission")
+    query2.whereKey("userFriend", equalTo: self)
+    query2.whereKey("user", equalTo: friend)
+    query2.whereKey("status", equalTo: "accepted")
+    
+    let mainQuery = PFQuery.orQueryWithSubqueries([query1, query2])
+    
+    mainQuery.findObjectsInBackgroundWithBlock {
+      (sharedPermissions: [PFObject]?, error: NSError?) in
+      if let sharedPermissions = sharedPermissions {
+        for sharedPermission in sharedPermissions {
+          sharedPermission.deleteInBackground()
+        }
+      }
+    }
+  }
+  
   //---------------------Private methods-----------------------------
   
   /* If the contact value is empty after a user update his contacts those contacts
